@@ -95,6 +95,7 @@
 		1728B802243252A900003B8F /* icHeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icHeat.png; sourceTree = "<group>"; };
 		1728B803243252A900003B8F /* icTableData.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icTableData.png; sourceTree = "<group>"; };
 		172BB06C2460858D001402D7 /* DashboardComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardComponentView.swift; sourceTree = "<group>"; };
+		172EF669249ABBCD00EBEE57 /* autoql.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = autoql.podspec; sourceTree = "<group>"; usesTabs = 0; };
 		17489AB3241713F400825936 /* DMAutoCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAutoCompleteView.swift; sourceTree = "<group>"; };
 		1759829E242D1FF4002D504F /* gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gif.swift; sourceTree = "<group>"; };
 		175982A0242D39D4002D504F /* gifBalls.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifBalls.gif; sourceTree = "<group>"; };
@@ -146,7 +147,6 @@
 		8969175EB0EA7C080077BC1644AD533A /* chata.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = chata.modulemap; sourceTree = "<group>"; };
 		9773577CEBE6AF2DD2F36A6C2B0E58DD /* Pods_chata_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chata_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97EFF409B6B5AD0CFF10B23422CAF572 /* Pods-chata_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-chata_Tests-Info.plist"; sourceTree = "<group>"; };
-		99500656B5DD8EA436346C7D39045B49 /* chata.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = chata.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BA37F319ECE2B6436A9AAF17A58775FE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CACB7ACC620015825567EE9048B4543B /* Pods-chata_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-chata_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 		B3BF7D1A991FCA8621173A5F0DB0E5C1 /* chata */ = {
 			isa = PBXGroup;
 			children = (
-				99500656B5DD8EA436346C7D39045B49 /* chata.podspec */,
+				172EF669249ABBCD00EBEE57 /* autoql.podspec */,
 				17EC9EBA23F5F483004B453F /* Assets */,
 				17EC9EAD23F5B5BD004B453F /* Classes */,
 				F9071FA4CFE310032B12FB584FD786C3 /* Pod */,

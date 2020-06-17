@@ -23,12 +23,12 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/chatatechnologies/ios-autoql'
+  s.homepage         = 'https://github.com/chatatechnologies/ios-autoql.git'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Chata' => 'vicente@rinro.com.mx' }
-  s.source           = { :git => 'https://github.com/chatatechnologies/ios-autoql', :tag => "0.0.1" }
-  #s.source           = { :git => 'https://gitlab.com/chata-widget/ios-widget.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/chatatechnologies/ios-autoql.git', :tag => "0.0.1" }
+  #s.source           = { :git => 'https://github.com/chatatechnologies/ios-autoql', :tag => s.version.to_s }
   
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
