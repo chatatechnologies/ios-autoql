@@ -38,7 +38,7 @@ pod 'chata'
 ```
 2. install by adding  imort Chata to your controller
 ```swift
-import chata
+import autoql
 ```
 3. Call DataMessenger()
 ```swift
