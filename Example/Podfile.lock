@@ -1,0 +1,16 @@
+PODS:
+  - chata (0.1.0)
+
+DEPENDENCIES:
+  - chata (from `../`)
+
+EXTERNAL SOURCES:
+  chata:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  chata: 2968240103a98cac8b1dc5ef37555a9304921e04
+
+PODFILE CHECKSUM: 002e985cc9bf5796ec1e68b454f8e4194ef4da27
+
+COCOAPODS: 1.8.4

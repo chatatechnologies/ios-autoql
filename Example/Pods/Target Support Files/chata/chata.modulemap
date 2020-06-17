@@ -1,0 +1,6 @@
+framework module chata {
+  umbrella header "chata-umbrella.h"
+
+  export *
+  module * { export * }
+}

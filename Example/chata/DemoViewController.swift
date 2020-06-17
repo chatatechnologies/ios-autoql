@@ -1,0 +1,396 @@
+//
+//  ViewController.swift
+//  chata
+//
+//  Created by Vicente Rincón on 02/12/2020.
+//  Copyright (c) 2020 Vicente Rincón. All rights reserved.
+//
+
+import UIKit
+import chata
+class DemoViewController: UIViewController, DemoParameterCellDelegate {
+    let label = UILabel()
+    let dataChat = DataMessenger(authentication: authentication(
+        apiKey: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU",
+        domain: "https://spira-staging.chata.io",
+        token: "eyJ0eXAiOiAiSldUIiwgImFsZyI6ICJSUzI1NiIsICJraWQiOiAiNzUxZmYzY2YxMjA2ZGUwODJhNzM1MjY5OTI2ZDg0NTgzYjcyOTZmNCJ9.eyJpYXQiOiAxNTkxNjM0OTI4LCAiZXhwIjogMTU5MTY1NjUyOCwgImlzcyI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImF1ZCI6ICJkZW1vMy1zdGFnaW5nLmNoYXRhLmlvIiwgInN1YiI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImVtYWlsIjogImRlbW8zLWp3dGFjY291bnRAc3RhZ2luZy0yNDU1MTQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAicHJvamVjdF9pZCI6ICJzcGlyYS1kZW1vMyIsICJ1c2VyX2lkIjogInNwaXJhLWRlbW8zIiwgImRpc3BsYXlfbmFtZSI6ICJzcGlyYS1kZW1vMyIsICJyZXNvdXJjZV9hY2Nlc3MiOiBbIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5LyoqIiwgIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5Il19.qaFeQW-8jiy9smijQnAX0ThYGi9cWycToqBBV9EzKSBzt2SIEZUhftNEyV-AE1rmIRAdsh4S9CjtzdZVEVF65lmfYklf_lH1yWpMx67LMg625L0P9E6U1atVhAqha3X0_qcA6QUB4Qx1kyl-iTtQI_EjylLDXAbtfbyj-ekQFI6ej-tpL0Fxek2y1cUaGj8Iqfb82GAZdRsRnQ-zqoodm6JZ_J4RvTjEYBNKkRl4t_4WoPPjoxpq4hDzH1_0z-4xktAN0Kk6749BHE4ENFY2zs-FgVdCnd7Ub6FQLPZMHrPR5dwJf9vbsAYofrdG5AePcYCUCNVMkeDk3iVMcy0UMQ=="),
+        projectID: "spira-demo3" )
+    var parameters: [String : Any] = [:]
+    @IBOutlet weak var tbMain: UITableView!
+    @IBOutlet weak var vwMain: UIView!
+    @IBOutlet weak var scMain: UISegmentedControl!
+    let loginSection: DemoSectionsModel =
+        DemoSectionsModel(title: "You must login to access data", arrParameters: [
+            DemoParameter(label: "Project ID *", type: .input, value: "spira-demo3", key: "projectID"),
+            DemoParameter(label: "User ID (email) *", type: .input, key: "userID", inputType: .mail),
+            DemoParameter(label: "API key *", type: .input, value: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU", key: "apiKey"),
+            DemoParameter(label: "Domain URL *", type: .input, value: "https://spira-staging.chata.io", key: "domain"),
+            DemoParameter(label: "Username *", type: .input, key: "username" ),
+            DemoParameter(label: "Password *", type: .input, key: "password", inputType: .password),
+            DemoParameter(label: "Authenticate", type: .button, key: "login")
+        ])
+    var allSection: [DemoSectionsModel] = []
+    @IBAction func changeSection(_ sender: Any) {
+        switch scMain.selectedSegmentIndex {
+        case 0:
+            loadDataSource()
+        case 1:
+            if dataChat.config.authenticationObj.token == "" {
+                let alert = UIAlertController(title: "", message: "Please log in,", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                scMain.selectedSegmentIndex = 0
+            } else {
+                loadDashboard()
+            }
+        default:
+            print("error")
+        }
+    }
+    func loadDataSource() {
+        tbMain.isHidden = false
+        for sub in vwMain.subviews {
+            if let viewWithTag = sub.viewWithTag(10) {
+                viewWithTag.removeFromSuperview()
+            }
+        }
+    }
+    func loadDashboard() {
+        tbMain.isHidden = true
+        let newView = DashboardView()
+        newView.tag = 10
+        vwMain.addSubview(newView)
+        newView.edgeTo(vwMain, safeArea: .none)
+        newView.configLoad(authFinal: dataChat.config.authenticationObj, mainView: self.view)
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadSections()
+        loadColors()
+        loadConfig()
+        loadData()
+    }
+    func loadSections(){
+        allSection = [
+            DemoSectionsModel(title: "Data Source", arrParameters: [
+                DemoParameter(label: "Demo data", type: .toggle, value: "true", key: "demo")
+            ]),
+            DemoSectionsModel(title: "Drawer Props", arrParameters: [
+                DemoParameter(label: "Reload Drawer", type: .button),
+                DemoParameter(label: "Open Drawer", type: .button, key: "openChat"),
+                DemoParameter(label: "Show Drawer Handle", type: .toggle, value: "\(dataChat.config.isVisible)", key:"isVisible"),
+                DemoParameter(label: "Theme", type: .segment, options: ["Light", "Dark"], value: dataChat.config.themeConfigObj.theme.capitalized, key: "theme"),
+                DemoParameter(label: "Drawer Placement", type: .segment, options: ["Top", "Bottom", "Left", "Right"], value: dataChat.config.placement.capitalized, key: "placement"),
+                DemoParameter(label: "Currency Code", type: .input, value: dataChat.config.dataFormattingObj.currencyCode, key: "currencyCode"),
+                DemoParameter(label: "Language Code", type: .input, value: dataChat.config.dataFormattingObj.languageCode, key: "languageCode"),
+                DemoParameter(label: "Format for Month, Year", type: .input, value: dataChat.config.dataFormattingObj.monthYearFormat, key: "monthYearFormat"),
+                DemoParameter(label: "Format for Day, Month, Year", type: .input, value: dataChat.config.dataFormattingObj.dayMonthYearFormat, key: "year"),
+                DemoParameter(label: "Number of Decimals for Currency Values", type: .input, value: "\(dataChat.config.dataFormattingObj.currencyDecimals)", key: "currencyDecimals"),
+                DemoParameter(label: "Number of Decimals for Quantity Values", type: .input, value: "\(dataChat.config.dataFormattingObj.quantityDecimals)", key: "quantityDecimals"),
+                DemoParameter(label: "User Display Name('reload Drawer')", type: .input, value: dataChat.config.userDisplayName, key: "userDisplayName"),
+                DemoParameter(label: "Intro Message", type: .input, value: dataChat.config.introMessage, key: "introMessage"),
+                DemoParameter(label: "Query Input Placeholder", type: .input, value: dataChat.config.inputPlaceholder, key: "inputPlaceholder"),
+                //DemoParameter(label: "Clear All Messages on Close", type: .toggle, value: "\(DataMessenger.clearOnClose)", key: "clearOnClose"),
+                DemoParameter(label: "Title", type: .input, value: dataChat.config.title, key: "title"),
+            ]),
+            DemoSectionsModel(title: "Chart Colors", arrParameters: [
+                
+            ]),
+            DemoSectionsModel(title: "More Colors", arrParameters: [
+                DemoParameter(label: "AccentColor", type: .color, value: "#28A8E0", key: "lightTheme"),
+                DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#525252", key: "darkTheme")
+            ]),
+            DemoSectionsModel(title: "More Configuration", arrParameters: [
+                DemoParameter(label: "Maximum Number of Messages", type: .input, value: "\(dataChat.config.maxMessages)", key: "maxMessages"),
+                DemoParameter(label: "Enable Autocomplete", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableAutocomplete)", key: "enableAutocomplete"),
+                DemoParameter(label: "Enable Query Validator", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
+                DemoParameter(label: "Enable Query Suggestion", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
+                DemoParameter(label: "Enable Speech to Text", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableVoiceRecord"),
+                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableDrilldowns")
+            ])
+        ]
+    }
+    func loadColors() {
+        let posFather = allSection.firstIndex { (father) -> Bool in
+            father.title == "Chart Colors"
+        } ?? 0
+        for (index, color) in dataChat.config.themeConfigObj.chartColors.enumerated() {
+            let demoP = DemoParameter(label: "\(index)", type: .color, value: color, key: "\(index)")
+            allSection[posFather].arrParameters.append(demoP)
+        }
+        tbMain.reloadData()
+    }
+    func loadData(){
+        dataChat.config.isVisible = true
+    }
+    func searchValue(_ key: String) -> String{
+        var value = ""
+        for section in allSection {
+            for sect in section.arrParameters{
+                if sect.key == key{
+                    value = sect.value
+                }
+            }
+        }
+        return value
+    }
+    func toogleAction(value: Bool, key: String) {
+        self.view.endEditing(true)
+        setValueByKey(key, "\(value)")
+        switch key {
+        case "demo":
+            if value { allSection.remove(at: 1) } else { allSection.insert(loginSection, at: 1) }
+            tbMain.reloadData()
+        case "isVisible":
+            dataChat.config.isVisible = !value
+            dataChat.isHidden = !value
+        case "enableAutocomplete":
+            dataChat.config.autoQLConfigObj.enableAutocomplete = value
+        case "enableQueryValidation":
+            dataChat.config.autoQLConfigObj.enableQueryValidation = value
+        case "enableQuerySuggestions":
+            dataChat.config.autoQLConfigObj.enableQuerySuggestions = value
+        case "enableDrilldowns":
+            dataChat.config.autoQLConfigObj.enableDrilldowns = value
+        case "enableVoiceRecord":
+            dataChat.config.enableVoiceRecord = value
+        case "clearOnClose":
+            dataChat.config.clearOnClose = value
+        default:
+            print("invalid toggle")
+        }
+    }
+    func butonAction(key: String){
+        self.view.endEditing(true)
+        switch key {
+        case "login":
+            if dataChat.config.authenticationObj.token == "" {
+                let posFather = allSection.firstIndex { (father) -> Bool in
+                    father.title == "You must login to access data"
+                } ?? 0
+                var dict:[String: Any] = [:]
+                for input in allSection[posFather].arrParameters {
+                    if input.type == DemoParameterType.input{
+                        dict[input.key] = input.value
+                    }
+                }
+                dataChat.login(body: dict) { (success) in
+                    DispatchQueue.main.async {
+                        let message = success ? "Login Successful!" : "Login Unsuccessful"
+                        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                        if success {
+                            self.setNewValue(fatherP: "You must login to access data", sonP: "Authenticate", value: "Logout", changeLabel: true)
+                            self.tbMain.reloadData()
+                        }
+                    }
+                }
+            } else {
+                dataChat.logout { (success) in
+                    let alert = UIAlertController(title: "", message: "Successfully logged out", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                    self.setNewValue(fatherP: "You must login to access data", sonP: "Logout", value: "Authenticate", changeLabel: true)
+                    self.tbMain.reloadData()
+                }
+            }
+        case "openChat":
+            dataChat.createChat()
+            /*let vwFather: UIView = UIApplication.shared.keyWindow!
+            
+            if vwFather.subviews.count >= 2 {
+                vwFather.subviews[1].isHidden = false
+            } else{
+                dataChat.createChat()
+            }*/
+        default:
+            print("invalid button")
+        }
+    }
+    func segmentAction(key: String, value: String) {
+        self.view.endEditing(true)
+        setValueByKey(key, "\(value)")
+        switch key {
+        case "theme":
+            let dark: Bool = value == "Dark"
+            let theme = dark ? "darkTheme" : "lightTheme"
+            let accentColor = theme.getDataValue(allSection: allSection)
+            dataChat.config.themeConfigObj.theme = dark ? "dark" : "light"
+            dataChat.config.themeConfigObj.accentColor = accentColor
+            dataChat.changeColor()
+        case "placement":
+            dataChat.config.placement = value.lowercased()
+            dataChat.movePosition()
+        default:
+            print("invalid Key")
+        }
+    }
+    func chageText(name: String, value: String, key: String, color: Bool) {
+        setValueByKey(key, "\(value)")
+        setDataValue(key: key, value: value)
+        if color {
+            if value.count == 7 && value.first == "#" {
+                tbMain.reloadData()
+            }
+        }
+    }
+    func setDataValue(key: String, value: String) {
+        switch key {
+        case "currencyCode":
+            dataChat.config.dataFormattingObj.currencyCode = value
+        case "languageCode":
+            dataChat.config.dataFormattingObj.languageCode = value
+        case "monthYearFormat":
+            dataChat.config.dataFormattingObj.monthYearFormat = value
+        case "dayMonthYearFormat":
+            dataChat.config.dataFormattingObj.dayMonthYearFormat = value
+        case "currencyDecimals":
+            dataChat.config.dataFormattingObj.currencyDecimals = Int(value) ?? 0
+        case "quantityDecimals":
+            dataChat.config.dataFormattingObj.quantityDecimals = Int(value) ?? 0
+        case "userDisplayName":
+            dataChat.config.userDisplayName = value
+        case "introMessage":
+            dataChat.config.introMessage = value
+        case "inputPlaceholder":
+            dataChat.config.inputPlaceholder = value
+        case "title":
+            dataChat.config.title = value
+        case "maxMessages":
+            dataChat.config.maxMessages = Int(value) ?? 0
+        case "0", "1", "2", "3", "4":
+            if value.count == 7 && value.first == "#" {
+                let idx = Int(key) ?? 0
+                dataChat.config.themeConfigObj.chartColors[idx] = value
+            }
+        default:
+            print("Invalid")
+        }
+    }
+    func setValueByKey(_ key: String, _ newValue: String) {
+        for (posFather, section) in allSection.enumerated() {
+            for (posSon, sect) in section.arrParameters.enumerated(){
+                if sect.key == key{
+                    allSection[posFather].arrParameters[posSon].value = newValue
+                    break
+                }
+            }
+        }
+    }
+    func setNewValue(fatherP: String, sonP: String, value: String, byKey: Bool = false, changeLabel: Bool = false) {
+        let posFather = allSection.firstIndex { (father) -> Bool in
+            father.title == fatherP
+        } ?? 0
+        let sonPosition = allSection[posFather].arrParameters.firstIndex { (son) -> Bool in
+            if byKey{
+                return son.key == sonP
+            } else {
+                return son.label == sonP
+            }
+        } ?? 0
+        if changeLabel {
+            allSection[posFather].arrParameters[sonPosition].label = "\(value)"
+        } else{
+            allSection[posFather].arrParameters[sonPosition].value = "\(value)"
+        }
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+}
+extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
+    func loadConfig() {
+        view.backgroundColor = .white
+        dataChat.show(self.view)
+        tbMain.dataSource = self
+        tbMain.delegate = self
+        tbMain.separatorStyle = .none
+        tbMain.bounces = true
+        tbMain.allowsSelection = false
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allSection[section].arrParameters.count
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let size = getSize(type: allSection[indexPath.section].arrParameters[indexPath.row].type)
+        return size
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let finalCell = DemoParameterCell()
+        finalCell.delegate = self
+        finalCell.configCell(data: allSection[indexPath.section].arrParameters[indexPath.row])
+        return finalCell
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        let label = UILabel()
+        label.text = allSection[section].title
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
+        view.addSubview(label)
+        view.backgroundColor = .white
+        label.edgeTo(view, safeArea:.none)
+        return view
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return allSection.count
+    }
+    func getSize (type: DemoParameterType) -> CGFloat {
+        switch type {
+        case .button:
+            return 50
+        case .toggle, .input, .defaultCase :
+            return 90
+        case .color:
+            return 70
+        case .segment:
+            return 60
+        }
+        
+    }
+    @objc func changeStatus(){
+        print("change")
+    }
+}
+extension String {
+    func hexToColor () -> UIColor {
+        var cString: String = self.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if cString.hasPrefix("#") {
+            cString.remove(at: cString.startIndex)
+        }
+        if (cString.count) <= 5 {
+            return UIColor.gray
+        }
+        var rgbValue: UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 235.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 235.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 235.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+}
+extension UITextField {
+    func borderRadius() {
+    self.layer.borderWidth = 1.0
+    self.layer.borderColor = UIColor.lightGray.cgColor
+    self.layer.cornerRadius = 5.0
+    }
+    
+}
+extension String {
+    func getDataValue(allSection: [DemoSectionsModel], value: Bool = true) -> String {
+        var father = ""
+        for section in allSection {
+            for sect in section.arrParameters{
+                if sect.key == self{
+                    father = value ? sect.value : section.title
+                }
+            }
+        }
+        return father
+    }
+}

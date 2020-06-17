@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'chata_Example' do
+  pod 'chata', :path => '../'
+
+  target 'chata_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

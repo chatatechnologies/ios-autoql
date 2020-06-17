@@ -1,0 +1,30 @@
+//
+//  Colors.swift
+//  chata
+//
+//  Created by Vicente Rincon on 03/03/20.
+//
+
+import Foundation
+import UIKit
+var dark = DataConfig.themeConfigObj.theme == "dark"
+var chataDrawerAccentColor = (DataConfig.themeConfigObj.accentColor).hexToColor()
+var chataDrawerBackgroundColor = (dark ? "#636363" : "#ffffff").hexToColor()
+var chataDrawerBorderColor = (dark ? "#838383" : "#d3d3d3").hexToColor()
+var chataDrawerHoverColor = (dark ? "#5A5A5A" : "#ECECEC").hexToColor()
+var chataDrawerTextColorPrimary = (dark ? "#FFFFFF" :  "#5D5D5D").hexToColor()
+var chataDrawerTextColorPlaceholder = (dark ? "#333333" : "#000000").hexToColor()
+var chataDashboardAccentColor = (dark ? "#ffffff" : "#28A8E0").hexToColor()
+var chataDrawerMessengerTextColorPrimary = (dark ? "#8f908f" : "#838383").hexToColor()
+var backgroundDash = (dark ? "fafafa" : "fafafa").hexToColor()
+var chataDrawerBlue = "#28a8e0".hexToColor()
+var chataDrawerWebViewBackground = dark ? "#636363" : "#ffffff"
+var chataDrawerWebViewText = dark ? "#FFFFFF" : "#5D5D5D"
+/*var chataDashboardBackgroundColor = (dark ? "#fff").hexToColor()
+var chataDashboardBorderColor = (dark ? "#d3d3d3").hexToColor()
+var chataDashboardHoverColor = (dark ? "#ECECEC").hexToColor()
+var chataDashboardTextColorPrimary = (dark ? "#5D5D5D").hexToColor()
+var chataDashboardTextColorPlaceholder = (dark ? "#000000").hexToColor()*/
+
+
+
