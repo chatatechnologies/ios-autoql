@@ -12,7 +12,7 @@ About Data Messenger
 Data Messenger is a conversational user interface (CUI). It is a flexible frontend widget that can be implemented and accessed within an existing application or software interface. Data Messenger enables users to interact conversationally with their data by entering natural language queries to receive information from their database (or more simply, allows users to ask questions in their own words to receive data-related responses).
 
 Throughout this document, the words "Data Messenger" and "widget" are used interchangeably. All widget components are open source, so Data Messenger is highly customizable in terms of both function and design.
-<img src="https://ibb.co/FJ9TcM0" title="DataMessenger">
+<img src="https://i.ibb.co/CvqG4ZM/Simulator-Screen-Shot-i-Phone-8-2020-06-18-at-13-26-02.png" title="DataMessenger">
 ## Requirements
 
 iOS 8 or later.
