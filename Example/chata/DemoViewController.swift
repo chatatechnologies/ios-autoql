@@ -122,6 +122,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     }
     func loadData(){
         dataChat.config.isVisible = true
+        dataChat.config.userDisplayName = "Test"
     }
     func searchValue(_ key: String) -> String{
         var value = ""

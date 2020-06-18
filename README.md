@@ -12,7 +12,7 @@ About Data Messenger
 Data Messenger is a conversational user interface (CUI). It is a flexible frontend widget that can be implemented and accessed within an existing application or software interface. Data Messenger enables users to interact conversationally with their data by entering natural language queries to receive information from their database (or more simply, allows users to ask questions in their own words to receive data-related responses).
 
 Throughout this document, the words "Data Messenger" and "widget" are used interchangeably. All widget components are open source, so Data Messenger is highly customizable in terms of both function and design.
-
+<img src="https://ibb.co/FJ9TcM0" title="DataMessenger">
 ## Requirements
 
 iOS 8 or later.
@@ -53,6 +53,9 @@ authentication: authentication(
 4. Show DataMessenger
 ```swift
 dataChat.show(YourView)
+// for access to props, use .config
+
+dataChata.config.userDisplayName = "Chata"
 ```
 ## Props
 <table>
@@ -61,13 +64,12 @@ dataChat.show(YourView)
   </thead>
   <tbody>
     <tr><td>isVisible</td><td>Boolean</td><td>true</td></tr>
-    <tr><td>placement</td><td>Int: TOP_PLACEMENT || BOTTOM_PLACEMENT || LEFT_PLACEMENT || RIGHT_PLACEMENT || NOT_PLACEMENT</td><td>RIGHT_PLACEMENT</td></tr>
+    <tr><td>placement</td><td>string: "Top" || "Bottom" || "Left" || "Right"</td><td>"Right"</td></tr>
     <tr><td>title</td><td>String</td><td>"Data Messenger"</td></tr>
     <tr><td>userDisplayName</td><td>String</td><td>"there"</td></tr>
     <tr><td>introMessage</td><td>String</td><td>"Hi %s! Let\'s dive into your data. What can I help you discover today?"</td></tr>
     <tr><td>inputPlaceholder</td><td>String</td><td>"Type your queries here"</td></tr>
     <tr><td>maxMessages</td><td>Int</td><td>0</td></tr>
-    <tr><td>clearOnClose</td><td>Boolean</td><td>false</td></tr>
     <tr><td>enableVoiceRecord</td><td>Boolean</td><td>true</td></tr>
     <tr><td>autoQLConfig</td><td>AutoQLConfig</td><td>AutoQLConfig()</td></tr>
     <tr><td>dataFormatting</td><td>DataFormatting</td><td>DataFormatting()</td></tr>
@@ -79,41 +81,41 @@ dataChat.show(YourView)
 </table>
 
 >`isVisible`: Determines whether the Bubble Handle view is visible on the screen or not.
-```kotlin
+```swift
 //isChecked is a Boolean
 bubbleHandle.isVisible = isChecked
 ```
 >`placement`: Determines the edge of the screen where Bubble Handle is placed.
-```kotlin
+```swift
 //placement is a Integer
-//Constant -> TOP_PLACEMENT || BOTTOM_PLACEMENT || LEFT_PLACEMENT || RIGHT_PLACEMENT || NOT_PLACEMENT
-bubbleHandle.placement = placement
+//config.placement = "Top" || "Bottom" || "Left" || "Right"
+
 ```
 >`title`: Text that appears in the header of the default Data Messenger
 view. You must provide an empty string if you do not want text to appear
 here, otherwise the default text (Data Messenger) will apply.
-```kotlin
+```swift
 //title is a String
-bubbleHandle.title = title
+config.title = "Your Title"
 ```
 >`userDisplayName`: Name used in the intro message (example. "Hi Carlos!").
 You can customize this value using names from your own source database.
-```kotlin
+```swift
 //userDisplayName is a String
-bubbleHandle.userDisplayName = userDisplayName
+config.userDisplayName = "Your Display Name"
 ```
 >`introMessage`: Customize the default intro message using your own brand
 voice and custom copy. The userDisplayName prop will be ignored if this
 is provided.
-```kotlin
+```swift
 //introMessage is a String
-bubbleHandle.introMessage = introMessage
+config.introMessage = "Your intro Message"
 ```
 >`inputPlaceholder`: Customize the placeholder for the Query Input
 (natural language query search bar).
-```kotlin
+```swift
 //inputPlaceholder is a String
-bubbleHandle.inputPlaceholder = inputPlaceholder
+config.inputPlaceholder = "Your input Placeholder"
 ```
 >`maxMessages`: Maximum number of messages that can be displayed in the
 Data Messenger interface at one time. A message is any input or any
@@ -121,50 +123,20 @@ output in the interface. This means a query entered by a user
 constitutes one message, and the response returned in the Data Messenger
 interface constitutes another message. If a new message is added and you
 have reached the maximum, the oldest message will be erased.
-```kotlin
+```swift
 //maxMessages is a Int
-bubbleHandle.maxMessages = maxMessages
-```
->`clearOnClose`: Determines whether or not to clear all messages when the
-widget is closed. Note: The default intro message will appear when you
-reopen the widget after closing it.
-```kotlin
-//clearOnClose is a Boolean
-bubbleHandle.clearOnClose = clearOnClose
+config.maxMessages = maxMessages
 ```
 >`enableVoiceRecord`: Enable the speech to text button.
 Note: The speech to text function uses SpeechRecognizer which works when the "Manifest.permission.RECORD_AUDIO" permission is accepted by the user.
-```kotlin
+```swift
 //enableVoiceRecord is a Boolean
-bubbleHandle.enableVoiceRecord = enableVoiceRecord
+config.enableVoiceRecord = enableVoiceRecord
 ```
 > `theme`: Color theme for Data Messenger. There are currently two options: light theme and dark theme. For a light theme we will use 'light' and for a dark theme we will use 'dark'.
-```kotlin
+```swift
 //theme is a String "light" else "dark"
-bubbleHandle.theme = theme
-```
-> `lightThemeColor`: Primary accent color used in Data Messenger. This is the color of the header, speech-to-text button, and the messages displayed in the interface (both natural language query inputs from users and the associated responses that are generated and returned to the user). The visualization (table and chart) colors will not be affected here. This color is used when the light theme is active.
-```kotlin
-//lightThemeColor is a String, its format is #FFFFFF
-bubbleHandle.setLightThemeColor(lightThemeColor)
-```
-> `darkThemeColor`: Primary accent color used in Data Messenger. This is the color of the header, speech-to-text button, and the messages displayed in the interface (both natural language query inputs from users and the associated responses that are generated and returned to the user). The visualization (table and chart) colors will not be affected here. This color is used when the dark theme is active.
-```kotlin
-//darkThemeColor is a String, its format is #FFFFFF
-bubbleHandle.setDarkThemeColor(darkThemeColor)
-```
-> `aChartColors`: Array of color options for the chart visualization themes, starting with the most primary. You can pass any valid CSS color format in here, however it is recommended that the color is opaque (ex. "#26A7E9"). Charts will always apply the colors in order from first to last. If the visualization requires more colors than provided, all colors will be used and then repeated in order.
-
-> `changeColor(indexColor: Int, valueColor: String)`: With the change Color method you will update the color in index Color and the color value of the color to update will be valueColor.
-```kotlin
-//indexColor is a Int; valueColor is a valueColor
-bubbleHandle.changeColor(indexColor, valueColor)
-```
-> `addChartColor(valueColor: String): Boolean`: Add one more color to aChartColors. The color format must be hexadecimal. (Ex. # FF00FF).
-
-```kotlin
-//valueColor is a String
-bubbleHandle.addChartColor(valueColor)
+config.theme = theme
 ```
 
 #### autoQLConfig Prop
@@ -183,38 +155,33 @@ bubbleHandle.addChartColor(valueColor)
 </table>
 
 >`enableAutocomplete`: Automatically populates similar query suggestions as users enter a query, so they get results more quickly and easily. If enabled, suggested queries will begin to appear above the Query Input bar as the user types.
-```kotlin
+```swift
 //enableAutocomplete is a Boolean
-bubbleHandle.autoQLConfig.enableAutocomplete = enableAutocomplete
+config.autoQLConfig.enableAutocomplete = enableAutocomplete
 ```
 >`enableQueryValidation`: Catches and verifies references to unique data, so users always receive the data they need. If enabled, the natural language query entered by a user will first go through the validate endpoint. If the query requires validation (ex. the input contains reference to a unique data label), suggestions for that label will be returned in a subsequent message, allowing the user to verify their input before executing their query.
-```kotlin
+```swift
 //enableQueryValidation is a Boolean
-bubbleHandle.autoQLConfig.enableQueryValidation = enableQueryValidation
+config.autoQLConfig.enableQueryValidation = enableQueryValidation
 ```
 >>For example: If you query, 'How much money does Carlos owe me?', validation may detect that there is no 'Carlos' label, but there are labels called 'Karlo', and 'carlo' in your database. The message will then let you select the appropriate label and run the corresponding query.
 
 >>If this value is false, the query will bypass the validate endpoint and be sent straight to the query endpoint.
 
 >`enableQuerySuggestions`: Enables option for user to clarify meaning in cases where their original query lacked context or could be interpreted in multiple different ways. If enabled, in cases where the query input was ambiguous, a list of suggested queries will be returned for the user to choose from, leading to more efficient and accurate responses. If this is false, a general error message will appear in its place.
-```kotlin
+```swift
 //enableQuerySuggestions is a Boolean
-bubbleHandle.autoQLConfig.enableQuerySuggestions = enableQuerySuggestions
+config.autoQLConfig.enableQuerySuggestions = enableQuerySuggestions
 ```
 >`enableDrilldowns`: When a table or chart element is clicked by a user, a new query will run automatically, allowing the user to "drilldown" into the data to obtain a detailed breakdown of the figure returned by entry. If this is false, nothing will happen when a table or chart element is clicked.
-```kotlin
+```swift
 //enableDrilldowns is a Boolean
-bubbleHandle.autoQLConfig.enableDrilldowns = enableDrilldowns
+config.autoQLConfig.enableDrilldowns = enableDrilldowns
 ```
 >`enableColumnVisibilityManager`: Column Visibility Manager allows the user to control the visibility of individual columns when query results are returned in a table. Users can access the Column Visibility Manager to adjust their visibility preferences by clicking the "eye" icon in the Options Toolbar and selecting or deselecting columns. Once set, visibility preferences will be persisted. Any future query containing columns that were previously shown or hidden by the user will also reflect these changes. The user can access the Column Visibility Manager to make changes to these visibility preferences at any time.
-```kotlin
+```swift
 //enableColumnVisibilityManager is a Boolean
-bubbleHandle.autoQLConfig.enableColumnVisibilityManager = enableColumnVisibilityManager
-```
->`debug`: If this value is true, the user can copy the full query language (QL) statement (ex. SQL statement) that was dynamically generated from their natural language query input by clicking "Copy generated query to clipboard".
-```kotlin
-//debug is a Boolean
-bubbleHandle.autoQLConfig.debug = debug
+config.autoQLConfig.enableColumnVisibilityManager = enableColumnVisibilityManager
 ```
 #### dataFormatting Prop
 <table>
@@ -232,34 +199,34 @@ bubbleHandle.autoQLConfig.debug = debug
 </table>
 
 >`currencyCode`: If your data is not in USD, you can specify a different currency code here. All visualizations (tables and charts) will show the default currency formatting for the specified code.
-```kotlin
+```swift
 //currencyCode is a String
-bubbleHandle.dataFormatting.currencyCode = currencyCode
+config.dataFormatting.currencyCode = currencyCode
 ```
 >`languageCode`: If the currency code from your country requires letters not contained in the English alphabet in order to show symbols correctly. This is not support.
-```kotlin
+```swift
 //languageCode is a String
-bubbleHandle.dataFormatting.languageCode = languageCode
+config.dataFormatting.languageCode = languageCode
 ```
 >`currencyDecimals`: Number of digits to display after a decimal point for currencies.
-```kotlin
+```swift
 //currencyDecimals is a Integer
-bubbleHandle.dataFormatting.currencyDecimals = currencyDecimals
+config.dataFormatting.currencyDecimals = currencyDecimals
 ```
 >`quantityDecimals`: Number of digits to display after a decimal point for quantity values.
-```kotlin
+```swift
 //quantityDecimals is a Int
-bubbleHandle.dataFormatting.quantityDecimals = quantityDecimals
+config.dataFormatting.quantityDecimals = quantityDecimals
 ```
 >`monthYearFormat`: The format to display the representation of a whole month. AutoQL uses SimpleDateFormat("format", Locale.US). You can see https://developer.android.com/reference/java/text/SimpleDateFormat
-```kotlin
+```swift
 //monthYearFormat is a String
-bubbleHandle.dataFormatting.monthYearFormat = monthYearFormat
+config.dataFormatting.monthYearFormat = monthYearFormat
 ```
 >`dayMonthYearFormat`: The format to display the representation of a single day. (ie. March 18, 2020). AutoQL uses SimpleDateFormat("format", Locale.US). You can see https://developer.android.com/reference/java/text/SimpleDateFormat
-```kotlin
+```swift
 //dayMonthYearFormat is a String
-bubbleHandle.dataFormatting.dayMonthYearFormat = dayMonthYearFormat
+config.dataFormatting.dayMonthYearFormat = dayMonthYearFormat
 ```
 
 ## Author
