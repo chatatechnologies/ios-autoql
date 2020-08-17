@@ -109,6 +109,39 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             mainLabel.attributedText = mainAttr
         }
     }
+    func recreateLabel(){
+        /*let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        let attributedString:[NSAttributedString.Key: Any] = [
+            .paragraphStyle: paragraph,
+            .font: generalFont,
+            .foregroundColor : chataDrawerTextColorPrimary,
+        ]
+        //let mainAttr = NSMutableAttributedString(string: "\(originalText)")
+        let mainAttr = NSMutableAttributedString(string: "Cambiando........................")
+        let range2 = NSRange(location: 0, length: originalText.count)
+        mainAttr.addAttributes(attributedString, range: range2)
+        mainLabel.attributedText = mainAttr*/
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        for (index, change) in data.fullSuggestions.enumerated() {
+            let start = originalText.index(originalText.startIndex, offsetBy: change.start)
+            let end = originalText.index(originalText.endIndex, offsetBy: change.end - originalText.count)
+            var mySubstring = getRange(start: start, end: end, original: originalText)
+            let newSelect = selectString[index]
+            originalText = originalText.replace(target: mySubstring, withString: selectString[index])
+            mySubstring = newSelect
+            let msgAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor : chataDrawerAccentColor,
+                .underlineStyle: NSUnderlineStyle.double.rawValue,
+                .font: generalFont,
+                .paragraphStyle: paragraph
+            ]
+            let range = NSRange(location: change.start, length: mySubstring.count)
+            print(mySubstring)
+            
+        }
+    }
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         listArr.enumerated().forEach { (index, list) in
             if URL.absoluteString == "\(index)"{
@@ -175,7 +208,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             
         }) + [originalTerm]
         listValue = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
-            return data.valueLabel
+            return data.text
         }) + [labelText]
         dataSource = list
         tbChange.reloadData()
@@ -239,7 +272,8 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         //HAcer el switch de botones
         //btnsDynamics[numBtn].setTitle(text, for: .normal)
         removeTransparentView()
-        createLabel(false)
+        //createLabel(false)
+        recreateLabel()
     }
 }
 extension UITapGestureRecognizer {
