@@ -21,6 +21,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     var finalStr = ""
     let mainLabel = UITextView()
     var listArr: [String] = []
+    var listValue: [String] = []
     var selectString: [String] = []
     var posSelected = 0
     weak var delegate: ChatViewDelegate?
@@ -58,6 +59,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     func loadSafeLabel(){
         //mainLabel.numberOfLines = 0
         //mainLabel.sizeToFit()
+        mainLabel.backgroundColor = .clear
         mainLabel.translatesAutoresizingMaskIntoConstraints = true
         //mainLabel.isSelectable = false
         //mainLabel.lineBreakMode = .byTruncatingTail
@@ -140,23 +142,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         //finalText.replace(target: " ", withString: "")
         return finalText
     }
-    private func generateButton(index: Int, mySubstring: String, stack: UIStackView) {
-        btnsDynamics.append(UIButton())
-        btnsDynamics[index].tag = index
-        //btnsDynamics[index].cardView()
-        let image = UIImage(named: "icDoubleArrow.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
-        let image2 = image?.resizeT(maxWidthHeight: 20)
-        btnsDynamics[index].setImage(image2, for: .normal)
-        btnsDynamics[index].semanticContentAttribute = .forceRightToLeft
-        btnsDynamics[index].contentMode = .scaleAspectFit
-        btnsDynamics[index].titleLabel?.adjustsFontSizeToFitWidth = true
-        btnsDynamics[index].titleLabel?.minimumScaleFactor = 0.5
-        btnsDynamics[index].setTitle(mySubstring, for: .normal)
-        btnsDynamics[index].setTitleColor(chataDrawerBlue, for: .normal)
-        stack.addArrangedSubview(btnsDynamics[index])
-        btnsDynamics[index].addTarget(self, action: #selector(openOptions), for: .touchUpInside)
-        btnsDynamics[index].edgeTo(stack, safeArea: .fullStackV, height: 0, padding: 10 )
-    }
     private func generateLabel(finalText: String, stack: UIStackView){
         let label = UILabel()
         //label.cardView()
@@ -165,9 +150,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         label.textAlignment = .center
         stack.addArrangedSubview(label)
         label.edgeTo(stack, safeArea: .fullStackV, height: 0, padding: 10 )
-    }
-    @IBAction private func openOptions(_ sender: AnyObject){
-        addTrasparentView(button: sender as? UIButton ?? UIButton())
     }
     @objc func removeTransparentView() {
         for element in self.superview!.superview!.superview!.subviews {
@@ -186,8 +168,14 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         //vwTrasparent.edgeTo(self, safeArea: .none)
         dataSource = []
         //numBtn = button.tag
+        let originalTerm = "\(labelText) (Original Term)"
         let list = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
-            return data.text
+            let text = data.valueLabel
+            return "\(data.text) (\(text))"
+            
+        }) + [originalTerm]
+        listValue = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
+            return data.valueLabel
         }) + [labelText]
         dataSource = list
         tbChange.reloadData()
@@ -202,30 +190,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         let height = CGFloat(41 * list.count)
         tbChange.backgroundColor = .none
         tbChange.edgeTo(mainLabel, safeArea: .dropDown, height: height, padding: 8)
-        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
-    }
-    private func addTrasparentView(button: UIButton){
-        vwTrasparent.tag = -1
-        //self.addSubview(vwTrasparent)
-        //vwTrasparent.edgeTo(self, safeArea: .none)
-        dataSource = []
-        numBtn = button.tag
-        let list = data.fullSuggestions[button.tag].suggestionList.map({ (data) -> String in
-            return data.text
-        }) + [button.titleLabel?.text ?? ""]
-        dataSource = list
-        tbChange.reloadData()
-        vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
-        vwTrasparent.addGestureRecognizer(tapgesture)
-        //adaptar Vista centrada
-        tbChange.tag = -2
-        self.superview?.superview?.superview?.addSubview(tbChange)
-        //self.superview?.superview?.superview?.isHidden = true
-        //tbChange.cardView()
-        let height = CGFloat(41 * list.count)
-        tbChange.backgroundColor = .none
-        tbChange.edgeTo(button, safeArea: .dropDown, height: height, padding: 8)
         //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
     }
     func loadBtn() {
@@ -270,7 +234,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let text = dataSource[indexPath.row]
+        let text = listValue[indexPath.row]
         selectString[posSelected] = text
         //HAcer el switch de botones
         //btnsDynamics[numBtn].setTitle(text, for: .normal)
