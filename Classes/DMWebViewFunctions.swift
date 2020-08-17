@@ -68,7 +68,8 @@ func getHTMLStyle() -> String {
             border-color: grey;
         }
         table {
-            font-size: 12px;
+            font-family: '-apple-system','HelveticaNeue';
+            font-size: 15.5px;
         }
         tr td:first-child {
             text-align: center;
@@ -78,7 +79,14 @@ func getHTMLStyle() -> String {
             text-align: center!important;
         }
         td, th {
-          font-size: 16px;
+          font-family: '-apple-system','HelveticaNeue';
+          font-size: 15.5px;
+          max-width: 200px;
+          white-space: nowrap;
+          width: 50px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          border: 0.5px solid #cccccc;
         }
         .green{
             color: #2ecc40;
@@ -124,8 +132,10 @@ func getHTMLFooter(rows: [[String]], columns: [String], types: [ChatTableColumnT
         }
     }
     function hideTables(idHide, idShow, type2) {
-        $( idShow ).show(0);
-        $( idHide ).hide("slow");
+        if (idHide != idShow){
+          $( idHide ).hide(0);
+          $( idShow ).show(0);
+        }
         //$( idShow ).show("slow");
         type = type2;
         changeGraphic(type2);
@@ -135,26 +145,64 @@ func getHTMLFooter(rows: [[String]], columns: [String], types: [ChatTableColumnT
     </html>
     """
 }
-func getChartFooter(rows: [[String]], columns: [String], types: [ChatTableColumnType], drills: [String], mainType: String = "idTableBasic") -> String {
-    let triType = columns.count  == 3
-    let dataChartBi = triType ? [] : rows.map { (row) -> [Any] in
-        let name = row[0]
-        let mount = Double(row[1]) ?? 0.0
-        return [name, mount]
-    }
-    let dataChartLine = rows.map { (row) -> Double in
-        let mount = Double(row[1]) ?? 0.0
-        return mount
-    }
-    let catX = rows.map { (row) -> String in
-        let name = row[0]
-        return name
-    }
+func getChartFooter(rows: [[String]],
+                    columns: [String],
+                    types: [ChatTableColumnType],
+                    drills: [String],
+                    mainType: String = "idTableBasic") -> String {
+    var dataSpecial: [[Any]] = []
+    var dataSpecialActive = false
     var categoriesX: [String] = []
     var categoriesY: [String] = []
     var drillTableY: [String] = []
     var drillY: [String] = []
     var stacked: [[Double]] = []
+    var catXFormat = rows.map {
+        (row) -> String in
+        let name = (validateArray(row, 0) as? String ?? "").toDate()
+        return name
+    }
+    var dataChartLine = rows.map { (row) -> Double in
+        let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
+        return mount
+    }
+    if types.count > 3 {
+        catXFormat = []
+        dataChartLine = []
+        //var positionsCharts: [Int] = []
+        var positionsCharts: Int = -1
+        for (index, type) in types.enumerated() {
+            if type == .quantity || type == .dollar {
+                //print("found")
+                positionsCharts = index
+                break
+            }
+        }
+        dataSpecial = rows.map { (row) -> [Any] in
+            let name = validateArray(row, 1) as? String ?? ""
+            /*let doubleData = positionsCharts.map { (num) -> Double in
+                let mount = Double(validateArray(row, num) as? String ?? "") ?? 0.0
+                return mount
+            }*/
+            if catXFormat.firstIndex(of: name) == nil {
+                catXFormat.append(name)
+            }
+            let mount = validateArray(row, positionsCharts) as? String ?? ""
+            return [name, mount]
+        }
+        dataSpecialActive = true
+        print(dataSpecial)
+    }
+    let triType = columns.count  == 3
+    let dataChartBi = triType ? [] : rows.map { (row) -> [Any] in
+        let name = validateArray(row, 0) as? String ?? ""
+        let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
+        return [name, mount]
+    }
+    let catX = rows.map { (row) -> String in
+        let name = validateArray(row, 0) as? String ?? ""
+        return name
+    }
     let datachartTri = triType ? rows.map { (column) -> [Any] in
         drillTableY.append(column[1])
         let data1 = column[0]
@@ -202,14 +250,14 @@ func getChartFooter(rows: [[String]], columns: [String], types: [ChatTableColumn
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
     return """
         var type = '\(mainType)';
-        var xAxis = '\(columns[0])';
-        var yAxis = '\(columns[1])';
-        var dataChartBi = \(dataChartBi);
+        var xAxis = '\(validateArray(columns, 0) as? String ?? "")';
+        var yAxis = '\(validateArray(columns, 1) as? String ?? "")';
+        var dataChartBi = \(dataSpecialActive ? dataSpecial : dataChartBi);
         var datachartTri = \(datachartTri);
         var dataChartLine = \(dataChartLineFinal);
-    var categoriesX = \(triType ? categoriesX : catX);
-    var categoriesY = \(catFinaY);
-        var drillX = [];
+        var categoriesX = \(triType ? categoriesX : catXFormat);
+        var categoriesY = \(catFinaY);
+        var drillX = \(catX);
         var drillTableY = \(drillTableY);
         var drillSpecial = \(drills);
         var drillY = \(drillY);
@@ -218,21 +266,38 @@ func getChartFooter(rows: [[String]], columns: [String], types: [ChatTableColumn
     var color1 = "\(DataConfig.themeConfigObj.chartColors[0])";
     """
 }
-func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, columnsType: [ChatTableColumnType], datePivot: Bool = false) -> String {
+func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, columns: [ChatTableColumn], datePivot: Bool = false) -> String {
     let star = "<table id='\(idTable)'>"
     var body = ""
     let end = "</table>"
     if dataColumn.count > 0 {
         body = "<thead><tr>"
-        for column in dataColumn {
-            body += "<th>\(column)</th>"
+        for (index, column) in dataColumn.enumerated() {
+            if columns.count == dataColumn.count {
+                if columns[index].isVisible {
+                    body += "<th>\(column)</th>"
+                }
+            } else {
+                body += "<th>\(column)</th>"
+            }
         }
         body += "</tr></thead><tbody>"
         for row in dataTable {
             body += "<tr>"
             for (index, column) in row.enumerated() {
-                let finalColumn = datePivot ? column : column.getTypeColumn(type: columnsType[index])
-                body += "<td>\(finalColumn)</td>"
+                if columns.count == row.count {
+                    if columns[index].isVisible{
+                        let finalColumn = datePivot
+                            ? column
+                            : column.getTypeColumn(type: columns[index].type)
+                        body += "<td><span class='limit'>\(finalColumn)</span></td>"
+                    }
+                } else {
+                    let finalColumn = datePivot
+                        ? column
+                        : column.getTypeColumn(type: columns[index].type)
+                    body += "<td><span class='limit'>\(finalColumn)</span></td>"
+                }
             }
             body += "</tr>"
         }

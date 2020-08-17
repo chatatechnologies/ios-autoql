@@ -39,7 +39,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         lblMain.textColor = chataDrawerAccentColor
         vwComponent.addSubview(vwWebview)
         vwWebview.edgeTo(vwComponent, safeArea: .bottomPaddingtoTop, lblMain,  padding: 8)
-        lblDefault.text = "Hit 'Sammy' to run this dashboard"
+        lblDefault.text = "Hit 'Execute' to run this dashboard"
         lblDefault.numberOfLines = 0
         lblDefault.textColor = chataDrawerTextColorPrimary
         lblDefault.textAlignment = .center
@@ -54,7 +54,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         case .Webview:
             loadWebView()
         case .Table:
-            print("Table")
+            loadWebView()
         case .Introduction:
             loadIntro()
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:

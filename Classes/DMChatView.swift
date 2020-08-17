@@ -17,7 +17,6 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
     var data = [
         ChatComponentModel(type: .Introduction, text: "Hi \(DataConfig.userDisplayName)! \(DataConfig.introMessage)")
         //ChatComponentModel(type: .QueryBuilder, text: "" )
-        
     ]
     private var cellAnimationsFlags = [IndexPath]()
     required init?(coder aDecoder: NSCoder) {
@@ -30,12 +29,24 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
         configLoad()
     }
     func deleteQuery(numQuery: Int) {
+        var two = false
         data.remove(at: numQuery)
+        if data[numQuery-1].type == .Introduction{
+            two = true
+            data.remove(at: numQuery - 1)
+        }
         let index1 = IndexPath(row: numQuery, section: 0)
+        let index2 = IndexPath(row: numQuery - 1, section: 0)
         DispatchQueue.main.async {
-            self.tableView.deleteRows(at: [index1], with: .automatic)
+            var num = 1
+            if two{
+                self.tableView.deleteRows(at: [index1, index2], with: .automatic)
+                num = 2
+            } else{
+                self.tableView.deleteRows(at: [index1], with: .automatic)
+            }
             self.tableView.reloadData()
-            let endIndex = IndexPath(row: numQuery - 1, section: 0)
+            let endIndex = IndexPath(row: numQuery - num, section: 0)
             self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
         }
     }
@@ -102,10 +113,14 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     func sendText(_ text: String, _ safe: Bool) {
         delegate?.sendText(text, safe)
     }
-    func updateSize(numRows: Int, index: Int) {
-        data[index].numRow = numRows
-        tableView.beginUpdates()
-        tableView.endUpdates()
+    func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool) {
+        if toTable{
+            // diferencias si es table o webview
+            data[index].numRow = numRows
+            data[index].type = isTable ? .Table : data[index].type
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
         let indexPath = IndexPath(row: index, section: 0)
         guard let cell = self.tableView.cellForRow(at: indexPath) as? DataChatCell else {return}
         cell.updateChart()

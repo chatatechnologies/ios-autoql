@@ -8,43 +8,92 @@
 import Foundation
 class DashboardService {
     static let instance = DashboardService()
+    private var dashList: [DashboardList] = []
     func getDashboards(apiKey: String, completion: @escaping CompletionDashboards) {
-        let url = "\(wsDashboard)\(apiKey)"
+        let projectID = ChataServices.instance.getProjectID()
+        let url = "\(wsDashboard)\(apiKey)&project_id=\(projectID)"
         httpRequest(url, integrator: true) { (response) in
-            let arrResponse = response["response"] as? [[String: Any]] ?? []
-            let json = arrResponse.count > 0 ? arrResponse[0] : [:]
-            let data = json["data"] as? [[String: Any]] ?? []
-            var dashboards: [DashboardModel] = []
-            for dash in data {
-                let newDash = self.makeDash(dash: dash)
-                dashboards.append(newDash)
+            let items = response["items"] as? [[String: Any]] ?? []
+            DashboardService.instance.dashList = []
+            items.forEach { (item) in
+                let createdAt = item["created_at"] as? String ?? ""
+                let data = item["data"] as? [[String: Any]] ?? []
+                var dashboards: [DashboardModel] = []
+                for dash in data {
+                    let newDash = self.makeDash(dash: dash)
+                    dashboards.append(newDash)
+                }
+                let id = item["id"] as? Int ?? 0
+                let name = item["name"] as? String ?? ""
+                let updateAt = item["update_at"] as? String ?? ""
+                let dashFinal = DashboardList(createdAt: createdAt,
+                                              data: dashboards,
+                                              id: id,
+                                              name: name,
+                                              updatedAt: updateAt)
+                DashboardService.instance.dashList.append(dashFinal)
             }
-            completion(dashboards)
+            completion(DashboardService.instance.dashList)
             //completion(matches)
         }
     }
-    func getDashQuery(query: String, type: String, split: Bool = false, splitType: String = "", completion: @escaping CompletionChatComponentModel) {
+    func getSecondDashQuery(query: String,completion: @escaping CompletionSecondData) {
         var base = DataConfig.authenticationObj.domain
         if base.last == "/" {
             base.removeLast()
         }
         // https://qbo-staging.chata.io/autoql/api/v1/query?key=AIzaSyD2J8pfYPSI8b--HfxliLYB8V5AehPv0ys
         let url = "\(base)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
-        print(url)
+        let body: [String: Any] = [
+            "debug": true,
+            "source": "dashboards.user",
+            "test": true,
+            "text": query
+        ]
+        httpRequest(url, "POST", body) { (response) in
+            let finalComponent = ChataServices().getDataSecondQuery(response: response)
+            completion(finalComponent)
+            //completion(finalComponent)
+            //completion(matches)
+        }
+    }
+    func getDashQuery(dash: DashboardModel,
+                      position: Int = 0,
+                      completion: @escaping CompletionChatComponentModel) {
+        var base = DataConfig.authenticationObj.domain
+        if base.last == "/" {
+            base.removeLast()
+        }
+        // https://qbo-staging.chata.io/autoql/api/v1/query?key=AIzaSyD2J8pfYPSI8b--HfxliLYB8V5AehPv0ys
+        let url = "\(base)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let body: [String: Any] = [
                     "debug": true,
                     "source": "dashboards.user",
                     "test": true,
-                    "text": query
+                    "text": dash.query
                 ]
         //let urlRequest = wsQuery
         httpRequest(url, "POST", body) { (response) in
-            print(type)
             //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
-            let finalComponent = ChataServices().getDataComponent(response: response, type: type, split: split, splitType: splitType)
-            completion(finalComponent)
-            //completion(finalComponent)
-            //completion(matches)
+            
+            if dash.splitView {
+                self.getSecondDashQuery(query: dash.secondQuery) { (htmlSecond) in
+                    let typeFinal = dash.type == .Introduction ? "" : dash.type.rawValue
+                    let finalComponent = ChataServices().getDataComponent(response: response,
+                                                                          type: typeFinal,
+                                                                          split: dash.splitView,
+                                                                          splitType: dash.secondDisplayType,
+                                                                          position: position,
+                                                                          secondQuery: htmlSecond)
+                    completion(finalComponent)
+                }
+            } else {
+                let typeFinal = dash.type == .Introduction ? "" : dash.type.rawValue
+                let finalComponent = ChataServices().getDataComponent(response: response,
+                                                                      type: typeFinal,
+                                                                      position: position)
+                completion(finalComponent)
+            }
         }
         
     }
@@ -97,6 +146,7 @@ class DashboardService {
         let posH = dash["h"] as? Int ?? 0
         let posW = dash["w"] as? Int ?? 0
         let splitView = dash["splitView"] as? Bool ?? false
+        let secondQuery = dash["secondQuery"] as? String ?? ""
         let secondDisplayType = dash["secondDisplayType"] as? String ?? ""
         let finalTitle = title == "" ? query : title
         return DashboardModel(minW: minW, staticVar: staticVar, maxH: maxH,
@@ -105,6 +155,6 @@ class DashboardService {
                               query: query, isNewTile: isNewTile,
                               title: finalTitle, key: key, moved: moved,
                               posH: posH, posW: posW, splitView: splitView,
-                              secondDisplayType: secondDisplayType)
+                              secondDisplayType: secondDisplayType, secondQuery: secondQuery)
     }
 }

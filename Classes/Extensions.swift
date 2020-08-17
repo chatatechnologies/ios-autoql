@@ -9,8 +9,8 @@
 import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop,
-    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, centerSize, bottomRight
+    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, fullPadding,
+    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, centerSize, bottomRight
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
             "\($0.description)" == str
@@ -75,7 +75,7 @@ extension String {
     func getTypeColumn(type: ChatTableColumnType) -> String {
         switch type {
         case .date:
-            return self.toDate()
+            return self.toDate(true)
         case .string:
             return self
         case .dollar:
@@ -90,18 +90,20 @@ extension String {
             return self
         case .defaultType:
             return self
+        case .dateString:
+            return self
         }
     }
     func toMoney() -> String {
         let format = NumberFormatter()
-        format.numberStyle = .currency
+        format.numberStyle = .decimal
         //format.currencyCode = "$"
         format.currencyCode = DataConfig.dataFormattingObj.currencyCode
         format.minimumFractionDigits = DataConfig.dataFormattingObj.currencyDecimals
         //format.locale = Locale.init(identifier: "en_us")
         let money: Double = Double(self) ?? 0.0
         let dolar = format.string(from: NSNumber(value: money)) ?? ""
-        let finalStr = self == "" ? "" : "\(String(describing: dolar))"
+        let finalStr = self == "" ? "" : "$\(String(describing: dolar))"
         return finalStr
     }
     func toQuantity() -> String {
@@ -110,7 +112,7 @@ extension String {
         format.minimumFractionDigits = DataConfig.dataFormattingObj.quantityDecimals
         //format.locale = Locale.init(identifier: "en_us")
         let money: Double = Double(self) ?? 0.0
-        let dolar = format.string(from: NSNumber(value: money)) ?? ""
+        let dolar = format.string(from: NSNumber(value: money)) ?? "0"
         return "\(String(describing: dolar))"
     }
     func toPercent() -> String {
@@ -120,17 +122,68 @@ extension String {
         format.minimumFractionDigits = 2
         //format.locale = Locale.init(identifier: "en_us")
         let money: Double = (Double(self) ?? 0.0) * 100.0
-        let dolar = format.string(from: NSNumber(value: money)) ?? ""
+        let dolar = format.string(from: NSNumber(value: money)) ?? "0"
         return "\(String(describing: dolar))%"
     }
-    func toDate() -> String {
+    func toDate(_ day: Bool = false) -> String {
         let formater = DateFormatter()
-        formater.dateFormat = DataConfig.dataFormattingObj.monthYearFormat
+        formater.dateFormat = day
+            ? DataConfig.dataFormattingObj.dayMonthYearFormat
+            : DataConfig.dataFormattingObj.monthYearFormat
         formater.timeZone = TimeZone(abbreviation: "GMT")
         let valid = Double(self) ?? 0.0
         let dates = NSDate(timeIntervalSince1970: valid)
         let form = formater.string(from: dates as Date)
         return valid == 0.0 ? self : form
+    }
+    func toStrDate(format: String = "yyyy-MM") -> String {
+        let separete = self.components(separatedBy: " ")
+        if format == "yyyy-MM"{
+            let month = separete.count > 0 ? separete[0] : ""
+            let year = separete.count > 1 ? separete[1] : ""
+            return "\(year)-\(month.monthStr())"
+        }
+        return ""
+    }
+    func monthStr() -> String{
+        let finalTxt = String(self.prefix(3)).lowercased()
+        let months = [
+            "",
+            "jan",
+            "feb",
+            "mar",
+            "apr",
+            "may",
+            "jun",
+            "jul",
+            "aug",
+            "sep",
+            "oct",
+            "nov",
+            "dec"
+        ]
+        let finalNumber = months.firstIndex(of: finalTxt) ?? 0
+        return finalNumber > 9 ? "\(finalNumber)" : "0\(finalNumber)"
+    }
+    func toDate2(format: String = "yyyy-MM") -> String {
+        let separete = self.components(separatedBy: "-")
+        let format2 = format.components(separatedBy: "-")
+        var year = ""
+        var month = ""
+        format2.enumerated().forEach { (index, formatE) in
+            let ff = formatE.lowercased()
+            if ff == "yyyy"{
+                year = "\(separete[index])"
+            } else if ff == "mm" || ff == "m"{
+                month = "\(separete[index].toMonth().prefix(3))"
+            } else if ff == "mmm" {
+                month = separete[index]
+            } else if ff == "mmmm" {
+                month = String(separete[index].prefix(3))
+            }
+        }
+        let finalDate = "\(month) \(year)"
+        return finalDate
     }
     func toMonth() -> String {
         let months = ["",
@@ -146,7 +199,8 @@ extension String {
                       "October",
                       "November",
                       "December"]
-        return months[Int(self)!]
+        let pos = Int(self) ?? 0
+        return months[pos]
     }
 }
 extension Array {
@@ -322,6 +376,11 @@ extension UIView {
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        case .safe:
+            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .nonePadding:
             topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: height).isActive = true
@@ -378,6 +437,7 @@ extension UIView {
         case .secondTop:
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
+            widthAnchor.constraint(equalToConstant: height * 3).isActive = true
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         case .fullState:
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
@@ -395,6 +455,11 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             heightAnchor.constraint(equalToConstant: 300.0).isActive = true
         case .full:
+            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: bottom.topAnchor).isActive = true
+        case .fullPadding:
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -476,7 +541,7 @@ extension UIView {
             self.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         case .topMiddle:
             self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            self.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            self.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             self.heightAnchor.constraint(equalToConstant: 50).isActive = true
             self.widthAnchor.constraint(equalToConstant: 50).isActive = true
         case .bottomMiddle:
@@ -502,6 +567,11 @@ extension UIView {
             topAnchor.constraint(equalTo: view.bottomAnchor, constant: 1).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -padding).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        case .dropDownTop:
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 1).isActive = true
+            leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
+            trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
         
@@ -607,5 +677,10 @@ extension UIStackView{
         self.distribution  = UIStackView.Distribution.fillEqually
         self.alignment = UIStackView.Alignment.center
         self.spacing = 8
+    }
+}
+extension UILabel {
+    func setSize(_ size: CGFloat = 16) {
+        font = UIFont.systemFont(ofSize: size)
     }
 }

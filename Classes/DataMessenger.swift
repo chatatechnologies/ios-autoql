@@ -23,14 +23,16 @@ public class DataMessenger: UIButton {
         self.init(authenticationF: authenticationFinal, projectIDFinal: projectIDF)
     }
     init(authenticationF: authentication,  projectIDFinal: String) {
-        DataConfig.authenticationObj = authenticationF
-        //self.authentication = authenticationF
-        DataConfig.authenticationObj.token = authenticationF.token
-        wsUrlDynamic = DataConfig.authenticationObj.domain
-        let service = ChataServices()
-        service.setProjectID(projectID: projectIDFinal)
-        service.setJWT(jwt: DataConfig.authenticationObj.token)
-        service.setLogin(active: true)
+        if authenticationF.token != "" && !DataConfig.demo{
+            DataConfig.authenticationObj = authenticationF
+            //self.authentication = authenticationF
+            DataConfig.authenticationObj.token = authenticationF.token
+            wsUrlDynamic = DataConfig.authenticationObj.domain
+            let service = ChataServices()
+            service.setProjectID(projectID: projectIDFinal)
+            service.setJWT(jwt: DataConfig.authenticationObj.token)
+            service.setLogin(active: true)
+        }
         super.init(frame: .zero)
     }
     public override func didMoveToSuperview() {
@@ -42,19 +44,16 @@ public class DataMessenger: UIButton {
         let height: CGFloat = 50
         self.withWidth(width)
         self.withHeight(height)
-        self.backgroundColor = chataDrawerBackgroundColor
-        //let jeremyGif = UIImage.gifImageWithName("preloader")
-        let image = UIImage(named: "iconBubble.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
-        self.setImage(image, for: .normal)
+        self.configBubble()
         self.loadStyleBtn(width: width)
     }
-    public func movePosition(){
+    public func movePosition() {
         let type = DViewSafeArea.withLabel(DataConfig.placement) ?? DViewSafeArea.rightMiddle
         self.removeAllConstraints()
         self.edgeTo(father2, safeArea: type)
         self.layoutIfNeeded()
     }
-    public func changeColor(){
+    public func changeColor() {
         reloadColors()
         self.backgroundColor = chataDrawerBackgroundColor
     }
@@ -66,10 +65,51 @@ public class DataMessenger: UIButton {
         let service = ChataServices()
         service.login(parameters: body,  completion: { (success) in
             // si hay problemas utilizar instance
-            service.getJWT(parameters: body) { (success) in
-                completion(success)
+            if success {
+                service.getJWT(parameters: body) { (success) in
+                    DispatchQueue.main.async {
+                        let nameImage = "iconProject" + self.getImageProject(url: wsUrlDynamic)
+                        if nameImage == "iconProjectBubble"{
+                            self.configBubble()
+                        } else{
+                            self.backgroundColor = .white
+                            let image = UIImage(named: "\(nameImage).png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+                            self.setImage(image, for: .normal)
+                        }
+                        //self.setImage(self.imageView?.changeColor(color: .white).image, for: .normal)
+                    }
+                    completion(success)
+                }
+            } else {
+                completion(false)
             }
         })
+    }
+    private func getImageProject(url: String) -> String  {
+        switch url {
+        case let str where str.contains("stripe"):
+            return "Stripe"
+        case let str where str.contains("qbo"):
+            return "QBO"
+        case let str where str.contains("hotel"):
+            return "Hotel"
+        case let str where str.contains("restaurant"):
+            return "Restaurant"
+        case let str where str.contains("spira"):
+            return "Spira"
+        case let str where str.contains("xero"):
+            return "Xero"
+        default:
+            return "Bubble"
+        }
+        
+    }
+    private func configBubble(){
+        self.backgroundColor = chataDrawerAccentColor
+        //let jeremyGif = UIImage.gifImageWithName("preloader")
+        let image = UIImage(named: "iconProjectBubble.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        self.setImage(image, for: .normal)
+        self.setImage(self.imageView?.changeColor(color: .white).image, for: .normal)
     }
     public func logout(completion: @escaping CompletionChatSuccess){
         let service = ChataServices()

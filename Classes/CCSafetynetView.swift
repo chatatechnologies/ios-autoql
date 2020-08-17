@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
+class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     let lbl = UILabel()
     let btnRunQuery = UIButton()
     let tbChange = UITableView()
@@ -16,8 +16,13 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
     var data: ChatComponentModel = ChatComponentModel()
     var dataSource: [String] = []
     var btnsDynamics: [UIButton] = []
+    var originalText = ""
     var numBtn = 0
     var finalStr = ""
+    let mainLabel = UITextView()
+    var listArr: [String] = []
+    var selectString: [String] = []
+    var posSelected = 0
     weak var delegate: ChatViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -28,10 +33,11 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
         tbChange.dataSource = self
         loadLabel()
         loadBtn()
-        loadSafe()
+        loadSafeLabel()
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        mainLabel.delegate = self
     }
     func loadLabel() {
         lbl.text = data.text
@@ -41,80 +47,80 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
         lbl.sizeToFit()
         lbl.translatesAutoresizingMaskIntoConstraints = true
         lbl.lineBreakMode = .byTruncatingTail
+        lbl.setSize()
         lbl.textColor = chataDrawerTextColorPrimary
         //self.edgeTo(self, safeArea: .paddingTop)
         self.addSubview(lbl)
         lbl.edgeTo(self, safeArea: .topPadding, height: 60, padding: 8)
         layoutIfNeeded()
     }
-    func loadSafe() {
-        stack.axis = NSLayoutConstraint.Axis.vertical
-        stack.distribution  = UIStackView.Distribution.fillEqually
-        stack.alignment = UIStackView.Alignment.center
-        stack.spacing = 0
-        self.addSubview(stack)
-        btnsDynamics = []
-        stack.edgeTo(self, safeArea: .full, height: 0, lbl, btnRunQuery)
-        let originalText = data.options[0]
-        var lastPosition = 0
-        let numR = Float(originalText.components(separatedBy: " ").count)
-        let numRow: Float = numR / 3.0
-        let numInt: Int = Int(numRow.rounded(.up))
-        let numRows = numInt == 0 ? 1 : numInt
-        var allStacks: [UIStackView] = []
-        for _ in 0..<numRows{
-            let firstStack = UIStackView()
-            firstStack.getHorizontal()
-            stack.addArrangedSubview(firstStack)
-            firstStack.edgeTo(stack, safeArea: .fullStackHH, height: 0 , padding: 20)
-            allStacks.append(firstStack)
-        }
-        var sumStr = 0
+    
+    func loadSafeLabel(){
+        //mainLabel.numberOfLines = 0
+        //mainLabel.sizeToFit()
+        mainLabel.translatesAutoresizingMaskIntoConstraints = true
+        //mainLabel.isSelectable = false
+        //mainLabel.lineBreakMode = .byTruncatingTail
+        mainLabel.textColor = chataDrawerTextColorPrimary
+        originalText = data.options[0]
+        mainLabel.textAlignment = .center
+        mainLabel.isEditable = false
+        mainLabel.font = generalFont
+        self.addSubview(mainLabel)
+        mainLabel.isUserInteractionEnabled = true
+        mainLabel.edgeTo(self, safeArea: .fullPadding, height: 0, lbl, btnRunQuery, padding: 8)
+        createLabel()
+    }
+    func createLabel(_ first: Bool = true) {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        let attributedString:[NSAttributedString.Key: Any] = [
+            .paragraphStyle: paragraph,
+            .font: generalFont,
+            .foregroundColor : chataDrawerTextColorPrimary,
+        ]
+        let mainAttr = NSMutableAttributedString(string: "\(originalText)")
+        let range2 = NSRange(location: 0, length: originalText.count)
+        mainAttr.addAttributes(attributedString, range: range2)
         for (index, change) in data.fullSuggestions.enumerated() {
-            var posStack = getPos(index: index, sumStr: sumStr)
+            //var posStack = getPos(index: index, sumStr: sumStr)
             let start = originalText.index(originalText.startIndex, offsetBy: change.start)
             let end = originalText.index(originalText.endIndex, offsetBy: change.end - originalText.count)
-            let mySubstring = getRange(start: start, end: end, original: originalText)
-            if change.start == lastPosition {
-                generateButton(index: index, mySubstring: mySubstring, stack: allStacks[posStack])
-                if (data.fullSuggestions.count - 1) == index {
-                    if change.end != originalText.count{
-                        let finalEnd = originalText.index(originalText.endIndex, offsetBy: 0)
-                        let finalText = getRange(start: end, end: finalEnd, original: originalText)
-                        let numWords = getRealNumWord(text: finalText)
-                        sumStr += 1
-                        posStack = getPos(index: index, sumStr: sumStr)
-                        generateLabel(finalText: finalText, stack: allStacks[posStack])
-                        sumStr += numWords >= 3 ? 2 : numWords == 0 ? 0 : numWords - 1
-                    }
-                }
+            var mySubstring = getRange(start: start, end: end, original: originalText)
+            if first{
+                listArr.append(mySubstring)
+                selectString.append(mySubstring)
             } else {
-                let startFinal = originalText.index(originalText.startIndex, offsetBy: lastPosition)
-                let rangeLast = startFinal..<start
-                let finalW = String(originalText[rangeLast])
-                let numWords = getRealNumWord(text: finalText)
-                sumStr += 1
-                posStack = getPos(index: index, sumStr: sumStr)
-                generateLabel(finalText: finalW, stack: allStacks[posStack])
-                sumStr += numWords >= 3 ? 2 : numWords == 0 ? 0 : numWords - 1
-                posStack = getPos(index: index, sumStr: sumStr)
-                generateButton(index: index, mySubstring: String(mySubstring), stack: allStacks[posStack])
-                if (data.fullSuggestions.count - 1) == index {
-                    if change.end != originalText.count{
-                        let finalEnd = originalText.index(originalText.endIndex, offsetBy: 0)
-                        let finalText = getRange(start: end, end: finalEnd, original: originalText)
-                        let numWords = getRealNumWord(text: finalText)
-                        sumStr += 1
-                        posStack = getPos(index: index, sumStr: sumStr)
-                        generateLabel(finalText: finalText, stack: allStacks[posStack])
-                        sumStr += numWords >= 3 ? 2 : numWords == 0 ? 0 : numWords - 1
-                    }
-                }
+                let newSelect = selectString[index]
+                originalText = originalText.replace(target: mySubstring, withString: selectString[index])
+                mySubstring = newSelect
             }
-            lastPosition = change.end + 1
+            let msgAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor : chataDrawerAccentColor,
+                .underlineStyle: NSUnderlineStyle.double.rawValue,
+                .font: generalFont,
+                .paragraphStyle: paragraph
+            ]
+            let range = NSRange(location: change.start, length: mySubstring.count)
+            mainAttr.addAttribute(.link, value: "\(index)", range: range)
+            mainAttr.addAttributes(msgAttributes, range: range)
+            mainLabel.attributedText = mainAttr
         }
-        let label = UILabel()
-        label.text = data.text
+    }
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        listArr.enumerated().forEach { (index, list) in
+            if URL.absoluteString == "\(index)"{
+                addTrasparentViewLabel(labelText: list, pos: index)
+                posSelected = index
+                print(list)
+            }
+            /*if gesture.didTapAttributedTextInLabel(label: mainLabel, inRange: stRange) {
+                
+                print("Tapped \(list)")
+                addTrasparentViewLabel(labelText: list, pos: <#T##Int#>)
+            }*/
+        }
+        return true
     }
     private func getRealNumWord(text: String) -> Int {
         var numWords = text.components(separatedBy: " ")
@@ -164,7 +170,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
         addTrasparentView(button: sender as? UIButton ?? UIButton())
     }
     @objc func removeTransparentView() {
-        for element in self.subviews {
+        for element in self.superview!.superview!.superview!.subviews {
             if let viewWithTag = element.viewWithTag(-2) {
                 viewWithTag.removeFromSuperview()
             }
@@ -173,13 +179,16 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    private func addTrasparentView(button: UIButton){
+    private func addTrasparentViewLabel(labelText: String, pos: Int){
         vwTrasparent.tag = -1
+        tbChange.cardView()
         //self.addSubview(vwTrasparent)
         //vwTrasparent.edgeTo(self, safeArea: .none)
         dataSource = []
-        numBtn = button.tag
-        let list = data.fullSuggestions[button.tag].suggestionList + [button.titleLabel?.text ?? ""]
+        //numBtn = button.tag
+        let list = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
+            return data.text
+        }) + [labelText]
         dataSource = list
         tbChange.reloadData()
         vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
@@ -187,10 +196,36 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
         vwTrasparent.addGestureRecognizer(tapgesture)
         //adaptar Vista centrada
         tbChange.tag = -2
-        tbChange.backgroundColor = .black
-        self.addSubview(tbChange)
+        self.superview?.superview?.superview?.addSubview(tbChange)
+        //self.superview?.superview?.superview?.isHidden = true
         //tbChange.cardView()
-        tbChange.edgeTo(button, safeArea: .dropDown, height: 40, padding: 8)
+        let height = CGFloat(41 * list.count)
+        tbChange.backgroundColor = .none
+        tbChange.edgeTo(mainLabel, safeArea: .dropDown, height: height, padding: 8)
+        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
+    }
+    private func addTrasparentView(button: UIButton){
+        vwTrasparent.tag = -1
+        //self.addSubview(vwTrasparent)
+        //vwTrasparent.edgeTo(self, safeArea: .none)
+        dataSource = []
+        numBtn = button.tag
+        let list = data.fullSuggestions[button.tag].suggestionList.map({ (data) -> String in
+            return data.text
+        }) + [button.titleLabel?.text ?? ""]
+        dataSource = list
+        tbChange.reloadData()
+        vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
+        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
+        vwTrasparent.addGestureRecognizer(tapgesture)
+        //adaptar Vista centrada
+        tbChange.tag = -2
+        self.superview?.superview?.superview?.addSubview(tbChange)
+        //self.superview?.superview?.superview?.isHidden = true
+        //tbChange.cardView()
+        let height = CGFloat(41 * list.count)
+        tbChange.backgroundColor = .none
+        tbChange.edgeTo(button, safeArea: .dropDown, height: height, padding: 8)
         //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
     }
     func loadBtn() {
@@ -199,6 +234,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
         btnRunQuery.setImage(image2, for: .normal)
         btnRunQuery.imageView?.contentMode = .scaleAspectFit
         btnRunQuery.setTitle("Run Query", for: .normal)
+        btnRunQuery.titleLabel?.font = generalFont
         btnRunQuery.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
         btnRunQuery.addTarget(self, action: #selector(runQuery), for: .touchUpInside)
         btnRunQuery.cardView()
@@ -228,13 +264,51 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate {
         //cell.cardView()
         cell.backgroundColor = chataDrawerBackgroundColor.withAlphaComponent(0.9)
         cell.textLabel?.text = dataSource[indexPath.row]
+        cell.textLabel?.font = generalFont
         cell.textLabel?.textColor = chataDrawerTextColorPrimary
         cell.textLabel?.textAlignment = .center
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let text = dataSource[indexPath.row]
-        btnsDynamics[numBtn].setTitle(text, for: .normal)
+        selectString[posSelected] = text
+        //HAcer el switch de botones
+        //btnsDynamics[numBtn].setTitle(text, for: .normal)
         removeTransparentView()
+        createLabel(false)
     }
+}
+extension UITapGestureRecognizer {
+
+    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize.zero)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+
+        // Configure layoutManager and textStorage
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        // Configure textContainer
+        textContainer.lineFragmentPadding = 0.0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        let labelSize = label.bounds.size
+        textContainer.size = labelSize
+
+        // Find the tapped character location and compare it to the specified range
+        let locationOfTouchInLabel = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        //let textContainerOffset = CGPointMake((labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
+                                              //(labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y);
+        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
+
+        //let locationOfTouchInTextContainer = CGPointMake(locationOfTouchInLabel.x - textContainerOffset.x,
+                                                        // locationOfTouchInLabel.y - textContainerOffset.y);
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
+        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        return NSLocationInRange(indexOfCharacter, targetRange)
+    }
+
 }

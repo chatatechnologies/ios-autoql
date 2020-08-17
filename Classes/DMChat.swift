@@ -30,7 +30,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         let vwFather: UIView = UIApplication.shared.keyWindow!
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
-        self.edgeTo(vwFather, safeArea: .none)
+        self.edgeTo(vwFather, safeArea: .safe)
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
@@ -47,7 +47,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     private func loadToolbar() {
         self.addSubview(vwToolbar)
-        vwToolbar.edgeTo(self, safeArea: .topView, height: 70.0)
+        vwToolbar.edgeTo(self, safeArea: .topView, height: 40.0)
     }
     private func loadMainChat() {
         self.addSubview(vwMainScrollChat)
@@ -138,8 +138,11 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         let service = ChataServices()
+        self.vwAutoComplete.isHidden = true
+        self.loadingQuery(true)
         service.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (component) in
             DispatchQueue.main.async {
+                self.loadingQuery(false)
                 self.limitData(element: component)
             }
         }
@@ -167,6 +170,17 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     private func loadQuery(text: String) {
         DispatchQueue.main.async {
             let service = ChataServices()
+            self.loadingQuery(true)
+            service.getDataChat(query: text) { (element) in
+                DispatchQueue.main.async {
+                    self.limitData(element: element)
+                }
+            }
+        }
+    }
+    private func loadingQuery(_ load: Bool){
+        if load{
+            self.isUserInteractionEnabled = false
             let imageView = UIImageView(image: nil)
             let bundle = Bundle(for: type(of: self))
             let path = bundle.path(forResource: "gifBalls", ofType: "gif")
@@ -177,19 +191,18 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             imageView.tag = 100
             self.addSubview(imageView)
             imageView.edgeTo(self.vwDataMessenger, safeArea: .bottomRight, height: 40, padding: 80)
-            service.getDataChat(query: text) { (element) in
-                DispatchQueue.main.async {
-                    self.limitData(element: element)
+        } else {
+            DRILLDOWNACTIVE = false
+            self.isUserInteractionEnabled = true
+            for sub in self.subviews {
+                if let viewWithTag = sub.viewWithTag(100) {
+                    viewWithTag.removeFromSuperview()
                 }
             }
         }
     }
     func limitData(element: ChatComponentModel){
-        for sub in self.subviews {
-            if let viewWithTag = sub.viewWithTag(100) {
-                viewWithTag.removeFromSuperview()
-            }
-        }
+        loadingQuery(false)
         if self.vwDataMessenger.data.count < DataConfig.maxMessages {
             self.vwDataMessenger.data.append(element)
             self.vwDataMessenger.updateTable()
@@ -201,13 +214,16 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     func updateAutocomplete(_ queries: [String], _ hidden: Bool) {
         DispatchQueue.main.async {
-            let height: CGFloat = queries.count >= 4 ? 190.0 : (CGFloat(queries.count) * 50.0)
-            self.vwAutoComplete.constraints[4].constant = height
-            // print(self.vwAutoComplete.constraints[4].constant)
-            self.vwAutoComplete.updateTable(queries: queries)
-            UIView.transition(with: self.vwAutoComplete, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                self.vwAutoComplete.toggleHide(hidden)
-            })
+            let emptyText = self.vwTextBox.textbox.text?.isEmpty ?? false
+           if !emptyText  {
+                let height: CGFloat = queries.count >= 4 ? 190.0 : (CGFloat(queries.count) * 50.0)
+                self.vwAutoComplete.constraints[4].constant = height
+                // print(self.vwAutoComplete.constraints[4].constant)
+                self.vwAutoComplete.updateTable(queries: queries)
+                UIView.transition(with: self.vwAutoComplete, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    self.vwAutoComplete.toggleHide(hidden)
+                })
+            }
         }
     }
     func delete() {

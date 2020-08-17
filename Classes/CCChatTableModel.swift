@@ -12,18 +12,24 @@ struct ChatTableColumn {
     var originalName: String
     var rows: [[String]]
     var webView: String
+    var formatDate: String
+    var isVisible: Bool
     init(
         name: String = "",
         type: ChatTableColumnType = .defaultType,
         rows: [[String]] = [],
         webView: String = "",
-        originalName: String = ""
+        originalName: String = "",
+        formatDate: String = "",
+        isVisible: Bool = true
     ) {
         self.name = name.replaceUnder()
         self.type = type
         self.rows = rows
         self.webView = webView
         self.originalName = originalName
+        self.formatDate = formatDate
+        self.isVisible = isVisible
     }
 }
 enum ChatTableColumnType: String, CaseIterable{
@@ -32,6 +38,7 @@ enum ChatTableColumnType: String, CaseIterable{
     case quantity = "QUANTITY"
     case percent = "PERCENT"
     case dollar = "DOLLAR_AMT"
+    case dateString = "DATE_STRING"
     case ratio = "RATIO"
     case defaultType = ""
     static func withLabel(_ str: String) -> ChatTableColumnType {

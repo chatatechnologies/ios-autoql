@@ -18,6 +18,9 @@ struct ChatComponentModel {
     var columns: [ChatTableColumnType] = []
     var columnsInfo: [ChatTableColumn] = []
     var idQuery: String
+    var drillDown: Bool
+    var isLoading: Bool
+    var position: Int
     init(type: ChatComponentType = .Introduction,
          text: String = "",
          user: Bool = false,
@@ -28,7 +31,10 @@ struct ChatComponentModel {
          dataRows: [[String]] = [],
          colunms: [ChatTableColumnType] = [],
          idQuery: String = "",
-         columnsInfo: [ChatTableColumn] = []
+         columnsInfo: [ChatTableColumn] = [],
+         drillDown: Bool = false,
+         isLoading: Bool = false,
+         position: Int = 0
          ) {
         self.type = type
         self.text = text
@@ -41,18 +47,32 @@ struct ChatComponentModel {
         self.columns = colunms
         self.idQuery = idQuery
         self.columnsInfo = columnsInfo
+        self.drillDown = drillDown
+        self.isLoading = isLoading
+        self.position = position
     }
 }
 struct ChatFullSuggestion {
-    var suggestionList: [String]
+    var suggestionList: [ChataFullSuggestionItem]
     var start: Int
     var end: Int
-    init(suggestionList: [String],
+    init(suggestionList: [ChataFullSuggestionItem],
          start: Int,
          end: Int) {
         self.suggestionList = suggestionList
         self.start = start
         self.end = end
+    }
+}
+struct ChataFullSuggestionItem {
+    var valueLabel: String
+    var text: String
+    init(
+        valueLabel: String = "",
+        text: String = ""
+    ) {
+        self.valueLabel = valueLabel
+        self.text = text
     }
 }
 enum ChatComponentType: String, CaseIterable {

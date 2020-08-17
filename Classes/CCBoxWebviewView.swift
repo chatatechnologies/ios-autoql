@@ -14,6 +14,8 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     var wbMain: WKWebView = WKWebView()
     var imageView = UIImageView(image: nil)
     var idQuery = ""
+    var dataMain = ChatComponentModel()
+    var drilldown = false
     weak var delegate: BoxWebviewViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -66,9 +68,10 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns {
-            let name = data.columnsInfo[0].originalName
-            let name2 = data.columnsInfo[1].originalName
+        if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE && !drilldown {
+            DRILLDOWNACTIVE = true
+            let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
+            let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
             let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
             delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)
         }

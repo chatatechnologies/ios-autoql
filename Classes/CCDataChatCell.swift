@@ -9,7 +9,7 @@ import Foundation
 protocol DataChatCellDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
     func deleteQuery(numQuery: Int)
-    func updateSize(numRows: Int, index: Int)
+    func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
 }
 class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
@@ -40,7 +40,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         case .Introduction:
             getIntroduction()
         case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-            getWebView()
+            if !data.isLoading{
+                getWebView()
+            }
         case .Suggestion:
             getSuggestion()
         case .Safetynet:
@@ -56,7 +58,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.cardView(border: !data.user)
         let align: DViewSafeArea = data.user ? .paddingTopRight : .paddingTopLeft
         newView.backgroundColor = data.user ? chataDrawerAccentColor : chataDrawerBackgroundColor
-        if !data.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns{
+        if !data.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && data.webView != "error"{
             let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
             newView.addGestureRecognizer(tapgesture)
         }
@@ -78,12 +80,15 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         buttonDefault = createButton(btn: defaultType)
         boxWeb.loadWebview(strWebview: data.webView, idQuery: data.idQuery)
         boxWeb.cardView()
+        boxWeb.dataMain = data
+        boxWeb.drilldown = data.drillDown
         boxWeb.delegate = self
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showHide))
         boxWeb.addGestureRecognizer(tapgesture)
         self.contentView.addSubview(boxWeb)
         boxWeb.edgeTo(self, safeArea: .paddingTop)
-        let buttons = getButtons(num: data.dataRows[0].count, columns: data.columns)
+        let buttons = getButtons(num: data.dataRows.count > 0 ? data.dataRows[0].count : 0,
+                                 columns: data.columns)
         loadButtons(area: .modal2, buttons: buttons, view: boxWeb)
         loadButtons(area: .modal2Right, buttons: menuButtons, view: boxWeb)
         self.sizeToFit()
@@ -121,29 +126,53 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         var contrast = false
         switch num {
         case 2:
-            buttonsFinal = [
-                ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
-                ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
-                ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
-                ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
-            ]
+            if columns[0] == .string && columns[1] == .string{
+                buttonsFinal = []
+            }
+            else{
+                buttonsFinal = [
+                    ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
+                    ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
+                    ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
+                    ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
+                ]
+            }
         case 3:
-            contrast = supportContrast(columns: columns)
-            let typeTry = contrast ? "contrast_" : "stacked_"
-            buttonsFinal = [
-                ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
-                ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)column"),
-                //ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cid\(contrast ? typeTry : "")line"),
-            ]
-            if !contrast {
-                buttonsFinal += [
-                ButtonMenu(imageStr: "icBubble", action: #selector(changeChart), idHTML: "cidbubble"),
-                ButtonMenu(imageStr: "icHeat", action: #selector(changeChart), idHTML: "cidheatmap"),
-                ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area"),
-                ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDataPivot") ]
+            if columns[0] == .string && columns[1] == .string && columns[2] == .string{
+                buttonsFinal = []
+            } else{
+                contrast = supportContrast(columns: columns)
+                let typeTry = contrast ? "contrast_" : "stacked_"
+                buttonsFinal = [
+                    ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
+                    ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)column"),
+                    //ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cid\(contrast ? typeTry : "")line"),
+                ]
+                if !contrast {
+                    buttonsFinal += [
+                    ButtonMenu(imageStr: "icBubble", action: #selector(changeChart), idHTML: "cidbubble"),
+                    ButtonMenu(imageStr: "icHeat", action: #selector(changeChart), idHTML: "cidheatmap"),
+                    ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area"),
+                    ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDataPivot") ]
+                }
             }
         default:
-            buttonsFinal = []
+            var specialActive = false
+            columns.forEach { (type) in
+                if type == .dollar || type == .quantity{
+                    //specialActive = true
+                }
+            }
+            if specialActive{
+                buttonsFinal += [
+                                 ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
+                                 ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
+                                 ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
+                                 ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
+                ]
+            } else {
+                buttonsFinal = []
+            }
         }
         if datePivot && !contrast{
             let datePivot = ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDatePivot")
@@ -160,7 +189,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private func getSuggestion() {
         let newView = SuggestionView()
         newView.delegate = self
-        newView.loadConfig(options: data.options)
+        newView.loadConfig(options: data.options, query: data.text)
         //newView.loadWebview(strWebview: data.webView)
         newView.cardView()
         self.contentView.addSubview(newView)
@@ -195,10 +224,16 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let type = newID.contains("cid") ? newID.replace(target: "cid", withString: "") : newID
         newID = newID.contains("cid") ? "container" : newID
         oldID = oldID.contains("cid") ? "container" : oldID
-        let numRows = sender.idButton.contains("Table") ? self.data.dataRows.count : 12
+        let numRows = newID.contains("Table") ? self.data.dataRows.count : 12
         functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
         print(functionJS)
-        self.delegate?.updateSize(numRows: numRows, index: self.index)
+        //if oldID != newID{
+        self.delegate?.updateSize(numRows: numRows,
+                                  index: self.index,
+                                  toTable: oldID != newID,
+                                  isTable: newID.contains("Table"))
+        data.isLoading = true
+        //}
         /*delayWithSeconds(0.2) {
             self.boxWeb.wbMain.evaluateJavaScript("hideTables('#\(oldID)','#\(newID)', '\(type)');", completionHandler: {
                (_,_) in

@@ -39,7 +39,11 @@ class TextboxView: UIView {
         textbox.keyboardAppearance = dark ? .dark : .light
         textbox.addDoneButtonOnKeyboard()
         textbox.attributedPlaceholder = NSAttributedString(string: DataConfig.inputPlaceholder,
-                                                           attributes: [NSAttributedString.Key.foregroundColor: chataDrawerMessengerTextColorPrimary])
+                                                           attributes: [
+                                                                NSAttributedString.Key.foregroundColor: chataDrawerMessengerTextColorPrimary,
+                                                                NSAttributedString.Key.font: generalFont
+                                                            ]
+                                                           )
         textbox.textColor = chataDrawerTextColorPrimary
         textbox.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         textbox.setLeftPaddingPoints(10)
@@ -98,6 +102,7 @@ extension TextboxView: UITableViewDataSource, UITableViewDelegate {
         let cell = UITableViewCell()
         cell.textLabel?.text = "Example this is a large text for test the application with this have a large text"
         cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.setSize()
         cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.textLabel?.minimumScaleFactor = 0.7
         return cell

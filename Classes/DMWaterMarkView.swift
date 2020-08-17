@@ -18,7 +18,7 @@ class WaterMarkView: UIView {
         lbMarkWater.text = "We run on AutoQL by Chata"
         self.addSubview(lbMarkWater)
         lbMarkWater.textAlignment = .center
-        lbMarkWater.font = UIFont(name: lbMarkWater.font.fontName , size: 14)
+        lbMarkWater.setSize()
         lbMarkWater.textColor = chataDrawerMessengerTextColorPrimary
         lbMarkWater.edgeTo(self, safeArea: .center)
         let image = UIImage(named: "icChat.png", in: Bundle(for: type(of: self)), compatibleWith: nil)

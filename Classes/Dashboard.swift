@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate {
     let tbMain = UITableView()
+    let tbListDashboard = UITableView()
     var dataDash: [DashboardModel] = []
     var imageView = UIImageView(image: nil)
     let vwDrillDown = UIView()
@@ -16,30 +17,47 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     var vwWebview = UIView()
     var wbMain = WKWebView()
     var imageView2 = UIImageView(image: nil)
+    var spinnerDashboard = UIButton()
+    var listDash: [DashboardList] = []
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        tbMain.delegate = self
-        tbMain.dataSource = self
+        loadTableD(table: tbMain)
+        loadTableD(table: tbListDashboard)
+        self.addSubview(spinnerDashboard)
+        spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 50, padding: 16)
+        spinnerDashboard.setTitleColor(.black, for: .normal)
+        spinnerDashboard.cardView()
+        spinnerDashboard.addTarget(self, action: #selector(toggleDash), for: .touchUpInside)
         self.addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .none)
+        tbMain.edgeTo(self, safeArea: .fullState, spinnerDashboard)
+        self.addSubview(tbListDashboard)
+        tbListDashboard.edgeTo(self, safeArea: .dropDownTop, height: 200, spinnerDashboard, padding: 0)
+        tbListDashboard.cardView()
+        tbListDashboard.clipsToBounds = true
+        tbListDashboard.isHidden = true
         //print(testVAR)
     }
-    
+    @IBAction func toggleDash(_ sender: AnyObject){
+        toggleListDashboard(tbListDashboard.isHidden)
+    }
     public func loadDashboard(
         view: UIView,
         autentification: authentication,
         mainView: UIView
     ){
-        self.backgroundColor = .red
         self.edgeTo(view, safeArea: .none)
         self.mainView = mainView
         DashboardService().getDashboards(apiKey: autentification.apiKey) { (dashboards) in
             DispatchQueue.main.async {
-                self.dataDash = dashboards
+                let firstDash = dashboards.count > 0 ? dashboards[0] : DashboardList()
+                self.spinnerDashboard.setTitle(firstDash.name, for: .normal)
+                self.listDash = dashboards
+                self.dataDash = firstDash.data
                 self.tbMain.reloadData()
+                self.tbListDashboard.reloadData()
                
             }
             
@@ -108,16 +126,17 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             //let indexPath = IndexPath(row: index, section: 0)
             //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
             //cell.loaderWebview()
-            print(index)
-            DashboardService().getDashQuery(query: dash.query, type: dash.displayType,
-                                            split: dash.splitView, splitType: dash.secondDisplayType) { (component) in
+            DashboardService().getDashQuery(dash: dash,
+                                            position: index) { (component) in
                 DispatchQueue.main.async {
-                    self.dataDash[index].webview = component.webView
-                    self.dataDash[index].type = component.type
-                    self.dataDash[index].text = component.text
-                    self.dataDash[index].idQuery = component.idQuery
-                    self.dataDash[index].columnsInfo = component.columnsInfo
+                    let pos = component.position
+                    self.dataDash[pos].webview = component.webView
+                    self.dataDash[pos].type = component.type
+                    self.dataDash[pos].text = component.text
+                    self.dataDash[pos].idQuery = component.idQuery
+                    self.dataDash[pos].columnsInfo = component.columnsInfo
                     self.tbMain.reloadData()
+                    
                 }
             }
         }
@@ -129,22 +148,47 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         loaderWebview(false)
         //progress(off: true, viewT: wbChart!)
     }
+    func toggleListDashboard(_ show: Bool = true) {
+        tbListDashboard.isHidden = !show
+    }
     
 }
 extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataDash.count
+        return tableView == tbMain ? dataDash.count : listDash.count
     }
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getSizeDashboard(row: dataDash[indexPath.row], width: self.frame.width)
+        if tableView == tbMain {
+            return getSizeDashboard(row: dataDash[indexPath.row], width: self.frame.width)
+        } else {
+            return 50
+        }
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = DashboardComponentCell()
-        cell.delegate = self
-        cell.configCell(data: dataDash[indexPath.row])
-        //cell.addSubview(newView)
-        return cell
+        if tableView == tbMain {
+            let cell = DashboardComponentCell()
+            cell.delegate = self
+            cell.configCell(data: dataDash[indexPath.row])
+            //cell.addSubview(newView)
+            return cell
+        }
+        if tableView == tbListDashboard {
+            let cell = UITableViewCell()
+            cell.textLabel?.text = listDash[indexPath.row].name
+            return cell
+        }
+        return UITableViewCell()
     }
-    
-    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == tbListDashboard {
+            spinnerDashboard.setTitle(listDash[indexPath.row].name, for: .normal)
+            toggleListDashboard(false)
+            dataDash = listDash[indexPath.row].data
+            tbMain.reloadData()
+        }
+    }
+    func loadTableD(table: UITableView) {
+        table.delegate = self
+        table.dataSource = self
+    }
 }

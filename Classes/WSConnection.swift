@@ -14,7 +14,7 @@ private var versionApi1 = "\(baseApi)api/v1/"
 private var versionBaseTestApi1 = "\(baseTestApi)api/v1/"
 private var versionBaseTestApi2 = "\(baseTestApi2)api/v1/"
 var wsUrlDynamic = ""
-let wsAutocomplete = "\(versionApi1)autocomplete?apiId="
+let wsAutocomplete = "\(versionApi1)autocomplete?q="
 let wsQuery = "\(versionBaseTestApi1)chata/query"
 let wsSafetynet = "\(versionApi1)safetynet?q="
 let wsLogin = "\(versionBaseTestApi2)login"
@@ -108,6 +108,7 @@ func httpRequest(_ urlFinal: String,
     //create dataTask using the session object to send data to the server
     let task = session.dataTask(with: request, completionHandler: { data, response, error in
         guard error == nil else {
+            completion(["result": "fail"])
             return
         }
         guard let data = data else {

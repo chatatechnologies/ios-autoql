@@ -7,6 +7,7 @@
 
 import Foundation
 public var DataConfig = DataConfiguration.instance
+var generalFont = UIFont.systemFont(ofSize: 16)
 public class DataConfiguration {
     static let instance = DataConfiguration()
     public var authenticationObj = authentication(apiKey: "", domain: "", token: "")
@@ -14,14 +15,15 @@ public class DataConfiguration {
     public var placement = "right"
     public var title = "Data Messenger"
     public var userDisplayName = "User"
-    public var introMessage = "I'm here to help you access, search and analyze your data."
+    public var introMessage = "Let’s dive into your data. What can I help you discover today?"
     public var inputPlaceholder = "Type your queries here"
     public var showMask = true
     public var maskClosable = true
     public var showHandle = true
-    public var maxMessages = 10
+    public var maxMessages = 12
     public var clearOnClose = false
     public var enableVoiceRecord = true
+    public var demo = true
     public var autoQLConfigObj = autoQLConfig(
         enableAutocomplete: true,
         enableQueryValidation: true,
@@ -32,16 +34,16 @@ public class DataConfiguration {
     public var dataFormattingObj = dataFormatting(
         currencyCode: "USD",
         languageCode: "en-US",
-        currencyDecimals: 2,
-        quantityDecimals: 1,
+        currencyDecimals: 0,
+        quantityDecimals: 0,
         comparisonDisplay: "PERCENT",
         monthYearFormat: "MMM YYYY",
-        dayMonthYearFormat: "MMM D, YYYY"
+        dayMonthYearFormat: "MMM YYYY"
     )
     public var themeConfigObj = themeConfig(
         theme: "light",
         accentColor: "#28a8e0",
-        chartColors: ["#26A7E9", "#A5CD39", "#DD6A6A", "#FFA700", "#00C1B2"]
+        chartColors: ["#355C7D", "#6C5B7B", "#C06C84", "#F67280", "#F8B195"]
     )
     //public var mainChatView = Chat()
     // public var chatView = Chat()
@@ -54,7 +56,7 @@ public class DataConfiguration {
         placement = "right"
         title = "Data Messenger"
         userDisplayName = "User"
-        introMessage = "Hi User! I'm here to help you access, search and analyze your data."
+        introMessage = "Hi User! Let’s dive into your data. What can I help you discover today?"
         inputPlaceholder = "Type your queries here"
         showMask = true
         maskClosable = true
@@ -76,7 +78,7 @@ public class DataConfiguration {
             quantityDecimals: 1,
             comparisonDisplay: "PERCENT",
             monthYearFormat: "MMM YYYY",
-            dayMonthYearFormat: "MMM D, YYYY"
+            dayMonthYearFormat: "ll"
         )
         themeConfigObj = themeConfig(
             theme: "light",

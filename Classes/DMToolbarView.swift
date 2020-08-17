@@ -43,7 +43,7 @@ class ToolbarView: UIView {
         label.text = DataConfig.title
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        label.setSize(18)
         self.addSubview(label)
         label.edgeTo(self, safeArea: .fullWidth, height: 40.0, cancel, delete)
     }

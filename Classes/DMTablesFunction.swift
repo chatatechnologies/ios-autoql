@@ -6,9 +6,9 @@
 //
 
 import Foundation
-func getDatePivot(rows: [[String]]) -> [[String]] {
+func getDatePivot(rows: [[String]], columnsT: [ChatTableColumnType]) -> [[String]] {
     var datePivot: [[String]] = [[""]]
-    var infoPivot: DataPivotModel = getDataPivot(rows: rows)
+    var infoPivot: DataPivotModel = getDataPivot(rows: rows, columnsT: columnsT)
     let yearsOrder = infoPivot.years.sorted(by: <)
     infoPivot.months = infoPivot.months.sorted(by: <)
     var filterMonth: [String] = []
@@ -102,47 +102,88 @@ func getAllDaysPivot(infoPivot: DataPivotModel, yearsOrder: [String]) -> [[Strin
     })
     return datePivot
 }
-func getDataPivot(rows: [[String]]) -> DataPivotModel {
+func getDataPivot(rows: [[String]], columnsT: [ChatTableColumnType]) -> DataPivotModel {
     var datePivotTable: [[String]] = []
     var years: [String] = []
     var months: [String] = []
     var oneMonth: [[String]] = [[""]]
     var one365Pivot: [DatePivotModal] = []
-    for rowM in rows {
-        let date = rowM[0]
-        let test = Date(timeIntervalSince1970: TimeInterval(date)!)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMC-5") //Set timezone that you want
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "yyyy"
-        let year = dateFormatter.string(from: test)
-        if year == "2020"{
-            print(test)
-        }
-        dateFormatter.dateFormat = "MMMM"
-        let month = dateFormatter.string(from: test)
-        dateFormatter.dateFormat = "MM"
-        let monthNum = dateFormatter.string(from: test)
-        datePivotTable.append([month, year, rowM[1], date])
-        dateFormatter.dateFormat = "MMMM dd"
-        let monthDay = dateFormatter.string(from: test)
-        dateFormatter.dateFormat = "MM.dd"
-        let monthYear = dateFormatter.string(from: test)
-        let one365Pivot1 = DatePivotModal(month: monthYear, year: year, mount: rowM[1], timestamp: date)
-        one365Pivot.append(one365Pivot1)
-        let str = "<span class='selectData' id='\(String(describing: date))'> \(String(rowM[1]).toMoney()) </span>"
-        oneMonth.append([monthDay, str])
-        let itemExists = years.contains(where: {
-            $0.range(of: year, options: .caseInsensitive) != nil
-        })
-        if !itemExists {
-            years.append(year)
-        }
-        let monthExists = months.contains(where: {
-            $0.range(of: monthNum, options: .caseInsensitive) != nil
-        })
-        if !monthExists {
-            months.append(monthNum)
+    var dateStringActive = false
+    var position = columnsT.firstIndex(of: .date) ?? -1
+    let positionDolar = columnsT.firstIndex(of: .dollar) ?? -1
+    if position == -1 {
+        position = columnsT.firstIndex(of: .dateString) ?? -1
+        dateStringActive = true
+    }
+    position = position == -1 ? columnsT.firstIndex(of: .dateString) ?? -1 : position
+    if position != -1 && positionDolar != -1 {
+        for rowM in rows {
+            let date = rowM[position]
+            if !dateStringActive {
+                let test = Date(timeIntervalSince1970: TimeInterval(date)!)
+                let dateFormatter = DateFormatter()
+                dateFormatter.timeZone = TimeZone(abbreviation: "GMC-5") //Set timezone that you want
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "yyyy"
+                let year = dateFormatter.string(from: test)
+                
+                dateFormatter.dateFormat = "MMMM"
+                let month = dateFormatter.string(from: test)
+                dateFormatter.dateFormat = "MM"
+                let monthNum = dateFormatter.string(from: test)
+                datePivotTable.append([month, year, rowM[positionDolar], date])
+                dateFormatter.dateFormat = "MMMM dd"
+                let monthDay = dateFormatter.string(from: test)
+                dateFormatter.dateFormat = "MM.dd"
+                let monthYear = dateFormatter.string(from: test)
+                let one365Pivot1 = DatePivotModal(month: monthYear, year: year, mount: rowM[positionDolar], timestamp: date)
+                one365Pivot.append(one365Pivot1)
+                let str = "<span class='selectData' id='\(String(describing: date))'> \(String(rowM[positionDolar]).toMoney()) </span>"
+                oneMonth.append([monthDay, str])
+                let itemExists = years.contains(where: {
+                    $0.range(of: year, options: .caseInsensitive) != nil
+                })
+                if !itemExists {
+                    years.append(year)
+                }
+                let monthExists = months.contains(where: {
+                    $0.range(of: monthNum, options: .caseInsensitive) != nil
+                })
+                if !monthExists {
+                    months.append(monthNum)
+                }
+            } else {
+                let separate = date.components(separatedBy: "-")
+                let monthNumber = separate.count > 1 ? separate[1] : ""
+                let year = separate.count > 0 ? separate[0] : ""
+                let month = String(monthNumber.toMonth().prefix(3))
+                datePivotTable.append([month, year, rowM[positionDolar], date])
+                let str = "<span class='selectData' id='\(String(describing: date))'> \(String(rowM[positionDolar]).toMoney()) </span>"
+                oneMonth.append(["\(month).\(year)", str])
+                let itemExists = years.contains(where: {
+                    $0.range(of: year, options: .caseInsensitive) != nil
+                })
+                if !itemExists {
+                    years.append(year)
+                }
+                let monthExists = months.contains(where: {
+                    $0.range(of: monthNumber, options: .caseInsensitive) != nil
+                })
+                if !monthExists {
+                    months.append(monthNumber)
+                }
+                /*
+                let one365Pivot1 = DatePivotModal(month: monthYear, year: year, mount: rowM[positionDolar], timestamp: date)
+                one365Pivot.append(one365Pivot1)
+                
+                if !itemExists {
+                    years.append(year)
+                }
+                if !monthExists {
+                    months.append(monthNum)
+                }*/
+            }
+            
         }
     }
     let data = DataPivotModel(datePivotTable: datePivotTable,
@@ -176,14 +217,15 @@ func getDataPivotColumn(rows: [[String]]) -> ([[String]], [String]) {
     }
     
     // hacer algoritmo para hacer pivots
+    // INvertir CatY
     var final: [[String]] = []
-    for (indexX, cat) in categoriesX.enumerated(){
+    for (indexX, cat) in categoriesY.enumerated(){
         var finalB = [cat]
         for (indexY, _) in categoriesY.enumerated() {
             let position = totalSum.firstIndex(where: {
                 $0.posX == indexX && $0.posY == indexY
             })
-            let value = position == nil ? "" : "\(totalSum[position!].value)".toMoney()
+            let value = position == nil ? "$0" : "\(totalSum[position!].value)".toMoney()
             finalB.append(value)
         }
         final.append(finalB)
@@ -191,8 +233,9 @@ func getDataPivotColumn(rows: [[String]]) -> ([[String]], [String]) {
     }
     var header = [""]
     var headerFree: [String] = []
-    for catY in categoriesY {
-        header.append(catY.toDate())
+    for catY in categoriesX {
+        //header.append(catY.toDate())
+        header.append(catY)
         headerFree.append(catY)
     }
     final.insert(header, at: 0)

@@ -10,25 +10,49 @@ import UIKit
 import chata
 class DemoViewController: UIViewController, DemoParameterCellDelegate {
     let label = UILabel()
-    let dataChat = DataMessenger(authentication: authentication(
+    /*let dataChat = DataMessenger(authentication: authentication(
         apiKey: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU",
         domain: "https://spira-staging.chata.io",
         token: "eyJ0eXAiOiAiSldUIiwgImFsZyI6ICJSUzI1NiIsICJraWQiOiAiNzUxZmYzY2YxMjA2ZGUwODJhNzM1MjY5OTI2ZDg0NTgzYjcyOTZmNCJ9.eyJpYXQiOiAxNTkxNjM0OTI4LCAiZXhwIjogMTU5MTY1NjUyOCwgImlzcyI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImF1ZCI6ICJkZW1vMy1zdGFnaW5nLmNoYXRhLmlvIiwgInN1YiI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImVtYWlsIjogImRlbW8zLWp3dGFjY291bnRAc3RhZ2luZy0yNDU1MTQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAicHJvamVjdF9pZCI6ICJzcGlyYS1kZW1vMyIsICJ1c2VyX2lkIjogInNwaXJhLWRlbW8zIiwgImRpc3BsYXlfbmFtZSI6ICJzcGlyYS1kZW1vMyIsICJyZXNvdXJjZV9hY2Nlc3MiOiBbIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5LyoqIiwgIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5Il19.qaFeQW-8jiy9smijQnAX0ThYGi9cWycToqBBV9EzKSBzt2SIEZUhftNEyV-AE1rmIRAdsh4S9CjtzdZVEVF65lmfYklf_lH1yWpMx67LMg625L0P9E6U1atVhAqha3X0_qcA6QUB4Qx1kyl-iTtQI_EjylLDXAbtfbyj-ekQFI6ej-tpL0Fxek2y1cUaGj8Iqfb82GAZdRsRnQ-zqoodm6JZ_J4RvTjEYBNKkRl4t_4WoPPjoxpq4hDzH1_0z-4xktAN0Kk6749BHE4ENFY2zs-FgVdCnd7Ub6FQLPZMHrPR5dwJf9vbsAYofrdG5AePcYCUCNVMkeDk3iVMcy0UMQ=="),
-        projectID: "spira-demo3" )
+        projectID: "spira-demo3" )*/
+    let dataChat = DataMessenger(authentication: authentication(apiKey: "", domain: "", token: ""), projectID: "")
     var parameters: [String : Any] = [:]
     @IBOutlet weak var tbMain: UITableView!
     @IBOutlet weak var vwMain: UIView!
     @IBOutlet weak var scMain: UISegmentedControl!
+    /*      Spira        */
     let loginSection: DemoSectionsModel =
-        DemoSectionsModel(title: "You must login to access data", arrParameters: [
-            DemoParameter(label: "Project ID *", type: .input, value: "spira-demo3", key: "projectID"),
-            DemoParameter(label: "User ID (email) *", type: .input, key: "userID", inputType: .mail),
-            DemoParameter(label: "API key *", type: .input, value: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU", key: "apiKey"),
-            DemoParameter(label: "Domain URL *", type: .input, value: "https://spira-staging.chata.io", key: "domain"),
-            DemoParameter(label: "Username *", type: .input, key: "username" ),
-            DemoParameter(label: "Password *", type: .input, key: "password", inputType: .password),
+        DemoSectionsModel(title: "Authentication", arrParameters: [
+            DemoParameter(label: "* Project ID", type: .input, value: "spira-demo3", key: "projectID"),
+            DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
+            DemoParameter(label: "* API key", type: .input, value: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU", key: "apiKey"),
+            DemoParameter(label: "* Domain URL", type: .input, value: "https://spira-staging.chata.io", key: "domain"),
+            DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
+            DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
             DemoParameter(label: "Authenticate", type: .button, key: "login")
         ])
+    /*Accounting Demo*/
+    /*let loginSection: DemoSectionsModel =
+    DemoSectionsModel(title: "Authentication", arrParameters: [
+        DemoParameter(label: "* Project ID", type: .input, value: "accounting-demo", key: "projectID"),
+        DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
+        DemoParameter(label: "* API key", type: .input, value: "AIzaSyDX28JVW248PmBwN8_xRROWvO0a2BWH67o", key: "apiKey"),
+        DemoParameter(label: "* Domain URL", type: .input, value: "https://accounting-demo-staging.chata.io", key: "domain"),
+        DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
+        DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
+        DemoParameter(label: "Authenticate", type: .button, key: "login")
+    ])*/
+    
+    /*let loginSection: DemoSectionsModel =
+    DemoSectionsModel(title: "Authentication", arrParameters: [
+        DemoParameter(label: "* Project ID", type: .input, value: "", key: "projectID"),
+        DemoParameter(label: "* User Email", type: .input, key: "userID", inputType: .mail),
+        DemoParameter(label: "* API key", type: .input, value: "", key: "apiKey"),
+        DemoParameter(label: "* Domain URL", type: .input, value: "", key: "domain"),
+        DemoParameter(label: "* Username", type: .input, key: "username" ),
+        DemoParameter(label: "* Password", type: .input, key: "password", inputType: .password),
+        DemoParameter(label: "Authenticate", type: .button, key: "login")
+    ])*/
     var allSection: [DemoSectionsModel] = []
     @IBAction func changeSection(_ sender: Any) {
         switch scMain.selectedSegmentIndex {
@@ -36,7 +60,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             loadDataSource()
         case 1:
             if dataChat.config.authenticationObj.token == "" {
-                let alert = UIAlertController(title: "", message: "Please log in,", preferredStyle: .alert)
+                let alert = UIAlertController(title: "", message: "Please log in", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true)
                 scMain.selectedSegmentIndex = 0
@@ -65,6 +89,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataChat.config.demo = false
         loadSections()
         loadColors()
         loadConfig()
@@ -72,13 +97,20 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     }
     func loadSections(){
         allSection = [
-            DemoSectionsModel(title: "Data Source", arrParameters: [
+            /*DemoSectionsModel(title: "Data Source", arrParameters: [
                 DemoParameter(label: "Demo data", type: .toggle, value: "true", key: "demo")
-            ]),
-            DemoSectionsModel(title: "Drawer Props", arrParameters: [
+            ]),*/
+            loginSection,
+            DemoSectionsModel(title: "Customize Widgets", arrParameters: [
                 DemoParameter(label: "Reload Drawer", type: .button),
                 DemoParameter(label: "Open Drawer", type: .button, key: "openChat"),
-                DemoParameter(label: "Show Drawer Handle", type: .toggle, value: "\(dataChat.config.isVisible)", key:"isVisible"),
+                DemoParameter(label: "Enable Autocomplete", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableAutocomplete)", key: "enableAutocomplete"),
+                DemoParameter(label: "Enable Query Validator", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
+                DemoParameter(label: "Enable Query Suggestion", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
+                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableDrilldowns"),
+            ]),
+            DemoSectionsModel(title: "UI Configuration Options", arrParameters: [
+                DemoParameter(label: "Show Data Messenger Button", type: .toggle, value: "\(dataChat.config.isVisible)", key:"isVisible"),
                 DemoParameter(label: "Theme", type: .segment, options: ["Light", "Dark"], value: dataChat.config.themeConfigObj.theme.capitalized, key: "theme"),
                 DemoParameter(label: "Drawer Placement", type: .segment, options: ["Top", "Bottom", "Left", "Right"], value: dataChat.config.placement.capitalized, key: "placement"),
                 DemoParameter(label: "Currency Code", type: .input, value: dataChat.config.dataFormattingObj.currencyCode, key: "currencyCode"),
@@ -87,26 +119,21 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 DemoParameter(label: "Format for Day, Month, Year", type: .input, value: dataChat.config.dataFormattingObj.dayMonthYearFormat, key: "year"),
                 DemoParameter(label: "Number of Decimals for Currency Values", type: .input, value: "\(dataChat.config.dataFormattingObj.currencyDecimals)", key: "currencyDecimals"),
                 DemoParameter(label: "Number of Decimals for Quantity Values", type: .input, value: "\(dataChat.config.dataFormattingObj.quantityDecimals)", key: "quantityDecimals"),
-                DemoParameter(label: "User Display Name('reload Drawer')", type: .input, value: dataChat.config.userDisplayName, key: "userDisplayName"),
+                DemoParameter(label: "User Display Name", type: .input, value: dataChat.config.userDisplayName, key: "userDisplayName"),
                 DemoParameter(label: "Intro Message", type: .input, value: dataChat.config.introMessage, key: "introMessage"),
                 DemoParameter(label: "Query Input Placeholder", type: .input, value: dataChat.config.inputPlaceholder, key: "inputPlaceholder"),
-                //DemoParameter(label: "Clear All Messages on Close", type: .toggle, value: "\(DataMessenger.clearOnClose)", key: "clearOnClose"),
-                DemoParameter(label: "Title", type: .input, value: dataChat.config.title, key: "title"),
+                DemoParameter(label: "Title", type: .input, value: dataChat.config.title, key: "title")
             ]),
             DemoSectionsModel(title: "Chart Colors", arrParameters: [
                 
             ]),
-            DemoSectionsModel(title: "More Colors", arrParameters: [
+            DemoSectionsModel(title: "Themes Colors", arrParameters: [
                 DemoParameter(label: "AccentColor", type: .color, value: "#28A8E0", key: "lightTheme"),
                 DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#525252", key: "darkTheme")
             ]),
             DemoSectionsModel(title: "More Configuration", arrParameters: [
                 DemoParameter(label: "Maximum Number of Messages", type: .input, value: "\(dataChat.config.maxMessages)", key: "maxMessages"),
-                DemoParameter(label: "Enable Autocomplete", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableAutocomplete)", key: "enableAutocomplete"),
-                DemoParameter(label: "Enable Query Validator", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
-                DemoParameter(label: "Enable Query Suggestion", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
-                DemoParameter(label: "Enable Speech to Text", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableVoiceRecord"),
-                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableDrilldowns")
+                DemoParameter(label: "Enable Speech to Text", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableVoiceRecord")
             ])
         ]
     }
@@ -140,6 +167,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         setValueByKey(key, "\(value)")
         switch key {
         case "demo":
+            dataChat.config.demo = value
             if value { allSection.remove(at: 1) } else { allSection.insert(loginSection, at: 1) }
             tbMain.reloadData()
         case "isVisible":
@@ -167,7 +195,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         case "login":
             if dataChat.config.authenticationObj.token == "" {
                 let posFather = allSection.firstIndex { (father) -> Bool in
-                    father.title == "You must login to access data"
+                    father.title == "Authentication"
                 } ?? 0
                 var dict:[String: Any] = [:]
                 for input in allSection[posFather].arrParameters {
@@ -177,12 +205,12 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 }
                 dataChat.login(body: dict) { (success) in
                     DispatchQueue.main.async {
-                        let message = success ? "Login Successful!" : "Login Unsuccessful"
+                        let message = success ? "Login Successful!" : "Invalid Credentials"
                         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(alert, animated: true)
                         if success {
-                            self.setNewValue(fatherP: "You must login to access data", sonP: "Authenticate", value: "Logout", changeLabel: true)
+                            self.setNewValue(fatherP: "Authentication", sonP: "Authenticate", value: "Logout", changeLabel: true)
                             self.tbMain.reloadData()
                         }
                     }
@@ -192,7 +220,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                     let alert = UIAlertController(title: "", message: "Successfully logged out", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
-                    self.setNewValue(fatherP: "You must login to access data", sonP: "Logout", value: "Authenticate", changeLabel: true)
+                    self.setNewValue(fatherP: "Authentication", sonP: "Logout", value: "Authenticate", changeLabel: true)
                     self.tbMain.reloadData()
                 }
             }
@@ -320,6 +348,8 @@ extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let finalCell = DemoParameterCell()
+        finalCell.contentView.backgroundColor = .white
+        finalCell.textLabel?.textColor = .black
         finalCell.delegate = self
         finalCell.configCell(data: allSection[indexPath.section].arrParameters[indexPath.row])
         return finalCell
@@ -393,5 +423,17 @@ extension String {
             }
         }
         return father
+    }
+}
+extension UIView {
+    func cardView(border: Bool = true) {
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 10
+        self.layer.borderColor = UIColor.gray.cgColor
+        /*self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowRadius = 1.0*/
+        self.layer.masksToBounds = false
     }
 }

@@ -47,6 +47,7 @@ class DemoParameterCell: UITableViewCell {
         button.onTintColor = blueColor
         button.isOn = Data.value == "true"
         button.addTarget(self, action: #selector(switchValueDidChange), for: .valueChanged)
+        //button.addTarget(self, action: #selector(executeDashboard), for: .valueChanged)
         self.contentView.addSubview(button)
         button.edgeTo(self.contentView, safeArea: .fullBottomCenter, height: 50.0, label)
     }
@@ -70,6 +71,7 @@ class DemoParameterCell: UITableViewCell {
         let input = UITextField()
         input.text = Data.value
         input.autocapitalizationType = .none
+        input.textColor = .black
         input.keyboardType = Data.inputType == DemoInputType.mail ? .emailAddress : .default
         input.isSecureTextEntry = Data.inputType == DemoInputType.password
         input.textAlignment = .center
@@ -100,7 +102,7 @@ class DemoParameterCell: UITableViewCell {
         }
         segment.center = self.contentView.center
         segment.layer.cornerRadius = 5.0
-        segment.backgroundColor = .white
+        segment.backgroundColor = .gray
         segment.selectedSegmentIndex = indexSelect
         segment.addTarget(self, action: #selector(segmentPress), for: .valueChanged)
         segment.edgeTo(self.contentView, safeArea: .fullBottom, height: 100.0, label, self.contentView, padding: 0)
@@ -121,6 +123,7 @@ class DemoParameterCell: UITableViewCell {
     private func getLabel() -> UILabel {
         let label = UILabel()
         label.text = Data.label
+        label.textColor = .black
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.numberOfLines = 0

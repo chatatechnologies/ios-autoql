@@ -19,6 +19,7 @@ class IntroductionView: UIView {
         lbl.sizeToFit()
         lbl.translatesAutoresizingMaskIntoConstraints = true
         lbl.lineBreakMode = .byTruncatingTail
+        lbl.setSize()
         //self.edgeTo(self, safeArea: .paddingTop)
         self.addSubview(lbl)
         lbl.edgeTo(self, safeArea: .padding)

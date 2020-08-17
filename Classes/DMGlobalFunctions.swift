@@ -12,6 +12,7 @@ private let request = SFSpeechAudioBufferRecognitionRequest()
 private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
 private var recognitionTask: SFSpeechRecognitionTask?
 private let audioEngine = AVAudioEngine()
+var DRILLDOWNACTIVE = false
 var speechResult = SFSpeechRecognitionResult()
 var finalText = ""
 var data = ChatComponentModel()
@@ -20,7 +21,9 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     switch row.type {
     case .Introduction:
         return getSizeText(row.text, width)
-    case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
+    case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
+        return getSizeWebView()
+    case .Webview, .Table:
         return getSizeWebView()
     case .Suggestion:
         return getSizeSuggestion()
@@ -49,21 +52,28 @@ func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
 private func getSizeText(_ text: String, _ width: CGFloat) -> CGFloat {
     let approximateWidthOfBioTextView = width - 12 - 50 - 12 - 2
     let size = CGSize(width: approximateWidthOfBioTextView, height: 1000)
-    let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
+    let attributes = [NSAttributedString.Key.font: generalFont]
     let estimatedFrame = NSString(string: text).boundingRect(with: size,
                                                              options: .usesLineFragmentOrigin,
                                                              attributes: attributes,
                                                              context: nil)
     let sum: CGFloat = data.webView == "" ? 0.0 : 15.0
-    let finalHeight = estimatedFrame.height + 40 + sum
+    let finalHeight = estimatedFrame.height + 50 + sum
     return finalHeight
 }
 private func getSizeWebView() -> CGFloat{
     let size: CGFloat = data.numRow > 12 ? 360 : (CGFloat(data.numRow * 30) + 80)
     return size
 }
+private func getSizeTable() -> CGFloat{
+    if data.type == .Table{
+        let size: CGFloat = data.numRow > 12 ? 360 : (CGFloat(data.numRow * 30) + 80)
+        return size
+    }
+    return 360
+}
 private func getSizeSuggestion() -> CGFloat {
-    return CGFloat(110 + (data.options.count * 40))
+    return CGFloat(130 + (data.options.count * 40))
 }
 private func getSizeSafetynet() -> CGFloat {
     let size = Float(data.options[0].components(separatedBy: " ").count)
@@ -179,9 +189,15 @@ func reloadColors () {
 }
 func supportPivot(columns: [ChatTableColumnType]) -> Bool {
     var support = false
-    if columns.count >= 2 && columns.count <= 3{
-        let valid1 = columns[0] == .date
-        let valid2 = columns[1] == .dollar
+    //if columns.count >= 2 && columns.count <= 3{
+    if columns.count == 3{
+        let valid1 = (columns[0] == .date
+            //|| columns[0] == .dateString
+            )
+            || (columns[1] == .date
+            //||  columns[1] == .dateString
+        )
+        let valid2 = columns[1] == .dollar || columns[2] == .dollar
         support = valid1 && valid2
         if support && columns.count == 3 {
             support = columns[2] == .dollar
@@ -195,4 +211,11 @@ func supportContrast(columns: [ChatTableColumnType]) -> Bool {
         support = true
     }
     return support
+}
+func validateArray(_ array:[Any], _ pos: Int) -> Any{
+    //CHECAR EL LUNES- URGENTE
+    if pos == -1 {
+        return 0
+    }
+    return array.count > pos ? array[pos] : 0
 }

@@ -53,6 +53,7 @@ extension AutoCompleteView: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = data[indexPath.row]
         cell.textLabel?.textColor = chataDrawerTextColorPrimary
         cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.setSize()
         cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.textLabel?.minimumScaleFactor = 0.7
         return cell
