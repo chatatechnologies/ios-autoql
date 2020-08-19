@@ -17,6 +17,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     var dataSource: [String] = []
     var btnsDynamics: [UIButton] = []
     var originalText = ""
+    var originalTexts: [String] = []
     var numBtn = 0
     var finalStr = ""
     let mainLabel = UITextView()
@@ -75,6 +76,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     func createLabel(_ first: Bool = true) {
         let paragraph = NSMutableParagraphStyle()
+        //originalTexts = []
         paragraph.alignment = .center
         let attributedString:[NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraph,
@@ -82,22 +84,23 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             .foregroundColor : chataDrawerTextColorPrimary,
         ]
         var mainAttr = NSMutableAttributedString(string: "\(originalText)")
-        let range2 = NSRange(location: 0, length: originalText.count)
-        mainAttr.addAttributes(attributedString, range: range2)
+        //let range2 = NSRange(location: 0, length: originalText.count)
+        //mainAttr.addAttributes(attributedString, range: range2)
         for (index, change) in data.fullSuggestions.enumerated() {
             //var posStack = getPos(index: index, sumStr: sumStr)
             let start = originalText.index(originalText.startIndex, offsetBy: change.start)
             let end = originalText.index(originalText.endIndex, offsetBy: change.end - originalText.count)
             let rangeLast = start..<end
-            //var mySubstring = getRange(start: start, end: end, original: originalText)
+            let originText = getRange(start: start, end: end, original: originalText)
             var mySubstring = change.suggestionList[0].text
-            let newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
+            var newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
             if first{
+                originalTexts.append(originText)
                 listArr.append(mySubstring)
                 selectString.append(mySubstring)
             } else {
                 let newSelect = selectString[index]
-                originalText = originalText.replace(target: mySubstring, withString: selectString[index])
+                newString = originalText.replaceRange(range: rangeLast, start: start, newText: newSelect)
                 mySubstring = newSelect
             }
             let msgAttributes: [NSAttributedString.Key: Any] = [
@@ -107,6 +110,8 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
                 .paragraphStyle: paragraph
             ]
             mainAttr = NSMutableAttributedString(string: "\(newString)")
+            let range2 = NSRange(location: 0, length: newString.count)
+            mainAttr.addAttributes(attributedString, range: range2)
             let range = NSRange(location: change.start, length: mySubstring.count)
             mainAttr.addAttribute(.link, value: "\(index)", range: range)
             mainAttr.addAttributes(msgAttributes, range: range)
@@ -205,7 +210,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         //vwTrasparent.edgeTo(self, safeArea: .none)
         dataSource = []
         //numBtn = button.tag
-        let originalTerm = "\(labelText) (Original Term)"
+        let originalTerm = "\(originalTexts[pos]) (Original Term)"
         let list = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
             let text = data.valueLabel
             return "\(data.text) (\(text))"
@@ -213,7 +218,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         }) + [originalTerm]
         listValue = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
             return data.text
-        }) + [labelText]
+        }) + [originalTexts[pos]]
         dataSource = list
         tbChange.reloadData()
         vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
@@ -273,11 +278,8 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let text = listValue[indexPath.row]
         selectString[posSelected] = text
-        //HAcer el switch de botones
-        //btnsDynamics[numBtn].setTitle(text, for: .normal)
         removeTransparentView()
-        //createLabel(false)
-        recreateLabel()
+        createLabel(false)
     }
 }
 extension UITapGestureRecognizer {

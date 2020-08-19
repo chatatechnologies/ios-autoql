@@ -3582,8 +3582,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "loadLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3598,8 +3598,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "loadSafeLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3614,8 +3614,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "init(frame:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4510,8 +4510,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4526,8 +4526,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "recreateLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4542,8 +4542,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4558,8 +4558,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4574,8 +4574,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4590,8 +4590,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "recreateLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4606,8 +4606,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "recreateLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4622,8 +4622,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
             landmarkName = "recreateLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4638,8 +4638,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "recreateLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4686,8 +4686,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4695,16 +4695,112 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2A9A7EC8-C821-462A-98D4-F7D4991CA502"
+            uuid = "A3641A70-58ED-4446-8F43-FDD2403FD41C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCSafetynetView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "addTrasparentViewLabel(labelText:pos:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A3641A70-58ED-4446-8F43-FDD2403FD41C - bd5f09b4bf8af989"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.SafetynetView.(addTrasparentViewLabel in _A2013B7E8EFE9426DF8E914F4F454FFA)(labelText: Swift.String, pos: Swift.Int) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/CCSafetynetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "214"
+                  endingLineNumber = "214"
+                  offsetFromSymbolStart = "885">
+               </Location>
+               <Location
+                  uuid = "A3641A70-58ED-4446-8F43-FDD2403FD41C - b0cee2092a1e8e23"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (chata.ChataFullSuggestionItem) -&gt; Swift.String in chata.SafetynetView.(addTrasparentViewLabel in _A2013B7E8EFE9426DF8E914F4F454FFA)(labelText: Swift.String, pos: Swift.Int) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/CCSafetynetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "215"
+                  endingLineNumber = "215"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6130577-C33F-4223-8762-E0EA0CA35803"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCSafetynetView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "createLabel(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C12C4CA2-8B47-44BF-8113-F099FAF4D0D0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "createLabel(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F3F38845-AD9D-4275-8012-2E8A658F440F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCSafetynetView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FE152358-E61A-440D-ADCD-DD7FCEF386A8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCSafetynetView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "addTrasparentViewLabel(labelText:pos:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
