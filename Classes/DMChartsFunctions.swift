@@ -43,40 +43,6 @@ private func getConstants() -> String {
             },
             title: subTitle,
             subTitle: subTitle,
-            xAxis: {
-              gridLineWidth: 0,
-              categories: categoriesX,
-              labels: {
-                rotation: -60,
-                style: {
-                        color: colorAxis,
-                         fontSize:'15.5px',
-                         fontFamily: ['-apple-system','HelveticaNeue']
-                },
-                formatter: function(){
-                  return formatterLabel(this.value);
-                }
-              },
-
-              title: {
-                text: xAxis,
-                style: {
-                        color: colorAxis
-                    }
-              }
-            },
-            yAxis: {
-              gridLineWidth: 0,
-              labels: {
-                style: {
-                    color: colorAxis,
-                    fontSize:'15.5px',
-                    fontFamily: ['-apple-system','HelveticaNeue']
-                },
-                
-              },
-              title: yAxisTitle
-            },
             colorAxis: {
               reversed: false,
               min: 0,
@@ -181,8 +147,6 @@ private func getBiTypeCharts() -> String{
               minColor: '#FFFFFF',
               maxColor: '#26a7df'
             },
-            showInLegend: true,
-            legend: false,
             dataLabels: {
               enabled: false
             },
