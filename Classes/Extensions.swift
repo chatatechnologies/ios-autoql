@@ -21,6 +21,12 @@ public enum DViewSafeArea: String, CaseIterable {
     }
 }
 extension String {
+    func replaceRange(range: Range<Index>, start: Index, newText: String) -> String{
+        var newString = self
+        newString.removeSubrange(range)
+        newString.insert(contentsOf: newText, at: start)
+        return newString
+    }
     func hexToColor () -> UIColor {
         var cString: String = self.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         if cString.hasPrefix("#") {

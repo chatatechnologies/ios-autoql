@@ -81,14 +81,17 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             .font: generalFont,
             .foregroundColor : chataDrawerTextColorPrimary,
         ]
-        let mainAttr = NSMutableAttributedString(string: "\(originalText)")
+        var mainAttr = NSMutableAttributedString(string: "\(originalText)")
         let range2 = NSRange(location: 0, length: originalText.count)
         mainAttr.addAttributes(attributedString, range: range2)
         for (index, change) in data.fullSuggestions.enumerated() {
             //var posStack = getPos(index: index, sumStr: sumStr)
             let start = originalText.index(originalText.startIndex, offsetBy: change.start)
             let end = originalText.index(originalText.endIndex, offsetBy: change.end - originalText.count)
-            var mySubstring = getRange(start: start, end: end, original: originalText)
+            let rangeLast = start..<end
+            //var mySubstring = getRange(start: start, end: end, original: originalText)
+            var mySubstring = change.suggestionList[0].text
+            let newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
             if first{
                 listArr.append(mySubstring)
                 selectString.append(mySubstring)
@@ -103,6 +106,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
                 .font: generalFont,
                 .paragraphStyle: paragraph
             ]
+            mainAttr = NSMutableAttributedString(string: "\(newString)")
             let range = NSRange(location: change.start, length: mySubstring.count)
             mainAttr.addAttribute(.link, value: "\(index)", range: range)
             mainAttr.addAttributes(msgAttributes, range: range)
