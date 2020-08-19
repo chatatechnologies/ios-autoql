@@ -86,6 +86,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         var mainAttr = NSMutableAttributedString(string: "\(originalText)")
         //let range2 = NSRange(location: 0, length: originalText.count)
         //mainAttr.addAttributes(attributedString, range: range2)
+        var newString = ""
         for (index, change) in data.fullSuggestions.enumerated() {
             //var posStack = getPos(index: index, sumStr: sumStr)
             let start = originalText.index(originalText.startIndex, offsetBy: change.start)
@@ -93,14 +94,15 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             let rangeLast = start..<end
             let originText = getRange(start: start, end: end, original: originalText)
             var mySubstring = change.suggestionList[0].text
-            var newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
+            //var newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
+            newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
             if first{
                 originalTexts.append(originText)
                 listArr.append(mySubstring)
                 selectString.append(mySubstring)
             } else {
                 let newSelect = selectString[index]
-                newString = originalText.replaceRange(range: rangeLast, start: start, newText: newSelect)
+                newString = newString.replaceRange(range: rangeLast, start: start, newText: newSelect)
                 mySubstring = newSelect
             }
             let msgAttributes: [NSAttributedString.Key: Any] = [
@@ -109,14 +111,16 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
                 .font: generalFont,
                 .paragraphStyle: paragraph
             ]
+            
             mainAttr = NSMutableAttributedString(string: "\(newString)")
-            let range2 = NSRange(location: 0, length: newString.count)
-            mainAttr.addAttributes(attributedString, range: range2)
+            
             let range = NSRange(location: change.start, length: mySubstring.count)
             mainAttr.addAttribute(.link, value: "\(index)", range: range)
             mainAttr.addAttributes(msgAttributes, range: range)
-            mainLabel.attributedText = mainAttr
         }
+        let range2 = NSRange(location: 0, length: newString.count)
+        mainAttr.addAttributes(attributedString, range: range2)
+        mainLabel.attributedText = mainAttr
     }
     func recreateLabel(){
         /*let paragraph = NSMutableParagraphStyle()
@@ -248,18 +252,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         btnRunQuery.edgeTo(self, safeArea: .bottomPadding, height: 30, padding: 8)
     }
     @objc func runQuery(sender: UIButton!) {
-        var text = ""
-        for firstLevel in stack.subviews {
-            for secondLevel in firstLevel.subviews {
-                let label = secondLevel as? UILabel
-                let btn = secondLevel as? UIButton
-                text += label != nil ? ((label?.text ?? "") + " ") : (btn?.titleLabel?.text ?? "") + " "
-            }
-        }
-        text = text.replace(target: "  ", withString: " ")
-        if text.last == " " {
-            text = String(text.dropLast())
-        }
+        let text = mainLabel.text ?? ""
         delegate?.sendText(text, false)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

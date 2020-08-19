@@ -213,7 +213,6 @@ func supportContrast(columns: [ChatTableColumnType]) -> Bool {
     return support
 }
 func validateArray(_ array:[Any], _ pos: Int) -> Any{
-    //CHECAR EL LUNES- URGENTE
     if pos == -1 {
         return 0
     }
