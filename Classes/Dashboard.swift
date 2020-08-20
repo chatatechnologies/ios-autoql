@@ -19,6 +19,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     var imageView2 = UIImageView(image: nil)
     var spinnerDashboard = UIButton()
     var listDash: [DashboardList] = []
+    var loadingGeneral: Bool = false
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -58,7 +59,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                 self.dataDash = firstDash.data
                 self.tbMain.reloadData()
                 self.tbListDashboard.reloadData()
-               
             }
             
         }
@@ -121,7 +121,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         }
     }
     public func executeDashboard(){
-        
+        loadingGeneral = true
+        tbMain.reloadData()
         for (index, dash) in self.dataDash.enumerated() {
             //let indexPath = IndexPath(row: index, section: 0)
             //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
@@ -135,6 +136,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                     self.dataDash[pos].text = component.text
                     self.dataDash[pos].idQuery = component.idQuery
                     self.dataDash[pos].columnsInfo = component.columnsInfo
+                    self.dataDash[pos].loading = true
                     self.tbMain.reloadData()
                     
                 }
@@ -168,7 +170,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         if tableView == tbMain {
             let cell = DashboardComponentCell()
             cell.delegate = self
-            cell.configCell(data: dataDash[indexPath.row])
+            cell.configCell(data: dataDash[indexPath.row],
+                            loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral )
             //cell.addSubview(newView)
             return cell
         }
@@ -181,6 +184,7 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbListDashboard {
+            loadingGeneral = false
             spinnerDashboard.setTitle(listDash[indexPath.row].name, for: .normal)
             toggleListDashboard(false)
             dataDash = listDash[indexPath.row].data

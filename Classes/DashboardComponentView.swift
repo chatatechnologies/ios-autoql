@@ -23,7 +23,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     static var identifier: String {
         return String(describing: self)
     }
-    func configCell(data: DashboardModel) {
+    func configCell(data: DashboardModel, loading: Bool = false) {
         self.data = data
         self.contentView.backgroundColor = backgroundDash
         vwComponent.cardView()
@@ -31,6 +31,9 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         self.contentView.addSubview(vwComponent)
         vwComponent.edgeTo(self, safeArea: .nonePadding, height: 8, padding: 1)
         loadComponent()
+        if loading {
+            loaderWebview()
+        }
     }
     func loadComponent() {
         lblMain.text = data.title

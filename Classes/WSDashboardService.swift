@@ -75,7 +75,6 @@ class DashboardService {
         //let urlRequest = wsQuery
         httpRequest(url, "POST", body) { (response) in
             //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
-            
             if dash.splitView {
                 self.getSecondDashQuery(query: dash.secondQuery) { (htmlSecond) in
                     let typeFinal = dash.type == .Introduction ? "" : dash.type.rawValue

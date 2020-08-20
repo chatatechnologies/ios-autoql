@@ -311,7 +311,7 @@ class ChataServices {
                           position: Int = 0,
                           secondQuery: String = "") -> ChatComponentModel {
         let data = response["data"] as? [String: Any] ?? [:]
-        var dataModel = ChatComponentModel(webView: "error", options: items)
+        var dataModel = ChatComponentModel(webView: "error", options: items, position: position)
         if items.count > 0{
             dataModel.type = .Suggestion
         }
@@ -390,7 +390,7 @@ class ChataServices {
                                         columns: columnsFinal,
                                         datePivot: false)
                 //let tableType = splitType == "table"
-                let typeFinal = type == "" ? "#idTableBasic" : type
+                let typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
                 webView = """
                     \(getHTMLHeader(triType: columnsF.count == 3))
                     \(datePivotStr)
@@ -527,6 +527,7 @@ struct DashboardModel {
     var idQuery: String
     var columnsInfo: [ChatTableColumn]
     var secondQuery: String
+    var loading: Bool
     init(
         minW: Int = 0,
         staticVar: Int = 0,
@@ -550,7 +551,8 @@ struct DashboardModel {
         secondDisplayType: String = "",
         idQuery: String = "",
         columnsInfo: [ChatTableColumn] = [],
-        secondQuery: String = ""
+        secondQuery: String = "",
+        loading: Bool = false
     ) {
         self.minW = minW
         self.staticVar = staticVar
@@ -575,6 +577,7 @@ struct DashboardModel {
         self.idQuery = idQuery
         self.columnsInfo = columnsInfo
         self.secondQuery = secondQuery
+        self.loading = loading
     }
 }
 struct DataPivotRow{

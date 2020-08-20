@@ -3758,8 +3758,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "loadWebView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3774,8 +3774,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "loadWebView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3796,34 +3796,34 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "092CF180-90E7-462A-8355-F8F6F4B00082 - e0d991e5e68b9916"
+                  uuid = "092CF180-90E7-462A-8355-F8F6F4B00082 - 6bebd80d8d6f9411"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "chata.DashboardService.getDashQuery(query: Swift.String, type: Swift.String, split: Swift.Bool, splitType: Swift.String, completion: (chata.ChatComponentModel) -&gt; ()) -&gt; ()"
+                  symbolName = "chata.DashboardService.getDashQuery(dash: chata.DashboardModel, position: Swift.Int, completion: (chata.ChatComponentModel) -&gt; ()) -&gt; ()"
                   moduleName = "chata"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSDashboardService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "2748">
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "1824">
                </Location>
                <Location
-                  uuid = "092CF180-90E7-462A-8355-F8F6F4B00082 - dde44bcc36f23b57"
+                  uuid = "092CF180-90E7-462A-8355-F8F6F4B00082 - 2cad104c52d47243"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; () in chata.DashboardService.getDashQuery(query: Swift.String, type: Swift.String, split: Swift.Bool, splitType: Swift.String, completion: (chata.ChatComponentModel) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; () in chata.DashboardService.getDashQuery(dash: chata.DashboardModel, position: Swift.Int, completion: (chata.ChatComponentModel) -&gt; ()) -&gt; ()"
                   moduleName = "chata"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSDashboardService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "56"
-                  endingLineNumber = "56"
-                  offsetFromSymbolStart = "131">
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "256">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -3854,8 +3854,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "executeDashboard()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3870,8 +3870,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "executeDashboard()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3886,8 +3886,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3904,7 +3904,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
-            landmarkName = "configCell(data:)"
+            landmarkName = "configCell(data:loading:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3918,8 +3918,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "loadType()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3934,10 +3934,42 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "executeDashboard()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C0D430CC-FDD0-4675-924D-11508667B882 - f152cb7a80822003"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (chata.ChatComponentModel) -&gt; () in chata.Dashboard.executeDashboard() -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "276">
+               </Location>
+               <Location
+                  uuid = "C0D430CC-FDD0-4675-924D-11508667B882 - f152cb7a80822003"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (chata.ChatComponentModel) -&gt; () in chata.Dashboard.executeDashboard() -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4023,22 +4055,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CDFA0BD7-DA5F-4AF2-9774-D66E7DBB97A8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/Dashboard.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "loadDashboard(view:autentification:mainView:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "6639CB1F-AA6D-4FD6-A80D-AD72F76570FD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4046,8 +4062,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "loadDashboard(view:autentification:mainView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4062,8 +4078,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4082,6 +4098,38 @@
             endingLineNumber = "314"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7ABFF834-20D9-4C22-A02E-3FCAA78E0850 - f3843ba27361d4bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.ChataServices.getDataComponent(response: Swift.Dictionary&lt;Swift.String, Any&gt;, type: Swift.String, split: Swift.Bool, splitType: Swift.String, query: Swift.String, items: Swift.Array&lt;Swift.String&gt;, drilldown: Swift.Bool, position: Swift.Int, secondQuery: Swift.String) -&gt; chata.ChatComponentModel"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSChataServices.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "314"
+                  endingLineNumber = "314"
+                  offsetFromSymbolStart = "1104">
+               </Location>
+               <Location
+                  uuid = "7ABFF834-20D9-4C22-A02E-3FCAA78E0850 - f3843ba27361d4bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.ChataServices.getDataComponent(response: Swift.Dictionary&lt;Swift.String, Any&gt;, type: Swift.String, split: Swift.Bool, splitType: Swift.String, query: Swift.String, items: Swift.Array&lt;Swift.String&gt;, drilldown: Swift.Bool, position: Swift.Int, secondQuery: Swift.String) -&gt; chata.ChatComponentModel"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSChataServices.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "314"
+                  endingLineNumber = "314"
+                  offsetFromSymbolStart = "1465">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4126,8 +4174,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "getDashQuery(dash:position:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4158,8 +4206,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "getDashQuery(dash:position:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4174,8 +4222,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "getDashQuery(dash:position:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4642,6 +4690,244 @@
             endingLineNumber = "226"
             landmarkName = "addTrasparentViewLabel(labelText:pos:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7A44B52E-7D69-4E0B-973A-BE8D61BE8392"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSDashboardService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "getDashQuery(dash:position:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B921DCEE-B483-478B-B481-DA2121B125B3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/Dashboard.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "loadDashboard(view:autentification:mainView:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - a7c12ea6911848d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.Dashboard.loadDashboard(view: __C.UIView, autentification: chata.authentication, mainView: __C.UIView) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "344">
+               </Location>
+               <Location
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - f8ccc3fe96008d72"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;chata.DashboardList&gt;) -&gt; () in chata.Dashboard.loadDashboard(view: __C.UIView, autentification: chata.authentication, mainView: __C.UIView) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - a7c12ea6911848d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.Dashboard.loadDashboard(view: __C.UIView, autentification: chata.authentication, mainView: __C.UIView) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "259">
+               </Location>
+               <Location
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - f8ccc3fe96008d72"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;chata.DashboardList&gt;) -&gt; () in chata.Dashboard.loadDashboard(view: __C.UIView, autentification: chata.authentication, mainView: __C.UIView) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "158">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "23E3761C-7F34-4BA4-8946-83C63C59CFA1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/Dashboard.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "executeDashboard()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3E206B2C-7068-4DB6-9788-5697DC3FB205"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/Dashboard.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "executeDashboard()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "365C337C-4D74-48F2-BA87-1B7F6F616D21"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSDashboardService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "getDashQuery(dash:position:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "234266DF-122C-41A1-8AEF-7DBAE1C8F59A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSDashboardService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "getDashQuery(dash:position:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "93D14F3E-9523-4D3D-B90E-C5C2C6D22C51"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
+            landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2D028AD5-CEB6-4BA6-9F9C-C13311A9F8D1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
+            landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E2D5B117-1D83-4C9F-84FD-B3D71A7CA5FF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "394"
+            endingLineNumber = "394"
+            landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E2D5B117-1D83-4C9F-84FD-B3D71A7CA5FF - f3843ba27361d4bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.ChataServices.getDataComponent(response: Swift.Dictionary&lt;Swift.String, Any&gt;, type: Swift.String, split: Swift.Bool, splitType: Swift.String, query: Swift.String, items: Swift.Array&lt;Swift.String&gt;, drilldown: Swift.Bool, position: Swift.Int, secondQuery: Swift.String) -&gt; chata.ChatComponentModel"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSChataServices.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "394"
+                  endingLineNumber = "394"
+                  offsetFromSymbolStart = "9120">
+               </Location>
+               <Location
+                  uuid = "E2D5B117-1D83-4C9F-84FD-B3D71A7CA5FF - f3843ba27361d4bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.ChataServices.getDataComponent(response: Swift.Dictionary&lt;Swift.String, Any&gt;, type: Swift.String, split: Swift.Bool, splitType: Swift.String, query: Swift.String, items: Swift.Array&lt;Swift.String&gt;, drilldown: Swift.Bool, position: Swift.Int, secondQuery: Swift.String) -&gt; chata.ChatComponentModel"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSChataServices.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "394"
+                  endingLineNumber = "394"
+                  offsetFromSymbolStart = "13105">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
