@@ -28,7 +28,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         loadTableD(table: tbMain)
         loadTableD(table: tbListDashboard)
         self.addSubview(spinnerDashboard)
-        spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 50, padding: 16)
+        spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 50, padding: 32)
         spinnerDashboard.setTitleColor(.black, for: .normal)
         spinnerDashboard.cardView()
         spinnerDashboard.addTarget(self, action: #selector(toggleDash), for: .touchUpInside)
@@ -137,7 +137,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                     self.dataDash[pos].idQuery = component.idQuery
                     self.dataDash[pos].columnsInfo = component.columnsInfo
                     self.dataDash[pos].loading = true
-                    self.tbMain.reloadData()
+                    let indexPath = IndexPath(row: pos, section: 0)
+                    self.tbMain.reloadRows(at: [indexPath], with: .none)
                     
                 }
             }
@@ -171,7 +172,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             let cell = DashboardComponentCell()
             cell.delegate = self
             cell.configCell(data: dataDash[indexPath.row],
-                            loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral )
+                            loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral
+                            )
             //cell.addSubview(newView)
             return cell
         }

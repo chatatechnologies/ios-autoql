@@ -105,17 +105,28 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         delegate?.sendDrillDown(idQuery: data.idQuery, obj: [], name: [], title: data.query)
     }
     func loaderWebview(_ load: Bool = true){
+        var isLoading = false
+        vwWebview.subviews.forEach { (view) in
+            if view.tag == 5{
+                isLoading = true
+            }
+        }
         if load {
-            let bundle = Bundle(for: type(of: self))
-            let path = bundle.path(forResource: "gifBalls", ofType: "gif")
-            let url = URL(fileURLWithPath: path!)
-            imageView2.loadGif(url: url)
-            //let jeremyGif = UIImage.gifImageWithName("preloader")
-            //let imageView = UIImageView(image: image)
-            imageView2.tag = 5
-            lblDefault.isHidden = true
-            vwWebview.addSubview(imageView2)
-            imageView2.edgeTo(vwWebview, safeArea: .centerSize, height: 50, padding: 100)
+            if data.query == "estimates by customer"{
+                print("funca")
+            }
+            if !isLoading{
+                let bundle = Bundle(for: type(of: self))
+                let path = bundle.path(forResource: "gifBalls", ofType: "gif")
+                let url = URL(fileURLWithPath: path!)
+                imageView2.loadGif(url: url)
+                //let jeremyGif = UIImage.gifImageWithName("preloader")
+                //let imageView = UIImageView(image: image)
+                imageView2.tag = 5
+                lblDefault.isHidden = true
+                vwWebview.addSubview(imageView2)
+                imageView2.edgeTo(vwWebview, safeArea: .centerSize, height: 50, padding: 100)
+            }
         } else{
             vwWebview.subviews.forEach { (view) in
                 if view.tag == 5{
