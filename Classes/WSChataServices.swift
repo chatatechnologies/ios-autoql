@@ -331,7 +331,7 @@ class ChataServices {
             if rows.count == 1{
                 if rows[0].count == 1{
                     displayType = .Introduction
-                    textFinal = (rows[0][0] as? String ?? "").toMoney()
+                    textFinal = "\(rows[0][0] )".toMoney()
                     user = false
                 }
             }

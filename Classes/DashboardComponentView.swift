@@ -15,6 +15,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     var data: DashboardModel = DashboardModel()
     let vwComponent = UIView()
     let vwWebview = UIView()
+    let vwSecondWebview = UIView()
     var wbMain = WKWebView()
     let lblMain = UILabel()
     let lblDefault = UILabel()
@@ -112,9 +113,6 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             }
         }
         if load {
-            if data.query == "estimates by customer"{
-                print("funca")
-            }
             if !isLoading{
                 let bundle = Bundle(for: type(of: self))
                 let path = bundle.path(forResource: "gifBalls", ofType: "gif")
