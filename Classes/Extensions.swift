@@ -9,7 +9,7 @@
 import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, fullPadding,
+    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding,
     topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, centerSize, bottomRight
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
@@ -332,6 +332,16 @@ extension UIView {
             leadingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
+        case .bottomPaddingtoTopHalf:
+            //let finalHeight = (view.frame.height / 2) - top.frame.height
+            //heightAnchor.constraint(equalToConstant: finalHeight).isActive = true
+            
+            heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.38).isActive = true
+            //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
+            leadingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
+            //self.addConstraint(heightConstraint)
         case .bottomPadding:
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true

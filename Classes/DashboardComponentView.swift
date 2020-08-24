@@ -26,30 +26,49 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     func configCell(data: DashboardModel, loading: Bool = false) {
         self.data = data
+        if data.splitView{
+            print("YES")
+            styleComponent()
+            loadTitle()
+            loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
+            loadComponent(view: vwSecondWebview, connect: vwWebview)
+        } else {
+            styleComponent()
+            loadTitle()
+            loadComponent(view: vwWebview, connect: lblMain)
+            loadType()
+            if loading {
+                loaderWebview()
+            }
+        }
+    }
+    func styleComponent() {
         self.contentView.backgroundColor = backgroundDash
         vwComponent.cardView()
         vwComponent.backgroundColor = .white
         self.contentView.addSubview(vwComponent)
         vwComponent.edgeTo(self, safeArea: .nonePadding, height: 8, padding: 1)
-        loadComponent()
-        if loading {
-            loaderWebview()
-        }
     }
-    func loadComponent() {
+    func loadComponent(view: UIView, nsType: DViewSafeArea = .bottomPaddingtoTop, connect: UIView) {
+        vwComponent.addSubview(view)
+        view.edgeTo(vwComponent, safeArea: nsType, connect,  padding: 8)
+        loadDefault(view: view)
+    }
+    func loadTitle() {
         lblMain.text = data.title
         vwComponent.addSubview(lblMain)
         lblMain.edgeTo(vwComponent, safeArea: .topPadding, height: 30, padding: 8)
         lblMain.textColor = chataDrawerAccentColor
-        vwComponent.addSubview(vwWebview)
-        vwWebview.edgeTo(vwComponent, safeArea: .bottomPaddingtoTop, lblMain,  padding: 8)
-        lblDefault.text = "Hit 'Execute' to run this dashboard"
-        lblDefault.numberOfLines = 0
-        lblDefault.textColor = chataDrawerTextColorPrimary
-        lblDefault.textAlignment = .center
-        vwWebview.addSubview(lblDefault)
-        lblDefault.edgeTo(vwWebview, safeArea: .none)
-        loadType()
+    }
+    func loadDefault(view: UIView) {
+        let newLbl = UILabel()
+        newLbl.text = "Hit 'Execute' to run this dashboard"
+        newLbl.numberOfLines = 0
+        newLbl.textColor = chataDrawerTextColorPrimary
+        newLbl.textAlignment = .center
+        //vwWebview.addSubview(lblDefault)
+        view.addSubview(newLbl)
+        newLbl.edgeTo(view, safeArea: .none)
     }
     func loadType() {
         switch data.type {
