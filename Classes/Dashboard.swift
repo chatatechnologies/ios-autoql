@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate {
     let tbMain = UITableView()
+    let vwEmptyDash = UIView()
     let tbListDashboard = UITableView()
     var dataDash: [DashboardModel] = []
     var imageView = UIImageView(image: nil)
@@ -34,6 +35,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         spinnerDashboard.addTarget(self, action: #selector(toggleDash), for: .touchUpInside)
         self.addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .fullState, spinnerDashboard)
+        loadEmptyView()
         self.addSubview(tbListDashboard)
         tbListDashboard.edgeTo(self, safeArea: .dropDownTop, height: 200, spinnerDashboard, padding: 0)
         tbListDashboard.cardView()
@@ -43,6 +45,17 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     }
     @IBAction func toggleDash(_ sender: AnyObject){
         toggleListDashboard(tbListDashboard.isHidden)
+    }
+    func loadEmptyView() {
+        self.addSubview(vwEmptyDash)
+        vwEmptyDash.edgeTo(self, safeArea: .topHeight, height: 100, spinnerDashboard)
+        vwEmptyDash.isHidden = true
+        let lblText = UILabel()
+        lblText.text = "Empty Dashboard"
+        lblText.textAlignment = .center
+        lblText.textColor = chataDrawerTextColorPrimary
+        vwEmptyDash.addSubview(lblText)
+        lblText.edgeTo(vwEmptyDash, safeArea: .none)
     }
     public func loadDashboard(
         view: UIView,
@@ -59,9 +72,14 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                 self.dataDash = firstDash.data
                 self.tbMain.reloadData()
                 self.tbListDashboard.reloadData()
+                self.toggleTable()
             }
             
         }
+    }
+    func toggleTable() {
+        tbMain.isHidden = dataDash.count == 0
+        vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
     func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String) {
         print(idQuery)
@@ -191,6 +209,7 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             spinnerDashboard.setTitle(listDash[indexPath.row].name, for: .normal)
             toggleListDashboard(false)
             dataDash = listDash[indexPath.row].data
+            toggleTable()
             tbMain.reloadData()
         }
     }
