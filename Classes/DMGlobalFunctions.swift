@@ -38,7 +38,7 @@ func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
     switch row.type {
     case .Introduction:
         //return getSizeText(row.text, width)
-        return 200
+        return CGFloat(row.posH) * 100.0
     case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
         return row.splitView ? 800 : 400
     case .Suggestion:

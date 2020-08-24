@@ -240,16 +240,12 @@ class ChataServices {
             //let idQuery = data["query_id"] as? String ?? ""
             let rows = data["rows"] as? [[Any]] ?? []
             let columnsFinal = getColumns(columns: columns)
-            let (rowsFinal, rowsFinalClean) = getRows(rows: rows, columnsFinal: columnsFinal)
+            let (rowsFinal, _) = getRows(rows: rows, columnsFinal: columnsFinal)
             let columnsF = columnsFinal.map { (element) -> String in
                 return element.name
             }
-            var webView = ""
             let chartsBi = displayType == .Pie || displayType == .Bar || displayType == .Column || displayType == .Line
             let chartsTri = displayType == .Heatmap || displayType == .Bubble || displayType == .StackColumn || displayType == .StackBar || displayType == .StackArea
-            let columsType = columnsFinal.map({ (element) -> ChatTableColumnType in
-                return element.type
-            })
             // hacer DAta
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
                 /*let existsDatePivot = supportPivot(columns: columsType)

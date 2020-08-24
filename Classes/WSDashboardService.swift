@@ -139,7 +139,7 @@ class DashboardService {
         let identify = dash["i"] as? Int ?? 0
         let query = dash["query"] as? String ?? ""
         let isNewTile = dash["isNewTile"] as? Int ?? 0
-        let title = dash["title"] as? String ?? ""
+        let title = dash["title"] as? String ?? "Untitled"
         let key = dash["key"] as? String ?? ""
         let moved = dash["moved"] as? Int ?? 0
         let posH = dash["h"] as? Int ?? 0
@@ -147,7 +147,7 @@ class DashboardService {
         let splitView = dash["splitView"] as? Bool ?? false
         let secondQuery = dash["secondQuery"] as? String ?? ""
         let secondDisplayType = dash["secondDisplayType"] as? String ?? ""
-        let finalTitle = title == "" ? query : title
+        let finalTitle = title == "" ? (query == "" ? "Untitled" : query) : title
         return DashboardModel(minW: minW, staticVar: staticVar, maxH: maxH,
                               minH: minH, displayType: displayType,
                               posX: posX, posY: posY, identify: identify,

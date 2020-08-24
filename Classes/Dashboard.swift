@@ -162,7 +162,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     }
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == tbMain {
-            return getSizeDashboard(row: dataDash[indexPath.row], width: self.frame.width)
+            let finalSize = getSizeDashboard(row: dataDash[indexPath.row], width: self.frame.width)
+            return finalSize
         } else {
             return 50
         }

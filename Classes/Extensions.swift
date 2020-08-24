@@ -296,6 +296,26 @@ extension UIView {
         self.layer.shadowRadius = 1.0*/
         self.layer.masksToBounds = false
     }
+    enum ViewSide {
+        case left, right, top, bottom
+    }
+
+    func addBorder(side: ViewSide = .bottom, color: UIColor = chataDrawerBorderColor, width: CGFloat = 1 ) {
+        let newBorder = UIView()
+        newBorder.backgroundColor = color
+        newBorder.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        switch side {
+        case .bottom:
+            newBorder.frame = CGRect(x: 0, y: frame.size.height - width, width: frame.size.width, height: width)
+        case .top:
+            newBorder.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: width)
+        case .left:
+            newBorder.frame = CGRect(x: 0, y: 0, width: width, height: frame.size.height)
+        case .right:
+            newBorder.frame = CGRect(x: frame.size.width - width, y: 0, width: width, height: frame.size.height)
+        }
+        addSubview(newBorder)
+    }
     func cardViewShadow() {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 20

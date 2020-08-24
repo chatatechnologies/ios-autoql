@@ -27,10 +27,10 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     func configCell(data: DashboardModel, loading: Bool = false) {
         self.data = data
         if data.splitView{
-            print("YES")
             styleComponent()
             loadTitle()
             loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
+            vwWebview.addBorder()
             loadComponent(view: vwSecondWebview, connect: vwWebview)
         } else {
             styleComponent()
@@ -64,6 +64,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         let newLbl = UILabel()
         newLbl.text = "Hit 'Execute' to run this dashboard"
         newLbl.numberOfLines = 0
+        newLbl.tag = 1
         newLbl.textColor = chataDrawerTextColorPrimary
         newLbl.textAlignment = .center
         //vwWebview.addSubview(lblDefault)
