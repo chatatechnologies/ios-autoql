@@ -499,6 +499,29 @@ struct DashboardList {
         self.updatedAt = updatedAt
     }
 }
+struct SubDashboardModel {
+    var displayType: String
+    var webview: String
+    var text: String
+    var type: ChatComponentType
+    var idQuery: String
+    var loading: Bool
+    init(
+        displayType: String = "",
+        webview: String = "",
+        text: String = "",
+        type: ChatComponentType = .Introduction,
+        idQuery: String = "",
+        loading: Bool = false
+    ) {
+        self.displayType = displayType
+        self.webview = webview
+        self.text = text
+        self.type = type
+        self.idQuery = idQuery
+        self.loading = loading
+    }
+}
 struct DashboardModel {
     var minW: Int
     var staticVar: Int
@@ -524,6 +547,7 @@ struct DashboardModel {
     var columnsInfo: [ChatTableColumn]
     var secondQuery: String
     var loading: Bool
+    var subDashboardModel : SubDashboardModel
     init(
         minW: Int = 0,
         staticVar: Int = 0,
@@ -548,7 +572,8 @@ struct DashboardModel {
         idQuery: String = "",
         columnsInfo: [ChatTableColumn] = [],
         secondQuery: String = "",
-        loading: Bool = false
+        loading: Bool = false,
+        subDashboardModel: SubDashboardModel = SubDashboardModel()
     ) {
         self.minW = minW
         self.staticVar = staticVar
@@ -574,6 +599,7 @@ struct DashboardModel {
         self.columnsInfo = columnsInfo
         self.secondQuery = secondQuery
         self.loading = loading
+        self.subDashboardModel = subDashboardModel
     }
 }
 struct DataPivotRow{

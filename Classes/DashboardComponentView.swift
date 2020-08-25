@@ -26,17 +26,22 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     func configCell(data: DashboardModel, loading: Bool = false) {
         self.data = data
+        styleComponent()
+        loadTitle()
         if data.splitView{
-            styleComponent()
-            loadTitle()
             loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
             vwWebview.addBorder()
             loadComponent(view: vwSecondWebview, connect: vwWebview)
+            loadType(view: vwWebview, text: data.text)
+            print(data.text)
+            loadType(view: vwSecondWebview, text: data.subDashboardModel.text)
+            if loading {
+                loaderWebview(view: vwWebview)
+                loaderWebview(view: vwSecondWebview)
+            }
         } else {
-            styleComponent()
-            loadTitle()
             loadComponent(view: vwWebview, connect: lblMain)
-            loadType(view: vwWebview)
+            loadType(view: vwWebview, text: data.text)
             if loading {
                 loaderWebview(view: vwWebview)
             }
@@ -70,7 +75,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         view.addSubview(newLbl)
         newLbl.edgeTo(view, safeArea: .none)
     }
-    func loadType(view: UIView) {
+    func loadType(view: UIView, text: String) {
         switch data.type {
         case .Safetynet, .Suggestion:
             print("error")
@@ -79,7 +84,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         case .Table:
             loadWebView(view: view)
         case .Introduction:
-            loadIntro(view: view)
+            loadIntro(view: view, text: text)
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
             loadWebView(view: view)
         case .QueryBuilder:
@@ -111,9 +116,9 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         loaderWebview(view: view)
         wbMain.loadHTMLString(data.webview, baseURL: nil)
     }
-    func loadIntro(view: UIView) {
-        if data.text != "" {
-            view.changeTextSubView(tag: 1, newText: data.text)
+    func loadIntro(view: UIView, text: String) {
+        if text != "" {
+            view.changeTextSubView(tag: 1, newText: text)
             if DataConfig.autoQLConfigObj.enableDrilldowns{
                 let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
                 vwWebview.addGestureRecognizer(tapgesture)

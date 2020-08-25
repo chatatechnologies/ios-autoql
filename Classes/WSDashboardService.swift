@@ -57,42 +57,28 @@ class DashboardService {
             //completion(matches)
         }
     }
-    func getDashQuery(dash: DashboardModel,
+    func getDashQuery(query: String,
+                      type: ChatComponentType,
                       position: Int = 0,
                       completion: @escaping CompletionChatComponentModel) {
         var base = DataConfig.authenticationObj.domain
         if base.last == "/" {
             base.removeLast()
         }
-        // https://qbo-staging.chata.io/autoql/api/v1/query?key=AIzaSyD2J8pfYPSI8b--HfxliLYB8V5AehPv0ys
         let url = "\(base)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let body: [String: Any] = [
                     "debug": true,
                     "source": "dashboards.user",
                     "test": true,
-                    "text": dash.query
+                    "text": query
                 ]
-        //let urlRequest = wsQuery
         httpRequest(url, "POST", body) { (response) in
-            //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
-            if dash.splitView {
-                self.getSecondDashQuery(query: dash.secondQuery) { (htmlSecond) in
-                    let typeFinal = dash.type == .Introduction ? "" : dash.type.rawValue
-                    let finalComponent = ChataServices().getDataComponent(response: response,
-                                                                          type: typeFinal,
-                                                                          split: dash.splitView,
-                                                                          splitType: dash.secondDisplayType,
-                                                                          position: position,
-                                                                          secondQuery: htmlSecond)
-                    completion(finalComponent)
-                }
-            } else {
-                let typeFinal = dash.type == .Introduction ? "" : dash.type.rawValue
+                let typeFinal = type == .Introduction ? "" : type.rawValue
                 let finalComponent = ChataServices().getDataComponent(response: response,
                                                                       type: typeFinal,
                                                                       position: position)
                 completion(finalComponent)
-            }
+            
         }
         
     }

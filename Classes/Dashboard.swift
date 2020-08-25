@@ -146,19 +146,42 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             //let indexPath = IndexPath(row: index, section: 0)
             //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
             //cell.loaderWebview()
-            DashboardService().getDashQuery(dash: dash,
-                                            position: index) { (component) in
-                DispatchQueue.main.async {
-                    let pos = component.position
-                    self.dataDash[pos].webview = component.webView
-                    self.dataDash[pos].type = component.type
-                    self.dataDash[pos].text = component.text
-                    self.dataDash[pos].idQuery = component.idQuery
-                    self.dataDash[pos].columnsInfo = component.columnsInfo
-                    self.dataDash[pos].loading = true
-                    let indexPath = IndexPath(row: pos, section: 0)
-                    self.tbMain.reloadRows(at: [indexPath], with: .none)
+            if dash.splitView {
+                DashboardService().getDashQuery(query: dash.secondQuery,
+                                                type: ChatComponentType.withLabel(dash.secondDisplayType),
+                                                position: index) { (component) in
+                    DispatchQueue.main.async {
+                        let pos = component.position
+                        let newSub = SubDashboardModel(
+                                webview: component.webView,
+                                text: component.text,
+                                type: component.type,
+                                idQuery: component.idQuery,
+                                loading: true
+                        )
+                        self.dataDash[pos].subDashboardModel = newSub
+                        let indexPath = IndexPath(row: pos, section: 0)
+                        self.tbMain.reloadRows(at: [indexPath], with: .none)
+                    }
                 }
+            }
+            loadOneDash(query: dash.query, type: dash.type, index: index)
+        }
+    }
+    func loadOneDash(query: String, type: ChatComponentType, index: Int ) {
+        DashboardService().getDashQuery(query: query,
+                                        type: type,
+                                        position: index) { (component) in
+            DispatchQueue.main.async {
+                let pos = component.position
+                self.dataDash[pos].webview = component.webView
+                self.dataDash[pos].type = component.type
+                self.dataDash[pos].text = component.text
+                self.dataDash[pos].idQuery = component.idQuery
+                self.dataDash[pos].columnsInfo = component.columnsInfo
+                self.dataDash[pos].loading = true
+                let indexPath = IndexPath(row: pos, section: 0)
+                self.tbMain.reloadRows(at: [indexPath], with: .none)
             }
         }
     }
