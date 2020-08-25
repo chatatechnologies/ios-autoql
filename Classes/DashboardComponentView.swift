@@ -36,9 +36,9 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             styleComponent()
             loadTitle()
             loadComponent(view: vwWebview, connect: lblMain)
-            loadType()
+            loadType(view: vwWebview)
             if loading {
-                loaderWebview()
+                loaderWebview(view: vwWebview)
             }
         }
     }
@@ -67,27 +67,26 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newLbl.tag = 1
         newLbl.textColor = chataDrawerTextColorPrimary
         newLbl.textAlignment = .center
-        //vwWebview.addSubview(lblDefault)
         view.addSubview(newLbl)
         newLbl.edgeTo(view, safeArea: .none)
     }
-    func loadType() {
+    func loadType(view: UIView) {
         switch data.type {
         case .Safetynet, .Suggestion:
             print("error")
         case .Webview:
-            loadWebView()
+            loadWebView(view: view)
         case .Table:
-            loadWebView()
+            loadWebView(view: view)
         case .Introduction:
-            loadIntro()
+            loadIntro(view: view)
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-            loadWebView()
+            loadWebView(view: view)
         case .QueryBuilder:
             print("no supported for dashboard")
         }
     }
-    func loadWebView(){
+    func loadWebView(view: UIView){
         //self.wbMain = WKWebView(frame: self.bounds)
         //wbMain.navigationDelegate = self
         let contentController = WKUserContentController()
@@ -107,25 +106,25 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         wbMain.isOpaque = false
         wbMain.isUserInteractionEnabled = true
         wbMain.scrollView.isScrollEnabled = true
-        vwWebview.addSubview(wbMain)
-        self.wbMain.edgeTo(vwWebview, safeArea: .none)
-        loaderWebview()
+        view.addSubview(wbMain)
+        self.wbMain.edgeTo(view, safeArea: .none)
+        loaderWebview(view: view)
         wbMain.loadHTMLString(data.webview, baseURL: nil)
     }
-    func loadIntro() {
-        if data.text != ""{
-            lblDefault.text = data.text
+    func loadIntro(view: UIView) {
+        if data.text != "" {
+            view.changeTextSubView(tag: 1, newText: data.text)
             if DataConfig.autoQLConfigObj.enableDrilldowns{
                 let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
                 vwWebview.addGestureRecognizer(tapgesture)
             }
         }
-        loaderWebview(false)
+        loaderWebview(false, view: view)
     }
     @objc func showDrillDown() {
         delegate?.sendDrillDown(idQuery: data.idQuery, obj: [], name: [], title: data.query)
     }
-    func loaderWebview(_ load: Bool = true){
+    func loaderWebview(_ load: Bool = true, view: UIView){
         var isLoading = false
         vwWebview.subviews.forEach { (view) in
             if view.tag == 5{
@@ -140,9 +139,9 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                 imageView2.loadGif(url: url)
                 //let jeremyGif = UIImage.gifImageWithName("preloader")
                 //let imageView = UIImageView(image: image)
+                view.removeView(tag: 1)
                 imageView2.tag = 5
-                lblDefault.isHidden = true
-                vwWebview.addSubview(imageView2)
+                view.addSubview(imageView2)
                 imageView2.edgeTo(vwWebview, safeArea: .centerSize, height: 50, padding: 100)
             }
         } else{
@@ -183,7 +182,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loaderWebview(false)
+        loaderWebview(false, view: vwWebview)
         //progress(off: true, viewT: wbChart!)
     }
 }

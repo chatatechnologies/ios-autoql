@@ -29,12 +29,13 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         loadTableD(table: tbMain)
         loadTableD(table: tbListDashboard)
         self.addSubview(spinnerDashboard)
-        spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 50, padding: 32)
-        spinnerDashboard.setTitleColor(.black, for: .normal)
+        spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 40, padding: 8)
+        spinnerDashboard.titleLabel?.font = generalFont
+        spinnerDashboard.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
         spinnerDashboard.cardView()
         spinnerDashboard.addTarget(self, action: #selector(toggleDash), for: .touchUpInside)
         self.addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .fullState, spinnerDashboard)
+        tbMain.edgeTo(self, safeArea: .fullStatePaddingTop, spinnerDashboard, padding: 8)
         loadEmptyView()
         self.addSubview(tbListDashboard)
         tbListDashboard.edgeTo(self, safeArea: .dropDownTop, height: 200, spinnerDashboard, padding: 0)
@@ -157,7 +158,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                     self.dataDash[pos].loading = true
                     let indexPath = IndexPath(row: pos, section: 0)
                     self.tbMain.reloadRows(at: [indexPath], with: .none)
-                    
                 }
             }
         }
@@ -199,6 +199,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         if tableView == tbListDashboard {
             let cell = UITableViewCell()
             cell.textLabel?.text = listDash[indexPath.row].name
+            cell.textLabel?.font = generalFont
+            cell.textLabel?.textColor = chataDrawerTextColorPrimary
             return cell
         }
         return UITableViewCell()
@@ -216,5 +218,6 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     func loadTableD(table: UITableView) {
         table.delegate = self
         table.dataSource = self
+        table.bounces = false
     }
 }
