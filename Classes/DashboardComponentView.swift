@@ -11,7 +11,6 @@ protocol DashboardComponentCellDelegate: class{
     func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String)
 }
 class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler {
-    var imageView2 = UIImageView(image: nil)
     var data: DashboardModel = DashboardModel()
     let vwComponent = UIView()
     let vwWebview = UIView()
@@ -32,16 +31,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
             vwWebview.addBorder()
             loadComponent(view: vwSecondWebview, connect: vwWebview)
-            loadType(view: vwWebview, text: data.text)
+            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview)
             print(data.text)
-            loadType(view: vwSecondWebview, text: data.subDashboardModel.text)
+            loadType(view: vwSecondWebview, text: data.subDashboardModel.text, type: data.subDashboardModel.type, webview: data.subDashboardModel.webview)
             if loading {
                 loaderWebview(view: vwWebview)
                 loaderWebview(view: vwSecondWebview)
             }
         } else {
             loadComponent(view: vwWebview, connect: lblMain)
-            loadType(view: vwWebview, text: data.text)
+            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview)
             if loading {
                 loaderWebview(view: vwWebview)
             }
@@ -75,23 +74,23 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         view.addSubview(newLbl)
         newLbl.edgeTo(view, safeArea: .none)
     }
-    func loadType(view: UIView, text: String) {
-        switch data.type {
+    func loadType(view: UIView, text: String, type: ChatComponentType, webview: String = "") {
+        switch type {
         case .Safetynet, .Suggestion:
             print("error")
         case .Webview:
-            loadWebView(view: view)
+            loadWebView(view: view, webview: webview)
         case .Table:
-            loadWebView(view: view)
+            loadWebView(view: view, webview: webview)
         case .Introduction:
             loadIntro(view: view, text: text)
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-            loadWebView(view: view)
+            loadWebView(view: view, webview: webview)
         case .QueryBuilder:
             print("no supported for dashboard")
         }
     }
-    func loadWebView(view: UIView){
+    func loadWebView(view: UIView, webview: String){
         //self.wbMain = WKWebView(frame: self.bounds)
         //wbMain.navigationDelegate = self
         let contentController = WKUserContentController()
@@ -114,7 +113,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         view.addSubview(wbMain)
         self.wbMain.edgeTo(view, safeArea: .none)
         loaderWebview(view: view)
-        wbMain.loadHTMLString(data.webview, baseURL: nil)
+        wbMain.loadHTMLString(webview, baseURL: nil)
     }
     func loadIntro(view: UIView, text: String) {
         if text != "" {
@@ -131,13 +130,14 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     func loaderWebview(_ load: Bool = true, view: UIView){
         var isLoading = false
-        vwWebview.subviews.forEach { (view) in
+        view.subviews.forEach { (view) in
             if view.tag == 5{
                 isLoading = true
             }
         }
         if load {
             if !isLoading{
+                let imageView2 = UIImageView(image: nil)
                 let bundle = Bundle(for: type(of: self))
                 let path = bundle.path(forResource: "gifBalls", ofType: "gif")
                 let url = URL(fileURLWithPath: path!)
@@ -147,14 +147,10 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                 view.removeView(tag: 1)
                 imageView2.tag = 5
                 view.addSubview(imageView2)
-                imageView2.edgeTo(vwWebview, safeArea: .centerSize, height: 50, padding: 100)
+                imageView2.edgeTo(view, safeArea: .centerSize, height: 50, padding: 100)
             }
         } else{
-            vwWebview.subviews.forEach { (view) in
-                if view.tag == 5{
-                    view.removeFromSuperview()
-                }
-            }
+            view.removeView(tag: 5)
         }
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -187,7 +183,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loaderWebview(false, view: vwWebview)
+        loaderWebview(false, view: webView.superview ?? UIView())
         //progress(off: true, viewT: wbChart!)
     }
 }
