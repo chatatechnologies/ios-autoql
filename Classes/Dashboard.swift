@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate {
+public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate, ChatViewDelegate {
     let tbMain = UITableView()
     let vwEmptyDash = UIView()
     let tbListDashboard = UITableView()
@@ -215,6 +215,7 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         if tableView == tbMain {
             let cell = DashboardComponentCell()
             cell.delegate = self
+            cell.delegateSend = self
             cell.configCell(data: dataDash[indexPath.row],
                             loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral
                             )
@@ -245,5 +246,12 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         table.delegate = self
         table.dataSource = self
         table.bounces = false
+    }
+    func sendText(_ text: String, _ safe: Bool) {
+        print("funca")
+    }
+    
+    func sendDrillDown(idQuery: String, obj: String, name: String) {
+        
     }
 }

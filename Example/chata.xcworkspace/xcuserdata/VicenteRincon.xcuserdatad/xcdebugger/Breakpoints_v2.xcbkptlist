@@ -1742,9 +1742,9 @@
             filePath = "../Classes/CCSuggestionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "loadConfig(options:query:)"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "loadConfig(options:query:first:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3742,8 +3742,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "loadWebView(view:webview:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3758,9 +3758,9 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "loadWebView(view:webview:)"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "loadIntro(view:text:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3966,8 +3966,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4556,9 +4556,9 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "loadType(view:text:type:webview:list:)"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "loadType(view:text:type:webview:list:firstView:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4572,8 +4572,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "loadIntro(view:text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4620,8 +4620,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4636,8 +4636,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4652,8 +4652,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "loadIntro(view:text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4668,8 +4668,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "loadIntro(view:text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4700,8 +4700,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "loadWebView(view:webview:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4716,9 +4716,9 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "loadType(view:text:type:webview:list:)"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "loadType(view:text:type:webview:list:firstView:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4748,9 +4748,9 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "loadSuggestion(view:list:)"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "loadSuggestion(view:list:firstView:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4764,9 +4764,9 @@
             filePath = "../Classes/CCSuggestionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "loadConfig(options:query:)"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "loadConfig(options:query:first:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4780,9 +4780,57 @@
             filePath = "../Classes/CCSuggestionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "loadConfig(options:query:)"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "loadConfig(options:query:first:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "46825A9F-839D-4483-B394-663DE4645185"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DashboardComponentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "sendText(_:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2600789B-9CA6-4131-B348-D530E70E9BA1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCSuggestionView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "selectSuggest(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3BCCA768-4C2E-4FC0-8368-FAE2DBE02165"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/Dashboard.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "sendText(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

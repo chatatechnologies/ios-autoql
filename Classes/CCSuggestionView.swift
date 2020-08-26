@@ -12,11 +12,13 @@ class SuggestionView: UIView {
     let vwOptions = UIView()
     let stack = UIStackView()
     let scrollView = UIScrollView()
+    var firstView = true
     weak var delegate: ChatViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func loadConfig(options: [String], query: String) {
+    func loadConfig(options: [String], query: String, first: Bool = true) {
+        firstView = first
         label.text = "I want to make sure I understood your query. Did you mean:"
         label.numberOfLines = 0
         label.setSize()
@@ -53,7 +55,7 @@ class SuggestionView: UIView {
     }
     @IBAction func selectSuggest(_ sender: AnyObject){
         if let buttonTitle = sender.title(for: .normal) {
-            delegate?.sendText(buttonTitle, true)
+            delegate?.sendText(buttonTitle, firstView)
         }
     }
     public override init(frame: CGRect) {

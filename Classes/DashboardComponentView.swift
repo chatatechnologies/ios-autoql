@@ -18,6 +18,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     var wbMain = WKWebView()
     let lblMain = UILabel()
     let lblDefault = UILabel()
+    weak var delegateSend: ChatViewDelegate?
     weak var delegate: DashboardComponentCellDelegate?
     //let newView = UIView()
     static var identifier: String {
@@ -31,8 +32,17 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
             vwWebview.addBorder()
             loadComponent(view: vwSecondWebview, connect: vwWebview)
-            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
-            loadType(view: vwSecondWebview, text: data.subDashboardModel.text, type: data.subDashboardModel.type, webview: data.subDashboardModel.webview, list: data.subDashboardModel.items)
+            loadType(view: vwWebview,
+                     text: data.text,
+                     type: data.type,
+                     webview: data.webview,
+                     list: data.items)
+            loadType(view: vwSecondWebview,
+                     text: data.subDashboardModel.text,
+                     type: data.subDashboardModel.type,
+                     webview: data.subDashboardModel.webview,
+                     list: data.subDashboardModel.items,
+                     firstView: false)
             if loading {
                 loaderWebview(view: vwWebview)
                 loaderWebview(view: vwSecondWebview)
@@ -77,12 +87,14 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                   text: String,
                   type: ChatComponentType,
                   webview: String = "",
-                  list: [String] = []) {
+                  list: [String] = [],
+                  firstView: Bool = true
+    ) {
         switch type {
         case .Safetynet:
             print("fullSuggestion")
         case .Suggestion:
-            loadSuggestion(view: view, list: list)
+            loadSuggestion(view: view, list: list, firstView: firstView)
         case .Webview:
             loadWebView(view: view, webview: webview)
         case .Table:
@@ -95,11 +107,11 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             print("no supported for dashboard")
         }
     }
-    private func loadSuggestion(view: UIView, list: [String]) {
+    private func loadSuggestion(view: UIView, list: [String], firstView: Bool) {
         let newView = SuggestionView()
         view.removeView(tag: 1)
         newView.delegate = self
-        newView.loadConfig(options: list, query: data.text)
+        newView.loadConfig(options: list, query: data.text, first: firstView)
         //newView.loadWebview(strWebview: data.webView)
         newView.cardView()
         view.addSubview(newView)
@@ -203,7 +215,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         //progress(off: true, viewT: wbChart!)
     }
     func sendText(_ text: String, _ safe: Bool) {
-        
+        delegateSend?.sendText(text, safe)
     }
     
     func sendDrillDown(idQuery: String, obj: String, name: String) {
