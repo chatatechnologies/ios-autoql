@@ -97,12 +97,13 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     private func loadSuggestion(view: UIView, list: [String]) {
         let newView = SuggestionView()
+        view.removeView(tag: 1)
         newView.delegate = self
         newView.loadConfig(options: list, query: data.text)
         //newView.loadWebview(strWebview: data.webView)
         newView.cardView()
         view.addSubview(newView)
-        newView.edgeTo(self, safeArea: .paddingTop)
+        newView.edgeTo(view, safeArea: .paddingTop)
         self.sizeToFit()
     }
     func loadWebView(view: UIView, webview: String){

@@ -34,7 +34,7 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     }
 }
 func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
-    let base: CGFloat = 60.0
+    let base: CGFloat = 70.0
     switch row.type {
     case .Introduction:
         //return getSizeText(row.text, width)

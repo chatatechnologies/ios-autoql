@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 class SuggestionView: UIView {
     let label = UILabel()
+    let vwOptions = UIView()
     let stack = UIStackView()
+    let scrollView = UIScrollView()
     weak var delegate: ChatViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -25,13 +27,16 @@ class SuggestionView: UIView {
         stack.spacing = 8
         self.addSubview(label)
         label.edgeTo(self, safeArea: .topPadding, height: 50, padding: 8)
-        self.addSubview(stack)
-        stack.edgeTo(self, safeArea: .fullStatePadding, height: 0, label, padding: 8)
+        self.vwOptions.backgroundColor = .red
+        self.addSubview(scrollView)
+        scrollView.edgeTo(self, safeArea: .fullStatePadding, height: 0, label, padding: 8)
+        scrollView.addSubview(stack)
+        let finalHeight = CGFloat(options.count * 40)
+        stack.edgeTo(scrollView, safeArea: .fullStack, height: finalHeight)
+        /*scrollView.addSubview(stack)
+        stack.edgeTo(self, safeArea: .fullStatePadding, height: 0, label, padding: 8)*/
+        
         loadSuggestion(options: options)
-        //guard let confettiImageView = UIImageView.fromGif(frame: self.frame, resourceName: "preloader.gif") else { return }
-        //self.addSubview(confettiImageView)
-        //confettiImageView.edgeTo(self, safeArea: .none)
-        //confettiImageView.startAnimating()
         
     }
     private func loadSuggestion(options: [String]){
@@ -43,7 +48,7 @@ class SuggestionView: UIView {
             stack.addArrangedSubview(btn)
             btn.titleLabel?.font = generalFont
             btn.addTarget(self, action: #selector(selectSuggest), for: .touchUpInside)
-            btn.edgeTo(stack, safeArea: .fullStackH, height: 0, padding: 8)
+            btn.edgeTo(stack, safeArea: .fullStackH, height: 50, padding: 8)
         }
     }
     @IBAction func selectSuggest(_ sender: AnyObject){

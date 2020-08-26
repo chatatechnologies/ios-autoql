@@ -9,7 +9,7 @@
 import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, fullStatePaddingTop,
+    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, fullStatePaddingTop,
     topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, centerSize, bottomRight
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
@@ -514,6 +514,13 @@ extension UIView {
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             bottomAnchor.constraint(equalTo: bottom.topAnchor).isActive = true
+        case .fullStack:
+            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
         case .fullPadding:
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
