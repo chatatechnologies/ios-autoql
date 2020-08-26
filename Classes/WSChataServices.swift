@@ -506,13 +506,15 @@ struct SubDashboardModel {
     var type: ChatComponentType
     var idQuery: String
     var loading: Bool
+    var items: [String]
     init(
         displayType: String = "",
         webview: String = "",
         text: String = "",
         type: ChatComponentType = .Introduction,
         idQuery: String = "",
-        loading: Bool = false
+        loading: Bool = false,
+        items: [String] = []
     ) {
         self.displayType = displayType
         self.webview = webview
@@ -520,6 +522,7 @@ struct SubDashboardModel {
         self.type = type
         self.idQuery = idQuery
         self.loading = loading
+        self.items = items
     }
 }
 struct DashboardModel {
@@ -547,6 +550,7 @@ struct DashboardModel {
     var columnsInfo: [ChatTableColumn]
     var secondQuery: String
     var loading: Bool
+    var items: [String]
     var subDashboardModel : SubDashboardModel
     init(
         minW: Int = 0,
@@ -573,6 +577,7 @@ struct DashboardModel {
         columnsInfo: [ChatTableColumn] = [],
         secondQuery: String = "",
         loading: Bool = false,
+        items: [String] = [],
         subDashboardModel: SubDashboardModel = SubDashboardModel()
     ) {
         self.minW = minW
@@ -599,6 +604,7 @@ struct DashboardModel {
         self.columnsInfo = columnsInfo
         self.secondQuery = secondQuery
         self.loading = loading
+        self.items = items
         self.subDashboardModel = subDashboardModel
     }
 }

@@ -37,26 +37,6 @@ class DashboardService {
             //completion(matches)
         }
     }
-    func getSecondDashQuery(query: String,completion: @escaping CompletionSecondData) {
-        var base = DataConfig.authenticationObj.domain
-        if base.last == "/" {
-            base.removeLast()
-        }
-        // https://qbo-staging.chata.io/autoql/api/v1/query?key=AIzaSyD2J8pfYPSI8b--HfxliLYB8V5AehPv0ys
-        let url = "\(base)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
-        let body: [String: Any] = [
-            "debug": true,
-            "source": "dashboards.user",
-            "test": true,
-            "text": query
-        ]
-        httpRequest(url, "POST", body) { (response) in
-            let finalComponent = ChataServices().getDataSecondQuery(response: response)
-            completion(finalComponent)
-            //completion(finalComponent)
-            //completion(matches)
-        }
-    }
     func getDashQuery(query: String,
                       type: ChatComponentType,
                       position: Int = 0,
@@ -73,12 +53,20 @@ class DashboardService {
                     "text": query
                 ]
         httpRequest(url, "POST", body) { (response) in
-                let typeFinal = type == .Introduction ? "" : type.rawValue
+            let reference_id = response["reference_id"] as? String ?? ""
+            let typeFinal = type == .Introduction ? "" : type.rawValue
+            if reference_id == "1.1.430" || reference_id == "1.1.431"{
+                
+                ChataServices.instance.getSuggestionsQueries(query: query) { (items) in
+                    let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position)
+                    completion(finalComponent)
+                }
+            } else {
                 let finalComponent = ChataServices().getDataComponent(response: response,
                                                                       type: typeFinal,
                                                                       position: position)
                 completion(finalComponent)
-            
+            }
         }
         
     }

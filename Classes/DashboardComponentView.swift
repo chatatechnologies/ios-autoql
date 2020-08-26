@@ -10,7 +10,7 @@ import WebKit
 protocol DashboardComponentCellDelegate: class{
     func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String)
 }
-class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler {
+class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler, ChatViewDelegate {
     var data: DashboardModel = DashboardModel()
     let vwComponent = UIView()
     let vwWebview = UIView()
@@ -31,16 +31,15 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
             vwWebview.addBorder()
             loadComponent(view: vwSecondWebview, connect: vwWebview)
-            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview)
-            print(data.text)
-            loadType(view: vwSecondWebview, text: data.subDashboardModel.text, type: data.subDashboardModel.type, webview: data.subDashboardModel.webview)
+            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
+            loadType(view: vwSecondWebview, text: data.subDashboardModel.text, type: data.subDashboardModel.type, webview: data.subDashboardModel.webview, list: data.subDashboardModel.items)
             if loading {
                 loaderWebview(view: vwWebview)
                 loaderWebview(view: vwSecondWebview)
             }
         } else {
             loadComponent(view: vwWebview, connect: lblMain)
-            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview)
+            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
             if loading {
                 loaderWebview(view: vwWebview)
             }
@@ -74,10 +73,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         view.addSubview(newLbl)
         newLbl.edgeTo(view, safeArea: .none)
     }
-    func loadType(view: UIView, text: String, type: ChatComponentType, webview: String = "") {
+    func loadType(view: UIView,
+                  text: String,
+                  type: ChatComponentType,
+                  webview: String = "",
+                  list: [String] = []) {
         switch type {
-        case .Safetynet, .Suggestion:
-            print("error")
+        case .Safetynet:
+            print("fullSuggestion")
+        case .Suggestion:
+            loadSuggestion(view: view, list: list)
         case .Webview:
             loadWebView(view: view, webview: webview)
         case .Table:
@@ -89,6 +94,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         case .QueryBuilder:
             print("no supported for dashboard")
         }
+    }
+    private func loadSuggestion(view: UIView, list: [String]) {
+        let newView = SuggestionView()
+        newView.delegate = self
+        newView.loadConfig(options: list, query: data.text)
+        //newView.loadWebview(strWebview: data.webView)
+        newView.cardView()
+        view.addSubview(newView)
+        newView.edgeTo(self, safeArea: .paddingTop)
+        self.sizeToFit()
     }
     func loadWebView(view: UIView, webview: String){
         //self.wbMain = WKWebView(frame: self.bounds)
@@ -185,5 +200,12 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loaderWebview(false, view: webView.superview ?? UIView())
         //progress(off: true, viewT: wbChart!)
+    }
+    func sendText(_ text: String, _ safe: Bool) {
+        
+    }
+    
+    func sendDrillDown(idQuery: String, obj: String, name: String) {
+        
     }
 }
