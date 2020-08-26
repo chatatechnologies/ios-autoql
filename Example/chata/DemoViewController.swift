@@ -426,10 +426,10 @@ extension String {
     }
 }
 extension UIView {
-    func cardView(border: Bool = true) {
+    func cardView(border: Bool = true, color: UIColor = .gray) {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 10
-        self.layer.borderColor = UIColor.gray.cgColor
+        self.layer.borderColor = color.cgColor
         /*self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowOpacity = 0.5

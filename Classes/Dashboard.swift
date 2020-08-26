@@ -31,7 +31,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         self.addSubview(spinnerDashboard)
         spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 40, padding: 8)
         spinnerDashboard.titleLabel?.font = generalFont
-        spinnerDashboard.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
+        spinnerDashboard.setTitleColor(chataDrawerAccentColor, for: .normal)
         spinnerDashboard.cardView()
         spinnerDashboard.addTarget(self, action: #selector(toggleDash), for: .touchUpInside)
         self.addSubview(tbMain)
@@ -68,7 +68,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         DashboardService().getDashboards(apiKey: autentification.apiKey) { (dashboards) in
             DispatchQueue.main.async {
                 let firstDash = dashboards.count > 0 ? dashboards[0] : DashboardList()
-                self.spinnerDashboard.setTitle(firstDash.name, for: .normal)
+                let name = "\(firstDash.name) ⌄"
+                self.spinnerDashboard.setTitle(name, for: .normal)
                 self.listDash = dashboards
                 self.dataDash = firstDash.data
                 self.tbMain.reloadData()
@@ -231,7 +232,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbListDashboard {
             loadingGeneral = false
-            spinnerDashboard.setTitle(listDash[indexPath.row].name, for: .normal)
+            let name = "\(listDash[indexPath.row].name) ⌄"
+            spinnerDashboard.setTitle(name, for: .normal)
             toggleListDashboard(false)
             dataDash = listDash[indexPath.row].data
             toggleTable()

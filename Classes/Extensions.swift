@@ -485,9 +485,9 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .secondTop:
-            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height * 3).isActive = true
+            widthAnchor.constraint(equalToConstant: height * 4).isActive = true
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         case .fullState:
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true

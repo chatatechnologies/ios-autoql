@@ -23,15 +23,17 @@ class DashboardView: UIView {
         //loadTable()
     }
     func configLoad(authFinal: authentication, mainView: UIView = UIView()){
-        btnExecute.setTitle("Execute ", for: .normal)
+        btnExecute.setTitle("▷ Execute", for: .normal)
         btnExecute.setTitleColor(.systemBlue, for: .normal)
-        btnExecute.cardView()
+        btnExecute.cardView(color: .systemBlue)
+        btnExecute.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         lbTextrun.text = "Run Dashboard Automatically"
         lbTextrun.textAlignment = .center
-        addSubview(lbTextrun)
-        lbTextrun.edgeTo(self, safeArea: .topView, height: 40)
+        //addSubview(lbTextrun)
+        //lbTextrun.edgeTo(self, safeArea: .topView, height: 40)
         addSubview(btnExecute)
-        btnExecute.edgeTo(self, safeArea:.secondTop, height: 30, lbTextrun)
+        //btnExecute.edgeTo(self, safeArea:.secondTop, height: 30, lbTextrun)
+        btnExecute.edgeTo(self, safeArea: .secondTop, height: 30)
         addSubview(vwDash)
         vwDash.edgeTo(self, safeArea:.fullState, btnExecute)
         vwDash.addSubview(dash)
