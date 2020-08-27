@@ -148,26 +148,29 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
             //cell.loaderWebview()
             if dash.splitView {
-                DashboardService().getDashQuery(query: dash.secondQuery,
-                                                type: ChatComponentType.withLabel(dash.secondDisplayType),
-                                                position: index) { (component) in
-                    DispatchQueue.main.async {
-                        let pos = component.position
-                        let newSub = SubDashboardModel(
-                                webview: component.webView,
-                                text: component.text,
-                                type: component.type,
-                                idQuery: component.idQuery,
-                                loading: true,
-                                items: component.options
-                        )
-                        self.dataDash[pos].subDashboardModel = newSub
-                        let indexPath = IndexPath(row: pos, section: 0)
-                        self.tbMain.reloadRows(at: [indexPath], with: .none)
-                    }
-                }
+                loadTwoDash(query: dash.secondQuery, type: dash.secondDisplayType, index: index)
             }
             loadOneDash(query: dash.query, type: dash.type, index: index)
+        }
+    }
+    func loadTwoDash(query: String, type: String, index: Int) {
+        DashboardService().getDashQuery(query: query,
+                                        type: ChatComponentType.withLabel(type),
+                                        position: index) { (component) in
+            DispatchQueue.main.async {
+                let pos = component.position
+                let newSub = SubDashboardModel(
+                        webview: component.webView,
+                        text: component.text,
+                        type: component.type,
+                        idQuery: component.idQuery,
+                        loading: true,
+                        items: component.options
+                )
+                self.dataDash[pos].subDashboardModel = newSub
+                let indexPath = IndexPath(row: pos, section: 0)
+                self.tbMain.reloadRows(at: [indexPath], with: .none)
+            }
         }
     }
     func loadOneDash(query: String, type: ChatComponentType, index: Int ) {
@@ -217,6 +220,7 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             cell.delegateSend = self
             cell.configCell(data: dataDash[indexPath.row],
+                            pos: indexPath.row,
                             loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral
                             )
             //cell.addSubview(newView)
@@ -248,10 +252,18 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         table.bounces = false
     }
     func sendText(_ text: String, _ safe: Bool) {
-        print("funca")
+        
     }
     
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         
+    }
+    func updateComponent(text: String, first: Bool, position: Int) {
+        let query = first ? dataDash[position].query : dataDash[position].secondQuery
+        if first {
+            loadOneDash(query: query, type: dataDash[position].type, index: position)
+        } else {
+            loadTwoDash(query: text, type: "", index: position)
+        }
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 protocol DashboardComponentCellDelegate: class{
     func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String)
+    func updateComponent(text: String, first: Bool, position: Int)
 }
 class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler, ChatViewDelegate {
     var data: DashboardModel = DashboardModel()
@@ -18,14 +19,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     var wbMain = WKWebView()
     let lblMain = UILabel()
     let lblDefault = UILabel()
+    var position = 0
     weak var delegateSend: ChatViewDelegate?
     weak var delegate: DashboardComponentCellDelegate?
     //let newView = UIView()
     static var identifier: String {
         return String(describing: self)
     }
-    func configCell(data: DashboardModel, loading: Bool = false) {
+    func configCell(data: DashboardModel, pos: Int, loading: Bool = false) {
         self.data = data
+        self.position = pos
         styleComponent()
         loadTitle()
         if data.splitView{
@@ -215,7 +218,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         //progress(off: true, viewT: wbChart!)
     }
     func sendText(_ text: String, _ safe: Bool) {
-        delegateSend?.sendText(text, safe)
+        delegate?.updateComponent(text: text, first: safe, position: position)
     }
     
     func sendDrillDown(idQuery: String, obj: String, name: String) {
