@@ -3040,7 +3040,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
             endingLineNumber = "115"
-            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
+            landmarkName = "loaderWebview(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3056,7 +3056,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
             endingLineNumber = "116"
-            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
+            landmarkName = "closeDrillDown()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3808,7 +3808,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "77"
             endingLineNumber = "77"
-            landmarkName = "loadDashboard(view:autentification:mainView:)"
+            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3823,9 +3823,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "237"
-            endingLineNumber = "237"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
+            endingLineNumber = "237">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4240,7 +4238,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "69"
             endingLineNumber = "69"
-            landmarkName = "loadDashboard(view:autentification:mainView:)"
+            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -4631,9 +4629,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "updateComponent(text:first:position:)"
-            landmarkType = "7">
+            endingLineNumber = "263">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4647,9 +4643,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "265"
-            endingLineNumber = "265"
-            landmarkName = "updateComponent(text:first:position:)"
-            landmarkType = "7">
+            endingLineNumber = "265">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4664,7 +4658,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
             endingLineNumber = "174"
-            landmarkName = "loadTwoDash(query:type:index:)"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4724,7 +4718,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
             endingLineNumber = "113"
-            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
+            landmarkName = "loaderWebview(_:)"
             landmarkType = "7">
             <Locations>
                <Location
