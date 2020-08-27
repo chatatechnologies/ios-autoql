@@ -90,7 +90,7 @@ class DashboardService {
             }
         }
         let body: [String: Any] = [
-                    "debug": true,
+                    "translation": "include",
                     "columns": columns,
                     "test": true
                 ]

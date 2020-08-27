@@ -20,8 +20,10 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     let lblMain = UILabel()
     let lblDefault = UILabel()
     var position = 0
+    var mainText = "Hit 'Execute' to run this dashboard"
     weak var delegateSend: ChatViewDelegate?
     weak var delegate: DashboardComponentCellDelegate?
+    var first = false
     //let newView = UIView()
     static var identifier: String {
         return String(describing: self)
@@ -78,12 +80,13 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     func loadDefault(view: UIView) {
         let newLbl = UILabel()
-        newLbl.text = "Hit 'Execute' to run this dashboard"
+        newLbl.text = mainText
         newLbl.numberOfLines = 0
         newLbl.tag = 1
         newLbl.textColor = chataDrawerTextColorPrimary
         newLbl.textAlignment = .center
         view.addSubview(newLbl)
+        print(view.subviews)
         newLbl.edgeTo(view, safeArea: .none)
     }
     func loadType(view: UIView,
@@ -164,10 +167,13 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         view.subviews.forEach { (view) in
             if view.tag == 5{
                 isLoading = true
+                view.removeView(tag: 1)
             }
         }
         if load {
             if !isLoading{
+                view.removeView(tag: 1)
+                mainText = ""
                 let imageView2 = UIImageView(image: nil)
                 let bundle = Bundle(for: type(of: self))
                 let path = bundle.path(forResource: "gifBalls", ofType: "gif")
@@ -175,13 +181,15 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                 imageView2.loadGif(url: url)
                 //let jeremyGif = UIImage.gifImageWithName("preloader")
                 //let imageView = UIImageView(image: image)
-                view.removeView(tag: 1)
                 imageView2.tag = 5
                 view.addSubview(imageView2)
                 imageView2.edgeTo(view, safeArea: .centerSize, height: 50, padding: 100)
             }
         } else{
             view.removeView(tag: 5)
+            if isLoading {
+                view.removeView(tag: 1)
+            }
         }
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

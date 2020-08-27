@@ -8,6 +8,7 @@
 import Foundation
 import WebKit
 public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate, ChatViewDelegate {
+    
     let tbMain = UITableView()
     let vwEmptyDash = UIView()
     let tbListDashboard = UITableView()
@@ -101,6 +102,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         lbTitle.textAlignment = .center
         component.addSubview(lbTitle)
         lbTitle.edgeTo(component, safeArea: .topPadding, height: 30, padding: 20)
+        lbTitle.addBorder()
         component.addSubview(vwWebview)
         vwWebview.backgroundColor = .gray
         vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, lbTitle, padding: 20 )
@@ -134,6 +136,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         }
     }
     @objc func closeDrillDown(){
+        self.wbMain.loadHTMLString("", baseURL: nil)
         for view in mainView.subviews{
             if view.tag == 100 {
                 view.removeFromSuperview()
@@ -254,10 +257,6 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     func sendText(_ text: String, _ safe: Bool) {
         
     }
-    
-    func sendDrillDown(idQuery: String, obj: String, name: String) {
-        
-    }
     func updateComponent(text: String, first: Bool, position: Int) {
         let query = first ? dataDash[position].query : dataDash[position].secondQuery
         if first {
@@ -265,5 +264,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         } else {
             loadTwoDash(query: text, type: "", index: position)
         }
+    }
+    func sendDrillDown(idQuery: String, obj: String, name: String) {
+        
     }
 }
