@@ -157,7 +157,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                 }
             }
         default:
-            var specialActive = false
+            /*let specialActive = false
             columns.forEach { (type) in
                 if type == .dollar || type == .quantity{
                     //specialActive = true
@@ -172,7 +172,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                 ]
             } else {
                 buttonsFinal = []
-            }
+            }*/
+            buttonsFinal = []
         }
         if datePivot && !contrast{
             let datePivot = ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDatePivot")

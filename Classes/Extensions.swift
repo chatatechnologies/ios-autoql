@@ -9,7 +9,7 @@
 import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, fullPadding,
+    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, fullStatePaddingTop,
     topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, centerSize, bottomRight
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
@@ -21,6 +21,12 @@ public enum DViewSafeArea: String, CaseIterable {
     }
 }
 extension String {
+    func replaceRange(range: Range<Index>, start: Index, newText: String) -> String{
+        var newString = self
+        newString.removeSubrange(range)
+        newString.insert(contentsOf: newText, at: start)
+        return newString
+    }
     func hexToColor () -> UIColor {
         var cString: String = self.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         if cString.hasPrefix("#") {
@@ -290,6 +296,26 @@ extension UIView {
         self.layer.shadowRadius = 1.0*/
         self.layer.masksToBounds = false
     }
+    enum ViewSide {
+        case left, right, top, bottom
+    }
+
+    func addBorder(side: ViewSide = .bottom, color: UIColor = chataDrawerBorderColor, width: CGFloat = 1 ) {
+        let newBorder = UIView()
+        newBorder.backgroundColor = color
+        newBorder.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        switch side {
+        case .bottom:
+            newBorder.frame = CGRect(x: 0, y: frame.size.height - width, width: frame.size.width, height: width)
+        case .top:
+            newBorder.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: width)
+        case .left:
+            newBorder.frame = CGRect(x: 0, y: 0, width: width, height: frame.size.height)
+        case .right:
+            newBorder.frame = CGRect(x: frame.size.width - width, y: 0, width: width, height: frame.size.height)
+        }
+        addSubview(newBorder)
+    }
     func cardViewShadow() {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 20
@@ -300,6 +326,20 @@ extension UIView {
               self.layer.shadowOpacity = 0.5
               self.layer.shadowRadius = 5.0
               self.layer.masksToBounds = false
+    }
+    func removeView(tag: Int) {
+        subviews.forEach { (view) in
+            if view.tag == tag {
+                view.removeFromSuperview()
+            }
+        }
+    }
+    func changeTextSubView(tag: Int, newText: String) {
+        subviews.forEach { (view) in
+            if view.tag == tag {
+                (view as? UILabel ?? UILabel()).text = newText
+            }
+        }
     }
     @discardableResult
     public func edgeTo(_ view: UIView,
@@ -326,6 +366,16 @@ extension UIView {
             leadingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
+        case .bottomPaddingtoTopHalf:
+            //let finalHeight = (view.frame.height / 2) - top.frame.height
+            //heightAnchor.constraint(equalToConstant: finalHeight).isActive = true
+            
+            heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.38).isActive = true
+            //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
+            leadingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
+            //self.addConstraint(heightConstraint)
         case .bottomPadding:
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
@@ -435,9 +485,9 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .secondTop:
-            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height * 3).isActive = true
+            widthAnchor.constraint(equalToConstant: height * 4).isActive = true
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         case .fullState:
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
@@ -449,6 +499,11 @@ extension UIView {
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
+        case .fullStatePaddingTop:
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .fullState2:
             topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -459,6 +514,13 @@ extension UIView {
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             bottomAnchor.constraint(equalTo: bottom.topAnchor).isActive = true
+        case .fullStack:
+            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
         case .fullPadding:
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -483,6 +545,11 @@ extension UIView {
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         case .topY:
             bottomAnchor.constraint(equalTo: top.topAnchor, constant: 0).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        case .topHeight:
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 0).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true

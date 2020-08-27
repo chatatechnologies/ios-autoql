@@ -17,10 +17,12 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     var dataSource: [String] = []
     var btnsDynamics: [UIButton] = []
     var originalText = ""
+    var originalTexts: [String] = []
     var numBtn = 0
     var finalStr = ""
     let mainLabel = UITextView()
     var listArr: [String] = []
+    var listValue: [String] = []
     var selectString: [String] = []
     var posSelected = 0
     weak var delegate: ChatViewDelegate?
@@ -58,6 +60,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     func loadSafeLabel(){
         //mainLabel.numberOfLines = 0
         //mainLabel.sizeToFit()
+        mainLabel.backgroundColor = .clear
         mainLabel.translatesAutoresizingMaskIntoConstraints = true
         //mainLabel.isSelectable = false
         //mainLabel.lineBreakMode = .byTruncatingTail
@@ -73,26 +76,33 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     func createLabel(_ first: Bool = true) {
         let paragraph = NSMutableParagraphStyle()
+        //originalTexts = []
         paragraph.alignment = .center
         let attributedString:[NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraph,
             .font: generalFont,
             .foregroundColor : chataDrawerTextColorPrimary,
         ]
-        let mainAttr = NSMutableAttributedString(string: "\(originalText)")
-        let range2 = NSRange(location: 0, length: originalText.count)
-        mainAttr.addAttributes(attributedString, range: range2)
+        var mainAttr = NSMutableAttributedString(string: "\(originalText)")
+        //let range2 = NSRange(location: 0, length: originalText.count)
+        //mainAttr.addAttributes(attributedString, range: range2)
+        var newString = ""
         for (index, change) in data.fullSuggestions.enumerated() {
             //var posStack = getPos(index: index, sumStr: sumStr)
             let start = originalText.index(originalText.startIndex, offsetBy: change.start)
             let end = originalText.index(originalText.endIndex, offsetBy: change.end - originalText.count)
-            var mySubstring = getRange(start: start, end: end, original: originalText)
+            let rangeLast = start..<end
+            let originText = getRange(start: start, end: end, original: originalText)
+            var mySubstring = change.suggestionList[0].text
+            //var newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
+            newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
             if first{
+                originalTexts.append(originText)
                 listArr.append(mySubstring)
                 selectString.append(mySubstring)
             } else {
                 let newSelect = selectString[index]
-                originalText = originalText.replace(target: mySubstring, withString: selectString[index])
+                newString = newString.replaceRange(range: rangeLast, start: start, newText: newSelect)
                 mySubstring = newSelect
             }
             let msgAttributes: [NSAttributedString.Key: Any] = [
@@ -101,11 +111,16 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
                 .font: generalFont,
                 .paragraphStyle: paragraph
             ]
+            
+            mainAttr = NSMutableAttributedString(string: "\(newString)")
+            
             let range = NSRange(location: change.start, length: mySubstring.count)
             mainAttr.addAttribute(.link, value: "\(index)", range: range)
             mainAttr.addAttributes(msgAttributes, range: range)
-            mainLabel.attributedText = mainAttr
         }
+        let range2 = NSRange(location: 0, length: newString.count)
+        mainAttr.addAttributes(attributedString, range: range2)
+        mainLabel.attributedText = mainAttr
     }
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         listArr.enumerated().forEach { (index, list) in
@@ -140,23 +155,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         //finalText.replace(target: " ", withString: "")
         return finalText
     }
-    private func generateButton(index: Int, mySubstring: String, stack: UIStackView) {
-        btnsDynamics.append(UIButton())
-        btnsDynamics[index].tag = index
-        //btnsDynamics[index].cardView()
-        let image = UIImage(named: "icDoubleArrow.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
-        let image2 = image?.resizeT(maxWidthHeight: 20)
-        btnsDynamics[index].setImage(image2, for: .normal)
-        btnsDynamics[index].semanticContentAttribute = .forceRightToLeft
-        btnsDynamics[index].contentMode = .scaleAspectFit
-        btnsDynamics[index].titleLabel?.adjustsFontSizeToFitWidth = true
-        btnsDynamics[index].titleLabel?.minimumScaleFactor = 0.5
-        btnsDynamics[index].setTitle(mySubstring, for: .normal)
-        btnsDynamics[index].setTitleColor(chataDrawerBlue, for: .normal)
-        stack.addArrangedSubview(btnsDynamics[index])
-        btnsDynamics[index].addTarget(self, action: #selector(openOptions), for: .touchUpInside)
-        btnsDynamics[index].edgeTo(stack, safeArea: .fullStackV, height: 0, padding: 10 )
-    }
     private func generateLabel(finalText: String, stack: UIStackView){
         let label = UILabel()
         //label.cardView()
@@ -165,9 +163,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         label.textAlignment = .center
         stack.addArrangedSubview(label)
         label.edgeTo(stack, safeArea: .fullStackV, height: 0, padding: 10 )
-    }
-    @IBAction private func openOptions(_ sender: AnyObject){
-        addTrasparentView(button: sender as? UIButton ?? UIButton())
     }
     @objc func removeTransparentView() {
         for element in self.superview!.superview!.superview!.subviews {
@@ -186,9 +181,15 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         //vwTrasparent.edgeTo(self, safeArea: .none)
         dataSource = []
         //numBtn = button.tag
+        let originalTerm = "\(originalTexts[pos]) (Original Term)"
         let list = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
+            let text = data.valueLabel
+            return "\(data.text) (\(text))"
+            
+        }) + [originalTerm]
+        listValue = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
             return data.text
-        }) + [labelText]
+        }) + [originalTexts[pos]]
         dataSource = list
         tbChange.reloadData()
         vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
@@ -202,30 +203,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         let height = CGFloat(41 * list.count)
         tbChange.backgroundColor = .none
         tbChange.edgeTo(mainLabel, safeArea: .dropDown, height: height, padding: 8)
-        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
-    }
-    private func addTrasparentView(button: UIButton){
-        vwTrasparent.tag = -1
-        //self.addSubview(vwTrasparent)
-        //vwTrasparent.edgeTo(self, safeArea: .none)
-        dataSource = []
-        numBtn = button.tag
-        let list = data.fullSuggestions[button.tag].suggestionList.map({ (data) -> String in
-            return data.text
-        }) + [button.titleLabel?.text ?? ""]
-        dataSource = list
-        tbChange.reloadData()
-        vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
-        vwTrasparent.addGestureRecognizer(tapgesture)
-        //adaptar Vista centrada
-        tbChange.tag = -2
-        self.superview?.superview?.superview?.addSubview(tbChange)
-        //self.superview?.superview?.superview?.isHidden = true
-        //tbChange.cardView()
-        let height = CGFloat(41 * list.count)
-        tbChange.backgroundColor = .none
-        tbChange.edgeTo(button, safeArea: .dropDown, height: height, padding: 8)
         //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
     }
     func loadBtn() {
@@ -242,18 +219,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         btnRunQuery.edgeTo(self, safeArea: .bottomPadding, height: 30, padding: 8)
     }
     @objc func runQuery(sender: UIButton!) {
-        var text = ""
-        for firstLevel in stack.subviews {
-            for secondLevel in firstLevel.subviews {
-                let label = secondLevel as? UILabel
-                let btn = secondLevel as? UIButton
-                text += label != nil ? ((label?.text ?? "") + " ") : (btn?.titleLabel?.text ?? "") + " "
-            }
-        }
-        text = text.replace(target: "  ", withString: " ")
-        if text.last == " " {
-            text = String(text.dropLast())
-        }
+        let text = mainLabel.text ?? ""
         delegate?.sendText(text, false)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -270,10 +236,8 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let text = dataSource[indexPath.row]
+        let text = listValue[indexPath.row]
         selectString[posSelected] = text
-        //HAcer el switch de botones
-        //btnsDynamics[numBtn].setTitle(text, for: .normal)
         removeTransparentView()
         createLabel(false)
     }

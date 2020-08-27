@@ -34,13 +34,14 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     }
 }
 func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
-    
+    let base: CGFloat = 70.0
     switch row.type {
     case .Introduction:
         //return getSizeText(row.text, width)
-        return 200
+        return CGFloat(row.posH) * base
     case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-        return row.splitView ? 800 : 400
+        //return row.splitView ? 800 : 400
+        return CGFloat(row.posH) * base
     case .Suggestion:
         return getSizeSuggestion()
     case .Safetynet:
@@ -213,7 +214,6 @@ func supportContrast(columns: [ChatTableColumnType]) -> Bool {
     return support
 }
 func validateArray(_ array:[Any], _ pos: Int) -> Any{
-    //CHECAR EL LUNES- URGENTE
     if pos == -1 {
         return 0
     }

@@ -74,7 +74,8 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getSize(row: data[indexPath.row], width: self.frame.width)
+        let finalSize = getSize(row: data[indexPath.row], width: self.frame.width)
+        return finalSize
     }
     private func configLoad() {
         tableView.delegate = self

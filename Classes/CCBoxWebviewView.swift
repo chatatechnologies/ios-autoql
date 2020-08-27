@@ -68,12 +68,14 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE && !drilldown {
-            DRILLDOWNACTIVE = true
-            let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
-            let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
-            let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
-            delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)
+        if dataMain.columns.count <= 3 {
+            if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE && !drilldown {
+                DRILLDOWNACTIVE = true
+                let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
+                let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
+                let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
+                delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)
+            }
         }
     }
 }

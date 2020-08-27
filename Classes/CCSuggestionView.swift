@@ -9,12 +9,16 @@ import Foundation
 import UIKit
 class SuggestionView: UIView {
     let label = UILabel()
+    let vwOptions = UIView()
     let stack = UIStackView()
+    let scrollView = UIScrollView()
+    var firstView = true
     weak var delegate: ChatViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func loadConfig(options: [String], query: String) {
+    func loadConfig(options: [String], query: String, first: Bool = true) {
+        firstView = first
         label.text = "I want to make sure I understood your query. Did you mean:"
         label.numberOfLines = 0
         label.setSize()
@@ -25,13 +29,16 @@ class SuggestionView: UIView {
         stack.spacing = 8
         self.addSubview(label)
         label.edgeTo(self, safeArea: .topPadding, height: 50, padding: 8)
-        self.addSubview(stack)
-        stack.edgeTo(self, safeArea: .fullStatePadding, height: 0, label, padding: 8)
+        self.vwOptions.backgroundColor = .red
+        self.addSubview(scrollView)
+        scrollView.edgeTo(self, safeArea: .fullStatePadding, height: 0, label, padding: 8)
+        scrollView.addSubview(stack)
+        let finalHeight = CGFloat(options.count * 40)
+        stack.edgeTo(scrollView, safeArea: .fullStack, height: finalHeight)
+        /*scrollView.addSubview(stack)
+        stack.edgeTo(self, safeArea: .fullStatePadding, height: 0, label, padding: 8)*/
+        
         loadSuggestion(options: options)
-        //guard let confettiImageView = UIImageView.fromGif(frame: self.frame, resourceName: "preloader.gif") else { return }
-        //self.addSubview(confettiImageView)
-        //confettiImageView.edgeTo(self, safeArea: .none)
-        //confettiImageView.startAnimating()
         
     }
     private func loadSuggestion(options: [String]){
@@ -43,12 +50,12 @@ class SuggestionView: UIView {
             stack.addArrangedSubview(btn)
             btn.titleLabel?.font = generalFont
             btn.addTarget(self, action: #selector(selectSuggest), for: .touchUpInside)
-            btn.edgeTo(stack, safeArea: .fullStackH, height: 0, padding: 8)
+            btn.edgeTo(stack, safeArea: .fullStackH, height: 50, padding: 8)
         }
     }
     @IBAction func selectSuggest(_ sender: AnyObject){
         if let buttonTitle = sender.title(for: .normal) {
-            delegate?.sendText(buttonTitle, true)
+            delegate?.sendText(buttonTitle, firstView)
         }
     }
     public override init(frame: CGRect) {

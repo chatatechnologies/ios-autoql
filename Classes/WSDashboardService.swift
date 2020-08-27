@@ -37,65 +37,45 @@ class DashboardService {
             //completion(matches)
         }
     }
-    func getSecondDashQuery(query: String,completion: @escaping CompletionSecondData) {
-        var base = DataConfig.authenticationObj.domain
-        if base.last == "/" {
-            base.removeLast()
-        }
-        // https://qbo-staging.chata.io/autoql/api/v1/query?key=AIzaSyD2J8pfYPSI8b--HfxliLYB8V5AehPv0ys
-        let url = "\(base)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
-        let body: [String: Any] = [
-            "debug": true,
-            "source": "dashboards.user",
-            "test": true,
-            "text": query
-        ]
-        httpRequest(url, "POST", body) { (response) in
-            let finalComponent = ChataServices().getDataSecondQuery(response: response)
-            completion(finalComponent)
-            //completion(finalComponent)
-            //completion(matches)
-        }
-    }
-    func getDashQuery(dash: DashboardModel,
+    func getDashQuery(query: String,
+                      type: ChatComponentType,
                       position: Int = 0,
                       completion: @escaping CompletionChatComponentModel) {
         var base = DataConfig.authenticationObj.domain
         if base.last == "/" {
             base.removeLast()
         }
-        // https://qbo-staging.chata.io/autoql/api/v1/query?key=AIzaSyD2J8pfYPSI8b--HfxliLYB8V5AehPv0ys
         let url = "\(base)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let body: [String: Any] = [
                     "debug": true,
                     "source": "dashboards.user",
                     "test": true,
-                    "text": dash.query
+                    "text": query
                 ]
-        //let urlRequest = wsQuery
-        httpRequest(url, "POST", body) { (response) in
-            //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
-            
-            if dash.splitView {
-                self.getSecondDashQuery(query: dash.secondQuery) { (htmlSecond) in
-                    let typeFinal = dash.type == .Introduction ? "" : dash.type.rawValue
+        if query == "" {
+            var finalComponent = ChataServices().getDataComponent(response: [:],
+                                                                      type: "",
+                                                                      position: position)
+            finalComponent.text = "No query was supplied for this tile."
+            completion(finalComponent)
+        } else {
+            httpRequest(url, "POST", body) { (response) in
+                let reference_id = response["reference_id"] as? String ?? ""
+                let typeFinal = type == .Introduction ? "" : type.rawValue
+                if reference_id == "1.1.430" || reference_id == "1.1.431"{
+                    
+                    ChataServices.instance.getSuggestionsQueries(query: query) { (items) in
+                        let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position)
+                        completion(finalComponent)
+                    }
+                } else {
                     let finalComponent = ChataServices().getDataComponent(response: response,
                                                                           type: typeFinal,
-                                                                          split: dash.splitView,
-                                                                          splitType: dash.secondDisplayType,
-                                                                          position: position,
-                                                                          secondQuery: htmlSecond)
+                                                                          position: position)
                     completion(finalComponent)
                 }
-            } else {
-                let typeFinal = dash.type == .Introduction ? "" : dash.type.rawValue
-                let finalComponent = ChataServices().getDataComponent(response: response,
-                                                                      type: typeFinal,
-                                                                      position: position)
-                completion(finalComponent)
             }
         }
-        
     }
     func getDrillDownDashboard(idQuery: String, name: [String], value: [String], completion: @escaping CompletionChatComponentModel){
         var base = DataConfig.authenticationObj.domain
@@ -117,7 +97,7 @@ class DashboardService {
             }
         }
         let body: [String: Any] = [
-                    "debug": true,
+                    "translation": "include",
                     "columns": columns,
                     "test": true
                 ]
@@ -140,7 +120,7 @@ class DashboardService {
         let identify = dash["i"] as? Int ?? 0
         let query = dash["query"] as? String ?? ""
         let isNewTile = dash["isNewTile"] as? Int ?? 0
-        let title = dash["title"] as? String ?? ""
+        let title = dash["title"] as? String ?? "Untitled"
         let key = dash["key"] as? String ?? ""
         let moved = dash["moved"] as? Int ?? 0
         let posH = dash["h"] as? Int ?? 0
@@ -148,7 +128,7 @@ class DashboardService {
         let splitView = dash["splitView"] as? Bool ?? false
         let secondQuery = dash["secondQuery"] as? String ?? ""
         let secondDisplayType = dash["secondDisplayType"] as? String ?? ""
-        let finalTitle = title == "" ? query : title
+        let finalTitle = title == "" ? (query == "" ? "Untitled" : query) : title
         return DashboardModel(minW: minW, staticVar: staticVar, maxH: maxH,
                               minH: minH, displayType: displayType,
                               posX: posX, posY: posY, identify: identify,

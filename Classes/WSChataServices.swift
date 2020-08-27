@@ -240,16 +240,12 @@ class ChataServices {
             //let idQuery = data["query_id"] as? String ?? ""
             let rows = data["rows"] as? [[Any]] ?? []
             let columnsFinal = getColumns(columns: columns)
-            let (rowsFinal, rowsFinalClean) = getRows(rows: rows, columnsFinal: columnsFinal)
+            let (rowsFinal, _) = getRows(rows: rows, columnsFinal: columnsFinal)
             let columnsF = columnsFinal.map { (element) -> String in
                 return element.name
             }
-            var webView = ""
             let chartsBi = displayType == .Pie || displayType == .Bar || displayType == .Column || displayType == .Line
             let chartsTri = displayType == .Heatmap || displayType == .Bubble || displayType == .StackColumn || displayType == .StackBar || displayType == .StackArea
-            let columsType = columnsFinal.map({ (element) -> ChatTableColumnType in
-                return element.type
-            })
             // hacer DAta
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
                 /*let existsDatePivot = supportPivot(columns: columsType)
@@ -311,7 +307,7 @@ class ChataServices {
                           position: Int = 0,
                           secondQuery: String = "") -> ChatComponentModel {
         let data = response["data"] as? [String: Any] ?? [:]
-        var dataModel = ChatComponentModel(webView: "error", options: items)
+        var dataModel = ChatComponentModel(webView: "error", options: items, position: position)
         if items.count > 0{
             dataModel.type = .Suggestion
         }
@@ -331,7 +327,7 @@ class ChataServices {
             if rows.count == 1{
                 if rows[0].count == 1{
                     displayType = .Introduction
-                    textFinal = (rows[0][0] as? String ?? "").toMoney()
+                    textFinal = "\(rows[0][0] )".toMoney()
                     user = false
                 }
             }
@@ -390,7 +386,7 @@ class ChataServices {
                                         columns: columnsFinal,
                                         datePivot: false)
                 //let tableType = splitType == "table"
-                let typeFinal = type == "" ? "#idTableBasic" : type
+                let typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
                 webView = """
                     \(getHTMLHeader(triType: columnsF.count == 3))
                     \(datePivotStr)
@@ -503,6 +499,32 @@ struct DashboardList {
         self.updatedAt = updatedAt
     }
 }
+struct SubDashboardModel {
+    var displayType: String
+    var webview: String
+    var text: String
+    var type: ChatComponentType
+    var idQuery: String
+    var loading: Bool
+    var items: [String]
+    init(
+        displayType: String = "",
+        webview: String = "",
+        text: String = "",
+        type: ChatComponentType = .Introduction,
+        idQuery: String = "",
+        loading: Bool = false,
+        items: [String] = []
+    ) {
+        self.displayType = displayType
+        self.webview = webview
+        self.text = text
+        self.type = type
+        self.idQuery = idQuery
+        self.loading = loading
+        self.items = items
+    }
+}
 struct DashboardModel {
     var minW: Int
     var staticVar: Int
@@ -527,6 +549,9 @@ struct DashboardModel {
     var idQuery: String
     var columnsInfo: [ChatTableColumn]
     var secondQuery: String
+    var loading: Bool
+    var items: [String]
+    var subDashboardModel : SubDashboardModel
     init(
         minW: Int = 0,
         staticVar: Int = 0,
@@ -550,7 +575,10 @@ struct DashboardModel {
         secondDisplayType: String = "",
         idQuery: String = "",
         columnsInfo: [ChatTableColumn] = [],
-        secondQuery: String = ""
+        secondQuery: String = "",
+        loading: Bool = false,
+        items: [String] = [],
+        subDashboardModel: SubDashboardModel = SubDashboardModel()
     ) {
         self.minW = minW
         self.staticVar = staticVar
@@ -575,6 +603,9 @@ struct DashboardModel {
         self.idQuery = idQuery
         self.columnsInfo = columnsInfo
         self.secondQuery = secondQuery
+        self.loading = loading
+        self.items = items
+        self.subDashboardModel = subDashboardModel
     }
 }
 struct DataPivotRow{

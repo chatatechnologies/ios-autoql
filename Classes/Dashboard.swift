@@ -7,8 +7,10 @@
 
 import Foundation
 import WebKit
-public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate {
+public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate, ChatViewDelegate {
+    
     let tbMain = UITableView()
+    let vwEmptyDash = UIView()
     let tbListDashboard = UITableView()
     var dataDash: [DashboardModel] = []
     var imageView = UIImageView(image: nil)
@@ -19,6 +21,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     var imageView2 = UIImageView(image: nil)
     var spinnerDashboard = UIButton()
     var listDash: [DashboardList] = []
+    var loadingGeneral: Bool = false
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,12 +30,14 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         loadTableD(table: tbMain)
         loadTableD(table: tbListDashboard)
         self.addSubview(spinnerDashboard)
-        spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 50, padding: 16)
-        spinnerDashboard.setTitleColor(.black, for: .normal)
+        spinnerDashboard.edgeTo(self, safeArea: .topPadding, height: 40, padding: 8)
+        spinnerDashboard.titleLabel?.font = generalFont
+        spinnerDashboard.setTitleColor(chataDrawerAccentColor, for: .normal)
         spinnerDashboard.cardView()
         spinnerDashboard.addTarget(self, action: #selector(toggleDash), for: .touchUpInside)
         self.addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .fullState, spinnerDashboard)
+        tbMain.edgeTo(self, safeArea: .fullStatePaddingTop, spinnerDashboard, padding: 8)
+        loadEmptyView()
         self.addSubview(tbListDashboard)
         tbListDashboard.edgeTo(self, safeArea: .dropDownTop, height: 200, spinnerDashboard, padding: 0)
         tbListDashboard.cardView()
@@ -42,6 +47,17 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     }
     @IBAction func toggleDash(_ sender: AnyObject){
         toggleListDashboard(tbListDashboard.isHidden)
+    }
+    func loadEmptyView() {
+        self.addSubview(vwEmptyDash)
+        vwEmptyDash.edgeTo(self, safeArea: .topHeight, height: 100, spinnerDashboard)
+        vwEmptyDash.isHidden = true
+        let lblText = UILabel()
+        lblText.text = "Empty Dashboard"
+        lblText.textAlignment = .center
+        lblText.textColor = chataDrawerTextColorPrimary
+        vwEmptyDash.addSubview(lblText)
+        lblText.edgeTo(vwEmptyDash, safeArea: .none)
     }
     public func loadDashboard(
         view: UIView,
@@ -53,15 +69,20 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         DashboardService().getDashboards(apiKey: autentification.apiKey) { (dashboards) in
             DispatchQueue.main.async {
                 let firstDash = dashboards.count > 0 ? dashboards[0] : DashboardList()
-                self.spinnerDashboard.setTitle(firstDash.name, for: .normal)
+                let name = "\(firstDash.name) ⌄"
+                self.spinnerDashboard.setTitle(name, for: .normal)
                 self.listDash = dashboards
                 self.dataDash = firstDash.data
                 self.tbMain.reloadData()
                 self.tbListDashboard.reloadData()
-               
+                self.toggleTable()
             }
             
         }
+    }
+    func toggleTable() {
+        tbMain.isHidden = dataDash.count == 0
+        vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
     func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String) {
         print(idQuery)
@@ -81,6 +102,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         lbTitle.textAlignment = .center
         component.addSubview(lbTitle)
         lbTitle.edgeTo(component, safeArea: .topPadding, height: 30, padding: 20)
+        lbTitle.addBorder()
         component.addSubview(vwWebview)
         vwWebview.backgroundColor = .gray
         vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, lbTitle, padding: 20 )
@@ -114,6 +136,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         }
     }
     @objc func closeDrillDown(){
+        self.wbMain.loadHTMLString("", baseURL: nil)
         for view in mainView.subviews{
             if view.tag == 100 {
                 view.removeFromSuperview()
@@ -121,23 +144,52 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         }
     }
     public func executeDashboard(){
-        
+        loadingGeneral = true
+        tbMain.reloadData()
         for (index, dash) in self.dataDash.enumerated() {
             //let indexPath = IndexPath(row: index, section: 0)
             //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
             //cell.loaderWebview()
-            DashboardService().getDashQuery(dash: dash,
-                                            position: index) { (component) in
-                DispatchQueue.main.async {
-                    let pos = component.position
-                    self.dataDash[pos].webview = component.webView
-                    self.dataDash[pos].type = component.type
-                    self.dataDash[pos].text = component.text
-                    self.dataDash[pos].idQuery = component.idQuery
-                    self.dataDash[pos].columnsInfo = component.columnsInfo
-                    self.tbMain.reloadData()
-                    
-                }
+            if dash.splitView {
+                loadTwoDash(query: dash.secondQuery, type: dash.secondDisplayType, index: index)
+            }
+            loadOneDash(query: dash.query, type: dash.type, index: index)
+        }
+    }
+    func loadTwoDash(query: String, type: String, index: Int) {
+        DashboardService().getDashQuery(query: query,
+                                        type: ChatComponentType.withLabel(type),
+                                        position: index) { (component) in
+            DispatchQueue.main.async {
+                let pos = component.position
+                let newSub = SubDashboardModel(
+                        webview: component.webView,
+                        text: component.text,
+                        type: component.type,
+                        idQuery: component.idQuery,
+                        loading: true,
+                        items: component.options
+                )
+                self.dataDash[pos].subDashboardModel = newSub
+                let indexPath = IndexPath(row: pos, section: 0)
+                self.tbMain.reloadRows(at: [indexPath], with: .none)
+            }
+        }
+    }
+    func loadOneDash(query: String, type: ChatComponentType, index: Int ) {
+        DashboardService().getDashQuery(query: query,
+                                        type: type,
+                                        position: index) { (component) in
+            DispatchQueue.main.async {
+                let pos = component.position
+                self.dataDash[pos].webview = component.webView
+                self.dataDash[pos].type = component.type
+                self.dataDash[pos].text = component.text
+                self.dataDash[pos].idQuery = component.idQuery
+                self.dataDash[pos].columnsInfo = component.columnsInfo
+                self.dataDash[pos].loading = true
+                let indexPath = IndexPath(row: pos, section: 0)
+                self.tbMain.reloadRows(at: [indexPath], with: .none)
             }
         }
     }
@@ -159,7 +211,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     }
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == tbMain {
-            return getSizeDashboard(row: dataDash[indexPath.row], width: self.frame.width)
+            let finalSize = getSizeDashboard(row: dataDash[indexPath.row], width: self.frame.width)
+            return finalSize
         } else {
             return 50
         }
@@ -168,27 +221,51 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         if tableView == tbMain {
             let cell = DashboardComponentCell()
             cell.delegate = self
-            cell.configCell(data: dataDash[indexPath.row])
+            cell.delegateSend = self
+            cell.configCell(data: dataDash[indexPath.row],
+                            pos: indexPath.row,
+                            loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral
+                            )
             //cell.addSubview(newView)
             return cell
         }
         if tableView == tbListDashboard {
             let cell = UITableViewCell()
             cell.textLabel?.text = listDash[indexPath.row].name
+            cell.textLabel?.font = generalFont
+            cell.textLabel?.textColor = chataDrawerTextColorPrimary
             return cell
         }
         return UITableViewCell()
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbListDashboard {
-            spinnerDashboard.setTitle(listDash[indexPath.row].name, for: .normal)
+            loadingGeneral = false
+            let name = "\(listDash[indexPath.row].name) ⌄"
+            spinnerDashboard.setTitle(name, for: .normal)
             toggleListDashboard(false)
             dataDash = listDash[indexPath.row].data
+            toggleTable()
             tbMain.reloadData()
         }
     }
     func loadTableD(table: UITableView) {
         table.delegate = self
         table.dataSource = self
+        table.bounces = false
+    }
+    func sendText(_ text: String, _ safe: Bool) {
+        
+    }
+    func updateComponent(text: String, first: Bool, position: Int) {
+        let query = first ? dataDash[position].query : dataDash[position].secondQuery
+        if first {
+            loadOneDash(query: query, type: dataDash[position].type, index: position)
+        } else {
+            loadTwoDash(query: text, type: "", index: position)
+        }
+    }
+    func sendDrillDown(idQuery: String, obj: String, name: String) {
+        
     }
 }
