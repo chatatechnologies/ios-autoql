@@ -3719,22 +3719,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B8358C0A-5CAB-4B46-A53A-09C741F31D1B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSDashboardService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "getDashboards(apiKey:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "65C9C3EE-013A-4128-8E42-E0A218B3B0AD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -3761,70 +3745,6 @@
             startingLineNumber = "151"
             endingLineNumber = "151"
             landmarkName = "loadWebView(view:webview:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "092CF180-90E7-462A-8355-F8F6F4B00082"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSDashboardService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "getDashQuery(query:type:position:completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "092CF180-90E7-462A-8355-F8F6F4B00082 - 6bebd80d8d6f9411"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "chata.DashboardService.getDashQuery(dash: chata.DashboardModel, position: Swift.Int, completion: (chata.ChatComponentModel) -&gt; ()) -&gt; ()"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSDashboardService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "76"
-                  endingLineNumber = "76"
-                  offsetFromSymbolStart = "1824">
-               </Location>
-               <Location
-                  uuid = "092CF180-90E7-462A-8355-F8F6F4B00082 - 2cad104c52d47243"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; () in chata.DashboardService.getDashQuery(dash: chata.DashboardModel, position: Swift.Int, completion: (chata.ChatComponentModel) -&gt; ()) -&gt; ()"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSDashboardService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "256">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B1BCAEAC-A821-4D43-B864-F2CC725F0D5A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSDashboardService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "getDashQuery(query:type:position:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3872,38 +3792,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
-            landmarkName = "getDashboards(apiKey:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "14906F29-26F5-469C-B30D-08C83D661661"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSDashboardService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "getDashboards(apiKey:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A9CA8E1E-0656-482F-9735-1D865A71CDA3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSDashboardService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
             landmarkName = "getDashboards(apiKey:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4421,22 +4309,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "365C337C-4D74-48F2-BA87-1B7F6F616D21"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSDashboardService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "getDashQuery(query:type:position:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "93D14F3E-9523-4D3D-B90E-C5C2C6D22C51"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4677,22 +4549,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "25A32D9F-5FE1-4B65-860A-7F5CF9DAEC9D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSDashboardService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "getDashQuery(query:type:position:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "08543B59-4F7D-49F8-AA6A-F221F9D0328B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4924,8 +4780,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "getDrillDownDashboard(idQuery:name:value:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4940,8 +4796,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "getDrillDownDashboard(idQuery:name:value:completion:)"
             landmarkType = "7">
             <Locations>
@@ -4988,8 +4844,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "getDrillDownDashboard(idQuery:name:value:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5004,8 +4860,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "getDrillDownDashboard(idQuery:name:value:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5020,8 +4876,8 @@
             filePath = "../Classes/WSDashboardService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "getDrillDownDashboard(idQuery:name:value:completion:)"
             landmarkType = "7">
          </BreakpointContent>

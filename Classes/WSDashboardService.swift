@@ -52,23 +52,30 @@ class DashboardService {
                     "test": true,
                     "text": query
                 ]
-        httpRequest(url, "POST", body) { (response) in
-            let reference_id = response["reference_id"] as? String ?? ""
-            let typeFinal = type == .Introduction ? "" : type.rawValue
-            if reference_id == "1.1.430" || reference_id == "1.1.431"{
-                
-                ChataServices.instance.getSuggestionsQueries(query: query) { (items) in
-                    let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position)
+        if query == "" {
+            var finalComponent = ChataServices().getDataComponent(response: [:],
+                                                                      type: "",
+                                                                      position: position)
+            finalComponent.text = "No query was supplied for this tile."
+            completion(finalComponent)
+        } else {
+            httpRequest(url, "POST", body) { (response) in
+                let reference_id = response["reference_id"] as? String ?? ""
+                let typeFinal = type == .Introduction ? "" : type.rawValue
+                if reference_id == "1.1.430" || reference_id == "1.1.431"{
+                    
+                    ChataServices.instance.getSuggestionsQueries(query: query) { (items) in
+                        let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position)
+                        completion(finalComponent)
+                    }
+                } else {
+                    let finalComponent = ChataServices().getDataComponent(response: response,
+                                                                          type: typeFinal,
+                                                                          position: position)
                     completion(finalComponent)
                 }
-            } else {
-                let finalComponent = ChataServices().getDataComponent(response: response,
-                                                                      type: typeFinal,
-                                                                      position: position)
-                completion(finalComponent)
             }
         }
-        
     }
     func getDrillDownDashboard(idQuery: String, name: [String], value: [String], completion: @escaping CompletionChatComponentModel){
         var base = DataConfig.authenticationObj.domain
