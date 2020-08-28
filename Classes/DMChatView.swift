@@ -24,6 +24,9 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        if DataConfig.authenticationObj.token == "" {
+            data.remove(at: 1)
+        }
     }
     override func didMoveToSuperview() {
         configLoad()

@@ -30,7 +30,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
         lblMain.textColor = chataDrawerTextColorPrimary
         lblMain.font = generalFont
         addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .topHeight, height: 200, lblMain)
+        tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain)
         addSubview(lblInfo)
         lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
         lblInfo.text = "Use Explore Queries to further explore the possibilities"
@@ -47,11 +47,10 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
         button.setImage(image2, for: .normal)
         button.addTarget(self, action: #selector(returnSelection), for: .touchUpInside)
         vwSecond.addSubview(button)
-        button.edgeTo(vwSecond, safeArea: .widthLeft, height: 30 )
+        button.edgeTo(vwSecond, safeArea: .widthLeft, height: 25 )
         vwSecond.addSubview(tbSecond)
-        tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 30)
+        tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 25)
         tbSecond.addBorder(side: .left)
-        
         loadTable()
     }
     @IBAction func returnSelection(_ sender: AnyObject){
@@ -97,9 +96,21 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         if tableView == tbMain {
+            let imageView = UIImageView()
+            cell.contentView.addSubview(imageView)
+            let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            let image2 = image?.resizeT(maxWidthHeight: 30)
+            imageView.image = image2
+            imageView.edgeTo(cell.contentView, safeArea: .widthRight, height: 25, padding: 16)
+            imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             cell.textLabel?.text = dataQB[indexPath.row].topic
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
+            /*let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            let image2 = image?.resizeT(maxWidthHeight: 30)
+            //image2.transform = image2.transform.rotated(by: .pi)
+            cell.imageView?.image = image2
+            cell.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)*/
             return cell
         } else {
             cell.textLabel?.text = dataSelection[indexPath.row]
