@@ -21,6 +21,7 @@
 		1728B806243252A900003B8F /* icTableData.png in Resources */ = {isa = PBXBuildFile; fileRef = 1728B803243252A900003B8F /* icTableData.png */; };
 		172BB06D2460858D001402D7 /* DashboardComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172BB06C2460858D001402D7 /* DashboardComponentView.swift */; };
 		1742C60424F96EF900213FDA /* CCQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1742C60324F96EF900213FDA /* CCQueryBuilder.swift */; };
+		1742C60624F9AE4D00213FDA /* icArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1742C60524F9AE4D00213FDA /* icArrowLeft.png */; };
 		17489AB4241713F400825936 /* DMAutoCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17489AB3241713F400825936 /* DMAutoCompleteView.swift */; };
 		175937F024D9C8C8004F4B4F /* iconProjectRestautant.png in Resources */ = {isa = PBXBuildFile; fileRef = 175937EB24D9C8C8004F4B4F /* iconProjectRestautant.png */; };
 		175937F124D9C8C8004F4B4F /* iconProjectQBO.png in Resources */ = {isa = PBXBuildFile; fileRef = 175937EC24D9C8C8004F4B4F /* iconProjectQBO.png */; };
@@ -103,6 +104,7 @@
 		172BB06C2460858D001402D7 /* DashboardComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardComponentView.swift; sourceTree = "<group>"; };
 		172EF669249ABBCD00EBEE57 /* autoql.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = autoql.podspec; sourceTree = "<group>"; usesTabs = 0; };
 		1742C60324F96EF900213FDA /* CCQueryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCQueryBuilder.swift; sourceTree = "<group>"; };
+		1742C60524F9AE4D00213FDA /* icArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icArrowLeft.png; sourceTree = "<group>"; };
 		17489AB3241713F400825936 /* DMAutoCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAutoCompleteView.swift; sourceTree = "<group>"; };
 		175937EB24D9C8C8004F4B4F /* iconProjectRestautant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconProjectRestautant.png; sourceTree = "<group>"; };
 		175937EC24D9C8C8004F4B4F /* iconProjectQBO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconProjectQBO.png; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				17B46763242530F70098989C /* icPlay.png */,
 				175982A0242D39D4002D504F /* gifBalls.gif */,
 				17ECB5E0242E83EE001E09BB /* icDoubleArrow.png */,
+				1742C60524F9AE4D00213FDA /* icArrowLeft.png */,
 				17EF228F23FC6B2B001C5F69 /* icSend.png */,
 				177CE58C2476FB47007E13EA /* icArea.png */,
 				1728B801243252A900003B8F /* icBubble.png */,
@@ -544,6 +547,7 @@
 				17B46764242530F70098989C /* icPlay.png in Resources */,
 				1728B804243252A900003B8F /* icBubble.png in Resources */,
 				179A90DA242EB2A8005F362D /* icBar.png in Resources */,
+				1742C60624F9AE4D00213FDA /* icArrowLeft.png in Resources */,
 				175937F424D9C8C8004F4B4F /* iconProjectSpira.png in Resources */,
 				175982A1242D39D4002D504F /* gifBalls.gif in Resources */,
 			);

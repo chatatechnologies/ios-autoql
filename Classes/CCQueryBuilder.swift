@@ -15,7 +15,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
     var dataQB: [QueryBuilderModel] = []
     var dataSelection: [String] = []
     weak var delegate: ChatViewDelegate?
-    let selectSection = -1
+    var selectSection = -1
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -40,9 +40,41 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
         addSubview(vwSecond)
         vwSecond.edgeTo(tbMain, safeArea: .none)
         vwSecond.isHidden = true
+        vwSecond.backgroundColor = chataDrawerBackgroundColor
+        let button = UIButton()
+        let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        let image2 = image?.resizeT(maxWidthHeight: 30)
+        button.setImage(image2, for: .normal)
+        button.addTarget(self, action: #selector(returnSelection), for: .touchUpInside)
+        vwSecond.addSubview(button)
+        button.edgeTo(vwSecond, safeArea: .widthLeft, height: 30 )
         vwSecond.addSubview(tbSecond)
-        tbSecond.edgeTo(vwSecond, safeArea: .none)
+        tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 30)
+        tbSecond.addBorder(side: .left)
+        
         loadTable()
+    }
+    @IBAction func returnSelection(_ sender: AnyObject){
+        toggleAnimationSecond(hide: true)
+    }
+    func toggleAnimationSecond(hide: Bool = false){
+        let pos: CGFloat = !hide ? 500 : 0
+        let pos2: CGFloat = !hide ? 0 : 500
+        self.vwSecond.transform = CGAffineTransform(translationX: pos, y: 0)
+        UIView.animate(withDuration: 0.3,
+                       delay: 0.0,
+                       usingSpringWithDamping: 1,
+                       initialSpringVelocity: 0,
+                       options: .curveEaseOut,
+                       animations: {
+                        // Slide the views by -offset
+                        self.vwSecond.isHidden = hide
+                        self.vwSecond.transform = CGAffineTransform(translationX: pos2, y: 0)
+                        //self.tbMain.transform = CGAffineTransform.identity
+
+        }, completion: { finished in
+            // Remove the old view from the tabbar view.
+        })
     }
     func loadTable() {
         tbMain.delegate = self
@@ -79,21 +111,8 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbMain {
             dataSelection = dataQB[indexPath.row].queries
-            self.vwSecond.transform = CGAffineTransform(translationX: 500, y: 0)
-            UIView.animate(withDuration: 0.3,
-                           delay: 0.0,
-                           usingSpringWithDamping: 1,
-                           initialSpringVelocity: 0,
-                           options: .curveEaseOut,
-                           animations: {
-                            // Slide the views by -offset
-                            self.vwSecond.isHidden = false
-                            self.vwSecond.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self.tbMain.transform = CGAffineTransform.identity
-
-            }, completion: { finished in
-                // Remove the old view from the tabbar view.
-            })
+            selectSection = indexPath.row
+            toggleAnimationSecond()
             //vwSecond.isHidden = false
             tbSecond.reloadData()
         } else {
