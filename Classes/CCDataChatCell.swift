@@ -70,6 +70,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private func getQueryBuilder() {
         print("QB!")
         let viewQB = QueryBuilderView()
+        viewQB.delegate = self
         self.contentView.addSubview(viewQB)
         viewQB.cardView()
         viewQB.edgeTo(self, safeArea: .paddingTop)

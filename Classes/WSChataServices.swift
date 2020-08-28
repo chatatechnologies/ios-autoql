@@ -235,8 +235,8 @@ class ChataServices {
     func getDataQueryBuilder(completion: @escaping CompletionChatQueryBuilderModel){
         //https://backend-staging.chata.io/api/v1/topics?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&project_id=spira-demo3
         let projectID = ChataServices.instance.getProjectID()
-        let finalUrl = "\(wsUrlDynamic)/api/v1/topics?key=\(DataConfig.authenticationObj.apiKey)&project_id=\(projectID)"
-        httpRequest(finalUrl) { (response) in
+        let finalUrl = "\(wsQueryBuilder)\(DataConfig.authenticationObj.apiKey)&project_id=\(projectID)"
+        httpRequest(finalUrl, integrator: true) { (response) in
             let items = response["items"] as? [[String: Any]] ?? []
             var qboptions: [QueryBuilderModel] = []
             items.forEach { (item) in
