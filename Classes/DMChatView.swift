@@ -15,8 +15,8 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
     let tableView = UITableView()
     weak var delegate: ChatViewDelegate?
     var data = [
-        ChatComponentModel(type: .Introduction, text: "Hi \(DataConfig.userDisplayName)! \(DataConfig.introMessage)")
-        //ChatComponentModel(type: .QueryBuilder, text: "" )
+        ChatComponentModel(type: .Introduction, text: "Hi \(DataConfig.userDisplayName)! \(DataConfig.introMessage)"),
+        ChatComponentModel(type: .QueryBuilder, text: "")
     ]
     private var cellAnimationsFlags = [IndexPath]()
     required init?(coder aDecoder: NSCoder) {
@@ -24,6 +24,9 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        if DataConfig.authenticationObj.token == "" {
+            data.remove(at: 1)
+        }
     }
     override func didMoveToSuperview() {
         configLoad()
