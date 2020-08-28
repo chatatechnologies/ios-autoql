@@ -8,6 +8,7 @@
 import Foundation
 typealias CompletionArrString = (_ response: [String]) -> Void
 typealias CompletionChatComponentModel = (_ response: ChatComponentModel) -> Void
+typealias CompletionChatQueryBuilderModel = (_ response: [QueryBuilderModel]) -> Void
 typealias CompletionSecondData = (_ response: String) -> Void
 typealias CompletionDashboards = (_ response: [DashboardList]) -> Void
 typealias CompletionSuggestions = (_ response: [String]) -> Void
@@ -231,71 +232,21 @@ class ChataServices {
             //completion(matches)
         }
     }
-    func getDataSecondQuery(response: [String: Any], type: String = "") -> String {
-        let data = response["data"] as? [String: Any] ?? [:]
-        if data.count > 0 {
-            let columns = data["columns"] as? [[String: Any]] ?? []
-            let finalType = type == "" ? (data["display_type"] as? String ?? "") : type
-            let displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
-            //let idQuery = data["query_id"] as? String ?? ""
-            let rows = data["rows"] as? [[Any]] ?? []
-            let columnsFinal = getColumns(columns: columns)
-            let (rowsFinal, _) = getRows(rows: rows, columnsFinal: columnsFinal)
-            let columnsF = columnsFinal.map { (element) -> String in
-                return element.name
+    func getDataQueryBuilder(completion: @escaping CompletionChatQueryBuilderModel){
+        //https://backend-staging.chata.io/api/v1/topics?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&project_id=spira-demo3
+        let projectID = ChataServices.instance.getProjectID()
+        let finalUrl = "\(wsUrlDynamic)/api/v1/topics?key=\(DataConfig.authenticationObj.apiKey)&project_id=\(projectID)"
+        httpRequest(finalUrl) { (response) in
+            let items = response["items"] as? [[String: Any]] ?? []
+            var qboptions: [QueryBuilderModel] = []
+            items.forEach { (item) in
+                let topic = item["topic"] as? String ?? ""
+                let queries = item["queries"] as? [String] ?? []
+                let qbOption = QueryBuilderModel(topic: topic, queries: queries)
+                qboptions.append(qbOption)
             }
-            let chartsBi = displayType == .Pie || displayType == .Bar || displayType == .Column || displayType == .Line
-            let chartsTri = displayType == .Heatmap || displayType == .Bubble || displayType == .StackColumn || displayType == .StackBar || displayType == .StackArea
-            // hacer DAta
-            if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
-                /*let existsDatePivot = supportPivot(columns: columsType)
-                let supportTri = columnsFinal.count == 3
-                var datePivotStr = ""
-                var dataPivotStr = ""
-                var tableBasicStr = ""
-                var drills: [String] = []
-                if existsDatePivot {
-                    var datePivot =  getDatePivot(rows: rowsFinalClean, columnsT: columsType)
-                    let columnsTemp = datePivot[0]
-                    datePivot.remove(at: 0)
-                    datePivotStr = tableString(dataTable: datePivot,
-                                            dataColumn: columnsTemp,
-                                            idTable: "idTableDatePivot",
-                                            columns: columnsFinal,
-                                            datePivot: true)
-                }
-                if supportTri {
-                    var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal)
-                    drills = drill
-                    let dataPivotColumnsTemp = dataPivot[0]
-                    dataPivot.remove(at: 0)
-                    dataPivotStr = tableString(
-                        dataTable: dataPivot,
-                        dataColumn: dataPivotColumnsTemp,
-                        idTable: "idTableDataPivot",
-                        columns: columnsFinal,
-                        datePivot: true)
-                }*/
-                let tableBasicStr = tableString(dataTable: rowsFinal,
-                                        dataColumn: columnsF,
-                                        idTable: "idTableBasicSplit",
-                                        columns: columnsFinal,
-                                        datePivot: false)
-                //let tableType = splitType == "table"
-                return tableBasicStr
-                //let typeFinal = type == "" ? "#idTableBasic" : type
-                /*webView = """
-                    \(getHTMLHeader(triType: columnsF.count == 3))
-                    \(datePivotStr)
-                    \(dataPivotStr)
-                    \(tableBasicStr)
-                    \(split ? secondQuery : "")
-                \(getHTMLFooter(rows: rowsFinal, columns: columnsF, types: columsType, drills: drills, type: typeFinal))
-                """*/
-
-            }
+            completion(qboptions)
         }
-        return "<p>Erro in Second Split</p>"
     }
     func getDataComponent(response: [String: Any],
                           type: String = "",

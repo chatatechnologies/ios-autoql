@@ -6,10 +6,12 @@
 //
 
 import Foundation
-class QueryBuilderView: UIView {
+class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
     let lblMain = UILabel()
     let tbMain = UITableView()
     let lblInfo = UILabel()
+    var dataQB: [QueryBuilderModel] = []
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -31,5 +33,36 @@ class QueryBuilderView: UIView {
         lblInfo.font = generalFont
         lblInfo.textColor = chataDrawerTextColorPrimary
         lblInfo.numberOfLines = 0
+        loadTable()
+    }
+    func loadTable() {
+        tbMain.delegate = self
+        tbMain.dataSource = self
+        loadData()
+    }
+    func loadData() {
+        ChataServices.instance.getDataQueryBuilder { (options) in
+            self.dataQB = options
+            self.tbMain.reloadData()
+        }
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataQB.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = dataQB[indexPath.row].topic
+        return cell
+    }
+}
+struct QueryBuilderModel {
+    var topic: String
+    var queries: [String]
+    init(
+        topic: String = "",
+        queries: [String] = []
+    ) {
+        self.topic = topic
+        self.queries = []
     }
 }
