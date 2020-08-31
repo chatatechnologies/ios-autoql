@@ -206,11 +206,13 @@ class ChataServices {
                 ]
             }
         } else {
+            var dateFinal = String(obj)
+            dateFinal = name.contains("yyyy") ?  dateFinal.toStrDate() : dateFinal
             if name != ""{
                 group_bys = [
                     [
                         "name" : name,
-                        "value" : obj
+                        "value" : dateFinal
                     ]
                 ]
             }

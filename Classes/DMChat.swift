@@ -227,7 +227,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         }
     }
     func delete() {
-        let resetData: [ChatComponentModel] = [self.vwDataMessenger.data[0]]
+        let resetData: [ChatComponentModel] = DataConfig.authenticationObj.token == "" ? [self.vwDataMessenger.data[0]] : [self.vwDataMessenger.data[0], self.vwDataMessenger.data[1]]
         self.vwDataMessenger.data = resetData
         self.vwDataMessenger.tableView.reloadData()
     }

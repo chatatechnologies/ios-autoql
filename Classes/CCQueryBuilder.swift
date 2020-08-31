@@ -31,8 +31,8 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
         lblMain.font = generalFont
         addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain)
-        addSubview(lblInfo)
-        lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
+        //addSubview(lblInfo)
+        //lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
         lblInfo.text = "Use Explore Queries to further explore the possibilities"
         lblInfo.font = generalFont
         lblInfo.textColor = chataDrawerTextColorPrimary
