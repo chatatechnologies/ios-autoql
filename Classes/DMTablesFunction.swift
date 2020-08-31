@@ -209,7 +209,7 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
             categoriesY.append(data2)
             totalDate.append([])
         }
-        if data3 == 3300.0{
+        if data3 == 61.5{
             print("YEAH")
         }
         let locX = categoriesX.firstIndex(of: data1) ?? 0
@@ -230,9 +230,10 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
             })
             if position != nil {
                 let valueFinal = type == .dollar ? "\(totalSum[position!].value)".toMoney() : "\(totalSum[position!].value)"
+                finalB.append(valueFinal)
+            } else {
                 let valueDefault = type == .dollar ? "$0" : "0"
-                let value = position == nil ? valueDefault : valueFinal
-                finalB.append(value)
+                finalB.append(valueDefault)
             }
         }
         final.append(finalB)
