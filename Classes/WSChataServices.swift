@@ -322,13 +322,19 @@ class ChataServices {
                                             datePivot: true)
                 }
                 if supportTri {
-                    var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal)
+                    var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])
                     drills = drill
                     let dataPivotColumnsTemp = dataPivot[0]
+                    var arrFinal: [String] = []
+                    dataPivot.forEach { (arr) in
+                        let header = arr[0]
+                        arrFinal.append(header)
+                    }
                     dataPivot.remove(at: 0)
                     dataPivotStr = tableString(
                         dataTable: dataPivot,
                         dataColumn: dataPivotColumnsTemp,
+                        //dataColumn: arrFinal,
                         idTable: "idTableDataPivot",
                         columns: columnsFinal,
                         datePivot: true)
