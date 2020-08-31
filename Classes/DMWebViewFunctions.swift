@@ -171,24 +171,34 @@ func getChartFooter(rows: [[String]],
         dataChartLine = []
         //var positionsCharts: [Int] = []
         var positionsCharts: Int = -1
+        var positionsChartsSecond: Int = -1
         for (index, type) in types.enumerated() {
-            if type == .quantity || type == .dollar {
+            if type == .quantity || type == .dollar{
                 //print("found")
                 positionsCharts = index
+            }
+            if  type == .date {
+                positionsChartsSecond = index
+            }
+            if positionsCharts != -1 && positionsChartsSecond != -1{
                 break
             }
+            
         }
         dataSpecial = rows.map { (row) -> [Any] in
-            let name = validateArray(row, 1) as? String ?? ""
+            var name = validateArray(row, positionsChartsSecond) as? String ?? ""
+            //let name = validateArray(row, 1) as? String ?? ""
             /*let doubleData = positionsCharts.map { (num) -> Double in
                 let mount = Double(validateArray(row, num) as? String ?? "") ?? 0.0
                 return mount
             }*/
+            name = name.toDate()
             if catXFormat.firstIndex(of: name) == nil {
                 catXFormat.append(name)
             }
-            let mount = validateArray(row, positionsCharts) as? String ?? ""
-            return [name, mount]
+            let mount = validateArray(row, positionsCharts) as? String ?? "0"
+            let mountFinal = Double(mount) ?? 0.0
+            return [name, mountFinal]
         }
         dataSpecialActive = true
         print(dataSpecial)
