@@ -646,7 +646,7 @@ extension UIView {
             widthAnchor.constraint(equalToConstant: height).isActive = true
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         case .dropDown:
-            topAnchor.constraint(equalTo: view.bottomAnchor, constant: 1).isActive = true
+            topAnchor.constraint(equalTo: view.bottomAnchor, constant: padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -padding).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true

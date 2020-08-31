@@ -62,7 +62,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         let cell = DataChatCell()
         cell.selectionStyle = .none
         cell.delegate = self
-        cell.configCell(allData: data[indexPath.row], index: indexPath.row)
+        cell.configCell(allData: data[indexPath.row], index: indexPath.row, lastQueryFinal: (indexPath.row == data.count - 1))
         return cell
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

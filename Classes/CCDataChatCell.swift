@@ -20,11 +20,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     let boxWeb = BoxWebviewView()
     let defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
     var buttonDefault: myCustomButton?
+    var lastQuery: Bool = false
     weak var delegate: DataChatCellDelegate?
     static var identifier: String {
         return String(describing: self)
     }
-    func configCell(allData: ChatComponentModel, index: Int) {
+    func configCell(allData: ChatComponentModel, index: Int, lastQueryFinal: Bool = false) {
+        lastQuery = lastQueryFinal
         data = allData
         //self.
         self.index = index
@@ -202,7 +204,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
-        newView.loadConfig(data)
+        newView.loadConfig(data, lastQueryFinal: lastQuery)
         newView.delegate = self
         self.sizeToFit()
     }

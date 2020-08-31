@@ -25,11 +25,13 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     var listValue: [String] = []
     var selectString: [String] = []
     var posSelected = 0
+    var lastQuery = false
     weak var delegate: ChatViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func loadConfig(_ data: ChatComponentModel) {
+    func loadConfig(_ data: ChatComponentModel, lastQueryFinal: Bool = false) {
+        lastQuery = lastQueryFinal
         self.data = data
         tbChange.delegate = self
         tbChange.dataSource = self
@@ -86,23 +88,27 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         var mainAttr = NSMutableAttributedString(string: "\(originalText)")
         //let range2 = NSRange(location: 0, length: originalText.count)
         //mainAttr.addAttributes(attributedString, range: range2)
+        
         var newString = ""
         for (index, change) in data.fullSuggestions.enumerated() {
             //var posStack = getPos(index: index, sumStr: sumStr)
             let start = originalText.index(originalText.startIndex, offsetBy: change.start)
             let end = originalText.index(originalText.endIndex, offsetBy: change.end - originalText.count)
-            let rangeLast = start..<end
+            //let rangeLast = start..<end
             let originText = getRange(start: start, end: end, original: originalText)
             var mySubstring = change.suggestionList[0].text
             //var newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
-            newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
+            //newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
+            newString = originalText.replace(target: originText, withString: mySubstring)
+            //newTextTransform = newString
             if first{
                 originalTexts.append(originText)
                 listArr.append(mySubstring)
                 selectString.append(mySubstring)
             } else {
                 let newSelect = selectString[index]
-                newString = newString.replaceRange(range: rangeLast, start: start, newText: newSelect)
+                newString = originalText.replace(target: originText, withString: newSelect)
+                //newString = newString.replaceRange(range: rangeLast, start: start, newText: newSelect)
                 mySubstring = newSelect
             }
             let msgAttributes: [NSAttributedString.Key: Any] = [
@@ -166,6 +172,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     @objc func removeTransparentView() {
         for element in self.superview!.superview!.superview!.subviews {
+        //for element in self.superview!.superview!.superview!.superview!.subviews {
             if let viewWithTag = element.viewWithTag(-2) {
                 viewWithTag.removeFromSuperview()
             }
@@ -198,11 +205,14 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         //adaptar Vista centrada
         tbChange.tag = -2
         self.superview?.superview?.superview?.addSubview(tbChange)
+        //self.superview?.superview?.superview?.superview?.addSubview(tbChange)
         //self.superview?.superview?.superview?.isHidden = true
         //tbChange.cardView()
-        let height = CGFloat(41 * list.count)
+        let height: CGFloat = lastQuery ? 60 : CGFloat(41 * list.count)
         tbChange.backgroundColor = .none
-        tbChange.edgeTo(mainLabel, safeArea: .dropDown, height: height, padding: 8)
+        tbChange.bounces = false
+        tbChange.clipsToBounds = true
+        tbChange.edgeTo(mainLabel, safeArea: .dropDown, height: height, padding: -24)
         //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
     }
     func loadBtn() {
