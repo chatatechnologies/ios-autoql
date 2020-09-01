@@ -223,7 +223,7 @@ func getChartFooter(rows: [[String]],
         }
         if categoriesY.firstIndex(of: data2) == nil {
             categoriesY.append(data2)
-            drillY.append(column[1])
+            drillY.append(column[0])
             stacked.append([])
         }
         let locX = categoriesX.firstIndex(of: data1) ?? 0

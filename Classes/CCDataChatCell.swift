@@ -206,6 +206,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.edgeTo(self, safeArea: .paddingTop)
         newView.loadConfig(data, lastQueryFinal: lastQuery)
         newView.delegate = self
+        loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         self.sizeToFit()
     }
     func sendText(_ text: String, _ safe: Bool) {
