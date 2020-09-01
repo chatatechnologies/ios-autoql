@@ -228,6 +228,9 @@ func getChartFooter(rows: [[String]],
         }
         let locX = categoriesX.firstIndex(of: data1) ?? 0
         let locY = categoriesY.firstIndex(of: data2) ?? 0
+        if data1 == "Apr 2018"{
+            print("FF")
+        }
         stacked[locY].append(data3)
         return [locX, locY, data3]
     } : []
@@ -258,10 +261,12 @@ func getChartFooter(rows: [[String]],
     let catFinaY: [Any] = triType ? categoriesY : dataChartLine
     let stringChartLine = arrayDictionaryToJson(json: dataChartLineTri)
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
-    let yAxis = (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
+    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : (validateArray(columns, 0) as? String ?? "")
+    let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
+        (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
     return """
         var type = '\(mainType)';
-        var xAxis = '\(validateArray(columns, 0) as? String ?? "")';
+        var xAxis = '\(xAxis)';
         var yAxis = '\(yAxis)';
         var dataChartBi = \(dataSpecialActive ? dataSpecial : dataChartBi);
         var datachartTri = \(datachartTri);

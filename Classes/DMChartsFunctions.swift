@@ -390,7 +390,7 @@ func getTriTypeChart() -> String {
         
         function stackedType(invert){
             finalSize(invert);
-            var rotation = invert ? 10 : 40
+            var rotation = invert ? 0 : -60
             chart.destroy();
                     chart = Highcharts.chart('container', {
                         chart: {

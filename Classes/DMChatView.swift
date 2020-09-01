@@ -32,27 +32,29 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
         configLoad()
     }
     func deleteQuery(numQuery: Int) {
-        var two = false
-        data.remove(at: numQuery)
-        if data[numQuery-1].type == .Introduction{
-            if data[numQuery-1].user {
-                two = true
-                data.remove(at: numQuery - 1)
+        if data.count >= numQuery {
+            var two = false
+            data.remove(at: numQuery)
+            if data[numQuery-1].type == .Introduction{
+                if data[numQuery-1].user {
+                    two = true
+                    data.remove(at: numQuery - 1)
+                }
             }
-        }
-        let index1 = IndexPath(row: numQuery, section: 0)
-        let index2 = IndexPath(row: numQuery - 1, section: 0)
-        DispatchQueue.main.async {
-            var num = 1
-            if two{
-                self.tableView.deleteRows(at: [index1, index2], with: .automatic)
-                num = 2
-            } else{
-                self.tableView.deleteRows(at: [index1], with: .automatic)
+            let index1 = IndexPath(row: numQuery, section: 0)
+            let index2 = IndexPath(row: numQuery - 1, section: 0)
+            DispatchQueue.main.async {
+                var num = 1
+                if two{
+                    self.tableView.deleteRows(at: [index1, index2], with: .automatic)
+                    num = 2
+                } else{
+                    self.tableView.deleteRows(at: [index1], with: .automatic)
+                }
+                //self.tableView.reloadData()
+                let endIndex = IndexPath(row: numQuery - num, section: 0)
+                self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
             }
-            //self.tableView.reloadData()
-            let endIndex = IndexPath(row: numQuery - num, section: 0)
-            self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
         }
     }
 }
