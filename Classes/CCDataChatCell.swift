@@ -161,7 +161,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         default:
             var specialActive = false
             columns.forEach { (type) in
-                if type == .dollar || type == .quantity{
+                if type == .dollar //|| type == .quantity
+                {
                     specialActive = true
                 }
             }
