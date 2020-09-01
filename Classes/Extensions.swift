@@ -304,9 +304,9 @@ extension UITextField {
     }
 }
 extension UIView {
-    func cardView(border: Bool = true) {
+    func cardView(border: Bool = true, borderRadius: CGFloat = 10) {
         self.layer.borderWidth = 1
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = borderRadius
         self.layer.borderColor = border ? chataDrawerBorderColor.cgColor : UIColor.clear.cgColor
         /*self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -582,7 +582,7 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         case .topHeight:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 0).isActive = true
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
