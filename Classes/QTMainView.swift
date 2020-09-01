@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import  UIKit
 class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     var vwToolbar = ToolbarView()
     var tfMain = UITextField()
     let vwMainScrollChat = UIScrollView()
     var vwMainChat = UIView()
+    var vwTextBox = UIView()
     let tbMain = UITableView()
+    let lblDefault = UILabel()
+    let btnSend = UIButton()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,7 +39,9 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         loadToolbar()
         loadMainChat()
         loadInput()
-        loadTable()
+        //loadTable()
+        //loadDefault()
+        loadPagination()
     }
     private func loadToolbar() {
         self.addSubview(vwToolbar)
@@ -48,11 +54,24 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwMainScrollChat.edgeTo(self, safeArea: .fullState, vwToolbar )
         vwMainScrollChat.addSubview(vwMainChat)
         vwMainChat.edgeTo(self, safeArea: .fullState, vwToolbar)
-        vwMainChat.backgroundColor = .white
+        vwMainChat.backgroundColor = chataDrawerBackgroundColor
     }
     private func loadInput() {
-        addSubview(tfMain)
-        tfMain.edgeTo(self, safeArea: .topHeight, height: 50.0, vwToolbar, padding: 16)
+        let size: CGFloat = 40.0
+        let padding: CGFloat = -8
+        addSubview(vwTextBox)
+        vwTextBox.edgeTo(self, safeArea: .topHeight, height: 50.0, vwToolbar, padding: 16)
+        vwTextBox.addSubview(btnSend)
+        btnSend.edgeTo(vwTextBox, safeArea: .rightCenterY, height: size, padding:padding)
+        btnSend.backgroundColor = chataDrawerAccentColor
+        btnSend.addTarget(self, action: #selector(actionSearch), for: .touchUpInside)
+        let imageStr = "icSearch.png"
+        let image = UIImage(named: imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
+        btnSend.setImage(image, for: .normal)
+        btnSend.circle(size)
+        vwTextBox.addSubview(tfMain)
+        tfMain.edgeTo(vwTextBox, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
+        //tfMain.edgeTo(self, safeArea: .topHeight, height: 50.0, vwToolbar, padding: 16)
         tfMain.cardView(borderRadius: 20)
         tfMain.loadInputPlace("Search relevant queries by topic")
         tfMain.configStyle()
@@ -63,8 +82,44 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tbMain.dataSource = self
         tbMain.clipsToBounds = true
         tbMain.bounces = true
+        tbMain.backgroundColor = chataDrawerBackgroundColor
         vwMainChat.addSubview(tbMain)
-        tbMain.edgeTo(vwMainChat, safeArea: .bottomPaddingtoTop, tfMain, padding: 8)
+        tbMain.edgeTo(vwMainChat, safeArea: .fullStatePadding, tfMain, padding: 8)
+    }
+    func loadPagination() {
+        let stackedView = UIStackView()
+        vwMainChat.addSubview(stackedView)
+        stackedView.edgeTo(vwMainChat, safeArea: .bottomPadding, height: 50.0, padding: 0)
+        stackedView.getHorizontal()
+        let btn1 = UIButton()
+        btn1.setTitle("1", for: .normal)
+        let btn2 = UIButton()
+        btn1.setTitle("2", for: .normal)
+        let btn3 = UIButton()
+        btn3.setTitle("3", for: .normal)
+        stackedView.addArrangedSubview(btn1)
+        stackedView.addArrangedSubview(btn2)
+        stackedView.addArrangedSubview(btn3)
+    }
+    private func loadDefault() {
+        vwMainChat.addSubview(lblDefault)
+        lblDefault.edgeTo(vwMainChat, safeArea: .fullStatePaddingAll, tfMain, padding: 16)
+        lblDefault.text = """
+        Discover what you can ask by entering a topic in the search bar above.
+
+
+        Simply click on any of the returned options to run the query in Data Messenger.
+        """
+        lblDefault.textColor = chataDrawerTextColorPrimary
+        lblDefault.numberOfLines = 0
+        lblDefault.font = generalFont
+        tbMain.isHidden = true
+    }
+    @objc func actionSearch(sender: UIButton!) {
+        let finalText = tfMain.text ?? ""
+        print(finalText)
+        tbMain.isHidden = false
+        lblDefault.isHidden = true
     }
     public func dismiss(animated: Bool) {
         self.layoutIfNeeded()
@@ -96,7 +151,11 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "JOJo"
+        cell.textLabel?.text = "JoJo"
+        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.font = generalFont
+        cell.contentView.backgroundColor = chataDrawerBackgroundColor
+        cell.textLabel?.textColor = chataDrawerTextColorPrimary
         return cell
     }
 }
