@@ -147,11 +147,12 @@ extension String {
         if format == "yyyy-MM"{
             let month = separete.count > 0 ? separete[0] : ""
             let year = separete.count > 1 ? separete[1] : ""
-            return "\(year)-\(month.monthStr())"
+            let (finalMonth, valid) = month.monthStr()
+            return valid ? "\(year)-\(finalMonth)" : self
         }
-        return ""
+        return self
     }
-    func monthStr() -> String{
+    func monthStr() -> (String, Bool){
         let finalTxt = String(self.prefix(3)).lowercased()
         let months = [
             "",
@@ -169,7 +170,11 @@ extension String {
             "dec"
         ]
         let finalNumber = months.firstIndex(of: finalTxt) ?? 0
-        return finalNumber > 9 ? "\(finalNumber)" : "0\(finalNumber)"
+        if finalNumber == 0 {
+            return (self, false)
+        }
+        let finalTxtSend = finalNumber > 9 ? "\(finalNumber)" : "0\(finalNumber)"
+        return (finalTxtSend, true)
     }
     func toDate2(format: String = "yyyy-MM") -> String {
         let separete = self.components(separatedBy: "-")
