@@ -228,9 +228,6 @@ func getChartFooter(rows: [[String]],
         }
         let locX = categoriesX.firstIndex(of: data1) ?? 0
         let locY = categoriesY.firstIndex(of: data2) ?? 0
-        if data1 == "Apr 2018"{
-            print("FF")
-        }
         stacked[locY].append(data3)
         return [locX, locY, data3]
     } : []
