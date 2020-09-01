@@ -10,12 +10,15 @@ import  UIKit
 class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     var vwToolbar = ToolbarView()
     var tfMain = UITextField()
+    let svPaginator = UIStackView()
     let vwMainScrollChat = UIScrollView()
     var vwMainChat = UIView()
     var vwTextBox = UIView()
     let tbMain = UITableView()
     let lblDefault = UILabel()
     let btnSend = UIButton()
+    var selectBtn = 1
+    let btns = ["←", "1", "2", "3", "→"]
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,9 +42,9 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         loadToolbar()
         loadMainChat()
         loadInput()
-        //loadTable()
-        //loadDefault()
         loadPagination()
+        loadTable()
+        loadDefault()
     }
     private func loadToolbar() {
         self.addSubview(vwToolbar)
@@ -64,6 +67,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwTextBox.addSubview(btnSend)
         btnSend.edgeTo(vwTextBox, safeArea: .rightCenterY, height: size, padding:padding)
         btnSend.backgroundColor = chataDrawerAccentColor
+        btnSend.tag = 1
         btnSend.addTarget(self, action: #selector(actionSearch), for: .touchUpInside)
         let imageStr = "icSearch.png"
         let image = UIImage(named: imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
@@ -84,22 +88,36 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tbMain.bounces = true
         tbMain.backgroundColor = chataDrawerBackgroundColor
         vwMainChat.addSubview(tbMain)
-        tbMain.edgeTo(vwMainChat, safeArea: .fullStatePadding, tfMain, padding: 8)
+        tbMain.edgeTo(vwMainChat, safeArea: .fullPadding, tfMain, svPaginator, padding: 8)
     }
     func loadPagination() {
-        let stackedView = UIStackView()
-        vwMainChat.addSubview(stackedView)
-        stackedView.edgeTo(vwMainChat, safeArea: .bottomPadding, height: 50.0, padding: 0)
-        stackedView.getHorizontal()
-        let btn1 = UIButton()
-        btn1.setTitle("1", for: .normal)
-        let btn2 = UIButton()
-        btn1.setTitle("2", for: .normal)
-        let btn3 = UIButton()
-        btn3.setTitle("3", for: .normal)
-        stackedView.addArrangedSubview(btn1)
-        stackedView.addArrangedSubview(btn2)
-        stackedView.addArrangedSubview(btn3)
+        vwMainChat.addSubview(svPaginator)
+        svPaginator.edgeTo(vwMainChat, safeArea: .bottomPadding, height: 50.0, padding: 16)
+        svPaginator.getHorizontal(dist: .equalCentering,spacing: 0)
+        btns.enumerated().forEach { (index, titleBtn) in
+            let btnGeneral = UIButton()
+            btnGeneral.setTitle(titleBtn, for: .normal)
+            btnGeneral.tag = index
+            btnGeneral.circle(30)
+            btnGeneral.titleLabel?.font = generalFont
+            svPaginator.addArrangedSubview(btnGeneral)
+            btnGeneral.addTarget(self, action: #selector(actionSearch), for: .touchUpInside)
+            btnGeneral.edgeTo(svPaginator, safeArea: .fullStackV, height: 30, padding: 8)
+        }
+        loadMainBtn()
+    }
+    private func loadMainBtn() {
+        svPaginator.subviews.enumerated().forEach { (index, view) in
+            if view.tag == selectBtn{
+                svPaginator.subviews[index].backgroundColor = chataDrawerAccentColor
+                (svPaginator.subviews[index] as? UIButton)?.setTitleColor(.white, for: .normal)
+            }
+            else {
+                svPaginator.subviews[index].backgroundColor = .clear
+                let colorText = index == 0 || index == (svPaginator.subviews.count - 1) ? chataDrawerAccentColor : chataDrawerTextColorPrimary
+                (svPaginator.subviews[index] as? UIButton)?.setTitleColor(colorText, for: .normal)
+            }
+        }
     }
     private func loadDefault() {
         vwMainChat.addSubview(lblDefault)
@@ -113,13 +131,31 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         lblDefault.textColor = chataDrawerTextColorPrimary
         lblDefault.numberOfLines = 0
         lblDefault.font = generalFont
-        tbMain.isHidden = true
+        toogleView()
+    }
+    func toogleView(_ hideTable: Bool = true) {
+        tbMain.isHidden = hideTable
+        svPaginator.isHidden = hideTable
+        lblDefault.isHidden = !hideTable
     }
     @objc func actionSearch(sender: UIButton!) {
+        let numberButton = sender.tag == 0 || sender.tag == (btns.count - 1)
+        if numberButton {
+            var sum = 0
+            if sender.tag == 0 {
+                sum = selectBtn == 1 ? 0 : -1
+            } else {
+                sum = selectBtn == (btns.count - 2) ? 0 : 1
+            }
+            selectBtn += sum
+        } else {
+            selectBtn = sender.tag
+        }
+        loadMainBtn()
         let finalText = tfMain.text ?? ""
         print(finalText)
         tbMain.isHidden = false
-        lblDefault.isHidden = true
+        toogleView(false)
     }
     public func dismiss(animated: Bool) {
         self.layoutIfNeeded()
@@ -151,7 +187,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "JoJo"
+        cell.textLabel?.text = ""
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.font = generalFont
         cell.contentView.backgroundColor = chataDrawerBackgroundColor

@@ -777,11 +777,11 @@ extension UIImageView {
     }
 }
 extension UIStackView{
-    func getHorizontal(){
+    func getHorizontal(dist: Distribution = .fillEqually, spacing: CGFloat = 8){
         self.axis = NSLayoutConstraint.Axis.horizontal
-        self.distribution  = UIStackView.Distribution.fillEqually
+        self.distribution  = dist
         self.alignment = UIStackView.Alignment.center
-        self.spacing = 8
+        self.spacing = spacing
     }
 }
 extension UILabel {
