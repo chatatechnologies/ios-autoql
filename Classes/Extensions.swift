@@ -274,10 +274,23 @@ extension UIButton {
     }
 }
 extension UITextField {
-    func borderRadius(){
+    func borderRadius() {
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.cornerRadius = 20.0
+    }
+    func configStyle() {
+        keyboardAppearance = dark ? .dark : .light
+        addDoneButtonOnKeyboard()
+        textColor = chataDrawerTextColorPrimary
+    }
+    func loadInputPlace(_ txt: String) {
+        attributedPlaceholder = NSAttributedString(string: txt,
+        attributes: [
+             NSAttributedString.Key.foregroundColor: chataDrawerMessengerTextColorPrimary,
+             NSAttributedString.Key.font: generalFont
+         ]
+        )
     }
     func setLeftPaddingPoints(_ amount:CGFloat){
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))

@@ -130,7 +130,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwDataMessenger.data.append(model)
         //vwDataMessenger.tableView.reloadData()
         self.vwDataMessenger.updateTable()
-        vwTextBox.textbox.text = ""
+        vwTextBox.tfMain.text = ""
         vwAutoComplete.isHidden = true
         self.endEditing(true)
         vwTextBox.changeButton()
@@ -214,7 +214,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     func updateAutocomplete(_ queries: [String], _ hidden: Bool) {
         DispatchQueue.main.async {
-            let emptyText = self.vwTextBox.textbox.text?.isEmpty ?? false
+            let emptyText = self.vwTextBox.tfMain.text?.isEmpty ?? false
            if !emptyText  {
                 let height: CGFloat = queries.count >= 4 ? 190.0 : (CGFloat(queries.count) * 50.0)
                 self.vwAutoComplete.constraints[4].constant = height
