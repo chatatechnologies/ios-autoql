@@ -258,10 +258,11 @@ func getChartFooter(rows: [[String]],
     let catFinaY: [Any] = triType ? categoriesY : dataChartLine
     let stringChartLine = arrayDictionaryToJson(json: dataChartLineTri)
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
+    let yAxis = (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
     return """
         var type = '\(mainType)';
         var xAxis = '\(validateArray(columns, 0) as? String ?? "")';
-        var yAxis = '\(validateArray(columns, 1) as? String ?? "")';
+        var yAxis = '\(yAxis)';
         var dataChartBi = \(dataSpecialActive ? dataSpecial : dataChartBi);
         var datachartTri = \(datachartTri);
         var dataChartLine = \(dataChartLineFinal);

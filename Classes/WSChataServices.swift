@@ -426,7 +426,7 @@ class ChataServices {
             var finalRowClean: [String] = []
             row.enumerated().forEach { (index, element) in
                 if columnsFinal[index].type == .dateString {
-                    let strDate = element as? String ?? ""
+                    let strDate = "\(element)"
                     finalRow.append(strDate.toDate2(format: columnsFinal[index].formatDate))
                     finalRowClean.append(strDate)
                 } else {
