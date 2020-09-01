@@ -215,15 +215,15 @@ func getChartFooter(rows: [[String]],
     }
     let datachartTri = triType ? rows.map { (column) -> [Any] in
         drillTableY.append(column[1])
-        let data1 = column[0]
-        let data2 = column[1].toDate()
+        let data1 = column[1]
+        let data2 = column[0].toDate()
         let data3 = Double(column[2]) ?? 0.0
         if categoriesX.firstIndex(of: data1) == nil {
             categoriesX.append(data1)
         }
         if categoriesY.firstIndex(of: data2) == nil {
             categoriesY.append(data2)
-            drillY.append(column[1])
+            drillY.append(column[0])
             stacked.append([])
         }
         let locX = categoriesX.firstIndex(of: data1) ?? 0
