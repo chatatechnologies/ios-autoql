@@ -195,3 +195,34 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+struct QTModel {
+    var items: [String]
+    var pagination: PaginationModel
+    init(
+        items: [String] = [],
+        pagination: PaginationModel = PaginationModel()
+    ) {
+        self.items = items
+        self.pagination = pagination
+    }
+}
+struct PaginationModel {
+    var currentPage: Int
+    var nextUrl: String
+    var pageSize: Int
+    var totalItems: Int
+    var totalPages: Int
+    init(
+        currentPage: Int = 0,
+        nextUrl: String = "",
+        pageSize: Int = 0,
+        totalItems: Int = 0,
+        totalPages: Int = 0
+    ) {
+        self.currentPage = currentPage
+        self.nextUrl = nextUrl
+        self.pageSize = pageSize
+        self.totalItems = totalItems
+        self.totalPages = totalPages
+    }
+}
