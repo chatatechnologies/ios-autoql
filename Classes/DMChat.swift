@@ -118,12 +118,21 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveQuery), name: notifSendText, object: nil)
     }
     func removeObservers() {
         NotificationCenter.default.removeObserver(self,
                                                   name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self,
                                                   name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: notifSendText, object: nil)
+    }
+    @objc func receiveQuery(_ notification: Notification) {
+        let query = notification.object as? String ?? ""
+        sendText(query, true)
+        //print(query)
     }
     func sendText(_ text: String, _ safe: Bool) {
         let model = ChatComponentModel(type: .Introduction, text: text, user: true)

@@ -16,6 +16,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     var vwMainChat = UIView()
     var vwTextBox = UIView()
     let tbMain = UITableView()
+    let vwDefault = UIView()
     let lblDefault = UILabel()
     let btnSend = UIButton()
     var selectBtn = 1
@@ -122,8 +123,10 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     private func loadDefault() {
-        vwMainChat.addSubview(lblDefault)
-        lblDefault.edgeTo(vwMainChat, safeArea: .fullStatePaddingAll, tfMain, padding: 16)
+        vwMainChat.addSubview(vwDefault)
+        vwDefault.edgeTo(vwMainChat, safeArea: .fullStatePaddingAll, tfMain, padding: 0)
+        vwDefault.addSubview(lblDefault)
+        lblDefault.edgeTo(vwDefault, safeArea: .topPadding, height: 140, padding: 16)
         lblDefault.text = """
         Discover what you can ask by entering a topic in the search bar above.
 
@@ -138,7 +141,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     func toogleView(_ hideTable: Bool = true) {
         tbMain.isHidden = hideTable
         svPaginator.isHidden = hideTable
-        lblDefault.isHidden = !hideTable
+        vwDefault.isHidden = !hideTable
     }
     @objc func actionSearch(sender: UIButton!) {
         self.endEditing(true)
@@ -201,8 +204,10 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(Qtips.items[indexPath.row])
-        let chat = Chat()
-        chat.show(query: Qtips.items[indexPath.row])
+        NotificationCenter.default.post(name: notifSendText,
+                                        object: Qtips.items[indexPath.row])
+        self.dismiss(animated: DataConfig.clearOnClose)
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
