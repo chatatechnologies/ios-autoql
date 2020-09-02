@@ -20,7 +20,8 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     let lblDefault = UILabel()
     let btnSend = UIButton()
     var selectBtn = 1
-    let btns = ["←", "1", "2", "3", "→"]
+    var btnsBase = ["←", "→"]
+    var btns: [String] = []
     var Qtips: QTModel = QTModel()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -45,7 +46,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         loadToolbar()
         loadMainChat()
         loadInput()
-        loadPagination()
+        loadDefaultPagination()
         loadTable()
         loadDefault()
     }
@@ -93,18 +94,44 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwMainChat.addSubview(tbMain)
         tbMain.edgeTo(vwMainChat, safeArea: .fullPadding, tfMain, svPaginator, padding: 8)
     }
-    func loadPagination() {
+    func loadDefaultPagination() {
         vwMainChat.addSubview(svPaginator)
         svPaginator.edgeTo(vwMainChat, safeArea: .bottomPadding, height: 50.0, padding: 16)
         svPaginator.getHorizontal(dist: .equalCentering,spacing: 0)
+    }
+    func loadPagination() {
+        btns = btnsBase
+        svPaginator.subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        if Qtips.pagination.totalPages > 4 {
+            btns.insert("1", at: 1)
+            let defaultMed: String = selectBtn == 1 || selectBtn == Qtips.pagination.totalPages ? "..." : "\(selectBtn)"
+            btns.insert("\(defaultMed)", at: 2)
+            btns.insert("\(Qtips.pagination.totalPages)", at: 3)
+        } else {
+            for btn in 0..<Qtips.pagination.totalPages{
+                let number = btn + 1
+                btns.insert("\(number)", at: number)
+            }
+        }
         btns.enumerated().forEach { (index, titleBtn) in
             let btnGeneral = UIButton()
             btnGeneral.setTitle(titleBtn, for: .normal)
-            btnGeneral.tag = index
+            let number = Int(titleBtn) ?? -1
+            var finalIndex = number
+            if number == -1 {
+                if titleBtn == "..."{
+                    finalIndex = btns.count - 1
+                } else if index == 0 || index == (btns.count - 1){
+                    finalIndex = index
+                }
+            }
+            btnGeneral.tag = finalIndex
             btnGeneral.circle(30)
             btnGeneral.titleLabel?.font = generalFont
             svPaginator.addArrangedSubview(btnGeneral)
-            btnGeneral.addTarget(self, action: #selector(actionSearch), for: .touchUpInside)
+            btnGeneral.addTarget(self, action: #selector(actionChangePage), for: .touchUpInside)
             btnGeneral.edgeTo(svPaginator, safeArea: .fullStackV, height: 30, padding: 8)
         }
         loadMainBtn()
@@ -143,22 +170,37 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         svPaginator.isHidden = hideTable
         vwDefault.isHidden = !hideTable
     }
+    @objc func actionChangePage(sender: UIButton!) {
+        let limitMin = sender.tag == 0 ? selectBtn == 1 : false
+        let limitMax = sender.tag == Qtips.pagination.totalPages ? selectBtn == Qtips.pagination.totalPages : false
+        let invalidRequest = selectBtn == sender.tag
+        loadSearch(number: sender.tag, pagination: btns.count > 4, sameBtn: selectBtn == sender.tag)
+    }
     @objc func actionSearch(sender: UIButton!) {
         self.endEditing(true)
-        selectPage(numberPage: sender.tag)
-        loadMainBtn()
-        let finalText = tfMain.text ?? ""
-        print(finalText)
-        tbMain.isHidden = false
-        toogleView(false)
-        loadingView(mainView: self, inView: vwMainChat)
-        QTServices.instance.getTips(txtSearch: finalText, page: selectBtn, pageSize: 7) { (qtModel) in
-            self.Qtips = qtModel
-            DispatchQueue.main.async {
-                loadingView(mainView: self, inView: self.vwMainChat, false)
-                self.tbMain.reloadData()
+        loadSearch(number: sender.tag)
+    }
+    func loadSearch(number: Int, pagination: Bool = true, sameBtn: Bool = false) {
+        if !sameBtn{
+            selectPage(numberPage: number)
+            loadMainBtn()
+            let finalText = tfMain.text ?? ""
+            print(finalText)
+            toogleView(false)
+            Qtips.items = []
+            tbMain.reloadData()
+            loadingView(mainView: self, inView: vwMainChat)
+            QTServices.instance.getTips(txtSearch: finalText, page: selectBtn, pageSize: 7) { (qtModel) in
+                self.Qtips = qtModel
+                DispatchQueue.main.async {
+                    loadingView(mainView: self, inView: self.vwMainChat, false)
+                    if pagination {
+                        self.loadPagination()
+                    }
+                    self.tbMain.reloadData()
+                }
             }
-        }
+       }
     }
     func selectPage(numberPage: Int){
         let numberButton = numberPage == 0 || numberPage == (btns.count - 1)
@@ -167,7 +209,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
             if numberPage == 0 {
                 sum = selectBtn == 1 ? 0 : -1
             } else {
-                sum = selectBtn == (btns.count - 2) ? 0 : 1
+                sum = selectBtn >= Qtips.pagination.totalPages ? 0 : 1
             }
             selectBtn += sum
         } else {
