@@ -52,6 +52,7 @@
 		17CDBBD224FEE67500C9F535 /* icSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 17CDBBD124FEE67500C9F535 /* icSearch.png */; };
 		17E35583243E3DE7005CD1FB /* DMTablesFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E35582243E3DE7005CD1FB /* DMTablesFunction.swift */; };
 		17E35585243E6256005CD1FB /* icTable.png in Resources */ = {isa = PBXBuildFile; fileRef = 17E35584243E6256005CD1FB /* icTable.png */; };
+		17E6733924FFED7B00332AD8 /* WSQueryTipsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E6733824FFED7B00332AD8 /* WSQueryTipsServices.swift */; };
 		17EC9EB323F5B5E0004B453F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EC9EAF23F5B5E0004B453F /* Extensions.swift */; };
 		17EC9EB923F5C6DC004B453F /* DataMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EC9EB823F5C6DC004B453F /* DataMessenger.swift */; };
 		17EC9EBC23F5F605004B453F /* iconProjectBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 17EC9EBB23F5F605004B453F /* iconProjectBubble.png */; };
@@ -137,6 +138,7 @@
 		17CDBBD124FEE67500C9F535 /* icSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icSearch.png; path = ../../../Downloads/icSearch.png; sourceTree = "<group>"; };
 		17E35582243E3DE7005CD1FB /* DMTablesFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMTablesFunction.swift; sourceTree = "<group>"; };
 		17E35584243E6256005CD1FB /* icTable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icTable.png; sourceTree = "<group>"; };
+		17E6733824FFED7B00332AD8 /* WSQueryTipsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSQueryTipsServices.swift; sourceTree = "<group>"; };
 		17EC9EAF23F5B5E0004B453F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		17EC9EB823F5C6DC004B453F /* DataMessenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMessenger.swift; sourceTree = "<group>"; };
 		17EC9EBB23F5F605004B453F /* iconProjectBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconProjectBubble.png; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				170612892419443D00ABE8AF /* WSConnection.swift */,
 				1706128B241949C400ABE8AF /* WSChataServices.swift */,
 				1704C8C424632266001D599B /* WSDashboardService.swift */,
+				17E6733824FFED7B00332AD8 /* WSQueryTipsServices.swift */,
 				170350B22441097800974370 /* DMChartsFunctions.swift */,
 				17F6F1D424045D7000DE0133 /* CCChatComponentModel.swift */,
 				1771BF0D241C01E000BE1D4F /* CCChatTableModel.swift */,
@@ -606,6 +609,7 @@
 				17E35583243E3DE7005CD1FB /* DMTablesFunction.swift in Sources */,
 				175B809A240053D5001F52D8 /* DMTextboxView.swift in Sources */,
 				17B510642410286200798321 /* CCBoxWebviewView.swift in Sources */,
+				17E6733924FFED7B00332AD8 /* WSQueryTipsServices.swift in Sources */,
 				17F6F1D224045CA500DE0133 /* CCIntroductionView.swift in Sources */,
 				17EC9EB923F5C6DC004B453F /* DataMessenger.swift in Sources */,
 				172BB06D2460858D001402D7 /* DashboardComponentView.swift in Sources */,

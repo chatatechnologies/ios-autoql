@@ -11,6 +11,7 @@ typealias CompletionChatComponentModel = (_ response: ChatComponentModel) -> Voi
 typealias CompletionChatQueryBuilderModel = (_ response: [QueryBuilderModel]) -> Void
 typealias CompletionSecondData = (_ response: String) -> Void
 typealias CompletionDashboards = (_ response: [DashboardList]) -> Void
+typealias CompletionQueryTips = (_ response: QTModel) -> Void
 typealias CompletionSuggestions = (_ response: [String]) -> Void
 public typealias CompletionChatSuccess = (_ response: Bool) -> Void
 typealias CompletionChatSafetynet = (_ response: [ChatFullSuggestion]) -> Void

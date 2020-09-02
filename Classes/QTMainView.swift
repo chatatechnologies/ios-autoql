@@ -19,6 +19,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     let btnSend = UIButton()
     var selectBtn = 1
     let btns = ["←", "1", "2", "3", "→"]
+    var Qtips: QTModel = QTModel()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -139,23 +140,30 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         lblDefault.isHidden = !hideTable
     }
     @objc func actionSearch(sender: UIButton!) {
-        let numberButton = sender.tag == 0 || sender.tag == (btns.count - 1)
+        selectPage(numberPage: sender.tag)
+        loadMainBtn()
+        let finalText = tfMain.text ?? ""
+        print(finalText)
+        tbMain.isHidden = false
+        toogleView(false)
+        QTServices.instance.getTips(txtSearch: finalText, page: selectBtn, pageSize: 7) { (qtModel) in
+            self.Qtips = qtModel
+            self.tbMain.reloadData()
+        }
+    }
+    func selectPage(numberPage: Int){
+        let numberButton = numberPage == 0 || numberPage == (btns.count - 1)
         if numberButton {
             var sum = 0
-            if sender.tag == 0 {
+            if numberPage == 0 {
                 sum = selectBtn == 1 ? 0 : -1
             } else {
                 sum = selectBtn == (btns.count - 2) ? 0 : 1
             }
             selectBtn += sum
         } else {
-            selectBtn = sender.tag
+            selectBtn = numberPage
         }
-        loadMainBtn()
-        let finalText = tfMain.text ?? ""
-        print(finalText)
-        tbMain.isHidden = false
-        toogleView(false)
     }
     public func dismiss(animated: Bool) {
         self.layoutIfNeeded()
@@ -183,11 +191,11 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         //self.isHidden = true
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return Qtips.items.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = ""
+        cell.textLabel?.text = Qtips.items[indexPath.row]
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.font = generalFont
         cell.contentView.backgroundColor = chataDrawerBackgroundColor
