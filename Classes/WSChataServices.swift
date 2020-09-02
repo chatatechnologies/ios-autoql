@@ -281,7 +281,12 @@ class ChataServices {
             if rows.count == 1{
                 if rows[0].count == 1{
                     displayType = .Introduction
-                    textFinal = "\(rows[0][0] )".toMoney()
+                    if columnsFinal[0].type == .dollar {
+                        textFinal = "\(rows[0][0] )".toMoney()
+                    }
+                    else {
+                        textFinal = "\(rows[0][0] )"
+                    }
                     user = false
                 }
             }
