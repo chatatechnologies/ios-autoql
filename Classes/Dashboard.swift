@@ -43,7 +43,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         tbListDashboard.cardView()
         tbListDashboard.clipsToBounds = true
         tbListDashboard.isHidden = true
-        //print(testVAR)
     }
     @IBAction func toggleDash(_ sender: AnyObject){
         toggleListDashboard(tbListDashboard.isHidden)
@@ -85,7 +84,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
     func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String) {
-        print(idQuery)
         vwDrillDown.tag = 100
         vwDrillDown.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         mainView.addSubview(vwDrillDown)

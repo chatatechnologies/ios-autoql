@@ -82,10 +82,7 @@ class DashboardService {
         if base.last == "/" {
             base.removeLast()
         }
-        // https://qbo-staging.chata.io/autoql/api/v1/query?key=AIzaSyD2J8pfYPSI8b--HfxliLYB8V5AehPv0ys
         let url = "\(base)/autoql/api/v1/query/\(idQuery)/drilldown?key=\(DataConfig.authenticationObj.apiKey)"
-        // query/q_k8Zwr7jNRrmGR6iMl4INPw/drilldown?key=AIzaSyC8Mf-qnDRMfTsN2ZHuVSZFiTtbnLTW75o
-        print(url)
         var columns: [[String: Any]] = []
         if value.count > 0 {
             name.enumerated().forEach { (index, nam) in
@@ -101,12 +98,9 @@ class DashboardService {
                     "columns": columns,
                     "test": true
                 ]
-        //let urlRequest = wsQuery
         httpRequest(url, "POST", body) { (response) in
-            //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
             let finalComponent = ChataServices().getDataComponent(response: response)
             completion(finalComponent)
-            //completion(matches)
         }
     }
     func makeDash(dash: [String: Any]) -> DashboardModel{

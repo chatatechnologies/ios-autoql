@@ -174,7 +174,6 @@ func getChartFooter(rows: [[String]],
         var positionsChartsSecond: Int = -1
         for (index, type) in types.enumerated() {
             if type == .quantity || type == .dollar{
-                //print("found")
                 positionsCharts = index
             }
             if  type == .date {
@@ -201,7 +200,6 @@ func getChartFooter(rows: [[String]],
             return [name, mountFinal]
         }
         dataSpecialActive = true
-        print(dataSpecial)
     }
     let triType = columns.count  == 3
     let dataChartBi = triType ? [] : rows.map { (row) -> [Any] in

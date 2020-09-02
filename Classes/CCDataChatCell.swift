@@ -70,7 +70,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         self.sizeToFit()
     }
     private func getQueryBuilder() {
-        print("QB!")
         let viewQB = QueryBuilderView()
         viewQB.delegate = self
         self.contentView.addSubview(viewQB)
@@ -185,7 +184,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         return buttonsFinal
     }
     @objc func showHide() {
-        print("Funca")
+        print("Func")
     }
     @objc func showDrillDown() {
         delegate?.sendDrillDown(idQuery: data.idQuery, obj: "", name: "")

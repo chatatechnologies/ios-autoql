@@ -86,7 +86,6 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newLbl.textColor = chataDrawerTextColorPrimary
         newLbl.textAlignment = .center
         view.addSubview(newLbl)
-        print(view.subviews)
         newLbl.edgeTo(view, safeArea: .none)
     }
     func loadType(view: UIView,
@@ -195,7 +194,6 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if data.columnsInfo.count  <= 3 {
             if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns {
-                print(message.body)
                 var names: [String] = []
                 var columns: [String] = []
                 let name = message.body as? String ?? ""

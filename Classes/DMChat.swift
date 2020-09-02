@@ -24,7 +24,6 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwTextBox.delegate = self
         vwToolbar.delegate = self
         self.backgroundColor = chataDrawerBackgroundColor
-        //print(testVAR)
     }
     public func show(query: String = "") {
         let vwFather: UIView = UIApplication.shared.keyWindow!
@@ -132,7 +131,6 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     @objc func receiveQuery(_ notification: Notification) {
         let query = notification.object as? String ?? ""
         sendText(query, true)
-        //print(query)
     }
     func sendText(_ text: String, _ safe: Bool) {
         let model = ChatComponentModel(type: .Introduction, text: text, user: true)
@@ -227,7 +225,6 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
            if !emptyText  {
                 let height: CGFloat = queries.count >= 4 ? 190.0 : (CGFloat(queries.count) * 50.0)
                 self.vwAutoComplete.constraints[4].constant = height
-                // print(self.vwAutoComplete.constraints[4].constant)
                 self.vwAutoComplete.updateTable(queries: queries)
                 UIView.transition(with: self.vwAutoComplete, duration: 0.3, options: .transitionCrossDissolve, animations: {
                     self.vwAutoComplete.toggleHide(hidden)

@@ -48,11 +48,6 @@ func httpRequest(_ urlFinal: String,
         //request.httpBody = postString.data(using: .utf8)
         if content == "application/json"{
             request.setValue(content, forHTTPHeaderField: "Content-Type")
-            /*do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions()) // pass dictionary to nsdata object and set it as request body
-            } catch let error {
-                print(er ror.localizedDescription)
-            }*/
         } else {
             let boundary = "Boundary-\(UUID().uuidString)"
             request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -88,9 +83,7 @@ func httpRequest(_ urlFinal: String,
 
                     return bodyFinal
                 }()
-            } /*catch let error {
-                print(error.localizedDescription)
-            }*/
+            }
         }
     }
     let jwt = ChataServices.instance.getJwt()
@@ -135,10 +128,7 @@ func httpRequest(_ urlFinal: String,
                 } else{
                     completion(["response": responseJSON ?? [:]])
                 }
-            } /*catch let error {
-                print(error.localizedDescription)
-                completion([:])
-            }*/
+            }
         }
     })
     task.resume()
@@ -184,10 +174,7 @@ func httpFormDat(_ urlFinal: String, _ method: String = "GET",_ body: [String: A
             } else{
                 completion([:])
             }
-        } /*catch let error {
-            print(error.localizedDescription)
-            completion([:])
-        }*/
+        }
     })
     task.resume()
 }

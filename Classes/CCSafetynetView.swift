@@ -133,13 +133,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             if URL.absoluteString == "\(index)"{
                 addTrasparentViewLabel(labelText: list, pos: index)
                 posSelected = index
-                print(list)
             }
-            /*if gesture.didTapAttributedTextInLabel(label: mainLabel, inRange: stRange) {
-                
-                print("Tapped \(list)")
-                addTrasparentViewLabel(labelText: list, pos: <#T##Int#>)
-            }*/
         }
         return true
     }

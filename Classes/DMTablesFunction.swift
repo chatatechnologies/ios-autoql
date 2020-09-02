@@ -209,9 +209,6 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
             categoriesY.append(data2)
             totalDate.append([])
         }
-        if data3 == 61.5{
-            print("YEAH")
-        }
         let locX = categoriesX.firstIndex(of: data1) ?? 0
         let locY = categoriesY.firstIndex(of: data2) ?? 0
         totalDate[locY].append(data3)

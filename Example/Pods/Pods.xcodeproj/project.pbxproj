@@ -270,11 +270,11 @@
 				175937EE24D9C8C8004F4B4F /* iconProjectStripe.png */,
 				17E35584243E6256005CD1FB /* icTable.png */,
 				17EC9EBB23F5F605004B453F /* iconProjectBubble.png */,
-				17BB95B423FDC15200677873 /* icChat.png */,
 				179A90D7242EB2A7005F362D /* icColumn.png */,
 				179A90D6242EB2A7005F362D /* icBar.png */,
 				179A90D8242EB2A7005F362D /* icLine.png */,
 				179A90D9242EB2A7005F362D /* icPie.png */,
+				17BB95B423FDC15200677873 /* icChat.png */,
 			);
 			path = Assets;
 			sourceTree = "<group>";

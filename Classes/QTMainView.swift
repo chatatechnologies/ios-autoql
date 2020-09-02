@@ -23,13 +23,13 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     var btnsBase = ["←", "→"]
     var btns: [String] = []
     var Qtips: QTModel = QTModel()
+    var titleDefault = ""
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .darkGray
-        //print(testVAR)
     }
     public func show() {
         let vwFather: UIView = UIApplication.shared.keyWindow!
@@ -88,6 +88,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func loadTable() {
         tbMain.delegate = self
         tbMain.dataSource = self
+        tbMain.separatorStyle = .none
         tbMain.clipsToBounds = true
         tbMain.bounces = true
         tbMain.backgroundColor = chataDrawerBackgroundColor
@@ -154,12 +155,12 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwDefault.edgeTo(vwMainChat, safeArea: .fullStatePaddingAll, tfMain, padding: 0)
         vwDefault.addSubview(lblDefault)
         lblDefault.edgeTo(vwDefault, safeArea: .topPadding, height: 140, padding: 16)
-        lblDefault.text = """
+        lblDefault.text = titleDefault == "" ? """
         Discover what you can ask by entering a topic in the search bar above.
 
 
         Simply click on any of the returned options to run the query in Data Messenger.
-        """
+        """ : titleDefault
         lblDefault.textColor = chataDrawerTextColorPrimary
         lblDefault.numberOfLines = 0
         lblDefault.font = generalFont
@@ -172,9 +173,10 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     @objc func actionChangePage(sender: UIButton!) {
         let limitMin = sender.tag == 0 ? selectBtn == 1 : false
-        let limitMax = sender.tag == Qtips.pagination.totalPages ? selectBtn == Qtips.pagination.totalPages : false
-        let invalidRequest = selectBtn == sender.tag
-        loadSearch(number: sender.tag, pagination: btns.count > 4, sameBtn: selectBtn == sender.tag)
+        let limitMax = sender.tag == (btns.count - 1) ? selectBtn == Qtips.pagination.totalPages : false
+        let sameBtn = selectBtn == sender.tag
+        let invalidRequest = sameBtn || limitMax || limitMin
+        loadSearch(number: sender.tag, pagination: btns.count > 4, sameBtn: invalidRequest)
     }
     @objc func actionSearch(sender: UIButton!) {
         self.endEditing(true)
@@ -185,7 +187,6 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
             selectPage(numberPage: number)
             loadMainBtn()
             let finalText = tfMain.text ?? ""
-            print(finalText)
             toogleView(false)
             Qtips.items = []
             tbMain.reloadData()
@@ -193,11 +194,19 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
             QTServices.instance.getTips(txtSearch: finalText, page: selectBtn, pageSize: 7) { (qtModel) in
                 self.Qtips = qtModel
                 DispatchQueue.main.async {
-                    loadingView(mainView: self, inView: self.vwMainChat, false)
-                    if pagination {
-                        self.loadPagination()
+                    if self.Qtips.items.count > 0 {
+                        loadingView(mainView: self, inView: self.vwMainChat, false)
+                        if pagination {
+                            self.loadPagination()
+                        }
+                        self.tbMain.reloadData()
+                    } else{
+                        loadingView(mainView: self, inView: self.vwMainChat, false)
+                        self.lblDefault.text = """
+                        Sorry, I couldn’t find any queries matching your input. Try entering a different topic or keyword instead.
+                        """
+                        self.toogleView()
                     }
-                    self.tbMain.reloadData()
                 }
             }
        }
@@ -245,7 +254,6 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         return Qtips.items.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(Qtips.items[indexPath.row])
         NotificationCenter.default.post(name: notifSendText,
                                         object: Qtips.items[indexPath.row])
         self.dismiss(animated: DataConfig.clearOnClose)
