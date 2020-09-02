@@ -30,8 +30,8 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     case .Safetynet:
         return getSizeSafetynet()
     case .QueryBuilder:
-        //return 400
-        return 350
+        return 400
+        //return 350
     }
 }
 func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
@@ -219,4 +219,24 @@ func validateArray(_ array:[Any], _ pos: Int) -> Any{
         return 0
     }
     return array.count > pos ? array[pos] : 0
+}
+func loadingView(mainView: UIView, inView: UIView , _ load: Bool = true){
+    if load {
+        let bundle = Bundle(for: type(of: mainView))
+        let path = bundle.path(forResource: "gifBalls", ofType: "gif")
+        let url = URL(fileURLWithPath: path!)
+        let imageView2 = UIImageView(image: nil)
+        imageView2.loadGif(url: url)
+        //let jeremyGif = UIImage.gifImageWithName("preloader")
+        //let imageView = UIImageView(image: image)
+        imageView2.tag = 5
+        inView.addSubview(imageView2)
+        imageView2.edgeTo(inView, safeArea: .centerSize, height: 50, padding: 100)
+    } else{
+        inView.subviews.forEach { (view) in
+            if view.tag == 5{
+                view.removeFromSuperview()
+            }
+        }
+    }
 }

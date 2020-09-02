@@ -156,10 +156,10 @@ public class DataMessenger: UIButton {
         }
     }
     public func createChat() {
-        //let chat = Chat(frame: father2.frame)
-        //chat.show()
-        let tips = QTMainView(frame: father2.frame)
-        tips.show()
+        let chat = Chat(frame: father2.frame)
+        chat.show()
+        //let tips = QTMainView(frame: father2.frame)
+        //tips.show()
         
     }
     required init?(coder aDecoder: NSCoder) {

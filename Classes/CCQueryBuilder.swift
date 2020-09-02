@@ -16,6 +16,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
     var dataSelection: [String] = []
     weak var delegate: ChatViewDelegate?
     var selectSection = -1
+    var titleFooter = "Use Explore Queries to further explore the possibilities"
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -31,9 +32,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
         lblMain.font = generalFont
         addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain)
-        //addSubview(lblInfo)
-        //lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
-        lblInfo.text = "Use Explore Queries to further explore the possibilities"
+        addSubview(lblInfo)
+        lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
+        lblInfo.text = titleFooter
         lblInfo.font = generalFont
         lblInfo.textColor = chataDrawerTextColorPrimary
         lblInfo.numberOfLines = 0
@@ -140,6 +141,24 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
         }
         return ""
+    }
+    func refererToQueryTips() {
+        let msgAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor : chataDrawerAccentColor,
+            .underlineStyle: NSUnderlineStyle.double.rawValue,
+            .font: generalFont
+        ]
+        let range = NSRange(location: 4, length: 15)
+        let mainAttr = NSMutableAttributedString(string: "\(titleFooter)")
+        mainAttr.addAttribute(.link, value: "\(0)", range: range)
+        mainAttr.addAttributes(msgAttributes, range: range)
+        let range2 = NSRange(location: 0, length: titleFooter.count)
+        let attributedString:[NSAttributedString.Key: Any] = [
+            .font: generalFont,
+            .foregroundColor : chataDrawerTextColorPrimary,
+        ]
+        mainAttr.addAttributes(attributedString, range: range2)
+        lblInfo.attributedText = mainAttr
     }
 }
 struct QueryBuilderModel {

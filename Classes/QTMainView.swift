@@ -9,6 +9,7 @@ import Foundation
 import  UIKit
 class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     var vwToolbar = ToolbarView()
+    var mainFrame: CGRect = CGRect()
     var tfMain = UITextField()
     let svPaginator = UIStackView()
     let vwMainScrollChat = UIScrollView()
@@ -140,15 +141,20 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         lblDefault.isHidden = !hideTable
     }
     @objc func actionSearch(sender: UIButton!) {
+        self.endEditing(true)
         selectPage(numberPage: sender.tag)
         loadMainBtn()
         let finalText = tfMain.text ?? ""
         print(finalText)
         tbMain.isHidden = false
         toogleView(false)
+        loadingView(mainView: self, inView: vwMainChat)
         QTServices.instance.getTips(txtSearch: finalText, page: selectBtn, pageSize: 7) { (qtModel) in
             self.Qtips = qtModel
-            self.tbMain.reloadData()
+            DispatchQueue.main.async {
+                loadingView(mainView: self, inView: self.vwMainChat, false)
+                self.tbMain.reloadData()
+            }
         }
     }
     func selectPage(numberPage: Int){
@@ -192,6 +198,11 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Qtips.items.count
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(Qtips.items[indexPath.row])
+        let chat = Chat()
+        chat.show(query: Qtips.items[indexPath.row])
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()

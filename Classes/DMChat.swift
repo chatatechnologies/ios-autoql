@@ -26,7 +26,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         self.backgroundColor = chataDrawerBackgroundColor
         //print(testVAR)
     }
-    public func show() {
+    public func show(query: String = "") {
         let vwFather: UIView = UIApplication.shared.keyWindow!
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
