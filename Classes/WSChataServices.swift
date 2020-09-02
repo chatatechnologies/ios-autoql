@@ -259,7 +259,8 @@ class ChataServices {
                           items: [String] = [],
                           drilldown: Bool = false,
                           position: Int = 0,
-                          secondQuery: String = "") -> ChatComponentModel {
+                          secondQuery: String = "",
+                          mainColumn: Int = -1) -> ChatComponentModel {
         let data = response["data"] as? [String: Any] ?? [:]
         var dataModel = ChatComponentModel(webView: "error", options: items, position: position)
         if items.count > 0{
@@ -358,7 +359,12 @@ class ChataServices {
                     \(dataPivotStr)
                     \(tableBasicStr)
                     \(split ? secondQuery : "")
-                \(getHTMLFooter(rows: rowsFinal, columns: columnsF, types: columsType, drills: drills, type: typeFinal))
+                \(getHTMLFooter(rows: rowsFinal,
+                                columns: columnsF,
+                                types: columsType,
+                                drills: drills,
+                                type: typeFinal,
+                                mainColumn: mainColumn))
                 """
             } else {
                 webView = "text"
@@ -516,7 +522,9 @@ struct DashboardModel {
     var secondQuery: String
     var loading: Bool
     var items: [String]
-    var subDashboardModel : SubDashboardModel
+    var subDashboardModel: SubDashboardModel
+    var stringColumnIndex: Int
+    var stringColumnIndexSecond: Int
     init(
         minW: Int = 0,
         staticVar: Int = 0,
@@ -543,7 +551,9 @@ struct DashboardModel {
         secondQuery: String = "",
         loading: Bool = false,
         items: [String] = [],
-        subDashboardModel: SubDashboardModel = SubDashboardModel()
+        subDashboardModel: SubDashboardModel = SubDashboardModel(),
+        stringColumnIndex: Int = 0,
+        stringColumnIndexSecond: Int = 0
     ) {
         self.minW = minW
         self.staticVar = staticVar
@@ -571,6 +581,8 @@ struct DashboardModel {
         self.loading = loading
         self.items = items
         self.subDashboardModel = subDashboardModel
+        self.stringColumnIndex = stringColumnIndex
+        self.stringColumnIndexSecond = stringColumnIndexSecond
     }
 }
 struct DataPivotRow{

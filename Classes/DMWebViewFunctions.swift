@@ -107,10 +107,21 @@ func getHTMLStyle() -> String {
     """
     return style
 }
-func getHTMLFooter(rows: [[String]], columns: [String], types: [ChatTableColumnType], drills: [String], type: String, split: Bool = false) -> String {
+func getHTMLFooter(rows: [[String]],
+                   columns: [String],
+                   types: [ChatTableColumnType],
+                   drills: [String],
+                   type: String,
+                   split: Bool = false,
+                   mainColumn: Int = 0) -> String {
     var scriptJS = ""
     if rows.count > 0 && columns.count > 0 {
-        scriptJS += getChartFooter(rows: rows, columns: columns, types: types, drills: drills, mainType: type)
+        scriptJS += getChartFooter(rows: rows,
+                                   columns: columns,
+                                   types: types,
+                                   drills: drills,
+                                   mainType: type,
+                                   mainColum: mainColumn )
         scriptJS += getFooterScript()
     }
     return """
@@ -149,7 +160,8 @@ func getChartFooter(rows: [[String]],
                     columns: [String],
                     types: [ChatTableColumnType],
                     drills: [String],
-                    mainType: String = "idTableBasic") -> String {
+                    mainType: String = "idTableBasic",
+                    mainColum: Int = 0) -> String {
     var dataSpecial: [[Any]] = []
     var dataSpecialActive = false
     var categoriesX: [String] = []
@@ -186,12 +198,13 @@ func getChartFooter(rows: [[String]],
         }
         dataSpecial = rows.map { (row) -> [Any] in
             var name = validateArray(row, positionsChartsSecond) as? String ?? ""
-            //let name = validateArray(row, 1) as? String ?? ""
-            /*let doubleData = positionsCharts.map { (num) -> Double in
-                let mount = Double(validateArray(row, num) as? String ?? "") ?? 0.0
-                return mount
-            }*/
             name = name.toDate()
+            if mainColum != -1 {
+                name = validateArray(row, mainColum) as? String ?? ""
+                if types[mainColum] == .date {
+                    name = name.toDate()
+                }
+            }
             if catXFormat.firstIndex(of: name) == nil {
                 catXFormat.append(name)
             }
@@ -256,7 +269,8 @@ func getChartFooter(rows: [[String]],
     let catFinaY: [Any] = triType ? categoriesY : dataChartLine
     let stringChartLine = arrayDictionaryToJson(json: dataChartLineTri)
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
-    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : (validateArray(columns, 0) as? String ?? "")
+    let positionSpecial = mainColum != -1 ? mainColum : 0
+    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
     let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
         (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
     return """

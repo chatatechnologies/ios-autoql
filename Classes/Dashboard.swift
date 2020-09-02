@@ -149,15 +149,16 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
             //cell.loaderWebview()
             if dash.splitView {
-                loadTwoDash(query: dash.secondQuery, type: dash.secondDisplayType, index: index)
+                loadTwoDash(query: dash.secondQuery, type: dash.secondDisplayType, index: index, column: dash.stringColumnIndexSecond)
             }
-            loadOneDash(query: dash.query, type: dash.type, index: index)
+            loadOneDash(query: dash.query, type: dash.type, index: index, column: dash.stringColumnIndex)
         }
     }
-    func loadTwoDash(query: String, type: String, index: Int) {
+    func loadTwoDash(query: String, type: String, index: Int, column: Int) {
         DashboardService().getDashQuery(query: query,
                                         type: ChatComponentType.withLabel(type),
-                                        position: index) { (component) in
+                                        position: index,
+                                        column: column) { (component) in
             DispatchQueue.main.async {
                 let pos = component.position
                 let newSub = SubDashboardModel(
@@ -174,7 +175,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             }
         }
     }
-    func loadOneDash(query: String, type: ChatComponentType, index: Int ) {
+    func loadOneDash(query: String, type: ChatComponentType, index: Int, column: Int ) {
         DashboardService().getDashQuery(query: query,
                                         type: type,
                                         position: index) { (component) in
@@ -258,9 +259,9 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     func updateComponent(text: String, first: Bool, position: Int) {
         let query = first ? dataDash[position].query : dataDash[position].secondQuery
         if first {
-            loadOneDash(query: query, type: dataDash[position].type, index: position)
+            loadOneDash(query: query, type: dataDash[position].type, index: position, column: dataDash[position].stringColumnIndex)
         } else {
-            loadTwoDash(query: text, type: "", index: position)
+            loadTwoDash(query: text, type: "", index: position, column: dataDash[position].stringColumnIndexSecond )
         }
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {

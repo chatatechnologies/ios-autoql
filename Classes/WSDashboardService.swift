@@ -40,6 +40,7 @@ class DashboardService {
     func getDashQuery(query: String,
                       type: ChatComponentType,
                       position: Int = 0,
+                      column: Int = 0,
                       completion: @escaping CompletionChatComponentModel) {
         var base = DataConfig.authenticationObj.domain
         if base.last == "/" {
@@ -71,7 +72,8 @@ class DashboardService {
                 } else {
                     let finalComponent = ChataServices().getDataComponent(response: response,
                                                                           type: typeFinal,
-                                                                          position: position)
+                                                                          position: position,
+                                                                          mainColumn: column)
                     completion(finalComponent)
                 }
             }
@@ -123,12 +125,18 @@ class DashboardService {
         let secondQuery = dash["secondQuery"] as? String ?? ""
         let secondDisplayType = dash["secondDisplayType"] as? String ?? ""
         let finalTitle = title == "" ? (query == "" ? "Untitled" : query) : title
+        let dataConfig = dash["dataConfig"] as? [String: Any] ?? [:]
+        let secondDataConfig = dash["secondDataConfig"] as? [String: Any] ?? [:]
+        let stringColumnIndexSecond = secondDataConfig["stringColumnIndex"] as? Int ?? 0
+        let stringColumnIndex = dataConfig["stringColumnIndex"] as? Int ?? 0
         return DashboardModel(minW: minW, staticVar: staticVar, maxH: maxH,
                               minH: minH, displayType: displayType,
                               posX: posX, posY: posY, identify: identify,
                               query: query, isNewTile: isNewTile,
                               title: finalTitle, key: key, moved: moved,
                               posH: posH, posW: posW, splitView: splitView,
-                              secondDisplayType: secondDisplayType, secondQuery: secondQuery)
+                              secondDisplayType: secondDisplayType,
+                              secondQuery: secondQuery, stringColumnIndex: stringColumnIndex,
+                              stringColumnIndexSecond: stringColumnIndexSecond)
     }
 }
