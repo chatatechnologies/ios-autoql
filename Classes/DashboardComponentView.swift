@@ -206,7 +206,8 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         }
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if data.columnsInfo.count  <= 3 {
+        
+        //if data.columnsInfo.count  <= 3 {
             if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns {
                 /*var names: [String] = []
                 var columns: [String] = []
@@ -223,22 +224,27 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                     names.append(name)
                 }*/
                 var msg = message.body as? String ?? ""
+                var secondQuery: Bool = false
                 //var column: Int = data.stringColumnIndex
                 if msg.contains("SecondQuery") {
                     msg = msg.replace(target: "SecondQuery" , withString: "")
                     //column = data.stringColumnIndexSecond
+                    secondQuery = true
                 }
-                let name = data.columnsInfo.count > 0 ? data.columnsInfo[0].originalName : ""
-                let name2 = data.columnsInfo.count > 1 ? data.columnsInfo[1].originalName : ""
-                let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
-                delegate?.sendDrillDown(idQuery: data.idQuery, obj: msg, name: nameFinal, title: data.query)
+                let columns = secondQuery ? data.subDashboardModel.columnsInfo : data.columnsInfo
+                if columns.count  <= 3{
+                    let name = data.columnsInfo.count > 0 ? data.columnsInfo[0].originalName : ""
+                    let name2 = data.columnsInfo.count > 1 ? data.columnsInfo[1].originalName : ""
+                    let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
+                    delegate?.sendDrillDown(idQuery: data.idQuery, obj: msg, name: nameFinal, title: data.query)
+                }
                 //delegate?.sendDrillDown(idQuery: data.idQuery, obj: columns, name: names, title: data.query)
                 /*let name = data.columnsInfo[0].originalName
                 let name2 = data.columnsInfo[1].originalName
                 let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
                 delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)*/
             }
-        }
+        //}
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         

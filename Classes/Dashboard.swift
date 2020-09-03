@@ -173,7 +173,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                         type: component.type,
                         idQuery: component.idQuery,
                         loading: 2,
-                        items: component.options
+                        items: component.options,
+                        columnsInfo: component.columnsInfo
                 )
                 self.dataDash[pos].subDashboardModel = newSub
                 let indexPath = IndexPath(row: pos, section: 0)
