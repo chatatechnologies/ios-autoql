@@ -352,7 +352,8 @@ class ChataServices {
                                         columns: columnsFinal,
                                         datePivot: false)
                 //let tableType = splitType == "table"
-                let typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
+                var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
+                typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
                 webView = """
                     \(getHTMLHeader(triType: columnsF.count == 3))
                     \(datePivotStr)
@@ -521,6 +522,7 @@ struct DashboardModel {
     var columnsInfo: [ChatTableColumn]
     var secondQuery: String
     var loading: Bool
+    var secondLoading: Bool
     var items: [String]
     var subDashboardModel: SubDashboardModel
     var stringColumnIndex: Int
@@ -550,6 +552,7 @@ struct DashboardModel {
         columnsInfo: [ChatTableColumn] = [],
         secondQuery: String = "",
         loading: Bool = false,
+        secondLoading: Bool = false,
         items: [String] = [],
         subDashboardModel: SubDashboardModel = SubDashboardModel(),
         stringColumnIndex: Int = 0,
@@ -579,6 +582,7 @@ struct DashboardModel {
         self.columnsInfo = columnsInfo
         self.secondQuery = secondQuery
         self.loading = loading
+        self.secondLoading = secondLoading
         self.items = items
         self.subDashboardModel = subDashboardModel
         self.stringColumnIndex = stringColumnIndex

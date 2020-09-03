@@ -221,10 +221,12 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             let cell = DashboardComponentCell()
             cell.delegate = self
             cell.delegateSend = self
+            //if indexPath.row ==
             cell.configCell(data: dataDash[indexPath.row],
                             pos: indexPath.row,
-                            loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral
-                            )
+                            loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral)
+            
+            
             //cell.addSubview(newView)
             return cell
         }
