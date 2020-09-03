@@ -61,21 +61,24 @@ class DashboardService {
             completion(finalComponent)
         } else {
             httpRequest(url, "POST", body) { (response) in
-                let reference_id = response["reference_id"] as? String ?? ""
+                let referenceId = response["reference_id"] as? String ?? ""
                 let typeFinal = type == .Introduction ? "" : type.rawValue
-                if reference_id == "1.1.430" || reference_id == "1.1.431"{
+                /*if referenceId == "1.1.430" || referenceId == "1.1.431"{
                     
                     ChataServices.instance.getSuggestionsQueries(query: query) { (items) in
                         let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position)
                         completion(finalComponent)
                     }
-                } else {
-                    let finalComponent = ChataServices().getDataComponent(response: response,
-                                                                          type: typeFinal,
-                                                                          position: position,
-                                                                          mainColumn: column)
-                    completion(finalComponent)
+                } else {*/
+                var finalComponent = ChataServices().getDataComponent(response: response,
+                                                                      type: typeFinal,
+                                                                      position: position,
+                                                                      mainColumn: column)
+                if referenceId == "1.1.431"{
+                    finalComponent.text = "Invalid Request Parameters"
                 }
+                    completion(finalComponent)
+                //}
             }
         }
     }
