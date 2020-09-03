@@ -136,12 +136,13 @@ class DashboardService {
         let secondDataConfig = dash["secondDataConfig"] as? [String: Any] ?? [:]
         let stringColumnIndexSecond = secondDataConfig["stringColumnIndex"] as? Int ?? 0
         let stringColumnIndex = dataConfig["stringColumnIndex"] as? Int ?? 0
+        let type: ChatComponentType = ChatComponentType.withLabel(displayType)
         return DashboardModel(minW: minW, staticVar: staticVar, maxH: maxH,
                               minH: minH, displayType: displayType,
                               posX: posX, posY: posY, identify: identify,
                               query: query, isNewTile: isNewTile,
                               title: finalTitle, key: key, moved: moved,
-                              posH: posH, posW: posW, splitView: splitView,
+                              posH: posH, posW: posW, type: type, splitView: splitView,
                               secondDisplayType: secondDisplayType,
                               secondQuery: secondQuery, stringColumnIndex: stringColumnIndex,
                               stringColumnIndexSecond: stringColumnIndexSecond)

@@ -62,7 +62,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             }
         } else {
             loadComponent(view: vwWebview, connect: lblMain, loading: loading, type: data.type)
-            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
+            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items, loading: loading)
             if loading == 1 {
                 loaderWebview(view: vwWebview, type2: data.type )
             }
