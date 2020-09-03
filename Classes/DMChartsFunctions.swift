@@ -550,7 +550,7 @@ func getConfigScript() -> String {
         }
         function drillDown(position){
             try {
-                webkit.messageHandlers.drillDown.postMessage(position);
+                webkit.messageHandlers.drillDown.postMessage(position+""+second);
             } catch(err) {
                 console.log(position);
             };

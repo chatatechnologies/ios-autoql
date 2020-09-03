@@ -222,10 +222,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                 } else {
                     names.append(name)
                 }*/
+                var msg = message.body as? String ?? ""
+                //var column: Int = data.stringColumnIndex
+                if msg.contains("SecondQuery") {
+                    msg = msg.replace(target: "SecondQuery" , withString: "")
+                    //column = data.stringColumnIndexSecond
+                }
                 let name = data.columnsInfo.count > 0 ? data.columnsInfo[0].originalName : ""
                 let name2 = data.columnsInfo.count > 1 ? data.columnsInfo[1].originalName : ""
                 let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
-                delegate?.sendDrillDown(idQuery: data.idQuery, obj: message.body as? String ?? "", name: nameFinal, title: data.query)
+                delegate?.sendDrillDown(idQuery: data.idQuery, obj: msg, name: nameFinal, title: data.query)
                 //delegate?.sendDrillDown(idQuery: data.idQuery, obj: columns, name: names, title: data.query)
                 /*let name = data.columnsInfo[0].originalName
                 let name2 = data.columnsInfo[1].originalName

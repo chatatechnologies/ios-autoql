@@ -163,7 +163,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         DashboardService().getDashQuery(query: query,
                                         type: ChatComponentType.withLabel(type),
                                         position: index,
-                                        column: column) { (component) in
+                                        column: column,
+                                        second: "SecondQuery") { (component) in
             DispatchQueue.main.async {
                 let pos = component.position
                 let newSub = SubDashboardModel(

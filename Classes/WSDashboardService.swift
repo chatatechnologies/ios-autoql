@@ -41,6 +41,7 @@ class DashboardService {
                       type: ChatComponentType,
                       position: Int = 0,
                       column: Int = 0,
+                      second: String = "",
                       completion: @escaping CompletionChatComponentModel) {
         var base = DataConfig.authenticationObj.domain
         if base.last == "/" {
@@ -67,14 +68,15 @@ class DashboardService {
                 /*if referenceId == "1.1.430" || referenceId == "1.1.431"{
                     
                     ChataServices.instance.getSuggestionsQueries(query: query) { (items) in
-                        let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position)
+                        let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position, second: second)
                         completion(finalComponent)
                     }
                 } else {*/
                 var finalComponent = ChataServices().getDataComponent(response: response,
                                                                       type: typeFinal,
                                                                       position: position,
-                                                                      mainColumn: column)
+                                                                      mainColumn: column,
+                                                                      second: second)
                 if referenceId == "1.1.431"{
                     finalComponent.text = "Invalid Request Parameters"
                 }

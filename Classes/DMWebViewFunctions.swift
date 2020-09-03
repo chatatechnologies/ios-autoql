@@ -113,7 +113,8 @@ func getHTMLFooter(rows: [[String]],
                    drills: [String],
                    type: String,
                    split: Bool = false,
-                   mainColumn: Int = 0) -> String {
+                   mainColumn: Int = 0,
+                   second: String = "") -> String {
     var scriptJS = ""
     if rows.count > 0 && columns.count > 0 {
         scriptJS += getChartFooter(rows: rows,
@@ -121,7 +122,9 @@ func getHTMLFooter(rows: [[String]],
                                    types: types,
                                    drills: drills,
                                    mainType: type,
-                                   mainColum: mainColumn )
+                                   mainColum: mainColumn,
+                                   second: second
+        )
         scriptJS += getFooterScript()
     }
     return """
@@ -161,7 +164,8 @@ func getChartFooter(rows: [[String]],
                     types: [ChatTableColumnType],
                     drills: [String],
                     mainType: String = "idTableBasic",
-                    mainColum: Int = 0) -> String {
+                    mainColum: Int = 0,
+                    second: String = "") -> String {
     var dataSpecial: [[Any]] = []
     var dataSpecialActive = false
     var categoriesX: [String] = []
@@ -292,6 +296,7 @@ func getChartFooter(rows: [[String]],
         var drillY = \(drillY);
         var colorAxis = "\(chataDrawerWebViewText)";
         var colorFill = "\(chataDrawerWebViewBackground)";
+        var second = "\(second)"
     var color1 = "\(DataConfig.themeConfigObj.chartColors[0])";
     """
 }

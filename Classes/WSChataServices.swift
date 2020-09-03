@@ -260,7 +260,8 @@ class ChataServices {
                           drilldown: Bool = false,
                           position: Int = 0,
                           secondQuery: String = "",
-                          mainColumn: Int = -1) -> ChatComponentModel {
+                          mainColumn: Int = -1,
+                          second: String = "") -> ChatComponentModel {
         let data = response["data"] as? [String: Any] ?? [:]
         var dataModel = ChatComponentModel(webView: "error", options: items, position: position)
         if items.count > 0{
@@ -365,7 +366,9 @@ class ChataServices {
                                 types: columsType,
                                 drills: drills,
                                 type: typeFinal,
-                                mainColumn: mainColumn))
+                                mainColumn: mainColumn,
+                                second: second
+                ))
                 """
             } else {
                 webView = "text"
