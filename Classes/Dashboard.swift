@@ -21,7 +21,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     var imageView2 = UIImageView(image: nil)
     var spinnerDashboard = UIButton()
     var listDash: [DashboardList] = []
-    var loadingGeneral: Bool = false
+    var loadingGeneral: Int = 0
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -142,7 +142,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         }
     }
     public func executeDashboard(){
-        loadingGeneral = true
+        loadingGeneral = 1
         tbMain.reloadData()
         for (index, dash) in self.dataDash.enumerated() {
             //let indexPath = IndexPath(row: index, section: 0)
@@ -166,7 +166,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                         text: component.text,
                         type: component.type,
                         idQuery: component.idQuery,
-                        loading: true,
+                        loading: 2,
                         items: component.options
                 )
                 self.dataDash[pos].subDashboardModel = newSub
@@ -186,7 +186,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                 self.dataDash[pos].text = component.text
                 self.dataDash[pos].idQuery = component.idQuery
                 self.dataDash[pos].columnsInfo = component.columnsInfo
-                self.dataDash[pos].loading = true
+                self.dataDash[pos].loading = 2
                 let indexPath = IndexPath(row: pos, section: 0)
                 self.tbMain.reloadRows(at: [indexPath], with: .none)
             }
@@ -224,7 +224,9 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             //if indexPath.row ==
             cell.configCell(data: dataDash[indexPath.row],
                             pos: indexPath.row,
-                            loading: self.dataDash[indexPath.row].loading ? false : loadingGeneral)
+                            loading: self.dataDash[indexPath.row].loading == 2 ? 2 : loadingGeneral,
+                            secondLoading: self.dataDash[indexPath.row].subDashboardModel.loading == 2 ? 2 : loadingGeneral
+            )
             
             
             //cell.addSubview(newView)
@@ -241,7 +243,7 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbListDashboard {
-            loadingGeneral = false
+            loadingGeneral = 0
             let name = "\(listDash[indexPath.row].name) ⌄"
             spinnerDashboard.setTitle(name, for: .normal)
             toggleListDashboard(false)

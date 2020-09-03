@@ -28,37 +28,54 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     static var identifier: String {
         return String(describing: self)
     }
-    func configCell(data: DashboardModel, pos: Int, loading: Bool = false) {
-        self.data = data
-        self.position = pos
-        styleComponent()
-        loadTitle()
-        if data.splitView{
-            loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
-            vwWebview.addBorder()
-            loadComponent(view: vwSecondWebview, connect: vwWebview)
-            loadType(view: vwWebview,
-                     text: data.text,
-                     type: data.type,
-                     webview: data.webview,
-                     list: data.items)
-            loadType(view: vwSecondWebview,
-                     text: data.subDashboardModel.text,
-                     type: data.subDashboardModel.type,
-                     webview: data.subDashboardModel.webview,
-                     list: data.subDashboardModel.items,
-                     firstView: false)
-            if loading {
-                loaderWebview(view: vwWebview)
-                loaderWebview(view: vwSecondWebview)
-            }
-        } else {
-            loadComponent(view: vwWebview, connect: lblMain)
-            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
-            if loading {
-                loaderWebview(view: vwWebview)
+    func configCell(data: DashboardModel, pos: Int, loading: Int = 0, secondLoading: Int = 0) {
+        if loading == 0 {
+            self.data = data
+            self.position = pos
+            styleComponent()
+            loadTitle()
+            if data.splitView{
+                let multiLoad = secondLoading == 2 && loading == 2 ? 3 : loading
+                if position == 0 {
+                   print("T.t")
+                }
+                if loading == 0{
+                    loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain, loading: multiLoad )
+                    vwWebview.addBorder()
+                }
+                if secondLoading == 0{
+                    loadComponent(view: vwSecondWebview, connect: vwWebview, loading: secondLoading)
+                }
+                loadType(view: vwWebview,
+                         text: data.text,
+                         type: data.type,
+                         webview: data.webview,
+                         list: data.items,
+                         loading: multiLoad
+                )
+                loadType(view: vwSecondWebview,
+                         text: data.subDashboardModel.text,
+                         type: data.subDashboardModel.type,
+                         webview: data.subDashboardModel.webview,
+                         list: data.subDashboardModel.items,
+                         firstView: false,
+                         loading: secondLoading
+                         )
+                if loading == 1 {
+                    loaderWebview(view: vwWebview)
+                }
+                if secondLoading == 1 {
+                    loaderWebview(view: vwSecondWebview)
+                }
+            } else {
+                loadComponent(view: vwWebview, connect: lblMain, loading: loading)
+                loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
+                if loading == 1 {
+                    loaderWebview(view: vwWebview)
+                }
             }
         }
+        
     }
     func styleComponent() {
         self.contentView.backgroundColor = backgroundDash
@@ -67,10 +84,10 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         self.contentView.addSubview(vwComponent)
         vwComponent.edgeTo(self, safeArea: .nonePadding, height: 8, padding: 1)
     }
-    func loadComponent(view: UIView, nsType: DViewSafeArea = .bottomPaddingtoTop, connect: UIView) {
+    func loadComponent(view: UIView, nsType: DViewSafeArea = .bottomPaddingtoTop, connect: UIView, loading: Int = 0) {
         vwComponent.addSubview(view)
         view.edgeTo(vwComponent, safeArea: nsType, connect,  padding: 8)
-        loadDefault(view: view)
+        loadDefault(view: view, loading: loading)
     }
     func loadTitle() {
         lblMain.text = data.title
@@ -78,22 +95,25 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         lblMain.edgeTo(vwComponent, safeArea: .topPadding, height: 30, padding: 8)
         lblMain.textColor = chataDrawerAccentColor
     }
-    func loadDefault(view: UIView) {
-        let newLbl = UILabel()
-        newLbl.text = mainText
-        newLbl.numberOfLines = 0
-        newLbl.tag = 1
-        newLbl.textColor = chataDrawerTextColorPrimary
-        newLbl.textAlignment = .center
-        view.addSubview(newLbl)
-        newLbl.edgeTo(view, safeArea: .none)
+    func loadDefault(view: UIView ,loading: Int = 0) {
+        if loading == 0 {
+            let newLbl = UILabel()
+            newLbl.text = mainText
+            newLbl.numberOfLines = 0
+            newLbl.tag = 1
+            newLbl.textColor = chataDrawerTextColorPrimary
+            newLbl.textAlignment = .center
+            view.addSubview(newLbl)
+            newLbl.edgeTo(view, safeArea: .none)
+        }
     }
     func loadType(view: UIView,
                   text: String,
                   type: ChatComponentType,
                   webview: String = "",
                   list: [String] = [],
-                  firstView: Bool = true
+                  firstView: Bool = true,
+                  loading: Int = 0
     ) {
         switch type {
         case .Safetynet:
@@ -101,7 +121,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         case .Suggestion:
             loadSuggestion(view: view, list: list, firstView: firstView)
         case .Webview:
-            loadWebView(view: view, webview: webview)
+            loadWebView(view: view, webview: webview, loading: loading)
         case .Table:
             loadWebView(view: view, webview: webview)
         case .Introduction:
@@ -123,30 +143,35 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newView.edgeTo(view, safeArea: .paddingTop)
         self.sizeToFit()
     }
-    func loadWebView(view: UIView, webview: String){
+    func loadWebView(view: UIView, webview: String, loading: Int = 0){
         //self.wbMain = WKWebView(frame: self.bounds)
         //wbMain.navigationDelegate = self
-        let contentController = WKUserContentController()
-        let userScript = WKUserScript(
-            source: "mobileHeader()",
-            injectionTime: WKUserScriptInjectionTime.atDocumentEnd,
-            forMainFrameOnly: true
-        )
-        contentController.addUserScript(userScript)
-        contentController.add(self, name: "drillDown")
-        let config = WKWebViewConfiguration()
-        config.userContentController = contentController
-        wbMain = WKWebView(frame: self.bounds, configuration: config)
-        
-        wbMain.navigationDelegate = self
-        wbMain.scrollView.bounces = false
-        wbMain.isOpaque = false
-        wbMain.isUserInteractionEnabled = true
-        wbMain.scrollView.isScrollEnabled = true
-        view.addSubview(wbMain)
-        self.wbMain.edgeTo(view, safeArea: .none)
-        loaderWebview(view: view)
-        wbMain.loadHTMLString(webview, baseURL: nil)
+        if loading == 2 {
+            let contentController = WKUserContentController()
+            let userScript = WKUserScript(
+                source: "mobileHeader()",
+                injectionTime: WKUserScriptInjectionTime.atDocumentEnd,
+                forMainFrameOnly: true
+            )
+            contentController.addUserScript(userScript)
+            contentController.add(self, name: "drillDown")
+            let config = WKWebViewConfiguration()
+            config.userContentController = contentController
+            wbMain = WKWebView(frame: self.bounds, configuration: config)
+            
+            wbMain.navigationDelegate = self
+            wbMain.scrollView.bounces = false
+            wbMain.isOpaque = false
+            wbMain.isUserInteractionEnabled = true
+            wbMain.scrollView.isScrollEnabled = true
+            view.addSubview(wbMain)
+            self.wbMain.edgeTo(view, safeArea: .none)
+            if position == 0 {
+                print("T.t")
+            }
+            loaderWebview(view: view)
+            wbMain.loadHTMLString(webview, baseURL: nil)
+        }
     }
     func loadIntro(view: UIView, text: String) {
         if text != "" {

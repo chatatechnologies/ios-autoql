@@ -477,7 +477,7 @@ struct SubDashboardModel {
     var text: String
     var type: ChatComponentType
     var idQuery: String
-    var loading: Bool
+    var loading: Int
     var items: [String]
     init(
         displayType: String = "",
@@ -485,7 +485,7 @@ struct SubDashboardModel {
         text: String = "",
         type: ChatComponentType = .Introduction,
         idQuery: String = "",
-        loading: Bool = false,
+        loading: Int = 0,
         items: [String] = []
     ) {
         self.displayType = displayType
@@ -521,8 +521,8 @@ struct DashboardModel {
     var idQuery: String
     var columnsInfo: [ChatTableColumn]
     var secondQuery: String
-    var loading: Bool
-    var secondLoading: Bool
+    var loading: Int
+    var secondLoading: Int
     var items: [String]
     var subDashboardModel: SubDashboardModel
     var stringColumnIndex: Int
@@ -551,8 +551,8 @@ struct DashboardModel {
         idQuery: String = "",
         columnsInfo: [ChatTableColumn] = [],
         secondQuery: String = "",
-        loading: Bool = false,
-        secondLoading: Bool = false,
+        loading: Int = 0,
+        secondLoading: Int = 0,
         items: [String] = [],
         subDashboardModel: SubDashboardModel = SubDashboardModel(),
         stringColumnIndex: Int = 0,
