@@ -29,53 +29,43 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         return String(describing: self)
     }
     func configCell(data: DashboardModel, pos: Int, loading: Int = 0, secondLoading: Int = 0) {
-        if loading == 0 {
-            self.data = data
-            self.position = pos
-            styleComponent()
-            loadTitle()
-            if data.splitView{
-                let multiLoad = secondLoading == 2 && loading == 2 ? 3 : loading
-                if position == 0 {
-                   print("T.t")
-                }
-                if loading == 0{
-                    loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain, loading: multiLoad )
-                    vwWebview.addBorder()
-                }
-                if secondLoading == 0{
-                    loadComponent(view: vwSecondWebview, connect: vwWebview, loading: secondLoading)
-                }
-                loadType(view: vwWebview,
-                         text: data.text,
-                         type: data.type,
-                         webview: data.webview,
-                         list: data.items,
-                         loading: multiLoad
-                )
-                loadType(view: vwSecondWebview,
-                         text: data.subDashboardModel.text,
-                         type: data.subDashboardModel.type,
-                         webview: data.subDashboardModel.webview,
-                         list: data.subDashboardModel.items,
-                         firstView: false,
-                         loading: secondLoading
-                         )
-                if loading == 1 {
-                    loaderWebview(view: vwWebview)
-                }
-                if secondLoading == 1 {
-                    loaderWebview(view: vwSecondWebview)
-                }
-            } else {
-                loadComponent(view: vwWebview, connect: lblMain, loading: loading)
-                loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
-                if loading == 1 {
-                    loaderWebview(view: vwWebview)
-                }
+        self.data = data
+        self.position = pos
+        styleComponent()
+        loadTitle()
+        if data.splitView{
+            let multiLoad = loading == 0 ? 0 : secondLoading == 2 && loading == 2 ? 2 : 1
+            loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain, loading: multiLoad )
+            vwWebview.addBorder()
+            loadComponent(view: vwSecondWebview, connect: vwWebview, loading: secondLoading)
+            loadType(view: vwWebview,
+                     text: data.text,
+                     type: data.type,
+                     webview: data.webview,
+                     list: data.items,
+                     loading: multiLoad
+            )
+            loadType(view: vwSecondWebview,
+                     text: data.subDashboardModel.text,
+                     type: data.subDashboardModel.type,
+                     webview: data.subDashboardModel.webview,
+                     list: data.subDashboardModel.items,
+                     firstView: false,
+                     loading: secondLoading
+                     )
+            if loading == 1 {
+                loaderWebview(view: vwWebview)
+            }
+            if secondLoading == 1 {
+                loaderWebview(view: vwSecondWebview)
+            }
+        } else {
+            loadComponent(view: vwWebview, connect: lblMain, loading: loading)
+            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
+            if loading == 1 {
+                loaderWebview(view: vwWebview)
             }
         }
-        
     }
     func styleComponent() {
         self.contentView.backgroundColor = backgroundDash
@@ -105,6 +95,8 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             newLbl.textAlignment = .center
             view.addSubview(newLbl)
             newLbl.edgeTo(view, safeArea: .none)
+        } else {
+            loaderWebview(true, view: view)
         }
     }
     func loadType(view: UIView,
@@ -166,9 +158,6 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             wbMain.scrollView.isScrollEnabled = true
             view.addSubview(wbMain)
             self.wbMain.edgeTo(view, safeArea: .none)
-            if position == 0 {
-                print("T.t")
-            }
             loaderWebview(view: view)
             wbMain.loadHTMLString(webview, baseURL: nil)
         }

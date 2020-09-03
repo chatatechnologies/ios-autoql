@@ -3486,8 +3486,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "loadWebView(view:webview:loading:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4028,8 +4028,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "loadType(view:text:type:webview:list:firstView:loading:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4044,8 +4044,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "loadIntro(view:text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4092,8 +4092,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4108,8 +4108,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4124,8 +4124,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "loadIntro(view:text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4140,8 +4140,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "loadIntro(view:text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4156,8 +4156,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "loadType(view:text:type:webview:list:firstView:loading:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4172,8 +4172,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "loadSuggestion(view:list:firstView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4220,8 +4220,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "sendText(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4268,8 +4268,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "userContentController(_:didReceive:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4284,8 +4284,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "userContentController(_:didReceive:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4380,8 +4380,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "loadType(view:text:type:webview:list:firstView:loading:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4390,22 +4390,6 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "82F6D64A-5824-4BBC-B564-E9F44E9ABA54"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DashboardComponentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "loaderWebview(_:view:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "915CF5D6-D73D-4774-8D31-01251C92D3AB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -4421,6 +4405,22 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "915CF5D6-D73D-4774-8D31-01251C92D3AB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DashboardComponentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "loaderWebview(_:view:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             uuid = "C2660893-A3D4-4324-AC2A-B9995AE1429C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4428,8 +4428,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
             <Locations>
@@ -4476,8 +4476,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4492,8 +4492,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4508,8 +4508,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "loaderWebview(_:view:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6524,41 +6524,9 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "loadDefault(view:loading:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C66027AF-103B-4F99-BD3A-8FCED8051DE0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DashboardComponentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
-            landmarkName = "loadWebView(view:webview:loading:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "00ED8EE7-42CC-4093-B58C-C771DD16433E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DashboardComponentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
-            landmarkName = "loadWebView(view:webview:loading:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6572,8 +6540,8 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "loadComponent(view:nsType:connect:loading:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6588,25 +6556,9 @@
             filePath = "../Classes/DashboardComponentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "loadComponent(view:nsType:connect:loading:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B33114B9-2757-42EB-8522-E1BC90178B5E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DashboardComponentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "configCell(data:pos:loading:secondLoading:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
