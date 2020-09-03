@@ -61,6 +61,7 @@ class DashboardService {
             completion(finalComponent)
         } else {
             httpRequest(url, "POST", body) { (response) in
+                print(query)
                 let referenceId = response["reference_id"] as? String ?? ""
                 let typeFinal = type == .Introduction ? "" : type.rawValue
                 /*if referenceId == "1.1.430" || referenceId == "1.1.431"{
@@ -83,7 +84,7 @@ class DashboardService {
         }
     }
     func getDrillDownDashboard(idQuery: String, name: [String], value: [String], completion: @escaping CompletionChatComponentModel){
-        var base = DataConfig.authenticationObj.domain
+        /*var base = DataConfig.authenticationObj.domain
         if base.last == "/" {
             base.removeLast()
         }
@@ -106,7 +107,8 @@ class DashboardService {
         httpRequest(url, "POST", body) { (response) in
             let finalComponent = ChataServices().getDataComponent(response: response)
             completion(finalComponent)
-        }
+        }*/
+        
     }
     func makeDash(dash: [String: Any]) -> DashboardModel{
         let minW = dash["minW"] as? Int ?? 0

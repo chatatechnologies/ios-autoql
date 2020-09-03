@@ -221,7 +221,11 @@ func getChartFooter(rows: [[String]],
         return [name, mount]
     }
     let catX = rows.map { (row) -> String in
-        let name = validateArray(row, 0) as? String ?? ""
+        var name = ""
+        name = validateArray(row, 0) as? String ?? ""
+        if dataSpecialActive {
+            name = validateArray(row, mainColum) as? String ?? ""
+        }
         return name
     }
     let datachartTri = triType ? rows.map { (column) -> [Any] in

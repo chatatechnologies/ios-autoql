@@ -83,7 +83,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         tbMain.isHidden = dataDash.count == 0
         vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
-    func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String) {
+    func sendDrillDown(idQuery: String, obj: String, name: String, title: String) {
         vwDrillDown.tag = 100
         vwDrillDown.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         mainView.addSubview(vwDrillDown)
@@ -108,11 +108,16 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         wbMain.edgeTo(vwWebview, safeArea: .none)
         wbMain.navigationDelegate = self
         loaderWebview()
-        DashboardService.instance.getDrillDownDashboard(idQuery: idQuery, name: obj, value: name) { (dataComponent) in
+        ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
             DispatchQueue.main.async {
                 self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
             }
         }
+        /*DashboardService.instance.getDrillDownDashboard(idQuery: idQuery, name: , value: name) { (dataComponent) in
+            DispatchQueue.main.async {
+                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
+            }
+        }*/
     }
     func loaderWebview(_ load: Bool = true){
         if load {
