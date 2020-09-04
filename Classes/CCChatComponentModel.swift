@@ -21,6 +21,7 @@ struct ChatComponentModel {
     var drillDown: Bool
     var isLoading: Bool
     var position: Int
+    var biChart: Bool
     init(type: ChatComponentType = .Introduction,
          text: String = "",
          user: Bool = false,
@@ -34,7 +35,8 @@ struct ChatComponentModel {
          columnsInfo: [ChatTableColumn] = [],
          drillDown: Bool = false,
          isLoading: Bool = false,
-         position: Int = 0
+         position: Int = 0,
+         biChart: Bool = false
          ) {
         self.type = type
         self.text = text
@@ -50,6 +52,7 @@ struct ChatComponentModel {
         self.drillDown = drillDown
         self.isLoading = isLoading
         self.position = position
+        self.biChart = biChart
     }
 }
 struct ChatFullSuggestion {

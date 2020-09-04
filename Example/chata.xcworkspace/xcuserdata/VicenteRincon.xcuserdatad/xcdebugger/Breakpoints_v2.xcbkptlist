@@ -2190,8 +2190,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "updateChart()"
             landmarkType = "7">
             <Locations>
@@ -2478,8 +2478,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2542,8 +2542,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
             landmarkName = "changeChart(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3582,8 +3582,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3980,8 +3980,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
+            startingLineNumber = "401"
+            endingLineNumber = "401"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3996,8 +3996,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4012,8 +4012,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4060,8 +4060,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5020,8 +5020,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5036,8 +5036,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5052,8 +5052,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5116,8 +5116,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5132,8 +5132,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
             <Locations>
@@ -5452,8 +5452,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5468,8 +5468,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5484,8 +5484,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "442"
-            endingLineNumber = "442"
+            startingLineNumber = "446"
+            endingLineNumber = "446"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5500,8 +5500,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
             <Locations>
@@ -5548,8 +5548,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "444"
-            endingLineNumber = "444"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5564,8 +5564,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5580,8 +5580,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "446"
-            endingLineNumber = "446"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5596,8 +5596,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "456"
-            endingLineNumber = "456"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6476,8 +6476,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6991,6 +6991,22 @@
             startingLineNumber = "87"
             endingLineNumber = "87"
             landmarkName = "receiveQuery(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E536FE8C-4848-4B05-8ED6-CF1072745436"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

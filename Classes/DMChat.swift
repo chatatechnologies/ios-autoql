@@ -214,7 +214,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             self.vwDataMessenger.data.append(element)
             self.vwDataMessenger.updateTable()
         } else {
-            self.vwDataMessenger.data.remove(at: 1)
+            self.vwDataMessenger.data.remove(at: 2)
             self.vwDataMessenger.data.append(element)
             self.vwDataMessenger.updateWithLimit()
         }

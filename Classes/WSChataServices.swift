@@ -279,7 +279,9 @@ class ChataServices {
             var textFinal = ""
             var user = true
             var numRow = 20
-            let (rowsFinal, rowsFinalClean) = getRows(rows: rows, columnsFinal: columnsFinal)
+            var biChart = false
+            let (rowsFinal, rowsFinalClean, validBiChart) = getRows(rows: rows, columnsFinal: columnsFinal)
+            biChart = validBiChart
             if rows.count == 1{
                 if rows[0].count == 1{
                     displayType = .Introduction
@@ -392,7 +394,8 @@ class ChataServices {
                 idQuery: idQuery,
                 columnsInfo: columnsFinal,
                 drillDown: drilldown,
-                position: position
+                position: position,
+                biChart: biChart
             )
         }
         return dataModel
@@ -434,8 +437,9 @@ class ChataServices {
         }
         return columnsFinal
     }
-    func getRows(rows: [[Any]], columnsFinal: [ChatTableColumn]) -> ([[String]], [[String]]){
+    func getRows(rows: [[Any]], columnsFinal: [ChatTableColumn]) -> ([[String]], [[String]], Bool){
         var rowsFinal: [[String]] = []
+        var validValue = false
         var rowsFinalClean: [[String]] = []
         for row in rows {
             var finalRow: [String] = []
@@ -449,11 +453,17 @@ class ChataServices {
                     finalRow.append("\(element)")
                     finalRowClean.append("\(element)")
                 }
+                if !validValue && (columnsFinal[index].type == .dollar || columnsFinal[index].type == .quantity) {
+                    let intFinal = element as? Int ?? 0
+                    if intFinal > 0 {
+                        validValue = true
+                    }
+                }
             }
             rowsFinalClean.append(finalRowClean)
             rowsFinal.append(finalRow)
         }
-        return (rowsFinal, rowsFinalClean)
+        return (rowsFinal, rowsFinalClean, validValue)
     }
 }
 struct DashboardList {

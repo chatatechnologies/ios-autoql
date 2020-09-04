@@ -127,10 +127,11 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         var contrast = false
         switch num {
         case 2:
-            if columns[0] == .string && columns[1] == .string{
+            if !data.biChart{
                 buttonsFinal = []
             }
             else{
+                
                 buttonsFinal = [
                     ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
                     ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
@@ -158,14 +159,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                 }
             }
         default:
-            var specialActive = false
-            columns.forEach { (type) in
-                if type == .dollar //|| type == .quantity
-                {
-                    specialActive = true
-                }
-            }
-            if specialActive{
+            if data.biChart{
                 buttonsFinal += [
                                  ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
                                  ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
