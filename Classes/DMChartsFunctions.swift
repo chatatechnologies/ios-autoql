@@ -569,7 +569,7 @@ func getConfigScript() -> String {
         function finalSize(invert){
             var defaultWidth = "100%";
             var defaultHeight = "90%";
-            var dynamicWidthSize = ""+categoriesX.length * 100+"%";
+            var dynamicWidthSize = ""+categoriesX.length * 600+"%";
             var widthSize = categoriesX.length <= 10 ? defaultWidth : dynamicWidthSize;
             var dynamicHeightSize = ""+categoriesY.length * 10+"%";
             var heightSize = categoriesY.length <= 10 ? defaultHeight : dynamicHeightSize;

@@ -194,15 +194,15 @@ class ChataServices {
             let values = obj.split(separator: "_")
             let keys = name.split(separator: "º")
             if keys.count > 1 && values.count > 1{
-                var test = String(values[0])
-                test = test.toStrDate()
+                let valueOne = String(values[0]).toStrDate()
+                let valueTwo = String(values[1]).toStrDate()
                 group_bys = [[
-                        "name": String(keys[0]),
-                        "value": String(values[1])
+                        "name": String(keys[1]),
+                        "value": valueTwo
                     ],
                     [
-                        "name": String(keys[1]),
-                        "value": test
+                        "name": String(keys[0]),
+                        "value": valueOne
                     ]
                 ]
             }

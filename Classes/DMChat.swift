@@ -221,7 +221,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     func updateAutocomplete(_ queries: [String], _ hidden: Bool) {
         DispatchQueue.main.async {
-            let emptyText = self.vwTextBox.tfMain.text?.isEmpty ?? false
+           let emptyText = self.vwTextBox.tfMain.text?.isEmpty ?? false
            if !emptyText  {
                 let height: CGFloat = queries.count >= 4 ? 190.0 : (CGFloat(queries.count) * 50.0)
                 self.vwAutoComplete.constraints[4].constant = height
@@ -229,6 +229,8 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
                 UIView.transition(with: self.vwAutoComplete, duration: 0.3, options: .transitionCrossDissolve, animations: {
                     self.vwAutoComplete.toggleHide(hidden)
                 })
+           } else {
+                self.vwAutoComplete.toggleHide(true)
             }
         }
     }
