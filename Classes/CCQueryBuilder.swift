@@ -129,7 +129,10 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             //vwSecond.isHidden = false
             tbSecond.reloadData()
         } else {
-            delegate?.sendText(dataSelection[indexPath.row], true)
+            let typingSend = TypingSend(text: dataSelection[indexPath.row], safe: true)
+            NotificationCenter.default.post(name: notifTypingText,
+                                            object: typingSend)
+            //delegate?.sendText(dataSelection[indexPath.row], true)
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {

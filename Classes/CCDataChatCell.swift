@@ -197,6 +197,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
+        loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         self.sizeToFit()
     }
     private func getSafetynet() {

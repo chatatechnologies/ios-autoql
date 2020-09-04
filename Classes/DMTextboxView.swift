@@ -42,6 +42,7 @@ class TextboxView: UIView {
         tfMain.setLeftPaddingPoints(10)
         self.addSubview(tfMain)
         tfMain.edgeTo(self, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
+        addNotifications()
     }
     @objc func actionTyping() {
         changeButton()
@@ -73,6 +74,18 @@ class TextboxView: UIView {
         }
         // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
+    func addNotifications(){
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveQuery), name: notifTypingText, object: nil)
+    }
+    func removeNotificatios() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: notifTypingText, object: nil)
+    }
+    @objc func receiveQuery(_ notif: Notification) {
+        let query = notif.object as? TypingSend ?? TypingSend()
+        self.animateAppName(query: query.text, safe: query.safe)
+    }
     func changeButton() {
         let emptyInput = self.tfMain.text?.isEmpty ?? true
         isMic = emptyInput && DataConfig.enableVoiceRecord
@@ -85,6 +98,21 @@ class TextboxView: UIView {
     }
     override func didMoveToSuperview() {
         loadConfig()
+    }
+    func animateAppName(query: String, safe: Bool) {
+        tfMain.text = ""
+        let characters = query.map { $0 }
+        var index = 0
+        Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] timer in
+            if index < query.count {
+                let char = characters[index]
+                self?.tfMain.text! += "\(char)"
+                index += 1
+            } else {
+                timer.invalidate()
+                self?.delegate?.sendText(query, safe)
+            }
+        })
     }
 }
 extension TextboxView: UITableViewDataSource, UITableViewDelegate {

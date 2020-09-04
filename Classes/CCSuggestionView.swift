@@ -55,7 +55,10 @@ class SuggestionView: UIView {
     }
     @IBAction func selectSuggest(_ sender: AnyObject){
         if let buttonTitle = sender.title(for: .normal) {
-            delegate?.sendText(buttonTitle, firstView)
+            //delegate?.sendText(buttonTitle, firstView)
+            let typingSend = TypingSend(text: buttonTitle, safe: false)
+            NotificationCenter.default.post(name: notifTypingText,
+                                            object: typingSend)
         }
     }
     public override init(frame: CGRect) {

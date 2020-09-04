@@ -254,8 +254,12 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         return Qtips.items.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        NotificationCenter.default.post(name: notifSendText,
-                                        object: Qtips.items[indexPath.row])
+        let typingSend = TypingSend(text: Qtips.items[indexPath.row], safe: true)
+        NotificationCenter.default.post(name: notifTypingText,
+                                        object: typingSend)
+        
+        /*NotificationCenter.default.post(name: notifSendText,
+                                        object: Qtips.items[indexPath.row])*/
         self.dismiss(animated: DataConfig.clearOnClose)
         
     }

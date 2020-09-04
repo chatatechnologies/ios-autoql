@@ -224,7 +224,10 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     @objc func runQuery(sender: UIButton!) {
         let text = mainLabel.text ?? ""
-        delegate?.sendText(text, false)
+        //delegate?.sendText(text, false)
+        let typingSend = TypingSend(text: text, safe: false)
+        NotificationCenter.default.post(name: notifTypingText,
+                                        object: typingSend)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
@@ -279,4 +282,12 @@ extension UITapGestureRecognizer {
         return NSLocationInRange(indexOfCharacter, targetRange)
     }
 
+}
+struct TypingSend {
+    var text: String
+    var safe: Bool
+    init(text: String = "", safe: Bool = false) {
+        self.text = text
+        self.safe = safe
+    }
 }
