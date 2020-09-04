@@ -37,7 +37,7 @@ public class DataMessenger: UIButton {
     }
     public override func didMoveToSuperview() {
         self.loadStyle()
-        self.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        self.addTarget(self, action: #selector(buttonAction(sender:)), for: .touchUpInside)
     }
     private func loadStyle() {
         let width: CGFloat = 50
@@ -158,7 +158,9 @@ public class DataMessenger: UIButton {
     public func createChat() {
         let chat = Chat(frame: father2.frame)
         chat.show()
-        //chat.loadAnimation(vwFather: father2)
+        //let tips = QTMainView(frame: father2.frame)
+        //tips.show()
+        
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

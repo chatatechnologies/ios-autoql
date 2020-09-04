@@ -8,6 +8,7 @@
 import Foundation
 public var DataConfig = DataConfiguration.instance
 var generalFont = UIFont.systemFont(ofSize: 16)
+let notifSendText = Notification.Name("sendText")
 public class DataConfiguration {
     static let instance = DataConfiguration()
     public var authenticationObj = authentication(apiKey: "", domain: "", token: "")

@@ -32,25 +32,29 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
         configLoad()
     }
     func deleteQuery(numQuery: Int) {
-        var two = false
-        data.remove(at: numQuery)
-        if data[numQuery-1].type == .Introduction{
-            two = true
-            data.remove(at: numQuery - 1)
-        }
-        let index1 = IndexPath(row: numQuery, section: 0)
-        let index2 = IndexPath(row: numQuery - 1, section: 0)
-        DispatchQueue.main.async {
-            var num = 1
-            if two{
-                self.tableView.deleteRows(at: [index1, index2], with: .automatic)
-                num = 2
-            } else{
-                self.tableView.deleteRows(at: [index1], with: .automatic)
+        if data.count >= numQuery {
+            var two = false
+            data.remove(at: numQuery)
+            if data[numQuery-1].type == .Introduction{
+                if data[numQuery-1].user {
+                    two = true
+                    data.remove(at: numQuery - 1)
+                }
             }
-            self.tableView.reloadData()
-            let endIndex = IndexPath(row: numQuery - num, section: 0)
-            self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
+            let index1 = IndexPath(row: numQuery, section: 0)
+            let index2 = IndexPath(row: numQuery - 1, section: 0)
+            DispatchQueue.main.async {
+                var num = 1
+                if two{
+                    self.tableView.deleteRows(at: [index1, index2], with: .automatic)
+                    num = 2
+                } else{
+                    self.tableView.deleteRows(at: [index1], with: .automatic)
+                }
+                //self.tableView.reloadData()
+                let endIndex = IndexPath(row: numQuery - num, section: 0)
+                self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
+            }
         }
     }
 }
@@ -62,7 +66,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         let cell = DataChatCell()
         cell.selectionStyle = .none
         cell.delegate = self
-        cell.configCell(allData: data[indexPath.row], index: indexPath.row)
+        cell.configCell(allData: data[indexPath.row], index: indexPath.row, lastQueryFinal: (indexPath.row == data.count - 1))
         return cell
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

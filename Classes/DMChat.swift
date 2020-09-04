@@ -24,9 +24,8 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwTextBox.delegate = self
         vwToolbar.delegate = self
         self.backgroundColor = chataDrawerBackgroundColor
-        //print(testVAR)
     }
-    public func show() {
+    public func show(query: String = "") {
         let vwFather: UIView = UIApplication.shared.keyWindow!
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
@@ -118,19 +117,27 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveQuery), name: notifSendText, object: nil)
     }
     func removeObservers() {
         NotificationCenter.default.removeObserver(self,
                                                   name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self,
                                                   name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: notifSendText, object: nil)
+    }
+    @objc func receiveQuery(_ notification: Notification) {
+        let query = notification.object as? String ?? ""
+        sendText(query, true)
     }
     func sendText(_ text: String, _ safe: Bool) {
         let model = ChatComponentModel(type: .Introduction, text: text, user: true)
         vwDataMessenger.data.append(model)
         //vwDataMessenger.tableView.reloadData()
         self.vwDataMessenger.updateTable()
-        vwTextBox.textbox.text = ""
+        vwTextBox.tfMain.text = ""
         vwAutoComplete.isHidden = true
         self.endEditing(true)
         vwTextBox.changeButton()
@@ -214,11 +221,10 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     func updateAutocomplete(_ queries: [String], _ hidden: Bool) {
         DispatchQueue.main.async {
-            let emptyText = self.vwTextBox.textbox.text?.isEmpty ?? false
+            let emptyText = self.vwTextBox.tfMain.text?.isEmpty ?? false
            if !emptyText  {
                 let height: CGFloat = queries.count >= 4 ? 190.0 : (CGFloat(queries.count) * 50.0)
                 self.vwAutoComplete.constraints[4].constant = height
-                // print(self.vwAutoComplete.constraints[4].constant)
                 self.vwAutoComplete.updateTable(queries: queries)
                 UIView.transition(with: self.vwAutoComplete, duration: 0.3, options: .transitionCrossDissolve, animations: {
                     self.vwAutoComplete.toggleHide(hidden)
@@ -227,7 +233,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         }
     }
     func delete() {
-        let resetData: [ChatComponentModel] = [self.vwDataMessenger.data[0]]
+        let resetData: [ChatComponentModel] = DataConfig.authenticationObj.token == "" ? [self.vwDataMessenger.data[0]] : [self.vwDataMessenger.data[0], self.vwDataMessenger.data[1]]
         self.vwDataMessenger.data = resetData
         self.vwDataMessenger.tableView.reloadData()
     }

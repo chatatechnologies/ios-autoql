@@ -20,11 +20,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     let boxWeb = BoxWebviewView()
     let defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
     var buttonDefault: myCustomButton?
+    var lastQuery: Bool = false
     weak var delegate: DataChatCellDelegate?
     static var identifier: String {
         return String(describing: self)
     }
-    func configCell(allData: ChatComponentModel, index: Int) {
+    func configCell(allData: ChatComponentModel, index: Int, lastQueryFinal: Bool = false) {
+        lastQuery = lastQueryFinal
         data = allData
         //self.
         self.index = index
@@ -68,7 +70,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         self.sizeToFit()
     }
     private func getQueryBuilder() {
-        print("QB!")
         let viewQB = QueryBuilderView()
         viewQB.delegate = self
         self.contentView.addSubview(viewQB)
@@ -157,10 +158,11 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                 }
             }
         default:
-            /*let specialActive = false
+            var specialActive = false
             columns.forEach { (type) in
-                if type == .dollar || type == .quantity{
-                    //specialActive = true
+                if type == .dollar //|| type == .quantity
+                {
+                    specialActive = true
                 }
             }
             if specialActive{
@@ -172,8 +174,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                 ]
             } else {
                 buttonsFinal = []
-            }*/
-            buttonsFinal = []
+            }
+            //buttonsFinal = []
         }
         if datePivot && !contrast{
             let datePivot = ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDatePivot")
@@ -182,7 +184,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         return buttonsFinal
     }
     @objc func showHide() {
-        print("Funca")
+        print("Func")
     }
     @objc func showDrillDown() {
         delegate?.sendDrillDown(idQuery: data.idQuery, obj: "", name: "")
@@ -202,8 +204,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
-        newView.loadConfig(data)
+        newView.loadConfig(data, lastQueryFinal: lastQuery)
         newView.delegate = self
+        loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         self.sizeToFit()
     }
     func sendText(_ text: String, _ safe: Bool) {

@@ -8,7 +8,7 @@
 import Foundation
 import WebKit
 protocol DashboardComponentCellDelegate: class{
-    func sendDrillDown(idQuery: String, obj: [String], name: [String], title: String)
+    func sendDrillDown(idQuery: String, obj: String, name: String, title: String)
     func updateComponent(text: String, first: Bool, position: Int)
 }
 class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler, ChatViewDelegate {
@@ -28,35 +28,43 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     static var identifier: String {
         return String(describing: self)
     }
-    func configCell(data: DashboardModel, pos: Int, loading: Bool = false) {
+    func configCell(data: DashboardModel, pos: Int, loading: Int = 0, secondLoading: Int = 0) {
         self.data = data
         self.position = pos
         styleComponent()
         loadTitle()
+        let secondType = ChatComponentType.withLabel(data.secondDisplayType)
         if data.splitView{
-            loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain )
+            let multiLoad = loading == 0 ? 0 : secondLoading == 2 && loading == 2 ? 2 : 1
+            loadComponent(view: vwWebview, nsType: .bottomPaddingtoTopHalf, connect: lblMain, loading: multiLoad, type: data.type )
             vwWebview.addBorder()
-            loadComponent(view: vwSecondWebview, connect: vwWebview)
+            loadComponent(view: vwSecondWebview, connect: vwWebview, loading: secondLoading, type: secondType)
             loadType(view: vwWebview,
                      text: data.text,
                      type: data.type,
                      webview: data.webview,
-                     list: data.items)
+                     list: data.items,
+                     loading: multiLoad
+            )
             loadType(view: vwSecondWebview,
                      text: data.subDashboardModel.text,
                      type: data.subDashboardModel.type,
                      webview: data.subDashboardModel.webview,
                      list: data.subDashboardModel.items,
-                     firstView: false)
-            if loading {
-                loaderWebview(view: vwWebview)
-                loaderWebview(view: vwSecondWebview)
+                     firstView: false,
+                     loading: secondLoading
+                     )
+            if loading == 1 {
+                loaderWebview(view: vwWebview, type2: data.type)
+            }
+            if secondLoading == 1 {
+                loaderWebview(view: vwSecondWebview, type2: secondType)
             }
         } else {
-            loadComponent(view: vwWebview, connect: lblMain)
-            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items)
-            if loading {
-                loaderWebview(view: vwWebview)
+            loadComponent(view: vwWebview, connect: lblMain, loading: loading, type: data.type)
+            loadType(view: vwWebview, text: data.text, type: data.type, webview: data.webview, list: data.items, loading: loading)
+            if loading == 1 {
+                loaderWebview(view: vwWebview, type2: data.type )
             }
         }
     }
@@ -67,10 +75,10 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         self.contentView.addSubview(vwComponent)
         vwComponent.edgeTo(self, safeArea: .nonePadding, height: 8, padding: 1)
     }
-    func loadComponent(view: UIView, nsType: DViewSafeArea = .bottomPaddingtoTop, connect: UIView) {
+    func loadComponent(view: UIView, nsType: DViewSafeArea = .bottomPaddingtoTop, connect: UIView, loading: Int = 0, type: ChatComponentType) {
         vwComponent.addSubview(view)
         view.edgeTo(vwComponent, safeArea: nsType, connect,  padding: 8)
-        loadDefault(view: view)
+        loadDefault(view: view, loading: loading, type: type)
     }
     func loadTitle() {
         lblMain.text = data.title
@@ -78,37 +86,37 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         lblMain.edgeTo(vwComponent, safeArea: .topPadding, height: 30, padding: 8)
         lblMain.textColor = chataDrawerAccentColor
     }
-    func loadDefault(view: UIView) {
-        let newLbl = UILabel()
-        newLbl.text = mainText
-        newLbl.numberOfLines = 0
-        newLbl.tag = 1
-        newLbl.textColor = chataDrawerTextColorPrimary
-        newLbl.textAlignment = .center
-        view.addSubview(newLbl)
-        print(view.subviews)
-        newLbl.edgeTo(view, safeArea: .none)
+    func loadDefault(view: UIView ,loading: Int = 0, type: ChatComponentType) {
+        if loading == 0 {
+            let newLbl = UILabel()
+            newLbl.text = mainText
+            newLbl.numberOfLines = 0
+            newLbl.tag = 1
+            newLbl.textColor = chataDrawerTextColorPrimary
+            newLbl.textAlignment = .center
+            view.addSubview(newLbl)
+            newLbl.edgeTo(view, safeArea: .none)
+        } else {
+            loaderWebview(true, view: view, type2: type)
+        }
     }
     func loadType(view: UIView,
                   text: String,
                   type: ChatComponentType,
                   webview: String = "",
                   list: [String] = [],
-                  firstView: Bool = true
+                  firstView: Bool = true,
+                  loading: Int = 0
     ) {
         switch type {
         case .Safetynet:
             print("fullSuggestion")
         case .Suggestion:
             loadSuggestion(view: view, list: list, firstView: firstView)
-        case .Webview:
-            loadWebView(view: view, webview: webview)
-        case .Table:
-            loadWebView(view: view, webview: webview)
         case .Introduction:
             loadIntro(view: view, text: text)
-        case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-            loadWebView(view: view, webview: webview)
+        case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .Table, .Webview, .StackArea:
+            loadWebView(view: view, webview: webview, loading: loading)
         case .QueryBuilder:
             print("no supported for dashboard")
         }
@@ -124,45 +132,50 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newView.edgeTo(view, safeArea: .paddingTop)
         self.sizeToFit()
     }
-    func loadWebView(view: UIView, webview: String){
+    func loadWebView(view: UIView, webview: String, loading: Int = 0){
         //self.wbMain = WKWebView(frame: self.bounds)
         //wbMain.navigationDelegate = self
-        let contentController = WKUserContentController()
-        let userScript = WKUserScript(
-            source: "mobileHeader()",
-            injectionTime: WKUserScriptInjectionTime.atDocumentEnd,
-            forMainFrameOnly: true
-        )
-        contentController.addUserScript(userScript)
-        contentController.add(self, name: "drillDown")
-        let config = WKWebViewConfiguration()
-        config.userContentController = contentController
-        wbMain = WKWebView(frame: self.bounds, configuration: config)
-        
-        wbMain.navigationDelegate = self
-        wbMain.scrollView.bounces = false
-        wbMain.isOpaque = false
-        wbMain.isUserInteractionEnabled = true
-        wbMain.scrollView.isScrollEnabled = true
-        view.addSubview(wbMain)
-        self.wbMain.edgeTo(view, safeArea: .none)
-        loaderWebview(view: view)
-        wbMain.loadHTMLString(webview, baseURL: nil)
+        if loading == 2 {
+            let contentController = WKUserContentController()
+            let userScript = WKUserScript(
+                source: "mobileHeader()",
+                injectionTime: WKUserScriptInjectionTime.atDocumentEnd,
+                forMainFrameOnly: true
+            )
+            contentController.addUserScript(userScript)
+            contentController.add(self, name: "drillDown")
+            let config = WKWebViewConfiguration()
+            config.userContentController = contentController
+            wbMain = WKWebView(frame: self.bounds, configuration: config)
+            
+            wbMain.navigationDelegate = self
+            wbMain.scrollView.bounces = false
+            wbMain.isOpaque = false
+            wbMain.isUserInteractionEnabled = true
+            wbMain.scrollView.isScrollEnabled = true
+            view.addSubview(wbMain)
+            self.wbMain.edgeTo(view, safeArea: .none)
+            loaderWebview(view: view, type2: .Webview)
+            wbMain.loadHTMLString(webview, baseURL: nil)
+        }
     }
     func loadIntro(view: UIView, text: String) {
         if text != "" {
+            loadDefault(view: view, loading: 0, type: .Introduction)
             view.changeTextSubView(tag: 1, newText: text)
             if DataConfig.autoQLConfigObj.enableDrilldowns{
-                let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
-                vwWebview.addGestureRecognizer(tapgesture)
+                if text != "No query was supplied for this tile." && text != "Invalid Request Parameters"{
+                    let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
+                    vwWebview.addGestureRecognizer(tapgesture)
+                }
             }
         }
-        loaderWebview(false, view: view)
+        loaderWebview(false, view: view, type2: .Introduction)
     }
     @objc func showDrillDown() {
-        delegate?.sendDrillDown(idQuery: data.idQuery, obj: [], name: [], title: data.query)
+        delegate?.sendDrillDown(idQuery: data.idQuery, obj: "", name: "", title: data.query)
     }
-    func loaderWebview(_ load: Bool = true, view: UIView){
+    func loaderWebview(_ load: Bool = true, view: UIView, type2: ChatComponentType){
         var isLoading = false
         view.subviews.forEach { (view) in
             if view.tag == 5{
@@ -187,16 +200,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             }
         } else{
             view.removeView(tag: 5)
-            if isLoading {
+            if isLoading && type2 != .Introduction{
                 view.removeView(tag: 1)
             }
         }
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if data.columnsInfo.count  <= 3 {
+        
+        //if data.columnsInfo.count  <= 3 {
             if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns {
-                print(message.body)
-                var names: [String] = []
+                /*var names: [String] = []
                 var columns: [String] = []
                 let name = message.body as? String ?? ""
                 let column = data.columnsInfo[0].originalName
@@ -209,20 +222,35 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                     columns.append(column2)
                 } else {
                     names.append(name)
+                }*/
+                var msg = message.body as? String ?? ""
+                var secondQuery: Bool = false
+                //var column: Int = data.stringColumnIndex
+                if msg.contains("SecondQuery") {
+                    msg = msg.replace(target: "SecondQuery" , withString: "")
+                    //column = data.stringColumnIndexSecond
+                    secondQuery = true
                 }
-                delegate?.sendDrillDown(idQuery: data.idQuery, obj: columns, name: names, title: data.query)
+                let columns = secondQuery ? data.subDashboardModel.columnsInfo : data.columnsInfo
+                if columns.count  <= 3{
+                    let name = data.columnsInfo.count > 0 ? data.columnsInfo[0].originalName : ""
+                    let name2 = data.columnsInfo.count > 1 ? data.columnsInfo[1].originalName : ""
+                    let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
+                    delegate?.sendDrillDown(idQuery: data.idQuery, obj: msg, name: nameFinal, title: data.query)
+                }
+                //delegate?.sendDrillDown(idQuery: data.idQuery, obj: columns, name: names, title: data.query)
                 /*let name = data.columnsInfo[0].originalName
                 let name2 = data.columnsInfo[1].originalName
                 let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
                 delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)*/
             }
-        }
+        //}
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loaderWebview(false, view: webView.superview ?? UIView())
+        loaderWebview(false, view: webView.superview ?? UIView(), type2: .Webview)
         //progress(off: true, viewT: wbChart!)
     }
     func sendText(_ text: String, _ safe: Bool) {

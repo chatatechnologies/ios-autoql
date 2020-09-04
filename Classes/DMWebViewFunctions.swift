@@ -107,10 +107,24 @@ func getHTMLStyle() -> String {
     """
     return style
 }
-func getHTMLFooter(rows: [[String]], columns: [String], types: [ChatTableColumnType], drills: [String], type: String, split: Bool = false) -> String {
+func getHTMLFooter(rows: [[String]],
+                   columns: [String],
+                   types: [ChatTableColumnType],
+                   drills: [String],
+                   type: String,
+                   split: Bool = false,
+                   mainColumn: Int = 0,
+                   second: String = "") -> String {
     var scriptJS = ""
     if rows.count > 0 && columns.count > 0 {
-        scriptJS += getChartFooter(rows: rows, columns: columns, types: types, drills: drills, mainType: type)
+        scriptJS += getChartFooter(rows: rows,
+                                   columns: columns,
+                                   types: types,
+                                   drills: drills,
+                                   mainType: type,
+                                   mainColum: mainColumn,
+                                   second: second
+        )
         scriptJS += getFooterScript()
     }
     return """
@@ -149,7 +163,9 @@ func getChartFooter(rows: [[String]],
                     columns: [String],
                     types: [ChatTableColumnType],
                     drills: [String],
-                    mainType: String = "idTableBasic") -> String {
+                    mainType: String = "idTableBasic",
+                    mainColum: Int = 0,
+                    second: String = "") -> String {
     var dataSpecial: [[Any]] = []
     var dataSpecialActive = false
     var categoriesX: [String] = []
@@ -171,27 +187,36 @@ func getChartFooter(rows: [[String]],
         dataChartLine = []
         //var positionsCharts: [Int] = []
         var positionsCharts: Int = -1
+        var positionsChartsSecond: Int = -1
         for (index, type) in types.enumerated() {
-            if type == .quantity || type == .dollar {
-                //print("found")
+            if type == .quantity || type == .dollar{
                 positionsCharts = index
+            }
+            if  type == .date {
+                positionsChartsSecond = index
+            }
+            if positionsCharts != -1 && positionsChartsSecond != -1{
                 break
             }
+            
         }
         dataSpecial = rows.map { (row) -> [Any] in
-            let name = validateArray(row, 1) as? String ?? ""
-            /*let doubleData = positionsCharts.map { (num) -> Double in
-                let mount = Double(validateArray(row, num) as? String ?? "") ?? 0.0
-                return mount
-            }*/
+            var name = validateArray(row, positionsChartsSecond) as? String ?? ""
+            name = name.toDate()
+            if mainColum != -1 {
+                name = validateArray(row, mainColum) as? String ?? ""
+                if types[mainColum] == .date {
+                    name = name.toDate()
+                }
+            }
             if catXFormat.firstIndex(of: name) == nil {
                 catXFormat.append(name)
             }
-            let mount = validateArray(row, positionsCharts) as? String ?? ""
-            return [name, mount]
+            let mount = validateArray(row, positionsCharts) as? String ?? "0"
+            let mountFinal = Double(mount) ?? 0.0
+            return [name, mountFinal]
         }
         dataSpecialActive = true
-        print(dataSpecial)
     }
     let triType = columns.count  == 3
     let dataChartBi = triType ? [] : rows.map { (row) -> [Any] in
@@ -200,20 +225,24 @@ func getChartFooter(rows: [[String]],
         return [name, mount]
     }
     let catX = rows.map { (row) -> String in
-        let name = validateArray(row, 0) as? String ?? ""
+        var name = ""
+        name = validateArray(row, 0) as? String ?? ""
+        if dataSpecialActive {
+            name = validateArray(row, mainColum) as? String ?? ""
+        }
         return name
     }
     let datachartTri = triType ? rows.map { (column) -> [Any] in
         drillTableY.append(column[1])
-        let data1 = column[0]
-        let data2 = column[1].toDate()
+        let data1 = column[1]
+        let data2 = column[0].toDate()
         let data3 = Double(column[2]) ?? 0.0
         if categoriesX.firstIndex(of: data1) == nil {
             categoriesX.append(data1)
         }
         if categoriesY.firstIndex(of: data2) == nil {
             categoriesY.append(data2)
-            drillY.append(column[1])
+            drillY.append(column[0])
             stacked.append([])
         }
         let locX = categoriesX.firstIndex(of: data1) ?? 0
@@ -248,21 +277,26 @@ func getChartFooter(rows: [[String]],
     let catFinaY: [Any] = triType ? categoriesY : dataChartLine
     let stringChartLine = arrayDictionaryToJson(json: dataChartLineTri)
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
+    let positionSpecial = mainColum != -1 ? mainColum : 0
+    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
+    let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
+        (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
     return """
         var type = '\(mainType)';
-        var xAxis = '\(validateArray(columns, 0) as? String ?? "")';
-        var yAxis = '\(validateArray(columns, 1) as? String ?? "")';
+        var xAxis = '\(xAxis)';
+        var yAxis = '\(yAxis)';
         var dataChartBi = \(dataSpecialActive ? dataSpecial : dataChartBi);
         var datachartTri = \(datachartTri);
         var dataChartLine = \(dataChartLineFinal);
-        var categoriesX = \(triType ? categoriesX : catXFormat);
-        var categoriesY = \(catFinaY);
+        var categoriesX = \(triType ? categoriesX /*catFinaY*/ : catXFormat);
+        var categoriesY = \(catFinaY /*categoriesX*/);
         var drillX = \(catX);
         var drillTableY = \(drillTableY);
         var drillSpecial = \(drills);
         var drillY = \(drillY);
         var colorAxis = "\(chataDrawerWebViewText)";
         var colorFill = "\(chataDrawerWebViewBackground)";
+        var second = "\(second)"
     var color1 = "\(DataConfig.themeConfigObj.chartColors[0])";
     """
 }

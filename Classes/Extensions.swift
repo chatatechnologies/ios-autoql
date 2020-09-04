@@ -9,7 +9,7 @@
 import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, fullStatePaddingTop,
+    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, fullStatePaddingTop,
     topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, centerSize, bottomRight
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
@@ -147,11 +147,12 @@ extension String {
         if format == "yyyy-MM"{
             let month = separete.count > 0 ? separete[0] : ""
             let year = separete.count > 1 ? separete[1] : ""
-            return "\(year)-\(month.monthStr())"
+            let (finalMonth, valid) = month.monthStr()
+            return valid ? "\(year)-\(finalMonth)" : self
         }
-        return ""
+        return self
     }
-    func monthStr() -> String{
+    func monthStr() -> (String, Bool){
         let finalTxt = String(self.prefix(3)).lowercased()
         let months = [
             "",
@@ -169,7 +170,11 @@ extension String {
             "dec"
         ]
         let finalNumber = months.firstIndex(of: finalTxt) ?? 0
-        return finalNumber > 9 ? "\(finalNumber)" : "0\(finalNumber)"
+        if finalNumber == 0 {
+            return (self, false)
+        }
+        let finalTxtSend = finalNumber > 9 ? "\(finalNumber)" : "0\(finalNumber)"
+        return (finalTxtSend, true)
     }
     func toDate2(format: String = "yyyy-MM") -> String {
         let separete = self.components(separatedBy: "-")
@@ -269,10 +274,23 @@ extension UIButton {
     }
 }
 extension UITextField {
-    func borderRadius(){
+    func borderRadius() {
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.cornerRadius = 20.0
+    }
+    func configStyle() {
+        keyboardAppearance = dark ? .dark : .light
+        addDoneButtonOnKeyboard()
+        textColor = chataDrawerTextColorPrimary
+    }
+    func loadInputPlace(_ txt: String) {
+        attributedPlaceholder = NSAttributedString(string: txt,
+        attributes: [
+             NSAttributedString.Key.foregroundColor: chataDrawerMessengerTextColorPrimary,
+             NSAttributedString.Key.font: generalFont
+         ]
+        )
     }
     func setLeftPaddingPoints(_ amount:CGFloat){
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
@@ -286,9 +304,9 @@ extension UITextField {
     }
 }
 extension UIView {
-    func cardView(border: Bool = true) {
+    func cardView(border: Bool = true, borderRadius: CGFloat = 10) {
         self.layer.borderWidth = 1
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = borderRadius
         self.layer.borderColor = border ? chataDrawerBorderColor.cgColor : UIColor.clear.cgColor
         /*self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -514,6 +532,11 @@ extension UIView {
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
+        case .fullStatePaddingAll:
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
         case .fullStatePaddingTop:
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -564,7 +587,7 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         case .topHeight:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 0).isActive = true
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
@@ -646,7 +669,7 @@ extension UIView {
             widthAnchor.constraint(equalToConstant: height).isActive = true
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         case .dropDown:
-            topAnchor.constraint(equalTo: view.bottomAnchor, constant: 1).isActive = true
+            topAnchor.constraint(equalTo: view.bottomAnchor, constant: padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -padding).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
@@ -754,11 +777,11 @@ extension UIImageView {
     }
 }
 extension UIStackView{
-    func getHorizontal(){
+    func getHorizontal(dist: Distribution = .fillEqually, spacing: CGFloat = 8){
         self.axis = NSLayoutConstraint.Axis.horizontal
-        self.distribution  = UIStackView.Distribution.fillEqually
+        self.distribution  = dist
         self.alignment = UIStackView.Alignment.center
-        self.spacing = 8
+        self.spacing = spacing
     }
 }
 extension UILabel {

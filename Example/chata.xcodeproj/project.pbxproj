@@ -502,9 +502,13 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 20;
 =======
 				CURRENT_PROJECT_VERSION = 24;
+>>>>>>> develop
+=======
+				CURRENT_PROJECT_VERSION = 32;
 >>>>>>> develop
 				DEVELOPMENT_TEAM = CZWR4T2KVW;
 				INFOPLIST_FILE = chata/Info.plist;
@@ -526,9 +530,13 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 20;
 =======
 				CURRENT_PROJECT_VERSION = 24;
+>>>>>>> develop
+=======
+				CURRENT_PROJECT_VERSION = 32;
 >>>>>>> develop
 				DEVELOPMENT_TEAM = CZWR4T2KVW;
 				INFOPLIST_FILE = chata/Info.plist;

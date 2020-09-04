@@ -6,16 +6,17 @@
 //
 
 import Foundation
-class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
+class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     let lblMain = UILabel()
     let tbMain = UITableView()
     let vwSecond = UIView()
     let tbSecond = UITableView()
-    let lblInfo = UILabel()
+    let lblInfo = UITextView()
     var dataQB: [QueryBuilderModel] = []
     var dataSelection: [String] = []
     weak var delegate: ChatViewDelegate?
     var selectSection = -1
+    var titleFooter = "Use 💡Explore Queries to further explore the possibilities"
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -33,10 +34,11 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
         tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain)
         addSubview(lblInfo)
         lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
-        lblInfo.text = "Use Explore Queries to further explore the possibilities"
+        lblInfo.text = titleFooter
         lblInfo.font = generalFont
+        lblInfo.delegate = self
         lblInfo.textColor = chataDrawerTextColorPrimary
-        lblInfo.numberOfLines = 0
+        refererToQueryTips()
         addSubview(vwSecond)
         vwSecond.edgeTo(tbMain, safeArea: .none)
         vwSecond.isHidden = true
@@ -140,6 +142,29 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
         }
         return ""
+    }
+    func refererToQueryTips() {
+        let msgAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor : chataDrawerAccentColor,
+            .underlineStyle: NSUnderlineStyle.double.rawValue,
+            .font: generalFont
+        ]
+        let range = NSRange(location: 4, length: 17)
+        let mainAttr = NSMutableAttributedString(string: "\(titleFooter)")
+        mainAttr.addAttribute(.link, value: "\(0)", range: range)
+        mainAttr.addAttributes(msgAttributes, range: range)
+        let range2 = NSRange(location: 0, length: titleFooter.count)
+        let attributedString:[NSAttributedString.Key: Any] = [
+            .font: generalFont,
+            .foregroundColor : chataDrawerTextColorPrimary,
+        ]
+        mainAttr.addAttributes(attributedString, range: range2)
+        lblInfo.attributedText = mainAttr
+    }
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let tips = QTMainView(frame: self.frame)
+        tips.show()
+        return true
     }
 }
 struct QueryBuilderModel {

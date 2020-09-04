@@ -13,7 +13,7 @@ protocol TextboxViewDelegate: class {
 }
 class TextboxView: UIView {
     var isMic = true
-    let textbox = UITextField()
+    let tfMain = UITextField()
     let btnSend = UIButton()
     var image = UIImage()
     let autoCompleteTable = UITableView()
@@ -35,24 +35,17 @@ class TextboxView: UIView {
         btnSend.edgeTo(self, safeArea: .rightCenterY, height: size, padding:padding)
         btnSend.circle(size)
         changeButton()
-        textbox.borderRadius()
-        textbox.keyboardAppearance = dark ? .dark : .light
-        textbox.addDoneButtonOnKeyboard()
-        textbox.attributedPlaceholder = NSAttributedString(string: DataConfig.inputPlaceholder,
-                                                           attributes: [
-                                                                NSAttributedString.Key.foregroundColor: chataDrawerMessengerTextColorPrimary,
-                                                                NSAttributedString.Key.font: generalFont
-                                                            ]
-                                                           )
-        textbox.textColor = chataDrawerTextColorPrimary
-        textbox.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
-        textbox.setLeftPaddingPoints(10)
-        self.addSubview(textbox)
-        textbox.edgeTo(self, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
+        tfMain.borderRadius()
+        tfMain.configStyle()
+        tfMain.loadInputPlace(DataConfig.inputPlaceholder)
+        tfMain.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
+        tfMain.setLeftPaddingPoints(10)
+        self.addSubview(tfMain)
+        tfMain.edgeTo(self, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
     }
     @objc func actionTyping() {
         changeButton()
-        let query = self.textbox.text ?? ""
+        let query = self.tfMain.text ?? ""
         if DataConfig.autoQLConfigObj.enableAutocomplete {
             ChataServices().getQueries(query: query) { (queries) in
                 self.delegate?.updateAutocomplete(queries, query.isEmpty)
@@ -62,7 +55,7 @@ class TextboxView: UIView {
         // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionSend() {
-        let query = self.textbox.text ?? ""
+        let query = self.tfMain.text ?? ""
         if isMic {
             stopRecording()
             btnSend.backgroundColor = chataDrawerAccentColor
@@ -75,13 +68,13 @@ class TextboxView: UIView {
     @objc func actionMicrophoneStart() {
         isTypingMic = true
         if isMic {
-            loadRecord(textbox: textbox)
+            loadRecord(textbox: tfMain)
             btnSend.backgroundColor = .red
         }
         // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     func changeButton() {
-        let emptyInput = self.textbox.text?.isEmpty ?? true
+        let emptyInput = self.tfMain.text?.isEmpty ?? true
         isMic = emptyInput && DataConfig.enableVoiceRecord
         if !DataConfig.enableVoiceRecord{
             btnSend.isEnabled = !emptyInput

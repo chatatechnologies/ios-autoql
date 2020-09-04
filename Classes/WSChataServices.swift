@@ -11,6 +11,7 @@ typealias CompletionChatComponentModel = (_ response: ChatComponentModel) -> Voi
 typealias CompletionChatQueryBuilderModel = (_ response: [QueryBuilderModel]) -> Void
 typealias CompletionSecondData = (_ response: String) -> Void
 typealias CompletionDashboards = (_ response: [DashboardList]) -> Void
+typealias CompletionQueryTips = (_ response: QTModel) -> Void
 typealias CompletionSuggestions = (_ response: [String]) -> Void
 public typealias CompletionChatSuccess = (_ response: Bool) -> Void
 typealias CompletionChatSafetynet = (_ response: [ChatFullSuggestion]) -> Void
@@ -193,11 +194,11 @@ class ChataServices {
             let values = obj.split(separator: "_")
             let keys = name.split(separator: "º")
             if keys.count > 1 && values.count > 1{
-                var test = String(values[1])
+                var test = String(values[0])
                 test = test.toStrDate()
                 group_bys = [[
                         "name": String(keys[0]),
-                        "value": String(values[0])
+                        "value": String(values[1])
                     ],
                     [
                         "name": String(keys[1]),
@@ -206,11 +207,13 @@ class ChataServices {
                 ]
             }
         } else {
+            var dateFinal = String(obj)
+            dateFinal = name.contains("yyyy") ?  dateFinal.toStrDate() : dateFinal
             if name != ""{
                 group_bys = [
                     [
                         "name" : name,
-                        "value" : obj
+                        "value" : dateFinal
                     ]
                 ]
             }
@@ -256,7 +259,9 @@ class ChataServices {
                           items: [String] = [],
                           drilldown: Bool = false,
                           position: Int = 0,
-                          secondQuery: String = "") -> ChatComponentModel {
+                          secondQuery: String = "",
+                          mainColumn: Int = -1,
+                          second: String = "") -> ChatComponentModel {
         let data = response["data"] as? [String: Any] ?? [:]
         var dataModel = ChatComponentModel(webView: "error", options: items, position: position)
         if items.count > 0{
@@ -278,7 +283,12 @@ class ChataServices {
             if rows.count == 1{
                 if rows[0].count == 1{
                     displayType = .Introduction
-                    textFinal = "\(rows[0][0] )".toMoney()
+                    if columnsFinal[0].type == .dollar {
+                        textFinal = "\(rows[0][0] )".toMoney()
+                    }
+                    else {
+                        textFinal = "\(rows[0][0] )"
+                    }
                     user = false
                 }
             }
@@ -320,13 +330,19 @@ class ChataServices {
                                             datePivot: true)
                 }
                 if supportTri {
-                    var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal)
+                    var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])
                     drills = drill
                     let dataPivotColumnsTemp = dataPivot[0]
+                    var arrFinal: [String] = []
+                    dataPivot.forEach { (arr) in
+                        let header = arr[0]
+                        arrFinal.append(header)
+                    }
                     dataPivot.remove(at: 0)
                     dataPivotStr = tableString(
                         dataTable: dataPivot,
                         dataColumn: dataPivotColumnsTemp,
+                        //dataColumn: arrFinal,
                         idTable: "idTableDataPivot",
                         columns: columnsFinal,
                         datePivot: true)
@@ -337,14 +353,22 @@ class ChataServices {
                                         columns: columnsFinal,
                                         datePivot: false)
                 //let tableType = splitType == "table"
-                let typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
+                var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
+                typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
                 webView = """
                     \(getHTMLHeader(triType: columnsF.count == 3))
                     \(datePivotStr)
                     \(dataPivotStr)
                     \(tableBasicStr)
                     \(split ? secondQuery : "")
-                \(getHTMLFooter(rows: rowsFinal, columns: columnsF, types: columsType, drills: drills, type: typeFinal))
+                \(getHTMLFooter(rows: rowsFinal,
+                                columns: columnsF,
+                                types: columsType,
+                                drills: drills,
+                                type: typeFinal,
+                                mainColumn: mainColumn,
+                                second: second
+                ))
                 """
             } else {
                 webView = "text"
@@ -418,7 +442,7 @@ class ChataServices {
             var finalRowClean: [String] = []
             row.enumerated().forEach { (index, element) in
                 if columnsFinal[index].type == .dateString {
-                    let strDate = element as? String ?? ""
+                    let strDate = "\(element)"
                     finalRow.append(strDate.toDate2(format: columnsFinal[index].formatDate))
                     finalRowClean.append(strDate)
                 } else {
@@ -456,16 +480,18 @@ struct SubDashboardModel {
     var text: String
     var type: ChatComponentType
     var idQuery: String
-    var loading: Bool
+    var loading: Int
     var items: [String]
+    var columnsInfo: [ChatTableColumn]
     init(
         displayType: String = "",
         webview: String = "",
         text: String = "",
         type: ChatComponentType = .Introduction,
         idQuery: String = "",
-        loading: Bool = false,
-        items: [String] = []
+        loading: Int = 0,
+        items: [String] = [],
+        columnsInfo: [ChatTableColumn] = []
     ) {
         self.displayType = displayType
         self.webview = webview
@@ -474,6 +500,7 @@ struct SubDashboardModel {
         self.idQuery = idQuery
         self.loading = loading
         self.items = items
+        self.columnsInfo = columnsInfo
     }
 }
 struct DashboardModel {
@@ -500,9 +527,12 @@ struct DashboardModel {
     var idQuery: String
     var columnsInfo: [ChatTableColumn]
     var secondQuery: String
-    var loading: Bool
+    var loading: Int
+    var secondLoading: Int
     var items: [String]
-    var subDashboardModel : SubDashboardModel
+    var subDashboardModel: SubDashboardModel
+    var stringColumnIndex: Int
+    var stringColumnIndexSecond: Int
     init(
         minW: Int = 0,
         staticVar: Int = 0,
@@ -527,9 +557,12 @@ struct DashboardModel {
         idQuery: String = "",
         columnsInfo: [ChatTableColumn] = [],
         secondQuery: String = "",
-        loading: Bool = false,
+        loading: Int = 0,
+        secondLoading: Int = 0,
         items: [String] = [],
-        subDashboardModel: SubDashboardModel = SubDashboardModel()
+        subDashboardModel: SubDashboardModel = SubDashboardModel(),
+        stringColumnIndex: Int = 0,
+        stringColumnIndexSecond: Int = 0
     ) {
         self.minW = minW
         self.staticVar = staticVar
@@ -555,8 +588,11 @@ struct DashboardModel {
         self.columnsInfo = columnsInfo
         self.secondQuery = secondQuery
         self.loading = loading
+        self.secondLoading = secondLoading
         self.items = items
         self.subDashboardModel = subDashboardModel
+        self.stringColumnIndex = stringColumnIndex
+        self.stringColumnIndexSecond = stringColumnIndexSecond
     }
 }
 struct DataPivotRow{

@@ -390,7 +390,7 @@ func getTriTypeChart() -> String {
         
         function stackedType(invert){
             finalSize(invert);
-            var rotation = invert ? 10 : 40
+            var rotation = invert ? 0 : -60
             chart.destroy();
                     chart = Highcharts.chart('container', {
                         chart: {
@@ -550,7 +550,7 @@ func getConfigScript() -> String {
         }
         function drillDown(position){
             try {
-                webkit.messageHandlers.drillDown.postMessage(position);
+                webkit.messageHandlers.drillDown.postMessage(position+""+second);
             } catch(err) {
                 console.log(position);
             };
@@ -569,7 +569,7 @@ func getConfigScript() -> String {
         function finalSize(invert){
             var defaultWidth = "100%";
             var defaultHeight = "90%";
-            var dynamicWidthSize = ""+categoriesX.length * 10+"%";
+            var dynamicWidthSize = ""+categoriesX.length * 100+"%";
             var widthSize = categoriesX.length <= 10 ? defaultWidth : dynamicWidthSize;
             var dynamicHeightSize = ""+categoriesY.length * 10+"%";
             var heightSize = categoriesY.length <= 10 ? defaultHeight : dynamicHeightSize;

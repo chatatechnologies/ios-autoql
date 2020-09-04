@@ -192,15 +192,15 @@ func getDataPivot(rows: [[String]], columnsT: [ChatTableColumnType]) -> DataPivo
                               one365Pivot: one365Pivot)
     return data
 }
-func getDataPivotColumn(rows: [[String]]) -> ([[String]], [String]) {
+func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -> ([[String]], [String]) {
     var categoriesX: [String] = []
     var categoriesY: [String] = []
     var totalSum: [DataPivotRow] = []
     var totalDate: [[Any]] = []
     for row in rows
     {
-        let data1 = row[0]
-        let data2 = row[1]
+        let data1 = row[1]
+        let data2 = row[0]
         let data3 = Double(row[2]) ?? 0
         if categoriesX.firstIndex(of: data1) == nil {
             categoriesX.append(data1)
@@ -219,14 +219,19 @@ func getDataPivotColumn(rows: [[String]]) -> ([[String]], [String]) {
     // hacer algoritmo para hacer pivots
     // INvertir CatY
     var final: [[String]] = []
-    for (indexX, cat) in categoriesY.enumerated(){
+    for (indexY, cat) in categoriesY.enumerated(){
         var finalB = [cat]
-        for (indexY, _) in categoriesY.enumerated() {
+        for (indexX, _) in categoriesX.enumerated() {
             let position = totalSum.firstIndex(where: {
                 $0.posX == indexX && $0.posY == indexY
             })
-            let value = position == nil ? "$0" : "\(totalSum[position!].value)".toMoney()
-            finalB.append(value)
+            if position != nil {
+                let valueFinal = type == .dollar ? "\(totalSum[position!].value)".toMoney() : "\(totalSum[position!].value)"
+                finalB.append(valueFinal)
+            } else {
+                let valueDefault = type == .dollar ? "$0" : "0"
+                finalB.append(valueDefault)
+            }
         }
         final.append(finalB)
         //sumas.append(test)
