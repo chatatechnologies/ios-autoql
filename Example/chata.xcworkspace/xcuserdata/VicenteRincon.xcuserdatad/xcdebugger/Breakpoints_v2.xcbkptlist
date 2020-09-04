@@ -2062,24 +2062,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2B6F7822-DE13-4461-B5BC-E83AB9C06FC9"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2462,8 +2446,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2526,8 +2510,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -3602,22 +3586,6 @@
             endingLineNumber = "275"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "20290D58-23A8-4B61-89D7-A1E82B2A12AB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5388,8 +5356,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5404,40 +5372,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C313741B-A717-4BE1-A1B8-DD4BE4805C63"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8695AF06-C194-4D50-8EF7-5FEA63AC7C6F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5733,54 +5669,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7D20B027-0F52-4BB0-9021-A887A522A449"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "7D20B027-0F52-4BB0-9021-A887A522A449 - 50f6c9e66b573a2c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "chata.getChartFooter(rows: Swift.Array&lt;Swift.Array&lt;Swift.String&gt;&gt;, columns: Swift.Array&lt;Swift.String&gt;, types: Swift.Array&lt;chata.ChatTableColumnType&gt;, drills: Swift.Array&lt;Swift.String&gt;, mainType: Swift.String, mainColum: Swift.Int, second: Swift.String) -&gt; Swift.String"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/DMWebViewFunctions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "273"
-                  endingLineNumber = "273"
-                  offsetFromSymbolStart = "6002">
-               </Location>
-               <Location
-                  uuid = "7D20B027-0F52-4BB0-9021-A887A522A449 - 5f97a5f515b5bd2e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #9 (Swift.Array&lt;Swift.String&gt;) -&gt; Swift.String in chata.getChartFooter(rows: Swift.Array&lt;Swift.Array&lt;Swift.String&gt;&gt;, columns: Swift.Array&lt;Swift.String&gt;, types: Swift.Array&lt;chata.ChatTableColumnType&gt;, drills: Swift.Array&lt;Swift.String&gt;, mainType: Swift.String, mainColum: Swift.Int, second: Swift.String) -&gt; Swift.String"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/DMWebViewFunctions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "274"
-                  endingLineNumber = "274"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B1B152B9-B9EC-46E3-8799-AD9D0DFE4F7A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -5788,8 +5676,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5804,8 +5692,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5820,8 +5708,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
             <Locations>
@@ -5868,8 +5756,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6300,8 +6188,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6348,88 +6236,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "52DD74B4-4665-4423-B8A3-0F71E5AEFE6D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "52DD74B4-4665-4423-B8A3-0F71E5AEFE6D - 20e5fbb827dd2a66"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "chata.getChartFooter(rows: Swift.Array&lt;Swift.Array&lt;Swift.String&gt;&gt;, columns: Swift.Array&lt;Swift.String&gt;, types: Swift.Array&lt;chata.ChatTableColumnType&gt;, drills: Swift.Array&lt;Swift.String&gt;, mainType: Swift.String, mainColum: Swift.Int) -&gt; Swift.String"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/DMWebViewFunctions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199"
-                  offsetFromSymbolStart = "2126">
-               </Location>
-               <Location
-                  uuid = "52DD74B4-4665-4423-B8A3-0F71E5AEFE6D - 85c15d4b8e98c798"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Swift.Array&lt;Swift.String&gt;) -&gt; Swift.Array&lt;Any&gt; in chata.getChartFooter(rows: Swift.Array&lt;Swift.Array&lt;Swift.String&gt;&gt;, columns: Swift.Array&lt;Swift.String&gt;, types: Swift.Array&lt;chata.ChatTableColumnType&gt;, drills: Swift.Array&lt;Swift.String&gt;, mainType: Swift.String, mainColum: Swift.Int) -&gt; Swift.String"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/DMWebViewFunctions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "200"
-                  endingLineNumber = "200"
-                  offsetFromSymbolStart = "259">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B89D6013-3A26-40FC-9D46-2A448DD5F309"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F0CB70C1-C4B3-4CA9-8DA7-8A8A6E94308B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMWebViewFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6444,8 +6252,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6748,8 +6556,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6764,8 +6572,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -7040,6 +6848,38 @@
             endingLineNumber = "233"
             landmarkName = "updateAutocomplete(_:_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "39F9919A-1505-4C97-8D9F-2B4E1E90B898"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMWebViewFunctions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
+            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "641D2D32-C36F-48F9-A52D-4E640A6D5BA4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMWebViewFunctions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
+            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

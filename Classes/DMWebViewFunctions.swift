@@ -173,6 +173,7 @@ func getChartFooter(rows: [[String]],
     var drillTableY: [String] = []
     var drillY: [String] = []
     var stacked: [[Double]] = []
+    var positionDD = 0
     var catXFormat = rows.map {
         (row) -> String in
         let name = (validateArray(row, 0) as? String ?? "").toDate()
@@ -194,13 +195,14 @@ func getChartFooter(rows: [[String]],
             }
             if  type == .date {
                 positionsChartsSecond = index
+                positionDD = index
             }
             if positionsCharts != -1 && positionsChartsSecond != -1{
                 break
             }
             
         }
-        dataSpecial = rows.map { (row) -> [Any] in
+        rows.enumerated().forEach { (index, row) in
             var name = validateArray(row, positionsChartsSecond) as? String ?? ""
             name = name.toDate()
             if mainColum != -1 {
@@ -209,12 +211,18 @@ func getChartFooter(rows: [[String]],
                     name = name.toDate()
                 }
             }
-            if catXFormat.firstIndex(of: name) == nil {
-                catXFormat.append(name)
-            }
             let mount = validateArray(row, positionsCharts) as? String ?? "0"
             let mountFinal = Double(mount) ?? 0.0
-            return [name, mountFinal]
+            if catXFormat.firstIndex(of: name) == nil {
+                catXFormat.append(name)
+                dataSpecial.append([name, mountFinal])
+            } else {
+                var pos = catXFormat.firstIndex(of: name) ?? 0
+                pos = Int(pos)
+                let mountBase = dataSpecial[pos][1] as? Double ?? 0.0
+                let mountFinalColumn = mountBase + mountFinal
+                dataSpecial[pos][1] = mountFinalColumn
+            }
         }
         dataSpecialActive = true
     }
@@ -278,7 +286,7 @@ func getChartFooter(rows: [[String]],
     let stringChartLine = arrayDictionaryToJson(json: dataChartLineTri)
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
     let positionSpecial = mainColum != -1 ? mainColum : 0
-    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
+    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : dataSpecialActive ? (validateArray(columns, positionDD) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
     let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
         (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
     return """
