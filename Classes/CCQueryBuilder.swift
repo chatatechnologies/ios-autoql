@@ -31,10 +31,10 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblMain.textColor = chataDrawerTextColorPrimary
         lblMain.font = generalFont
         addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain)
+        tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain, padding: 16)
         tbMain.backgroundColor = chataDrawerBackgroundColor
         addSubview(lblInfo)
-        lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
+        lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain, padding: 16)
         lblInfo.clipsToBounds = true
         lblInfo.text = titleFooter
         lblInfo.font = generalFont
@@ -104,11 +104,14 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         let viewHeader = UIView()
         viewHeader.backgroundColor = chataDrawerBackgroundColor
         let lbl = UILabel()
+        lbl.textColor = chataDrawerTextColorPrimary
         if selectSection != -1 {
             lbl.text = dataQB[selectSection].topic
         }
         viewHeader.addSubview(lbl)
-        lbl.edgeTo(viewHeader, safeArea: .nonePadding, padding: 0)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(returnSelection))
+        viewHeader.addGestureRecognizer(gesture)
+        lbl.edgeTo(viewHeader, safeArea: .nonePadding, padding: 4)
         return viewHeader
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

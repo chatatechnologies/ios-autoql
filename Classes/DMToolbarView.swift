@@ -38,7 +38,7 @@ class ToolbarView: UIView {
         cancel.edgeTo(self, safeArea: .leftBottom, height: 40.0, self)
         cancel.padding(7)
         cancel.addTarget(self, action: #selector(actionClose), for: .touchUpInside)
-        let image2 = UIImage(named: "icDelete.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        let image2 = UIImage(named: "icDeleteBar.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
         btnDelete.setImage(image2, for: .normal)
         btnDelete.setTitleColor(.white, for: .normal)
         btnDelete.padding()

@@ -30,7 +30,7 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     case .Safetynet:
         return getSizeSafetynet()
     case .QueryBuilder:
-        return 400
+        return 440
         //return 350
     }
 }
