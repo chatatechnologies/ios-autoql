@@ -32,11 +32,14 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblMain.font = generalFont
         addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain)
+        tbMain.backgroundColor = chataDrawerBackgroundColor
         addSubview(lblInfo)
         lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
+        lblInfo.clipsToBounds = true
         lblInfo.text = titleFooter
         lblInfo.font = generalFont
         lblInfo.delegate = self
+        lblInfo.backgroundColor = chataDrawerBackgroundColor
         lblInfo.textColor = chataDrawerTextColorPrimary
         refererToQueryTips()
         addSubview(vwSecond)
@@ -47,12 +50,14 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
         let image2 = image?.resizeT(maxWidthHeight: 30)
         button.setImage(image2, for: .normal)
+        button.setImage(button.imageView?.changeColor().image, for: .normal)
         button.addTarget(self, action: #selector(returnSelection), for: .touchUpInside)
         vwSecond.addSubview(button)
         button.edgeTo(vwSecond, safeArea: .widthLeft, height: 25 )
         vwSecond.addSubview(tbSecond)
         tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 25)
         tbSecond.addBorder(side: .left)
+        tbSecond.backgroundColor = chataDrawerBackgroundColor
         loadTable()
     }
     @IBAction func returnSelection(_ sender: AnyObject){
@@ -95,16 +100,29 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableView == tbMain ? dataQB.count : dataSelection.count
     }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let viewHeader = UIView()
+        viewHeader.backgroundColor = chataDrawerBackgroundColor
+        let lbl = UILabel()
+        if selectSection != -1 {
+            lbl.text = dataQB[selectSection].topic
+        }
+        viewHeader.addSubview(lbl)
+        lbl.edgeTo(viewHeader, safeArea: .nonePadding, padding: 0)
+        return viewHeader
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         if tableView == tbMain {
-            let imageView = UIImageView()
+            var imageView = UIImageView()
             cell.contentView.addSubview(imageView)
             let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
             let image2 = image?.resizeT(maxWidthHeight: 30)
             imageView.image = image2
+            imageView = imageView.changeColor()
             imageView.edgeTo(cell.contentView, safeArea: .widthRight, height: 25, padding: 16)
             imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            cell.backgroundColor = chataDrawerBackgroundColor
             cell.textLabel?.text = dataQB[indexPath.row].topic
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
@@ -115,6 +133,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             cell.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)*/
             return cell
         } else {
+            cell.backgroundColor = chataDrawerBackgroundColor
             cell.textLabel?.text = dataSelection[indexPath.row]
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
@@ -147,8 +166,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         return ""
     }
     func refererToQueryTips() {
+        let finalColor = "#28A8E0".hexToColor()
         let msgAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor : chataDrawerAccentColor,
+            .foregroundColor : finalColor,
             .underlineStyle: NSUnderlineStyle.double.rawValue,
             .font: generalFont
         ]
@@ -156,7 +176,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         let mainAttr = NSMutableAttributedString(string: "\(titleFooter)")
         mainAttr.addAttribute(.link, value: "\(0)", range: range)
         mainAttr.addAttributes(msgAttributes, range: range)
-        let range2 = NSRange(location: 0, length: titleFooter.count)
+        let range2 = NSRange(location: 0, length: titleFooter.count + 1)
         let attributedString:[NSAttributedString.Key: Any] = [
             .font: generalFont,
             .foregroundColor : chataDrawerTextColorPrimary,

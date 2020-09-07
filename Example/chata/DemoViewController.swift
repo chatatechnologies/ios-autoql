@@ -129,7 +129,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             ]),
             DemoSectionsModel(title: "Themes Colors", arrParameters: [
                 DemoParameter(label: "AccentColor", type: .color, value: "#28A8E0", key: "lightTheme"),
-                DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#525252", key: "darkTheme")
+                DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#28A8E0", key: "darkTheme")
             ]),
             DemoSectionsModel(title: "More Configuration", arrParameters: [
                 DemoParameter(label: "Maximum Number of Messages", type: .input, value: "\(dataChat.config.maxMessages)", key: "maxMessages"),

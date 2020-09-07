@@ -72,7 +72,7 @@ public class DataMessenger: UIButton {
                         if nameImage == "iconProjectBubble"{
                             self.configBubble()
                         } else{
-                            self.backgroundColor = .white
+                            self.backgroundColor = chataDrawerBackgroundColor
                             let image = UIImage(named: "\(nameImage).png", in: Bundle(for: type(of: self)), compatibleWith: nil)
                             self.setImage(image, for: .normal)
                         }

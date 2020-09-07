@@ -456,6 +456,7 @@ class ChataServices {
                     finalRowClean.append("\(element)")
                 }
                 if !validValue && (columnsFinal[index].type == .dollar || columnsFinal[index].type == .quantity) {
+                    /*let doubleFinal = Double(element as? String ?? "") ?? 0*/
                     let intFinal = element as? Int ?? 0
                     if intFinal > 0 {
                         validValue = true
