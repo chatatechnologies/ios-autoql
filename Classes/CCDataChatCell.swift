@@ -117,7 +117,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)
         let image2 = image?.resizeT(maxWidthHeight: 30)
         button.setImage(image2, for: .normal)
-        button.setImage(button.imageView?.changeColor().image, for: .normal)
+        //button.setImage(button.imageView?.changeColor().image, for: .normal)
         button.addTarget(self, action: btn.action, for: .touchUpInside)
         return button
     }
@@ -127,17 +127,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         var contrast = false
         switch num {
         case 2:
-            if !data.biChart{
-                buttonsFinal = []
-            }
-            else{
-                
-                buttonsFinal = [
-                    ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
-                    ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
-                    ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
-                    ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
-                ]
+            if data.biChart {
+                buttonsFinal = getBichart()
             }
         case 3:
             if columns[0] == .string && columns[1] == .string && columns[2] == .string{
@@ -145,29 +136,24 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
             } else{
                 contrast = supportContrast(columns: columns)
                 let typeTry = contrast ? "contrast_" : "stacked_"
-                buttonsFinal = [
-                    ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
-                    ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)column"),
-                    //ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cid\(contrast ? typeTry : "")line"),
-                ]
+                
                 if !contrast {
                     buttonsFinal += [
-                    ButtonMenu(imageStr: "icBubble", action: #selector(changeChart), idHTML: "cidbubble"),
+                    ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDataPivot"),
                     ButtonMenu(imageStr: "icHeat", action: #selector(changeChart), idHTML: "cidheatmap"),
-                    ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area"),
-                    ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDataPivot") ]
+                    ButtonMenu(imageStr: "icBubble", action: #selector(changeChart), idHTML: "cidbubble")
+                    ]
+                    buttonsFinal += [
+                        ButtonMenu(imageStr: "icStackedBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
+                        ButtonMenu(imageStr: "icStackedColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)column"),
+                        ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area")
+                        //ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cid\(contrast ? typeTry : "")line"),
+                    ]
                 }
             }
         default:
             if data.biChart{
-                buttonsFinal += [
-                                 ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
-                                 ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
-                                 ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
-                                 ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
-                ]
-            } else {
-                buttonsFinal = []
+                buttonsFinal = getBichart()
             }
             //buttonsFinal = []
         }
@@ -176,6 +162,14 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
             buttonsFinal.append(datePivot)
         }
         return buttonsFinal
+    }
+    func getBichart() -> [ButtonMenu] {
+        return [
+                         ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
+                         ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
+                         ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
+                         ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
+        ]
     }
     @objc func showHide() {
         print("Func")
