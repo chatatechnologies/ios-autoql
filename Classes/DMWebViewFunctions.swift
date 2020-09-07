@@ -204,7 +204,7 @@ func getChartFooter(rows: [[String]],
         }
         rows.enumerated().forEach { (index, row) in
             var name = validateArray(row, positionsChartsSecond) as? String ?? ""
-            name = name.toDate()
+            name = name.toDate(true)
             if mainColum != -1 {
                 name = validateArray(row, mainColum) as? String ?? ""
                 if types[mainColum] == .date {

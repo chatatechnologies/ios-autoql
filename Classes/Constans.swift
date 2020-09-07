@@ -40,7 +40,7 @@ public class DataConfiguration {
         quantityDecimals: 0,
         comparisonDisplay: "PERCENT",
         monthYearFormat: "MMM YYYY",
-        dayMonthYearFormat: "MMM YYYY"
+        dayMonthYearFormat: "MMM d YYYY"
     )
     public var themeConfigObj = themeConfig(
         theme: "light",

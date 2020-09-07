@@ -466,6 +466,7 @@ class ChataServices {
             rowsFinalClean.append(finalRowClean)
             rowsFinal.append(finalRow)
         }
+        validValue = rows.count > 1 ? validValue : false
         return (rowsFinal, rowsFinalClean, validValue)
     }
 }
