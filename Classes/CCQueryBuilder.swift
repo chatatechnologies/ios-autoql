@@ -16,6 +16,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     var dataSelection: [String] = []
     weak var delegate: ChatViewDelegate?
     var selectSection = -1
+    var selectOption = -1
     var titleFooter = "Use 💡Explore Queries to further explore the possibilities"
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -53,15 +54,16 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         button.setImage(button.imageView?.changeColor().image, for: .normal)
         button.addTarget(self, action: #selector(returnSelection), for: .touchUpInside)
         vwSecond.addSubview(button)
-        button.edgeTo(vwSecond, safeArea: .widthLeft, height: 25 )
+        button.edgeTo(vwSecond, safeArea: .widthLeft, height: 25, padding: 8 )
         vwSecond.addSubview(tbSecond)
-        tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 25)
-        tbSecond.addBorder(side: .left)
+        tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 32)
         tbSecond.backgroundColor = chataDrawerBackgroundColor
         loadTable()
     }
     @IBAction func returnSelection(_ sender: AnyObject){
         toggleAnimationSecond(hide: true)
+        selectOption = -1
+        tbMain.reloadData()
     }
     func toggleAnimationSecond(hide: Bool = false){
         let pos: CGFloat = !hide ? 500 : 0
@@ -102,17 +104,24 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let viewHeader = UIView()
-        viewHeader.backgroundColor = chataDrawerBackgroundColor
-        let lbl = UILabel()
-        lbl.textColor = chataDrawerTextColorPrimary
-        if selectSection != -1 {
-            lbl.text = dataQB[selectSection].topic
+        if tableView == tbSecond {
+            let viewHeader = UIView()
+            viewHeader.backgroundColor = chataDrawerBackgroundColor
+            let lbl = UILabel()
+            lbl.textColor = chataDrawerTextColorPrimary
+            if selectSection != -1 {
+                lbl.text = dataQB[selectSection].topic
+            }
+            viewHeader.addSubview(lbl)
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(returnSelection))
+            viewHeader.addGestureRecognizer(gesture)
+            lbl.edgeTo(viewHeader, safeArea: .nonePadding, padding: 4)
+            return viewHeader
         }
-        viewHeader.addSubview(lbl)
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(returnSelection))
-        viewHeader.addGestureRecognizer(gesture)
-        lbl.edgeTo(viewHeader, safeArea: .nonePadding, padding: 4)
         return viewHeader
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tableView == tbMain ? 0 : 25
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
@@ -126,9 +135,17 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             imageView.edgeTo(cell.contentView, safeArea: .widthRight, height: 25, padding: 16)
             imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             cell.backgroundColor = chataDrawerBackgroundColor
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = chataDrawerAccentColor
+            cell.selectedBackgroundView = backgroundView
             cell.textLabel?.text = dataQB[indexPath.row].topic
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
+            if selectSection == indexPath.row {
+                cell.textLabel?.textColor = .white
+                cell.backgroundColor = chataDrawerAccentColor
+                imageView = imageView.changeColor(color: .white)
+            }
             /*let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
             let image2 = image?.resizeT(maxWidthHeight: 30)
             //image2.transform = image2.transform.rotated(by: .pi)
@@ -136,10 +153,17 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             cell.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)*/
             return cell
         } else {
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = chataDrawerAccentColor
+            cell.selectedBackgroundView = backgroundView
             cell.backgroundColor = chataDrawerBackgroundColor
             cell.textLabel?.text = dataSelection[indexPath.row]
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
+            if selectOption == indexPath.row {
+                cell.backgroundColor = chataDrawerAccentColor
+                cell.textLabel?.textColor = .white
+            }
             return cell
         }
     }
@@ -152,6 +176,8 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             tbSecond.reloadData()
         } else {
             let typingSend = TypingSend(text: dataSelection[indexPath.row], safe: true)
+            selectOption = indexPath.row
+            tbSecond.reloadData()
             NotificationCenter.default.post(name: notifTypingText,
                                             object: typingSend)
             //delegate?.sendText(dataSelection[indexPath.row], true)
