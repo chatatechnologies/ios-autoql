@@ -124,10 +124,12 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool) {
         if toTable{
             // diferencias si es table o webview
-            data[index].numRow = numRows
-            data[index].type = isTable ? .Table : data[index].type
-            tableView.beginUpdates()
-            tableView.endUpdates()
+            if data.count > index {
+                data[index].numRow = numRows
+                data[index].type = isTable ? .Table : data[index].type
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
         }
         let indexPath = IndexPath(row: index, section: 0)
         guard let cell = self.tableView.cellForRow(at: indexPath) as? DataChatCell else {return}

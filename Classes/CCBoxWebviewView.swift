@@ -53,7 +53,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         imageView = imageView.changeColor()
         self.addSubview(imageView)
         imageView.edgeTo(self, safeArea: .centerSize, height: 50, padding: 100)
-        print(strWebview)
         self.wbMain.loadHTMLString(strWebview, baseURL: nil)
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {

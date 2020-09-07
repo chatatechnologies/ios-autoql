@@ -181,16 +181,20 @@ extension String {
         let format2 = format.components(separatedBy: "-")
         var year = ""
         var month = ""
-        format2.enumerated().forEach { (index, formatE) in
-            let ff = formatE.lowercased()
-            if ff == "yyyy"{
-                year = "\(separete[index])"
-            } else if ff == "mm" || ff == "m"{
-                month = "\(separete[index].toMonth().prefix(3))"
-            } else if ff == "mmm" {
-                month = separete[index]
-            } else if ff == "mmmm" {
-                month = String(separete[index].prefix(3))
+        if format2.count > 0 {
+            format2.enumerated().forEach { (index, formatE) in
+                if separete.count > index {
+                    let ff = formatE.lowercased()
+                    if ff == "yyyy"{
+                        year = "\(separete[index])"
+                    } else if ff == "mm" || ff == "m"{
+                        month = "\(separete[index].toMonth().prefix(3))"
+                    } else if ff == "mmm" {
+                        month = separete[index]
+                    } else if ff == "mmmm" {
+                        month = String(separete[index].prefix(3))
+                    }
+                }
             }
         }
         let finalDate = "\(month) \(year)"
