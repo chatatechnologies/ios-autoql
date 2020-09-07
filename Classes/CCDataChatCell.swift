@@ -214,6 +214,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let btnTemp: myCustomButton = myCustomButton()
         var newID = sender.idButton
         var oldID = buttonDefault?.idButton ?? ""
+        let newTypeStr = newID.replace(target: "cid", withString: "")
         btnTemp.setImage(sender.imageView?.image, for: .normal)
         btnTemp.idButton = newID
         sender.setImage(buttonDefault?.imageView?.image, for: .normal)
@@ -231,6 +232,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                                   index: self.index,
                                   toTable: oldID != newID,
                                   isTable: newID.contains("Table"))
+        //data.type =
+        data.type = ChatComponentType.withLabel(newTypeStr)
+        boxWeb.updateType(newType: data.type)
         data.isLoading = true
         //}
         /*delayWithSeconds(0.2) {

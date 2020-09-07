@@ -20,6 +20,9 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    func updateType(newType: ChatComponentType) {
+        dataMain.type = newType
+    }
     func loadWebview(strWebview: String, idQuery: String) {
         self.idQuery = idQuery
         let contentController = WKUserContentController()
@@ -50,6 +53,7 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         imageView = imageView.changeColor()
         self.addSubview(imageView)
         imageView.edgeTo(self, safeArea: .centerSize, height: 50, padding: 100)
+        print(strWebview)
         self.wbMain.loadHTMLString(strWebview, baseURL: nil)
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -68,8 +72,12 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if dataMain.columns.count <= 3 {
-            if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE && !drilldown {
+        let table = dataMain.type == .Webview || dataMain.type == .Table
+        if dataMain.columns.count > 3 && table {
+        } else {
+            if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE
+                //&& !drilldown
+            {
                 DRILLDOWNACTIVE = true
                 let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
                 let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
