@@ -30,25 +30,33 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         data = allData
         //self.
         self.index = index
-        let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
-        menuButtons.append(new)
         self.backgroundColor = .clear
         contentView.backgroundColor = .clear
         genereteData()
         self.index = index
     }
+    func loadLeftMenu(report: Bool = false) {
+        let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
+        let reportProblem = ButtonMenu(imageStr: "icReport", action: #selector(deleteQuery), idHTML: "icReport")
+        menuButtons.append(new)
+        menuButtons.append(reportProblem)
+    }
     func genereteData() {
         switch data.type {
         case .Introduction:
             getIntroduction()
+            loadLeftMenu()
         case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
             if !data.isLoading{
                 getWebView()
+                loadLeftMenu()
             }
         case .Suggestion:
             getSuggestion()
+            loadLeftMenu()
         case .Safetynet:
             getSafetynet()
+            loadLeftMenu()
         case .QueryBuilder:
             getQueryBuilder()
         }
