@@ -37,26 +37,28 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     func loadLeftMenu(report: Bool = false) {
         let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
-        let reportProblem = ButtonMenu(imageStr: "icReport", action: #selector(deleteQuery), idHTML: "icReport")
         menuButtons.append(new)
-        menuButtons.append(reportProblem)
+        if report {
+           let reportProblem = ButtonMenu(imageStr: "icReport", action: #selector(deleteQuery), idHTML: "icReport")
+           menuButtons.append(reportProblem)
+        }
     }
     func genereteData() {
         switch data.type {
         case .Introduction:
+            loadLeftMenu(report: data.text.count < 10)
             getIntroduction()
-            loadLeftMenu()
         case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
             if !data.isLoading{
+                loadLeftMenu(report: true)
                 getWebView()
-                loadLeftMenu()
             }
         case .Suggestion:
+            loadLeftMenu()
             getSuggestion()
-            loadLeftMenu()
         case .Safetynet:
-            getSafetynet()
             loadLeftMenu()
+            getSafetynet()
         case .QueryBuilder:
             getQueryBuilder()
         }
@@ -75,6 +77,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.lbl.textColor = data.user ? .white : chataDrawerTextColorPrimary
         data.user || data.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         newView.edgeTo(self, safeArea: align)
+        if !data.user && data.text.count < 7 {
+            newView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        }
         self.sizeToFit()
     }
     private func getQueryBuilder() {
