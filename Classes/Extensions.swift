@@ -10,7 +10,7 @@ import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
     case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, fullStatePaddingTop,
-    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, centerSize, bottomRight
+    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, dropDownTopHeight, centerSize, bottomRight
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
             "\($0.description)" == str
@@ -682,7 +682,14 @@ extension UIView {
             leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
             trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
+        case .dropDownTopHeight:
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 1).isActive = true
+            //leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
+            trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
+            widthAnchor.constraint(equalToConstant: 100).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
         }
+        
         
         return self
     }
@@ -781,8 +788,12 @@ extension UIImageView {
     }
 }
 extension UIStackView{
-    func getHorizontal(dist: Distribution = .fillEqually, spacing: CGFloat = 8){
-        self.axis = NSLayoutConstraint.Axis.horizontal
+    func getSide(dist: Distribution = .fillEqually,
+                       spacing: CGFloat = 8,
+                       axis: NSLayoutConstraint.Axis = .horizontal
+                       
+    ){
+        self.axis = axis
         self.distribution  = dist
         self.alignment = UIStackView.Alignment.center
         self.spacing = spacing

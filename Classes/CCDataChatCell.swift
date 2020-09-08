@@ -17,6 +17,11 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
     private var functionJS = ""
+    private var menuReportProblem: [StackSelection] = [
+        StackSelection(title: "The data is incorrect", action: #selector(reportProblem)),
+        StackSelection(title: "The data is incomplete", action: #selector(reportProblem)),
+        StackSelection(title: "Other", action: #selector(reportProblem))
+    ]
     let boxWeb = BoxWebviewView()
     let defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
     var buttonDefault: myCustomButton?
@@ -39,7 +44,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
         menuButtons.append(new)
         if report {
-           let reportProblem = ButtonMenu(imageStr: "icReport", action: #selector(deleteQuery), idHTML: "icReport")
+           let reportProblem = ButtonMenu(imageStr: "icReport", action: #selector(showMenu), idHTML: "icReport")
            menuButtons.append(reportProblem)
         }
     }
@@ -110,6 +115,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private func loadButtons(area: DViewSafeArea, buttons: [ButtonMenu], view: UIView) {
         let changeViewMain = UIView()
         let changeView = UIStackView()
+        let nTag = area == .modal2Right ? 1 : 0
+        changeViewMain.tag = nTag
         changeViewMain.cardView()
         changeViewMain.backgroundColor = chataDrawerBackgroundColor
         self.contentView.addSubview(changeViewMain)
@@ -217,6 +224,16 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     @IBAction func deleteQuery(_ sender: AnyObject){
         delegate?.deleteQuery(numQuery: index)
     }
+    @IBAction func showMenu(_ sender: AnyObject){
+        print("Show Menu")
+        genereMenuReport()
+    }
+    @IBAction func hideMenu(_ sender: AnyObject){
+        contentView.removeView(tag: 2)
+    }
+    @IBAction func reportProblem(_ sender: AnyObject){
+        print("Report problem")
+    }
     @IBAction func changeChart(_ sender: myCustomButton){
         let btnTemp: myCustomButton = myCustomButton()
         var newID = sender.idButton
@@ -252,6 +269,27 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         }*/
         
     }
+    func genereMenuReport() {
+        let vwBackgroundMenu = UIView()
+        contentView.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(self, safeArea: .none)
+        vwBackgroundMenu.tag = 2
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideMenu))
+        vwBackgroundMenu.addGestureRecognizer(gesture)
+        let vwMenu = UIView()
+        vwMenu.backgroundColor = chataDrawerBackgroundColor
+        vwBackgroundMenu.addSubview(vwMenu)
+        vwMenu.cardView()
+        contentView.subviews.forEach { (subView) in
+            if subView.tag == 1 {
+                vwMenu.edgeTo(self, safeArea: .dropDownTopHeight, height: 100, subView)
+            }
+        }
+        let newStack = UIStackView()
+        newStack.getHorizontal()
+        newSt
+        
+    }
     public func updateChart(){
         self.boxWeb.wbMain.evaluateJavaScript(functionJS, completionHandler: {
             (_,_) in
@@ -264,6 +302,17 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
 func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
     DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
         completion()
+    }
+}
+struct StackSelection {
+    var title: String
+    var action: Selector
+    init(
+        title: String = "",
+        action: Selector = #selector(DataChatCell.reportProblem)
+    ) {
+        self.title = title
+        self.action = action
     }
 }
 struct ButtonMenu {
