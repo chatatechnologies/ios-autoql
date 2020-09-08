@@ -83,7 +83,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tfMain.cardView(borderRadius: 20)
         tfMain.loadInputPlace("Search relevant queries by topic")
         tfMain.configStyle()
-        tfMain.setLeftPaddingPoints(20)
+        tfMain.setLeftPaddingPoints(10)
     }
     private func loadTable() {
         tbMain.delegate = self
@@ -244,9 +244,13 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     func exit() {
+        NotificationCenter.default.post(name: notifcloseQueryTips,
+                                        object: nil)
         removeFromSuperview()
     }
     func saveData() {
+        NotificationCenter.default.post(name: notifcloseQueryTips,
+                                        object: nil)
         removeFromSuperview()
         //self.isHidden = true
     }
@@ -257,11 +261,11 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         let typingSend = TypingSend(text: Qtips.items[indexPath.row], safe: true)
         NotificationCenter.default.post(name: notifTypingText,
                                         object: typingSend)
-        
+        NotificationCenter.default.post(name: notifcloseQueryTips,
+                                        object: nil)
         /*NotificationCenter.default.post(name: notifSendText,
                                         object: Qtips.items[indexPath.row])*/
         self.dismiss(animated: DataConfig.clearOnClose)
-        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()

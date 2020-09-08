@@ -59,11 +59,26 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 32)
         tbSecond.backgroundColor = chataDrawerBackgroundColor
         loadTable()
+        addNotifications()
     }
     @IBAction func returnSelection(_ sender: AnyObject){
         toggleAnimationSecond(hide: true)
         selectOption = -1
         tbMain.reloadData()
+    }
+    func addNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(closeModal),
+                                               name: notifcloseQueryTips,
+                                               object: nil)
+    }
+    func removeNotifications() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: notifcloseQueryTips,
+                                                  object: nil)
+    }
+    @objc func closeModal() {
+        lblInfo.isSelectable = true
     }
     func toggleAnimationSecond(hide: Bool = false){
         let pos: CGFloat = !hide ? 500 : 0
@@ -216,6 +231,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let tips = QTMainView(frame: self.frame)
         tips.show()
+        lblInfo.isSelectable = false
         return true
     }
 }

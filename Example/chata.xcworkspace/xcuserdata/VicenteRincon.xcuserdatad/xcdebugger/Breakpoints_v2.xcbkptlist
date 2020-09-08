@@ -4652,8 +4652,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4700,8 +4700,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "loadData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4716,8 +4716,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6892,8 +6892,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "refererToQueryTips()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7004,9 +7004,105 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1EEBE579-F17E-4367-BEB2-6ECB4700FFA4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QTMainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "exit()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DD3A19D7-871B-4D9D-AA1D-4796E419720D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCQueryBuilder.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "closeModal()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DD3A19D7-871B-4D9D-AA1D-4796E419720D - b00630598662050a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.QueryBuilderView.toggleAnimationSecond(hide: Swift.Bool) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/CCQueryBuilder.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "757">
+               </Location>
+               <Location
+                  uuid = "DD3A19D7-871B-4D9D-AA1D-4796E419720D - 398c0b3329ca6e2e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in chata.QueryBuilderView.toggleAnimationSecond(hide: Swift.Bool) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/CCQueryBuilder.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "375">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E388E50E-746D-4629-9221-7D1CBFE509B6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QTMainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "dismiss(animated:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AEE15E79-03F2-4009-9EE9-318E7711E8D5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QTMainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "saveData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
