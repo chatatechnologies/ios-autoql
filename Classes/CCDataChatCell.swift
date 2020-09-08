@@ -18,9 +18,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private var index: Int = 0
     private var functionJS = ""
     private var menuReportProblem: [StackSelection] = [
-        StackSelection(title: "The data is incorrect", action: #selector(reportProblem)),
-        StackSelection(title: "The data is incomplete", action: #selector(reportProblem)),
-        StackSelection(title: "Other", action: #selector(reportProblem))
+        StackSelection(title: "The data is incorrect", action: #selector(reportProblem), tag: 0),
+        StackSelection(title: "The data is incomplete", action: #selector(reportProblem), tag: 1),
+        StackSelection(title: "Other", action: #selector(reportProblem), tag: 2)
     ]
     let boxWeb = BoxWebviewView()
     let defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
@@ -122,7 +122,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         self.contentView.addSubview(changeViewMain)
         changeViewMain.edgeTo(self, safeArea: area, height: 40, view, padding: CGFloat(buttons.count * 40) )
         changeView.cardView()
-        changeView.getHorizontal()
+        changeView.getSide()
         changeViewMain.addSubview(changeView)
         changeView.edgeTo(changeViewMain, safeArea: .modal, height: 40)
         changeViewMain.layer.zPosition = 1
@@ -231,8 +231,23 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     @IBAction func hideMenu(_ sender: AnyObject){
         contentView.removeView(tag: 2)
     }
-    @IBAction func reportProblem(_ sender: AnyObject){
-        print("Report problem")
+    @IBAction func reportProblem(_ sender: UIButton){
+        let newAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        switch sender.tag {
+        case 0:
+            newAlert.message = "Data incorrect"
+            UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+        case 1:
+            newAlert.message = "Data Incomplete"
+            UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+        case 2:
+            newAlert.message = "Other"
+            UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+        default:
+            print("error")
+        }
+        contentView.removeView(tag: 2)
     }
     @IBAction func changeChart(_ sender: myCustomButton){
         let btnTemp: myCustomButton = myCustomButton()
@@ -282,13 +297,24 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         vwMenu.cardView()
         contentView.subviews.forEach { (subView) in
             if subView.tag == 1 {
-                vwMenu.edgeTo(self, safeArea: .dropDownTopHeight, height: 100, subView)
+                vwMenu.edgeTo(self, safeArea: .dropDownTopHeight, height: 120, subView)
             }
         }
         let newStack = UIStackView()
-        newStack.getHorizontal()
-        newSt
-        
+        newStack.getSide(axis: .vertical)
+        vwMenu.addSubview(newStack)
+        newStack.edgeTo(vwMenu, safeArea: .none)
+        menuReportProblem.forEach { (newItem) in
+            let newView = UIButton()
+            newView.setTitle(newItem.title, for: .normal)
+            newView.titleLabel?.font = generalFont
+            newView.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
+            newView.addTarget(self, action: newItem.action, for: .touchUpInside)
+            newView.tag = newItem.tag
+            newStack.addArrangedSubview(newView)
+            newView.edgeTo(newStack, safeArea: .fullStackH)
+            newView.clipsToBounds = true
+        }
     }
     public func updateChart(){
         self.boxWeb.wbMain.evaluateJavaScript(functionJS, completionHandler: {
@@ -307,12 +333,15 @@ func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
 struct StackSelection {
     var title: String
     var action: Selector
+    var tag: Int
     init(
         title: String = "",
-        action: Selector = #selector(DataChatCell.reportProblem)
+        action: Selector = #selector(DataChatCell.reportProblem),
+        tag: Int = 0
     ) {
         self.title = title
         self.action = action
+        self.tag = tag
     }
 }
 struct ButtonMenu {

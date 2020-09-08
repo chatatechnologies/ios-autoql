@@ -98,7 +98,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     func loadDefaultPagination() {
         vwMainChat.addSubview(svPaginator)
         svPaginator.edgeTo(vwMainChat, safeArea: .bottomPadding, height: 50.0, padding: 16)
-        svPaginator.getHorizontal(dist: .equalCentering,spacing: 0)
+        svPaginator.getSide(dist: .equalCentering,spacing: 0)
     }
     func loadPagination() {
         btns = btnsBase
