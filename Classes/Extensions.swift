@@ -102,14 +102,14 @@ extension String {
     }
     func toMoney() -> String {
         let format = NumberFormatter()
-        format.numberStyle = .decimal
-        //format.currencyCode = "$"
+        format.numberStyle = .currency
         format.currencyCode = DataConfig.dataFormattingObj.currencyCode
         format.minimumFractionDigits = DataConfig.dataFormattingObj.currencyDecimals
-        //format.locale = Locale.init(identifier: "en_us")
+        format.maximumFractionDigits = DataConfig.dataFormattingObj.currencyDecimals
+        format.locale = Locale.init(identifier: DataConfig.dataFormattingObj.languageCode)
         let money: Double = Double(self) ?? 0.0
         let dolar = format.string(from: NSNumber(value: money)) ?? ""
-        let finalStr = self == "" ? "" : "$\(String(describing: dolar))"
+        let finalStr = self == "" ? "" : "\(String(describing: dolar))"
         return finalStr
     }
     func toQuantity() -> String {
