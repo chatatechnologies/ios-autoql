@@ -17,6 +17,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
     private var functionJS = ""
+    var vwFather: UIView = UIApplication.shared.keyWindow!
     private var menuReportProblem: [StackSelection] = [
         StackSelection(title: "The data is incorrect", action: #selector(reportProblem), tag: 0),
         StackSelection(title: "The data is incomplete", action: #selector(reportProblem), tag: 1),
@@ -224,6 +225,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     @IBAction func deleteQuery(_ sender: AnyObject){
         delegate?.deleteQuery(numQuery: index)
     }
+    @IBAction func closeModal(_ sender: AnyObject) {
+        vwFather.removeView(tag: 200)
+    }
     @IBAction func showMenu(_ sender: AnyObject){
         print("Show Menu")
         genereMenuReport()
@@ -290,15 +294,44 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         
     }
     func generatePopUp () {
-        let vwFather: UIView = UIApplication.shared.keyWindow!
+        //let vwFather: UIView = UIApplication.shared.keyWindow!
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeModal))
+        vwFather.addGestureRecognizer(tap)
         let vwBackgroundMenu = UIView()
+        vwBackgroundMenu.tag = 200
         vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         vwFather.addSubview(vwBackgroundMenu)
         vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
         let newView = UIView()
         newView.backgroundColor = .white
         vwBackgroundMenu.addSubview(newView)
-        newView.edgeTo(vwFather, safeArea: .centerSize, height: 300)
+        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSize, height: 300, padding: 300)
+        let lblTitle = UILabel()
+        lblTitle.textColor = chataDrawerTextColorPrimary
+        lblTitle.text = "Report Problem"
+        newView.addSubview(lblTitle)
+        lblTitle.edgeTo(newView, safeArea: .topView, height: 50)
+        lblTitle.font = generalFont
+        lblTitle.textAlignment = .center
+        let lblInfo = UILabel()
+        lblInfo.text = "Please tell us more about the problem you are experiencing:"
+        newView.addSubview(lblInfo)
+        lblInfo.edgeTo(newView, safeArea: .topHeight, height: 50, lblTitle)
+        lblInfo.font = generalFont
+        lblInfo.numberOfLines = 0
+        lblInfo.textAlignment = .center
+        lblInfo.textColor = chataDrawerTextColorPrimary
+        let tfReport = UITextField()
+        tfReport.font = generalFont
+        tfReport.textColor = chataDrawerTextColorPrimary
+        newView.addSubview(tfReport)
+        tfReport.edgeTo(newView, safeArea: .topHeight, height: 100, lblInfo, padding: 16)
+        tfReport.cardView()
+        let btnCancel = UIButton()
+        btnCancel.setTitle("Cancel", for: .normal)
+        newView.addSubview(btnCancel)
+        btnCancel.edgeTo(newView, safeArea: .topView)
+        let btnReport = UIButton()
     }
     func genereMenuReport() {
         let vwBackgroundMenu = UIView()
