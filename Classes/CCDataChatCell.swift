@@ -236,11 +236,17 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         switch sender.tag {
         case 0:
-            newAlert.message = "Data incorrect"
-            UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+            ChataServices.instance.reportProblem(queryID: data.idQuery, problemType: 0) { (success) in
+                DispatchQueue.main.async {
+                    newAlert.message = success ? "Thank you for your feedback" : "Error in report"
+                    UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+                }
+            }
         case 1:
-            newAlert.message = "Data Incomplete"
-            UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+            ChataServices.instance.reportProblem(queryID: data.idQuery, problemType: 1) { (success) in
+                newAlert.message = success ? "Thank you for your feedback" : "Error in report"
+                UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+            }
         case 2:
             newAlert.message = "Other"
             UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
