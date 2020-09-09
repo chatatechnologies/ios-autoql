@@ -187,12 +187,11 @@ class ChataServices {
             completion(msg == "" || msg == "Success")
         }
     }
-    func reportProblem(queryID: String, problemType: Int, completion: @escaping CompletionChatSuccess) {
-        let problems = ["The data is incorrect", "The data is incomplete"]
+    func reportProblem(queryID: String, problemType: String, completion: @escaping CompletionChatSuccess) {
         let url = "\(wsUrlDynamic)/autoql/api/v1/query/\(queryID)?key=\(DataConfig.authenticationObj.apiKey)"
         let body: [String: Any] = [
             "is_correct": false,
-            "message": problems[problemType]
+            "message": problemType
         ]
         httpRequest(url, "PUT", body) { (response) in
             let referenceID = response["reference_id"] as? String ?? ""

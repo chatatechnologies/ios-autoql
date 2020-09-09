@@ -18,6 +18,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private var index: Int = 0
     private var functionJS = ""
     var vwFather: UIView = UIApplication.shared.keyWindow!
+    var problemMessage = ""
     private var menuReportProblem: [StackSelection] = [
         StackSelection(title: "The data is incorrect", action: #selector(reportProblem), tag: 0),
         StackSelection(title: "The data is incomplete", action: #selector(reportProblem), tag: 1),
@@ -236,27 +237,28 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         contentView.removeView(tag: 2)
     }
     @IBAction func reportProblem(_ sender: UIButton){
-        let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
-        newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        
         switch sender.tag {
         case 0:
-            ChataServices.instance.reportProblem(queryID: data.idQuery, problemType: 0) { (success) in
-                DispatchQueue.main.async {
-                    newAlert.message = success ? "Thank you for your feedback" : "Error in report"
-                    UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
-                }
-            }
+            showAlertResult(msg: "The data is incorrect")
         case 1:
-            ChataServices.instance.reportProblem(queryID: data.idQuery, problemType: 1) { (success) in
-                newAlert.message = success ? "Thank you for your feedback" : "Error in report"
-                UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
-            }
+            showAlertResult(msg: "The data is incomplete")
         case 2:
             generatePopUp()
         default:
             print("error")
         }
         contentView.removeView(tag: 2)
+    }
+    func showAlertResult(msg: String) {
+        let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
+        newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        ChataServices.instance.reportProblem(queryID: data.idQuery, problemType: msg) { (success) in
+            DispatchQueue.main.async {
+                newAlert.message = success ? "Thank you for your feedback" : "Error in report"
+                UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+            }
+        }
     }
     @IBAction func changeChart(_ sender: myCustomButton){
         let btnTemp: myCustomButton = myCustomButton()
@@ -300,12 +302,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let vwBackgroundMenu = UIView()
         vwBackgroundMenu.tag = 200
         vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        vwBackgroundMenu.cardView()
         vwFather.addSubview(vwBackgroundMenu)
         vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
         let newView = UIView()
         newView.backgroundColor = .white
         vwBackgroundMenu.addSubview(newView)
-        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSize, height: 300, padding: 300)
+        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSize, height: 260, padding: 300)
         let lblTitle = UILabel()
         lblTitle.textColor = chataDrawerTextColorPrimary
         lblTitle.text = "Report Problem"
@@ -327,11 +330,29 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.addSubview(tfReport)
         tfReport.edgeTo(newView, safeArea: .topHeight, height: 100, lblInfo, padding: 16)
         tfReport.cardView()
+        tfReport.setLeftPaddingPoints(10)
+        let stackView = UIStackView()
+        stackView.getSide()
+        newView.addSubview(stackView)
+        stackView.edgeTo(newView, safeArea:.bottomPaddingtoTop, tfReport, padding: 16)
         let btnCancel = UIButton()
+        btnCancel.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        btnCancel.cardView()
+        btnCancel.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
         btnCancel.setTitle("Cancel", for: .normal)
-        newView.addSubview(btnCancel)
-        btnCancel.edgeTo(newView, safeArea: .topView)
+        stackView.addArrangedSubview(btnCancel)
+        btnCancel.edgeTo(stackView, safeArea: .fullStackV, height: 100)
         let btnReport = UIButton()
+        btnReport.cardView()
+        btnReport.backgroundColor = chataDrawerAccentColor
+        btnReport.setTitle("Report", for: .normal)
+        btnReport.addTarget(self, action: #selector(reportProblemName), for: .touchUpInside)
+        stackView.addArrangedSubview(btnReport)
+        btnReport.edgeTo(stackView, safeArea: .fullStackV, height: 100)
+    }
+    @objc func reportProblemName(_ sender: UIButton) {
+        vwFather.removeView(tag: 200)
+        showAlertResult(msg: <#T##String#>)
     }
     func genereMenuReport() {
         let vwBackgroundMenu = UIView()
@@ -400,4 +421,7 @@ struct ButtonMenu {
 }
 class myCustomButton: UIButton{
     var idButton: String = ""
+}
+class newClass: UIButton {
+    var newString = ""
 }
