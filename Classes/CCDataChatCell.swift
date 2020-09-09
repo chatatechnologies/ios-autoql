@@ -232,7 +232,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         contentView.removeView(tag: 2)
     }
     @IBAction func reportProblem(_ sender: UIButton){
-        let newAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
         newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         switch sender.tag {
         case 0:

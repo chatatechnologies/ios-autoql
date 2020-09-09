@@ -187,6 +187,26 @@ class ChataServices {
             completion(msg == "" || msg == "Success")
         }
     }
+    func reportProblem(queryID: String, problemType: Int) {
+        //https://spira-staging.chata.io/autoql/api/v1/query/q_NG3GDwJnTSe877AdLVtrtg?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU
+        /*
+         is_correct: false
+         message: "The data is incorrect"
+         
+         
+         is_correct: false
+         message: "The data is incomplete"
+         */
+        let problems = ["The data is incorrect", "The data is incomplete"]
+        let url = "\(wsUrlDynamic)autoql/api/v1/query/\(queryID)?key=\(DataConfig.authenticationObj.apiKey)"
+        let body: [String: Any] = [
+            "is_correct": false,
+            "message": problems[problemType]
+        ]
+        httpRequest(url, "PUT", body) { (response) in
+            
+        }
+    }
     func getDataChatDrillDown(obj: String, idQuery: String, name: String, completion: @escaping CompletionChatComponentModel){
         let guion = obj.contains("_")
         var group_bys: [[String: Any]] = []
