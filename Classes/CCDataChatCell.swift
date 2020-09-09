@@ -17,6 +17,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
     private var functionJS = ""
+    let btnReport = UIButton()
     var vwFather: UIView = UIApplication.shared.keyWindow!
     var problemMessage = ""
     private var menuReportProblem: [StackSelection] = [
@@ -331,6 +332,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         tfReport.edgeTo(newView, safeArea: .topHeight, height: 100, lblInfo, padding: 16)
         tfReport.cardView()
         tfReport.setLeftPaddingPoints(10)
+        tfReport.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         let stackView = UIStackView()
         stackView.getSide()
         newView.addSubview(stackView)
@@ -342,17 +344,24 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         btnCancel.setTitle("Cancel", for: .normal)
         stackView.addArrangedSubview(btnCancel)
         btnCancel.edgeTo(stackView, safeArea: .fullStackV, height: 100)
-        let btnReport = UIButton()
         btnReport.cardView()
-        btnReport.backgroundColor = chataDrawerAccentColor
+        btnReport.backgroundColor = chataDrawerBorderColor
         btnReport.setTitle("Report", for: .normal)
         btnReport.addTarget(self, action: #selector(reportProblemName), for: .touchUpInside)
         stackView.addArrangedSubview(btnReport)
         btnReport.edgeTo(stackView, safeArea: .fullStackV, height: 100)
     }
+    @objc func actionTyping(_ sender: UITextField) {
+        let valid = (sender.text ?? "") != ""
+        UIView.animate(withDuration: 0.3) {
+            self.btnReport.backgroundColor = valid ? chataDrawerAccentColor : chataDrawerBorderColor
+        }
+        btnReport.isEnabled = valid
+        problemMessage = sender.text ?? ""
+    }
     @objc func reportProblemName(_ sender: UIButton) {
         vwFather.removeView(tag: 200)
-        showAlertResult(msg: <#T##String#>)
+        showAlertResult(msg: problemMessage)
     }
     func genereMenuReport() {
         let vwBackgroundMenu = UIView()
