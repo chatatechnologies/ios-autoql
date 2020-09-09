@@ -248,8 +248,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                 UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
             }
         case 2:
-            newAlert.message = "Other"
-            UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+            generatePopUp()
         default:
             print("error")
         }
@@ -289,6 +288,17 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
            })
         }*/
         
+    }
+    func generatePopUp () {
+        let vwFather: UIView = UIApplication.shared.keyWindow!
+        let vwBackgroundMenu = UIView()
+        vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        vwFather.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
+        let newView = UIView()
+        newView.backgroundColor = .white
+        vwBackgroundMenu.addSubview(newView)
+        newView.edgeTo(vwFather, safeArea: .centerSize, height: 300)
     }
     func genereMenuReport() {
         let vwBackgroundMenu = UIView()
