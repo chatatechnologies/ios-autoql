@@ -303,11 +303,12 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let vwBackgroundMenu = UIView()
         vwBackgroundMenu.tag = 200
         vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        vwBackgroundMenu.cardView()
+        //vwBackgroundMenu.cardView()
         vwFather.addSubview(vwBackgroundMenu)
         vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
         let newView = UIView()
         newView.backgroundColor = .white
+        newView.cardView()
         vwBackgroundMenu.addSubview(newView)
         newView.edgeTo(vwBackgroundMenu, safeArea: .centerSize, height: 260, padding: 300)
         let lblTitle = UILabel()
@@ -320,7 +321,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let lblInfo = UILabel()
         lblInfo.text = "Please tell us more about the problem you are experiencing:"
         newView.addSubview(lblInfo)
-        lblInfo.edgeTo(newView, safeArea: .topHeight, height: 50, lblTitle)
+        lblInfo.edgeTo(newView, safeArea: .topHeightPadding, height: 50, lblTitle, padding: 16)
         lblInfo.font = generalFont
         lblInfo.numberOfLines = 0
         lblInfo.textAlignment = .center
@@ -329,7 +330,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         tfReport.font = generalFont
         tfReport.textColor = chataDrawerTextColorPrimary
         newView.addSubview(tfReport)
-        tfReport.edgeTo(newView, safeArea: .topHeight, height: 100, lblInfo, padding: 16)
+        tfReport.edgeTo(newView, safeArea: .topHeightPadding, height: 100, lblInfo, padding: 16)
         tfReport.cardView()
         tfReport.setLeftPaddingPoints(10)
         tfReport.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
