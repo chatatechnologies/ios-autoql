@@ -118,7 +118,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             }
         }*/
     }
-    func sendDrillDownManual(newData: [[String]]) {
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
         print(newData)
     }
     func loaderWebview(_ load: Bool = true){

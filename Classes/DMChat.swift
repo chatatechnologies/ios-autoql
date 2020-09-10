@@ -154,9 +154,9 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             }
         }
     }
-    func sendDrillDownManual(newData: [[String]]) {
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
         let service = ChataServices.instance
-        let newComponent = service.getDrillComponent(data: newData, columns: [])
+        let newComponent = service.getDrillComponent(data: newData, columns: columns)
         DispatchQueue.main.async {
             self.loadingQuery(false)
             self.limitData(element: newComponent)

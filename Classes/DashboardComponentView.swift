@@ -260,7 +260,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         
     }
-    func sendDrillDownManual(newData: [[String]]) {
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
         
     }
 }

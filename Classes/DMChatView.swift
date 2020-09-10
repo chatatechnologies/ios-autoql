@@ -10,7 +10,7 @@ import UIKit
 protocol ChatViewDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
-    func sendDrillDownManual(newData: [[String]])
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn])
 }
 class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
     let tableView = UITableView()
@@ -123,23 +123,25 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         delegate?.sendText(text, safe)
     }
     func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool) {
+        let indexPath = IndexPath(row: index, section: 0)
+        guard let cell = self.tableView.cellForRow(at: indexPath) as? DataChatCell else {return}
+        cell.updateChart()
         if toTable{
             // diferencias si es table o webview
             if data.count > index {
                 data[index].numRow = numRows
                 data[index].type = isTable ? .Table : data[index].type
+                //tableView.reloadRows(at: [indexPath], with: .none)
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
         }
-        let indexPath = IndexPath(row: index, section: 0)
-        guard let cell = self.tableView.cellForRow(at: indexPath) as? DataChatCell else {return}
-        cell.updateChart()
+        
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         delegate?.sendDrillDown(idQuery: idQuery, obj: obj, name: name)
     }
-    func sendDrillDownManual(newData: [[String]]) {
-        delegate?.sendDrillDownManual(newData: newData)
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
+        delegate?.sendDrillDownManual(newData: newData, columns: columns)
     }
 }

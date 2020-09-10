@@ -9,7 +9,7 @@ import Foundation
 import WebKit
 protocol BoxWebviewViewDelegate: class{
     func sendDrillDown(idQuery: String, obj: String, name: String)
-    func sendDrillDownManual(newData: [[String]])
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn])
 }
 class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     var wbMain: WKWebView = WKWebView()
@@ -92,7 +92,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
     func newDrilldown(data: String) {
-        print(dataMain.columns)
         var position = -1
         dataMain.columns.enumerated().forEach { (index, type) in
             if type == .date{
@@ -101,8 +100,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
                 }
             }
         }
-        print(data)
-        print(position)
         var newData: [[String]] = []
         dataMain.rowsClean.forEach { (row) in
             row.forEach { (column) in
@@ -111,7 +108,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
                 }
             }
         }
-        delegate?.sendDrillDownManual(newData: newData)
-        print(newData)
+        delegate?.sendDrillDownManual(newData: newData, columns: dataMain.columnsInfo)
     }
 }
