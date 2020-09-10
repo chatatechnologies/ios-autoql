@@ -156,13 +156,11 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     func sendDrillDownManual(newData: [[String]]) {
         let service = ChataServices.instance
-        
-        /*service.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (component) in
-            DispatchQueue.main.async {
-                self.loadingQuery(false)
-                self.limitData(element: component)
-            }
-        }*/
+        let newComponent = service.getDrillComponent(data: newData, columns: [])
+        DispatchQueue.main.async {
+            self.loadingQuery(false)
+            self.limitData(element: newComponent)
+        }
     }
     private func loadSafety(text: String) {
         let service = ChataServices()

@@ -262,8 +262,10 @@ class ChataServices {
             completion(qboptions)
         }
     }
-    func getDrillComponent(data: [[String]], columns: []) {
+    func getDrillComponent(data: [[String]], columns: [ChatTableColumn]) -> ChatComponentModel {
+        var newComponent = ChatComponentModel()
         
+        return newComponent
     }
     func getDataComponent(response: [String: Any],
                           type: String = "",
@@ -329,63 +331,16 @@ class ChataServices {
             }
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
                 
-                let existsDatePivot = supportPivot(columns: columsType)
-                let supportTri = columnsFinal.count == 3
-                var datePivotStr = ""
-                var dataPivotStr = ""
-                var tableBasicStr = ""
-                var drills: [String] = []
-                if existsDatePivot {
-                    var datePivot =  getDatePivot(rows: rowsFinalClean, columnsT: columsType)
-                    let columnsTemp = datePivot[0]
-                    datePivot.remove(at: 0)
-                    datePivotStr = tableString(dataTable: datePivot,
-                                            dataColumn: columnsTemp,
-                                            idTable: "idTableDatePivot",
-                                            columns: columnsFinal,
-                                            datePivot: true)
-                }
-                if supportTri {
-                    var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])
-                    drills = drill
-                    let dataPivotColumnsTemp = dataPivot[0]
-                    var arrFinal: [String] = []
-                    dataPivot.forEach { (arr) in
-                        let header = arr[0]
-                        arrFinal.append(header)
-                    }
-                    dataPivot.remove(at: 0)
-                    dataPivotStr = tableString(
-                        dataTable: dataPivot,
-                        dataColumn: dataPivotColumnsTemp,
-                        //dataColumn: arrFinal,
-                        idTable: "idTableDataPivot",
-                        columns: columnsFinal,
-                        datePivot: true)
-                }
-                tableBasicStr = tableString(dataTable: rowsFinal,
-                                        dataColumn: columnsF,
-                                        idTable: "idTableBasic",
-                                        columns: columnsFinal,
-                                        datePivot: false)
+                let webviewS = genereteFinalWebView(
+                                                    type: type,
+                                                    second: second,
+                                                    mainColumn: mainColumn,
+                                                    rowsFinal: rowsFinal,
+                                                    rowsFinalClean: rowsFinalClean,
+                                                    columnsFinal: columnsFinal)
+                webView = webviewS
                 //let tableType = splitType == "table"
-                var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
-                typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
-                webView = """
-                    \(getHTMLHeader(triType: columnsF.count == 3))
-                    \(datePivotStr)
-                    \(dataPivotStr)
-                    \(tableBasicStr)
-                    \(split ? secondQuery : "")
-                \(getHTMLFooter(rows: rowsFinal,
-                                columns: columnsF,
-                                types: columsType,
-                                drills: drills,
-                                type: typeFinal,
-                                mainColumn: mainColumn,
-                                second: second
-                ))
-                """
+                
             } else {
                 webView = "text"
             }
@@ -414,6 +369,77 @@ class ChataServices {
             )
         }
         return dataModel
+    }
+    func genereteFinalWebView(
+                         type: String = "",
+                         second: String = "",
+                         mainColumn: Int = -1,
+                         rowsFinal: [[String]],
+                         rowsFinalClean: [[String]],
+                         columnsFinal: [ChatTableColumn]) -> String {
+        let columsType = columnsFinal.map({ (element) -> ChatTableColumnType in
+            return element.type
+        })
+        let columnsF = columnsFinal.map { (element) -> String in
+            return element.name
+        }
+        let existsDatePivot = supportPivot(columns: columsType)
+        let supportTri = columnsFinal.count == 3
+        var datePivotStr = ""
+        var dataPivotStr = ""
+        var tableBasicStr = ""
+        var drills: [String] = []
+        if existsDatePivot {
+            var datePivot =  getDatePivot(rows: rowsFinalClean, columnsT: columsType)
+            let columnsTemp = datePivot[0]
+            datePivot.remove(at: 0)
+            datePivotStr = tableString(dataTable: datePivot,
+                                    dataColumn: columnsTemp,
+                                    idTable: "idTableDatePivot",
+                                    columns: columnsFinal,
+                                    datePivot: true)
+        }
+        if supportTri {
+            var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])
+            drills = drill
+            let dataPivotColumnsTemp = dataPivot[0]
+            var arrFinal: [String] = []
+            dataPivot.forEach { (arr) in
+                let header = arr[0]
+                arrFinal.append(header)
+            }
+            dataPivot.remove(at: 0)
+            dataPivotStr = tableString(
+                dataTable: dataPivot,
+                dataColumn: dataPivotColumnsTemp,
+                //dataColumn: arrFinal,
+                idTable: "idTableDataPivot",
+                columns: columnsFinal,
+                datePivot: true)
+        }
+        tableBasicStr = tableString(dataTable: rowsFinal,
+                                dataColumn: columnsF,
+                                idTable: "idTableBasic",
+                                columns: columnsFinal,
+                                datePivot: false)
+        var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
+        typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
+        let webView = """
+            \(getHTMLHeader(triType: columnsF.count == 3))
+            \(datePivotStr)
+            \(dataPivotStr)
+            \(tableBasicStr)
+        \(getHTMLFooter(rows: rowsFinal,
+                        columns: columnsF,
+                        types: columsType,
+                        drills: drills,
+                        type: typeFinal,
+                        mainColumn: mainColumn,
+                        second: second
+        ))
+        """
+        return webView
+        //let tableType = splitType == "table"
     }
     func getSplit(type: String, table: String = "") -> String {
         let wbSplit = "<div>SplitView</div>"
