@@ -10,6 +10,7 @@ import UIKit
 protocol ChatViewDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
+    func sendDrillDownManual(newData: [[String]])
 }
 class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
     let tableView = UITableView()
@@ -137,5 +138,8 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         delegate?.sendDrillDown(idQuery: idQuery, obj: obj, name: name)
+    }
+    func sendDrillDownManual(newData: [[String]]) {
+        delegate?.sendDrillDownManual(newData: newData)
     }
 }

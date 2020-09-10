@@ -11,6 +11,7 @@ protocol DataChatCellDelegate: class {
     func deleteQuery(numQuery: Int)
     func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
+    func sendDrillDownManual(newData: [[String]])
 }
 class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private var data = ChatComponentModel()
@@ -403,6 +404,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         delegate?.sendDrillDown(idQuery: idQuery, obj: obj, name: name)
+    }
+    func sendDrillDownManual(newData: [[String]]) {
+        delegate?.sendDrillDownManual(newData: newData)
     }
 }
 func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {

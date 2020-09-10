@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 protocol BoxWebviewViewDelegate: class{
     func sendDrillDown(idQuery: String, obj: String, name: String)
+    func sendDrillDownManual(newData: [[String]])
 }
 class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     var wbMain: WKWebView = WKWebView()
@@ -100,7 +101,17 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
                 }
             }
         }
+        print(data)
         print(position)
-        print(dataMain.rowsClean)
+        var newData: [[String]] = []
+        dataMain.rowsClean.forEach { (row) in
+            row.forEach { (column) in
+                if column == data {
+                    newData.append(row)
+                }
+            }
+        }
+        delegate?.sendDrillDownManual(newData: newData)
+        print(newData)
     }
 }

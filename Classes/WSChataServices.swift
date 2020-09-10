@@ -262,6 +262,9 @@ class ChataServices {
             completion(qboptions)
         }
     }
+    func getDrillComponent(data: [[String]], columns: []) {
+        
+    }
     func getDataComponent(response: [String: Any],
                           type: String = "",
                           split: Bool = false,

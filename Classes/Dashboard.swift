@@ -8,7 +8,6 @@
 import Foundation
 import WebKit
 public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate, ChatViewDelegate {
-    
     let tbMain = UITableView()
     let vwEmptyDash = UIView()
     let tbListDashboard = UITableView()
@@ -118,6 +117,9 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                 self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
             }
         }*/
+    }
+    func sendDrillDownManual(newData: [[String]]) {
+        print(newData)
     }
     func loaderWebview(_ load: Bool = true){
         if load {

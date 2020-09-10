@@ -154,6 +154,16 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             }
         }
     }
+    func sendDrillDownManual(newData: [[String]]) {
+        let service = ChataServices.instance
+        
+        /*service.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (component) in
+            DispatchQueue.main.async {
+                self.loadingQuery(false)
+                self.limitData(element: component)
+            }
+        }*/
+    }
     private func loadSafety(text: String) {
         let service = ChataServices()
         service.getSafetynet(query: text) { (suggestion) in
