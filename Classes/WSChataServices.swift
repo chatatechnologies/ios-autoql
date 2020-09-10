@@ -271,11 +271,18 @@ class ChataServices {
                                             rowsFinal: data,
                                             rowsFinalClean: data,
                                             columnsFinal: columns)
-        let numRows = data.count > 0 ? data[0].count : 0
+        let numRows = data.count > 0 ? data.count : 0
+        let columnsFilter = columns.map { (column) -> ChatTableColumnType in
+            return column.type
+        }
         newComponent.webView = webviewS
         newComponent.type = .Table
         newComponent.biChart = validBiCharts(rows: data, columnsFinal: columns)
         newComponent.numRow = numRows
+        newComponent.rowsClean = data
+        newComponent.dataRows = data
+        newComponent.columnsInfo = columns
+        newComponent.columns = columnsFilter
         return newComponent
     }
     func validBiCharts(rows: [[String]], columnsFinal: [ChatTableColumn]) -> Bool {

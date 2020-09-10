@@ -14,7 +14,7 @@ protocol DataChatCellDelegate: class {
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn])
 }
 class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
-    private var data = ChatComponentModel()
+    private var mainData = ChatComponentModel()
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
     private var functionJS = ""
@@ -36,7 +36,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     func configCell(allData: ChatComponentModel, index: Int, lastQueryFinal: Bool = false) {
         lastQuery = lastQueryFinal
-        data = allData
+        mainData = allData
         //self.
         self.index = index
         self.backgroundColor = .clear
@@ -53,12 +53,12 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         }
     }
     func genereteData() {
-        switch data.type {
+        switch mainData.type {
         case .Introduction:
-            loadLeftMenu(report: data.text.count < 10)
+            loadLeftMenu(report: mainData.text.count < 10)
             getIntroduction()
         case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-            if !data.isLoading{
+            if !mainData.isLoading{
                 loadLeftMenu(report: true)
                 getWebView()
             }
@@ -74,19 +74,19 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     private func getIntroduction(){
         let newView = IntroductionView()
-        newView.loadLabel(text: data.text)
+        newView.loadLabel(text: mainData.text)
         self.contentView.addSubview(newView)
-        newView.cardView(border: !data.user)
-        let align: DViewSafeArea = data.user ? .paddingTopRight : .paddingTopLeft
-        newView.backgroundColor = data.user ? chataDrawerAccentColor : chataDrawerBackgroundColor
-        if !data.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && data.webView != "error"{
+        newView.cardView(border: !mainData.user)
+        let align: DViewSafeArea = mainData.user ? .paddingTopRight : .paddingTopLeft
+        newView.backgroundColor = mainData.user ? chataDrawerAccentColor : chataDrawerBackgroundColor
+        if !mainData.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && mainData.webView != "error"{
             let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
             newView.addGestureRecognizer(tapgesture)
         }
-        newView.lbl.textColor = data.user ? .white : chataDrawerTextColorPrimary
-        data.user || data.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
+        newView.lbl.textColor = mainData.user ? .white : chataDrawerTextColorPrimary
+        mainData.user || mainData.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         newView.edgeTo(self, safeArea: align)
-        if !data.user && data.text.count < 7 {
+        if !mainData.user && mainData.text.count < 7 {
             newView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         }
         self.sizeToFit()
@@ -101,17 +101,17 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     private func getWebView() {
         buttonDefault = createButton(btn: defaultType)
-        boxWeb.loadWebview(strWebview: data.webView, idQuery: data.idQuery)
+        boxWeb.loadWebview(strWebview: mainData.webView, idQuery: mainData.idQuery)
         boxWeb.cardView()
-        boxWeb.dataMain = data
-        boxWeb.drilldown = data.drillDown
+        boxWeb.dataMain = mainData
+        boxWeb.drilldown = mainData.drillDown
         boxWeb.delegate = self
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showHide))
         boxWeb.addGestureRecognizer(tapgesture)
         self.contentView.addSubview(boxWeb)
         boxWeb.edgeTo(self, safeArea: .paddingTop)
-        let buttons = getButtons(num: data.dataRows.count > 0 ? data.dataRows[0].count : 0,
-                                 columns: data.columns)
+        let buttons = getButtons(num: mainData.dataRows.count > 0 ? mainData.dataRows[0].count : 0,
+                                 columns: mainData.columns)
         loadButtons(area: .modal2, buttons: buttons, view: boxWeb)
         loadButtons(area: .modal2Right, buttons: menuButtons, view: boxWeb)
         self.sizeToFit()
@@ -147,11 +147,11 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     private func getButtons(num: Int, columns: [ChatTableColumnType]) -> [ButtonMenu] {
         var buttonsFinal: [ButtonMenu] = []
-        let datePivot = supportPivot(columns: data.columns)
+        let datePivot = supportPivot(columns: mainData.columns)
         var contrast = false
         switch num {
         case 2:
-            if data.biChart {
+            if mainData.biChart {
                 buttonsFinal = getBichart()
             }
         case 3:
@@ -176,7 +176,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                 }
             }
         default:
-            if data.biChart{
+            if mainData.biChart{
                 buttonsFinal = getBichart()
             }
             //buttonsFinal = []
@@ -199,12 +199,12 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         print("Func")
     }
     @objc func showDrillDown() {
-        delegate?.sendDrillDown(idQuery: data.idQuery, obj: "", name: "")
+        delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: "", name: "")
     }
     private func getSuggestion() {
         let newView = SuggestionView()
         newView.delegate = self
-        newView.loadConfig(options: data.options, query: data.text)
+        newView.loadConfig(options: mainData.options, query: mainData.text)
         //newView.loadWebview(strWebview: data.webView)
         newView.cardView()
         self.contentView.addSubview(newView)
@@ -217,7 +217,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
-        newView.loadConfig(data, lastQueryFinal: lastQuery)
+        newView.loadConfig(mainData, lastQueryFinal: lastQuery)
         newView.delegate = self
         loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         self.sizeToFit()
@@ -255,7 +255,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     func showAlertResult(msg: String) {
         let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
         newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        ChataServices.instance.reportProblem(queryID: data.idQuery, problemType: msg) { (success) in
+        ChataServices.instance.reportProblem(queryID: mainData.idQuery, problemType: msg) { (success) in
             DispatchQueue.main.async {
                 newAlert.message = success ? "Thank you for your feedback" : "Error in report"
                 UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
@@ -266,7 +266,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let btnTemp: myCustomButton = myCustomButton()
         var newID = sender.idButton
         var oldID = buttonDefault?.idButton ?? ""
-        let newTypeStr = newID.replace(target: "cid", withString: "")
+        var newTypeStr = newID.replace(target: "cid", withString: "")
         btnTemp.setImage(sender.imageView?.image, for: .normal)
         btnTemp.idButton = newID
         sender.setImage(buttonDefault?.imageView?.image, for: .normal)
@@ -276,7 +276,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let type = newID.contains("cid") ? newID.replace(target: "cid", withString: "") : newID
         newID = newID.contains("cid") ? "container" : newID
         oldID = oldID.contains("cid") ? "container" : oldID
-        let numRows = newID.contains("Table") ? self.data.dataRows.count : 12
+        let numRows = newID.contains("Table") ? self.mainData.dataRows.count : 12
         functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
         print(functionJS)
         //if oldID != newID{
@@ -285,9 +285,10 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
                                   toTable: oldID != newID,
                                   isTable: newID.contains("Table"))
         //data.type =
-        data.type = ChatComponentType.withLabel(newTypeStr)
-        boxWeb.updateType(newType: data.type)
-        data.isLoading = true
+        newTypeStr = newID.contains("Table") ? "table" : newTypeStr
+        mainData.type = ChatComponentType.withLabel(newTypeStr)
+        boxWeb.updateType(newType: mainData.type)
+        mainData.isLoading = true
         //}
         /*delayWithSeconds(0.2) {
             self.boxWeb.wbMain.evaluateJavaScript("hideTables('#\(oldID)','#\(newID)', '\(type)');", completionHandler: {
