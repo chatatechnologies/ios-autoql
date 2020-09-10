@@ -406,7 +406,8 @@ class ChataServices {
                 columnsInfo: columnsFinal,
                 drillDown: drilldown,
                 position: position,
-                biChart: biChart
+                biChart: biChart,
+                rowsClean: rowsFinalClean
             )
         }
         return dataModel

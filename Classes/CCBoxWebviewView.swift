@@ -53,6 +53,7 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         imageView = imageView.changeColor()
         self.addSubview(imageView)
         imageView.edgeTo(self, safeArea: .centerSize, height: 50, padding: 100)
+        print(strWebview)
         self.wbMain.loadHTMLString(strWebview, baseURL: nil)
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -77,12 +78,29 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
             if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE
                 //&& !drilldown
             {
-                DRILLDOWNACTIVE = true
-                let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
-                let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
-                let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
-                delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)
+                if dataMain.columns.count > 3 {
+                    newDrilldown(data: message.body as? String ?? "")
+                } else{
+                    DRILLDOWNACTIVE = true
+                    let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
+                    let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
+                    let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
+                    delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)
+                }
             }
         }
+    }
+    func newDrilldown(data: String) {
+        print(dataMain.columns)
+        var position = -1
+        dataMain.columns.enumerated().forEach { (index, type) in
+            if type == .date{
+                if position == -1{
+                    position = index
+                }
+            }
+        }
+        print(position)
+        print(dataMain.rowsClean)
     }
 }

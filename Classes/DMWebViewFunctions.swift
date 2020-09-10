@@ -183,7 +183,13 @@ func getChartFooter(rows: [[String]],
         let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
         return mount
     }
+    var catX = rows.map { (row) -> String in
+        var name = ""
+        name = validateArray(row, 0) as? String ?? ""
+        return name
+    }
     if types.count > 3 {
+        catX = []
         catXFormat = []
         dataChartLine = []
         //var positionsCharts: [Int] = []
@@ -204,6 +210,7 @@ func getChartFooter(rows: [[String]],
         }
         rows.enumerated().forEach { (index, row) in
             var name = validateArray(row, positionsChartsSecond) as? String ?? ""
+            catX.append(name)
             name = name.toDate(true)
             if mainColum != -1 {
                 name = validateArray(row, mainColum) as? String ?? ""
@@ -231,14 +238,6 @@ func getChartFooter(rows: [[String]],
         let name = validateArray(row, 0) as? String ?? ""
         let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
         return [name, mount]
-    }
-    let catX = rows.map { (row) -> String in
-        var name = ""
-        name = validateArray(row, 0) as? String ?? ""
-        if dataSpecialActive {
-            name = validateArray(row, mainColum) as? String ?? ""
-        }
-        return name
     }
     let datachartTri = triType ? rows.map { (column) -> [Any] in
         drillTableY.append(column[1])
