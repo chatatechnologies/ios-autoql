@@ -12,7 +12,7 @@ protocol DashboardComponentCellDelegate: class{
     func updateComponent(text: String, first: Bool, position: Int)
 }
 class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler, ChatViewDelegate {
-    var data: DashboardModel = DashboardModel()
+    var mainData: DashboardModel = DashboardModel()
     let vwComponent = UIView()
     let vwWebview = UIView()
     let vwSecondWebview = UIView()
@@ -29,7 +29,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         return String(describing: self)
     }
     func configCell(data: DashboardModel, pos: Int, loading: Int = 0, secondLoading: Int = 0) {
-        self.data = data
+        self.mainData = data
         self.position = pos
         styleComponent()
         loadTitle()
@@ -81,7 +81,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         loadDefault(view: view, loading: loading, type: type)
     }
     func loadTitle() {
-        lblMain.text = data.title
+        lblMain.text = mainData.title
         vwComponent.addSubview(lblMain)
         lblMain.edgeTo(vwComponent, safeArea: .topPadding, height: 30, padding: 8)
         lblMain.textColor = chataDrawerAccentColor
@@ -125,7 +125,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         let newView = SuggestionView()
         view.removeView(tag: 1)
         newView.delegate = self
-        newView.loadConfig(options: list, query: data.text, first: firstView)
+        newView.loadConfig(options: list, query: mainData.text, first: firstView)
         //newView.loadWebview(strWebview: data.webView)
         newView.cardView()
         view.addSubview(newView)
@@ -173,7 +173,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         loaderWebview(false, view: view, type2: .Introduction)
     }
     @objc func showDrillDown() {
-        delegate?.sendDrillDown(idQuery: data.idQuery, obj: "", name: "", title: data.query)
+        delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: "", name: "", title: mainData.query)
     }
     func loaderWebview(_ load: Bool = true, view: UIView, type2: ChatComponentType){
         var isLoading = false
@@ -231,12 +231,14 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                     //column = data.stringColumnIndexSecond
                     secondQuery = true
                 }
-                let columns = secondQuery ? data.subDashboardModel.columnsInfo : data.columnsInfo
-                if columns.count  <= 3{
-                    let name = data.columnsInfo.count > 0 ? data.columnsInfo[0].originalName : ""
-                    let name2 = data.columnsInfo.count > 1 ? data.columnsInfo[1].originalName : ""
+                let columns = secondQuery ? mainData.subDashboardModel.columnsInfo : mainData.columnsInfo
+                if columns.count <= 3{
+                    let name = mainData.columnsInfo.count > 0 ? mainData.columnsInfo[0].originalName : ""
+                    let name2 = mainData.columnsInfo.count > 1 ? mainData.columnsInfo[1].originalName : ""
                     let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
-                    delegate?.sendDrillDown(idQuery: data.idQuery, obj: msg, name: nameFinal, title: data.query)
+                    delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: msg, name: nameFinal, title: mainData.query)
+                } else {
+                    newDrilldown(data: msg)
                 }
                 //delegate?.sendDrillDown(idQuery: data.idQuery, obj: columns, name: names, title: data.query)
                 /*let name = data.columnsInfo[0].originalName
@@ -245,6 +247,25 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                 delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)*/
             }
         //}
+    }
+    func newDrilldown(data: String) {
+        var position = -1
+        mainData.columnsInfo.enumerated().forEach { (index, type) in
+            if type.type == .date{
+                if position == -1{
+                    position = index
+                }
+            }
+        }
+        var newData: [[String]] = []
+        mainData.rowsClean.forEach { (row) in
+            row.forEach { (column) in
+                if column == data {
+                    newData.append(row)
+                }
+            }
+        }
+        delegate?.sendDrillDownManual(newData: newData, columns: mainData.columnsInfo)
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         
