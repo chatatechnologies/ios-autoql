@@ -332,18 +332,10 @@ class ChataServices {
             var biChart = false
             let (rowsFinal, rowsFinalClean, validBiChart) = getRows(rows: rows, columnsFinal: columnsFinal)
             biChart = validBiChart
-            if rows.count == 1{
-                if rows[0].count == 1{
-                    displayType = .Introduction
-                    if columnsFinal[0].type == .dollar {
-                        textFinal = "\(rows[0][0] )".toMoney()
-                    }
-                    else {
-                        textFinal = "\(rows[0][0] )"
-                    }
-                    user = false
-                }
-            }
+            let (finalUser, finalText, newDisplayType) = getFinalText(rows: rows, user: user, text: textFinal, displayType: displayType, columnsFinal: columnsFinal)
+            user = finalUser
+            textFinal = finalText
+            displayType = newDisplayType
             numRow = rows.count
             let columnsF = columnsFinal.map { (element) -> String in
                 return element.name
@@ -543,6 +535,28 @@ class ChataServices {
         }
         validValue = rows.count > 1 ? validValue : false
         return (rowsFinal, rowsFinalClean, validValue)
+    }
+    func getFinalText(rows: [[Any]],
+                      user: Bool,
+                      text: String,
+                      displayType: ChatComponentType,
+                      columnsFinal: [ChatTableColumn]) -> (Bool, String, ChatComponentType) {
+        var finalText = text
+        var newDisplayType = displayType
+        var finalUser = user
+        if rows.count == 1{
+            if rows[0].count == 1{
+                newDisplayType = .Introduction
+                if columnsFinal[0].type == .dollar {
+                    finalText = "\(rows[0][0] )".toMoney()
+                }
+                else {
+                    finalText = "\(rows[0][0] )"
+                }
+                finalUser = false
+            }
+        }
+        return (finalUser, finalText, newDisplayType)
     }
 }
 struct DashboardList {
