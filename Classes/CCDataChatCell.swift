@@ -232,6 +232,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     @IBAction func closeModal(_ sender: AnyObject) {
         vwFather.removeView(tag: 200)
+        
     }
     @IBAction func showMenu(_ sender: AnyObject){
         print("Show Menu")
@@ -302,8 +303,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     func generatePopUp () {
         //let vwFather: UIView = UIApplication.shared.keyWindow!
-        let tap = UITapGestureRecognizer(target: self, action: #selector(closeModal))
-        vwFather.addGestureRecognizer(tap)
+        //let tap = UITapGestureRecognizer(target: self, action: #selector(closeModal))
+        //vwFather.addGestureRecognizer(tap)
         let vwBackgroundMenu = UIView()
         vwBackgroundMenu.tag = 200
         vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)

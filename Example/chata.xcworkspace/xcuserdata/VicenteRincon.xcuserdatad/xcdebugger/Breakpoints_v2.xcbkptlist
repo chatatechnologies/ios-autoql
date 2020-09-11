@@ -2158,8 +2158,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
             landmarkName = "updateChart()"
             landmarkType = "7">
             <Locations>
@@ -4556,8 +4556,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4604,8 +4604,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
             landmarkName = "loadData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4620,8 +4620,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6444,8 +6444,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "changeChart(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6460,8 +6460,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "changeChart(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6476,8 +6476,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "changeChart(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6604,8 +6604,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "refererToQueryTips()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6716,8 +6716,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6748,8 +6748,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "closeModal()"
             landmarkType = "7">
             <Locations>
@@ -6924,8 +6924,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "252"
+            endingLineNumber = "252"
             landmarkName = "reportProblem(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6940,8 +6940,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
             landmarkName = "generatePopUp()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6956,8 +6956,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "reportProblemName(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6972,8 +6972,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
             landmarkName = "actionTyping(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7212,8 +7212,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "changeChart(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7372,8 +7372,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
             landmarkName = "changeChart(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7452,8 +7452,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "loadData()"
             landmarkType = "7">
             <Locations>
@@ -7532,8 +7532,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "418"
-            endingLineNumber = "418"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "updateSize(numQBOptions:index:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7548,8 +7548,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "loadData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7564,8 +7564,8 @@
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "394"
-            endingLineNumber = "394"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
             landmarkName = "genereMenuReport()"
             landmarkType = "7">
             <Locations>
@@ -7612,8 +7612,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>

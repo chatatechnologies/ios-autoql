@@ -32,6 +32,10 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     func start() {
         tbMain.bounces = false
         tbSecond.bounces = false
+        tbMain.allowsSelection = true
+        tbMain.isUserInteractionEnabled = true
+        tbSecond.allowsSelection = true
+        tbSecond.isUserInteractionEnabled = true
         lblMain.text = "Some things you can ask me:"
         addSubview(lblMain)
         lblMain.edgeTo(self, safeArea: .topPadding, height: 30, padding: 8)
