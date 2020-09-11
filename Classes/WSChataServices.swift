@@ -586,6 +586,7 @@ struct SubDashboardModel {
     var loading: Int
     var items: [String]
     var columnsInfo: [ChatTableColumn]
+    var rowsClean: [[String]]
     init(
         displayType: String = "",
         webview: String = "",
@@ -594,7 +595,8 @@ struct SubDashboardModel {
         idQuery: String = "",
         loading: Int = 0,
         items: [String] = [],
-        columnsInfo: [ChatTableColumn] = []
+        columnsInfo: [ChatTableColumn] = [],
+        rowsClean: [[String]] = []
     ) {
         self.displayType = displayType
         self.webview = webview
@@ -604,6 +606,7 @@ struct SubDashboardModel {
         self.loading = loading
         self.items = items
         self.columnsInfo = columnsInfo
+        self.rowsClean = rowsClean
     }
 }
 struct DashboardModel {
@@ -623,6 +626,7 @@ struct DashboardModel {
     var posH: Int
     var posW: Int
     var webview: String
+    var cleanRows: [[String]]
     var type: ChatComponentType
     var text: String
     var splitView: Bool
@@ -653,6 +657,7 @@ struct DashboardModel {
         posH: Int = 0,
         posW: Int = 0,
         webview: String = "",
+        cleanRows: [[String]] = [],
         type: ChatComponentType = ChatComponentType.Introduction,
         text: String = "",
         splitView: Bool = false,
@@ -683,6 +688,7 @@ struct DashboardModel {
         self.posH = posH
         self.posW = posW
         self.webview = webview
+        self.cleanRows = cleanRows
         self.type = type
         self.text = text
         self.splitView = splitView

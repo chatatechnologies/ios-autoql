@@ -83,6 +83,19 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
     func sendDrillDown(idQuery: String, obj: String, name: String, title: String) {
+        createDrillDown(title: title)
+        ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
+            DispatchQueue.main.async {
+                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
+            }
+        }
+        /*DashboardService.instance.getDrillDownDashboard(idQuery: idQuery, name: , value: name) { (dataComponent) in
+            DispatchQueue.main.async {
+                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
+            }
+        }*/
+    }
+    func createDrillDown(title: String) {
         vwDrillDown.tag = 100
         vwDrillDown.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         mainView.addSubview(vwDrillDown)
@@ -107,19 +120,11 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         wbMain.edgeTo(vwWebview, safeArea: .none)
         wbMain.navigationDelegate = self
         loaderWebview()
-        ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
-            DispatchQueue.main.async {
-                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
-            }
-        }
-        /*DashboardService.instance.getDrillDownDashboard(idQuery: idQuery, name: , value: name) { (dataComponent) in
-            DispatchQueue.main.async {
-                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
-            }
-        }*/
     }
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
-        print(newData)
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], title: String) {
+        createDrillDown(title: title)
+        let newComponent = ChataServices.instance.getDrillComponent(data: newData, columns: columns)
+        self.wbMain.loadHTMLString(newComponent.webView, baseURL: nil)
     }
     func loaderWebview(_ load: Bool = true){
         if load {
@@ -176,7 +181,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                         idQuery: component.idQuery,
                         loading: 2,
                         items: component.options,
-                        columnsInfo: component.columnsInfo
+                        columnsInfo: component.columnsInfo,
+                        rowsClean: component.rowsClean
                 )
                 self.dataDash[pos].subDashboardModel = newSub
                 let indexPath = IndexPath(row: pos, section: 0)
@@ -191,6 +197,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             DispatchQueue.main.async {
                 let pos = component.position
                 self.dataDash[pos].webview = component.webView
+                self.dataDash[pos].cleanRows = component.rowsClean
                 self.dataDash[pos].type = component.type
                 self.dataDash[pos].text = component.text
                 self.dataDash[pos].idQuery = component.idQuery
@@ -211,7 +218,9 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     func toggleListDashboard(_ show: Bool = true) {
         tbListDashboard.isHidden = !show
     }
-    
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
+        print("T")
+    }
 }
 extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

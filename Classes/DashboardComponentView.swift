@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 protocol DashboardComponentCellDelegate: class{
     func sendDrillDown(idQuery: String, obj: String, name: String, title: String)
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], title: String)
     func updateComponent(text: String, first: Bool, position: Int)
 }
 class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler, ChatViewDelegate {
@@ -258,14 +259,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             }
         }
         var newData: [[String]] = []
-        mainData.rowsClean.forEach { (row) in
+        mainData.cleanRows.forEach { (row) in
             row.forEach { (column) in
                 if column == data {
                     newData.append(row)
                 }
             }
         }
-        delegate?.sendDrillDownManual(newData: newData, columns: mainData.columnsInfo)
+        delegate?.sendDrillDownManual(newData: newData,
+                                      columns: mainData.columnsInfo,
+                                      title: mainData.title)
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         
