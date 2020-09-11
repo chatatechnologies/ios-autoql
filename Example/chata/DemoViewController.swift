@@ -17,6 +17,9 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         projectID: "spira-demo3" )*/
     let dataChat = DataMessenger(authentication: authentication(apiKey: "", domain: "", token: ""), projectID: "")
     var parameters: [String : Any] = [:]
+    let dashboardView = DashboardView()
+    let inputMainView = DashboardView()
+    //let inputView = QueryInputView()
     @IBOutlet weak var tbMain: UITableView!
     @IBOutlet weak var vwMain: UIView!
     @IBOutlet weak var scMain: UISegmentedControl!
@@ -68,24 +71,47 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 loadDashboard()
             }
         default:
-            print("error")
-        }
-    }
-    func loadDataSource() {
-        tbMain.isHidden = false
-        for sub in vwMain.subviews {
-            if let viewWithTag = sub.viewWithTag(10) {
-                viewWithTag.removeFromSuperview()
+            if dataChat.config.authenticationObj.token == "" {
+                let alert = UIAlertController(title: "", message: "Please log in", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                scMain.selectedSegmentIndex = 0
+            } else {
+                loadInput()
             }
         }
     }
+    func loadDataSource() {
+        let mainTag = 100
+        tbMain.isHidden = false
+        tbMain.tag = mainTag
+        toggleView(tag: mainTag)
+    }
     func loadDashboard() {
+        let mainTag = 101
         tbMain.isHidden = true
-        let newView = DashboardView()
-        newView.tag = 10
-        vwMain.addSubview(newView)
-        newView.edgeTo(vwMain, safeArea: .none)
-        newView.configLoad(authFinal: dataChat.config.authenticationObj, mainView: self.view)
+        inputMainView.isHidden = true
+        dashboardView.tag = mainTag
+        vwMain.addSubview(dashboardView)
+        toggleView(tag: mainTag)
+        dashboardView.edgeTo(vwMain, safeArea: .none)
+        dashboardView.configLoad(authFinal: dataChat.config.authenticationObj, mainView: self.view)
+    }
+    func loadInput() {
+        let mainTag = 102
+        inputMainView.tag = mainTag
+        vwMain.addSubview(inputMainView)
+        toggleView(tag: mainTag)
+        inputMainView.edgeTo(vwMain, safeArea: .none)
+    }
+    func toggleView(tag: Int) {
+        vwMain.subviews.forEach { (subView) in
+            if subView.tag == tag {
+                subView.isHidden = false
+            } else {
+                subView.isHidden = true
+            }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
