@@ -6,6 +6,9 @@
 //
 
 import Foundation
+protocol QueryBuilderViewDelegate: class {
+    func updateSize(numQBOptions: Int, index: Int)
+}
 class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     let lblMain = UILabel()
     let tbMain = UITableView()
@@ -15,6 +18,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     var dataQB: [QueryBuilderModel] = []
     var dataSelection: [String] = []
     weak var delegate: ChatViewDelegate?
+    weak var delegateQB: QueryBuilderViewDelegate?
     var selectSection = -1
     var selectOption = -1
     var titleFooter = "Use 💡Explore Queries to further explore the possibilities"
@@ -31,11 +35,12 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblMain.edgeTo(self, safeArea: .topPadding, height: 30, padding: 8)
         lblMain.textColor = chataDrawerTextColorPrimary
         lblMain.font = generalFont
-        addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain, padding: 16)
-        tbMain.backgroundColor = chataDrawerBackgroundColor
+        
         addSubview(lblInfo)
-        lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain, padding: 16)
+        lblInfo.edgeTo(self, safeArea: .bottomPadding, height: 50, padding: 8)
+        addSubview(tbMain)
+        tbMain.edgeTo(self, safeArea: .fullPadding, lblMain, lblInfo, padding: 16)
+        tbMain.backgroundColor = chataDrawerBackgroundColor
         lblInfo.clipsToBounds = true
         lblInfo.text = titleFooter
         lblInfo.font = generalFont
@@ -109,6 +114,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     func loadData() {
         ChataServices.instance.getDataQueryBuilder { (options) in
             self.dataQB = options
+            self.delegateQB?.updateSize(numQBOptions: options.count, index: 0)
             DispatchQueue.main.async {
                 self.tbMain.reloadData()
             }

@@ -18,13 +18,13 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     let dataChat = DataMessenger(authentication: authentication(apiKey: "", domain: "", token: ""), projectID: "")
     var parameters: [String : Any] = [:]
     let dashboardView = DashboardView()
-    let inputMainView = DashboardView()
+    let inputMainView = QueryInputView()
     //let inputView = QueryInputView()
     @IBOutlet weak var tbMain: UITableView!
     @IBOutlet weak var vwMain: UIView!
     @IBOutlet weak var scMain: UISegmentedControl!
     /*      Spira        */
-    let loginSection: DemoSectionsModel =
+    /*let loginSection: DemoSectionsModel =
         DemoSectionsModel(title: "Authentication", arrParameters: [
             DemoParameter(label: "* Project ID", type: .input, value: "spira-demo3", key: "projectID"),
             DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
@@ -33,9 +33,9 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
             DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
             DemoParameter(label: "Authenticate", type: .button, key: "login")
-        ])
+        ])*/
     /*Accounting Demo*/
-    /*let loginSection: DemoSectionsModel =
+    let loginSection: DemoSectionsModel =
     DemoSectionsModel(title: "Authentication", arrParameters: [
         DemoParameter(label: "* Project ID", type: .input, value: "accounting-demo", key: "projectID"),
         DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
@@ -44,7 +44,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
         DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
         DemoParameter(label: "Authenticate", type: .button, key: "login")
-    ])*/
+    ])
     
     /*let loginSection: DemoSectionsModel =
     DemoSectionsModel(title: "Authentication", arrParameters: [

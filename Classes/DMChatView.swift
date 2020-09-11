@@ -12,7 +12,7 @@ protocol ChatViewDelegate: class {
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn])
 }
-class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate {
+class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderViewDelegate {
     let tableView = UITableView()
     weak var delegate: ChatViewDelegate?
     var data = [
@@ -67,6 +67,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         let cell = DataChatCell()
         cell.selectionStyle = .none
         cell.delegate = self
+        cell.delegateQB = self
         cell.configCell(allData: data[indexPath.row], index: indexPath.row, lastQueryFinal: (indexPath.row == data.count - 1))
         return cell
     }
@@ -143,5 +144,13 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     }
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
         delegate?.sendDrillDownManual(newData: newData, columns: columns)
+    }
+    func updateSize(numQBOptions: Int, index: Int) {
+        if data.count > index {
+            DispatchQueue.main.async {
+                self.data[index].numQBoptions = numQBOptions
+                self.tableView.reloadData()
+            }
+        }
     }
 }

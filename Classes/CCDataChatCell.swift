@@ -13,7 +13,7 @@ protocol DataChatCellDelegate: class {
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn])
 }
-class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
+class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate {    
     private var mainData = ChatComponentModel()
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
@@ -31,6 +31,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     var buttonDefault: myCustomButton?
     var lastQuery: Bool = false
     weak var delegate: DataChatCellDelegate?
+    weak var delegateQB: QueryBuilderViewDelegate?
     static var identifier: String {
         return String(describing: self)
     }
@@ -94,6 +95,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private func getQueryBuilder() {
         let viewQB = QueryBuilderView()
         viewQB.delegate = self
+        viewQB.delegateQB = self
         self.contentView.addSubview(viewQB)
         viewQB.cardView()
         viewQB.edgeTo(self, safeArea: .paddingTop)
@@ -408,6 +410,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
         delegate?.sendDrillDownManual(newData: newData, columns: columns)
+    }
+    func updateSize(numQBOptions: Int, index: Int) {
+        delegateQB?.updateSize(numQBOptions: numQBOptions, index: self.index)
     }
 }
 func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
