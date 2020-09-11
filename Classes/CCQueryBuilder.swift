@@ -44,6 +44,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbMain.backgroundColor = chataDrawerBackgroundColor
         lblInfo.clipsToBounds = true
         lblInfo.text = titleFooter
+        lblInfo.bounces = false
         lblInfo.font = generalFont
         lblInfo.delegate = self
         lblInfo.backgroundColor = chataDrawerBackgroundColor

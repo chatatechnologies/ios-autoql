@@ -238,7 +238,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         genereMenuReport()
     }
     @IBAction func hideMenu(_ sender: AnyObject){
-        contentView.removeView(tag: 2)
+        superview?.removeView(tag: 2)
     }
     @IBAction func reportProblem(_ sender: UIButton){
         
@@ -252,7 +252,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         default:
             print("error")
         }
-        contentView.removeView(tag: 2)
+        superview?.removeView(tag: 2)
     }
     func showAlertResult(msg: String) {
         let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
@@ -370,8 +370,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     func genereMenuReport() {
         let vwBackgroundMenu = UIView()
-        contentView.addSubview(vwBackgroundMenu)
-        vwBackgroundMenu.edgeTo(self, safeArea: .none)
+        superview?.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
         vwBackgroundMenu.tag = 2
         let gesture = UITapGestureRecognizer(target: self, action: #selector(hideMenu))
         vwBackgroundMenu.addGestureRecognizer(gesture)
@@ -381,7 +381,10 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         vwMenu.cardView()
         contentView.subviews.forEach { (subView) in
             if subView.tag == 1 {
-                vwMenu.edgeTo(self, safeArea: .dropDownTopHeight, height: 120, subView)
+                let finalSafe: DViewSafeArea = self.mainData.type == .Introduction ?
+                    .dropDownBottomHeight :
+                    .dropDownTopHeight
+                vwMenu.edgeTo(self, safeArea: finalSafe, height: 120, subView)
             }
         }
         let newStack = UIStackView()
