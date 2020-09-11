@@ -149,7 +149,8 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         if data.count > index {
             DispatchQueue.main.async {
                 self.data[index].numQBoptions = numQBOptions
-                self.tableView.reloadData()
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
             }
         }
     }

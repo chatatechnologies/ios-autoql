@@ -30,12 +30,13 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         start()
     }
     func start() {
+        tbMain.bounces = false
+        tbSecond.bounces = false
         lblMain.text = "Some things you can ask me:"
         addSubview(lblMain)
         lblMain.edgeTo(self, safeArea: .topPadding, height: 30, padding: 8)
         lblMain.textColor = chataDrawerTextColorPrimary
         lblMain.font = generalFont
-        
         addSubview(lblInfo)
         lblInfo.edgeTo(self, safeArea: .bottomPadding, height: 50, padding: 8)
         addSubview(tbMain)
