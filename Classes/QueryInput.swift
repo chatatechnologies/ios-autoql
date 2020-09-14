@@ -6,7 +6,7 @@
 //
 
 import Foundation
-public class QueryInput: UIView {
+public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     public var authenticationInput: authentication = authentication()
     public var autoQLConfig: autoQLConfigInput = autoQLConfigInput()
     public var themeConfig: themeConfigInput = themeConfigInput()
@@ -46,6 +46,15 @@ public class QueryInput: UIView {
         btnSend.circle(size)
         changeButton()
         loadTextField()
+        loadTable()
+        
+    }
+    func loadTable() {
+        tbAutoComplete.delegate = self
+        tbAutoComplete.dataSource = self
+        let vwFather: UIView = UIApplication.shared.keyWindow!
+        vwFather.addSubview(tbAutoComplete)
+        tbAutoComplete.edgeTo(self, safeArea: .dropDownTopView, height: 200, tfMain )
     }
     func loadTextField() {
         tfMain.borderRadius()
@@ -88,6 +97,19 @@ public class QueryInput: UIView {
         let image = UIImage(named: imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
         btnSend.setImage(image, for: .normal)
     }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = "test"
+        return cell
+    }
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+    
 }
 public struct autoQLConfigInput {
     var enableAutocomplete: Bool
