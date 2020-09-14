@@ -10,11 +10,6 @@ import UIKit
 import chata
 class DemoViewController: UIViewController, DemoParameterCellDelegate {
     let label = UILabel()
-    /*let dataChat = DataMessenger(authentication: authentication(
-        apiKey: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU",
-        domain: "https://spira-staging.chata.io",
-        token: "eyJ0eXAiOiAiSldUIiwgImFsZyI6ICJSUzI1NiIsICJraWQiOiAiNzUxZmYzY2YxMjA2ZGUwODJhNzM1MjY5OTI2ZDg0NTgzYjcyOTZmNCJ9.eyJpYXQiOiAxNTkxNjM0OTI4LCAiZXhwIjogMTU5MTY1NjUyOCwgImlzcyI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImF1ZCI6ICJkZW1vMy1zdGFnaW5nLmNoYXRhLmlvIiwgInN1YiI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImVtYWlsIjogImRlbW8zLWp3dGFjY291bnRAc3RhZ2luZy0yNDU1MTQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAicHJvamVjdF9pZCI6ICJzcGlyYS1kZW1vMyIsICJ1c2VyX2lkIjogInNwaXJhLWRlbW8zIiwgImRpc3BsYXlfbmFtZSI6ICJzcGlyYS1kZW1vMyIsICJyZXNvdXJjZV9hY2Nlc3MiOiBbIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5LyoqIiwgIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5Il19.qaFeQW-8jiy9smijQnAX0ThYGi9cWycToqBBV9EzKSBzt2SIEZUhftNEyV-AE1rmIRAdsh4S9CjtzdZVEVF65lmfYklf_lH1yWpMx67LMg625L0P9E6U1atVhAqha3X0_qcA6QUB4Qx1kyl-iTtQI_EjylLDXAbtfbyj-ekQFI6ej-tpL0Fxek2y1cUaGj8Iqfb82GAZdRsRnQ-zqoodm6JZ_J4RvTjEYBNKkRl4t_4WoPPjoxpq4hDzH1_0z-4xktAN0Kk6749BHE4ENFY2zs-FgVdCnd7Ub6FQLPZMHrPR5dwJf9vbsAYofrdG5AePcYCUCNVMkeDk3iVMcy0UMQ=="),
-        projectID: "spira-demo3" )*/
     let dataChat = DataMessenger(authentication: authentication(apiKey: "", domain: "", token: ""), projectID: "")
     var parameters: [String : Any] = [:]
     let dashboardView = DashboardView()
@@ -101,6 +96,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         let mainTag = 102
         inputMainView.tag = mainTag
         vwMain.addSubview(inputMainView)
+        inputMainView.loadView()
         toggleView(tag: mainTag)
         inputMainView.edgeTo(vwMain, safeArea: .none)
     }
@@ -120,6 +116,16 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         loadColors()
         loadConfig()
         loadData()
+        loadOptions()
+    }
+    func loadOptions(login: Bool = false) {
+        if !login {
+            scMain.removeSegment(at: 2, animated: false)
+            scMain.removeSegment(at: 1, animated: false)
+        } else {
+            scMain.insertSegment(withTitle: "Dashboard", at: 1, animated: true)
+            scMain.insertSegment(withTitle: "Input/Output", at: 2, animated: true)
+        }
     }
     func loadSections(){
         allSection = [
@@ -237,6 +243,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                         self.present(alert, animated: true)
                         if success {
                             self.setNewValue(fatherP: "Authentication", sonP: "Authenticate", value: "Logout", changeLabel: true)
+                            self.loadOptions(login: success)
                             self.tbMain.reloadData()
                         }
                     }

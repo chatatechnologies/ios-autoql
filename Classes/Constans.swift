@@ -94,9 +94,9 @@ public struct authentication {
     public var apiKey: String
     public var domain: String
     public var token: String
-    public init(apiKey: String,
-         domain: String,
-         token: String) {
+    public init(apiKey: String = "",
+         domain: String = "",
+         token: String = "") {
         self.apiKey = apiKey
         self.domain = domain
         self.token = token

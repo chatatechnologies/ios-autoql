@@ -7,7 +7,16 @@
 
 import Foundation
 public class QueryInput: UIView {
-    var placeholder: String = "Type Your Queries here"
+    public var authenticationInput: authentication = authentication()
+    public var autoQLConfig: autoQLConfigInput = autoQLConfigInput()
+    public var themeConfig: themeConfigInput = themeConfigInput()
+    public var isDisabled: Bool = false
+    public var placeholder: String = "Type Your Queries here"
+    public var showLoadingDots: Bool = true
+    public var showChataIcon: Bool = true
+    public var enableVoiceRecord: Bool = true
+    public var autoCompletePlacement: String = "above"
+    public var inputPlacement: String = "top"
     let tfMain = UITextField()
     let btnSend = UIButton()
     var isMic = true
@@ -17,16 +26,16 @@ public class QueryInput: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    public func start(mainView: UIView, align: String = "top") {
-        self.backgroundColor = .black
-        let finalAlign: DViewSafeArea = align == "top" ? .topPadding : .bottomPadding
+    public func start(mainView: UIView) {
+        let finalAlign: DViewSafeArea = inputPlacement == "top" ? .topPadding : .bottomPadding
         mainView.addSubview(self)
         self.edgeTo(mainView, safeArea: finalAlign, height: 60 )
+        DataConfig.authenticationObj = self.authenticationInput
         generateComponents()
     }
     private func generateComponents() {
         let size: CGFloat = 40.0
-        let padding: CGFloat = -8
+        let padding: CGFloat = -16
         btnSend.backgroundColor = chataDrawerAccentColor
         //btnSend.addTarget(self, action: #selector(actionSend), for: .touchUpInside)
         //btnSend.addTarget(self, action: #selector(actionMicrophoneStart), for: .touchDown)
@@ -38,7 +47,7 @@ public class QueryInput: UIView {
         let tfMain = UITextField()
         tfMain.borderRadius()
         tfMain.configStyle()
-        tfMain.loadInputPlace(DataConfig.inputPlaceholder)
+        tfMain.loadInputPlace(placeholder)
         tfMain.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         tfMain.setLeftPaddingPoints(10)
         self.addSubview(tfMain)
@@ -66,4 +75,17 @@ public class QueryInput: UIView {
         btnSend.setImage(image, for: .normal)
     }
 }
-
+public struct autoQLConfigInput {
+    var enableAutocomplete: Bool
+    init(enableAutocomplete: Bool = true) {
+        self.enableAutocomplete = enableAutocomplete
+    }
+}
+public struct themeConfigInput {
+    var theme: String
+    var accentColor: String
+    init(theme: String = "light", accentColor: String = "#28a8e0") {
+        self.theme = theme
+        self.accentColor = accentColor
+    }
+}

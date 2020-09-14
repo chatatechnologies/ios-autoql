@@ -42,7 +42,6 @@
                                 <segments>
                                     <segment title="Data Messenger"/>
                                     <segment title="Dashboard"/>
-                                    <segment title="QueryInput"/>
                                 </segments>
                                 <connections>
                                     <action selector="changeSection:" destination="vXZ-lx-hvc" eventType="valueChanged" id="KhY-hj-WSD"/>

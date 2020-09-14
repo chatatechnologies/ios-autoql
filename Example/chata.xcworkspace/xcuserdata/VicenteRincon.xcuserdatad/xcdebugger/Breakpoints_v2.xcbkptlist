@@ -942,8 +942,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "butonAction(key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -958,8 +958,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
             landmarkName = "setDataValue(key:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3486,8 +3486,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "toogleAction(value:key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3502,8 +3502,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "toogleAction(value:key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6492,8 +6492,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "444"
-            endingLineNumber = "444"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6508,8 +6508,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "451"
-            endingLineNumber = "451"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6524,8 +6524,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
+            startingLineNumber = "452"
+            endingLineNumber = "452"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6540,8 +6540,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6556,8 +6556,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
             landmarkName = "segmentAction(key:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7605,16 +7605,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2A0CF6B1-F3C9-4F21-BF78-84BC71D9096A"
+            uuid = "0EB5ACD3-F6D1-4426-BD9A-778CB4C0F019"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "chata/QueryInputView.swift"
+            filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "init(frame:)"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
+            landmarkName = "butonAction(key:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0EB5ACD3-F6D1-4426-BD9A-778CB4C0F019 - 6c42276344de3704"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AutoQL.DemoViewController.butonAction(key: Swift.String) -&gt; ()"
+                  moduleName = "AutoQL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Example/chata/DemoViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "238"
+                  endingLineNumber = "238"
+                  offsetFromSymbolStart = "2477">
+               </Location>
+               <Location
+                  uuid = "0EB5ACD3-F6D1-4426-BD9A-778CB4C0F019 - e792bbbce1d88922"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Bool) -&gt; () in AutoQL.DemoViewController.butonAction(key: Swift.String) -&gt; ()"
+                  moduleName = "AutoQL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Example/chata/DemoViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "239"
+                  endingLineNumber = "239"
+                  offsetFromSymbolStart = "158">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "515295FD-7CC6-44A3-BD5F-A8624F913491"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "chata/DemoViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "butonAction(key:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
