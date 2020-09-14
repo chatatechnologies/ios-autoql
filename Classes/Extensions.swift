@@ -278,6 +278,17 @@ extension UIButton {
     }
 }
 extension UITextField {
+    func addLeftImageTo(image: UIImage) {
+        let size: CGFloat = 30
+        
+        //var image = UIImage(named: imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)
+        //image = image?.resizeT(maxWidthHeight: Double(size))
+        let frame = CGRect(x: 0, y: 0, width: size, height: size)
+        let imageView = UIImageView(frame: frame)
+        imageView.image = image
+        self.leftView = imageView
+        self.leftViewMode = .always
+    }
     func borderRadius() {
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.lightGray.cgColor

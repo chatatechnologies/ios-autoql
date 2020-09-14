@@ -254,6 +254,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
                     self.setNewValue(fatherP: "Authentication", sonP: "Logout", value: "Authenticate", changeLabel: true)
+                    self.loadOptions(login: false)
                     self.tbMain.reloadData()
                 }
             }

@@ -19,7 +19,8 @@ public class QueryInput: UIView {
     public var inputPlacement: String = "top"
     let tfMain = UITextField()
     let btnSend = UIButton()
-    var isMic = true
+    let tbAutoComplete = UITableView()
+    public var isMic = true
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,14 +45,18 @@ public class QueryInput: UIView {
         btnSend.edgeTo(self, safeArea: .rightCenterY, height: size, padding:padding)
         btnSend.circle(size)
         changeButton()
-        let tfMain = UITextField()
+        loadTextField()
+    }
+    func loadTextField() {
         tfMain.borderRadius()
         tfMain.configStyle()
         tfMain.loadInputPlace(placeholder)
         tfMain.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
-        tfMain.setLeftPaddingPoints(10)
+        tfMain.isEnabled = !isDisabled
+        tfMain.backgroundColor = isDisabled ? chataDrawerBorderColor : chataDrawerBackgroundColor
         self.addSubview(tfMain)
-        tfMain.edgeTo(self, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
+        tfMain.edgeTo(self, safeArea: .leftCenterY, height: 30, btnSend, padding: -16)
+        toggleIcon()
     }
     @objc func actionTyping() {
         changeButton()
@@ -64,9 +69,18 @@ public class QueryInput: UIView {
         }
         // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
+    func toggleIcon() {
+        if showChataIcon {
+            let image = UIImage(named: "iconProjectBubble.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            let image2 = image?.resizeT(maxWidthHeight: 30) ?? UIImage()
+            tfMain.addLeftImageTo(image: image2)
+        } else {
+            tfMain.setLeftPaddingPoints(20)
+        }
+    }
     func changeButton() {
         let emptyInput = self.tfMain.text?.isEmpty ?? true
-        isMic = emptyInput && DataConfig.enableVoiceRecord
+        isMic = emptyInput && enableVoiceRecord
         if !DataConfig.enableVoiceRecord{
             btnSend.isEnabled = !emptyInput
         }
