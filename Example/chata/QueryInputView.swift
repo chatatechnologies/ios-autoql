@@ -22,7 +22,6 @@ class QueryInputView: UIView {
     }
     func loadView() {
         inputQuery.authenticationInput = authentication(apiKey: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU", domain: "https://spira-staging.chata.io", token: token)
-        inputQuery.showChataIcon = false
         inputQuery.start(mainView: self)
     }
 }

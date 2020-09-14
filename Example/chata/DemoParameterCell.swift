@@ -15,7 +15,7 @@ protocol DemoParameterCellDelegate: class {
 }
 class DemoParameterCell: UITableViewCell {
     private var Data: DemoParameter = DemoParameter()
-    var blueColor = "#1890ff".hexToColor()
+    var blueColor = "#28A8E0".hexToColor()
     weak var delegate: DemoParameterCellDelegate?
     static var identifier: String {
         return String(describing: self)

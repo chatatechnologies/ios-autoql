@@ -40,9 +40,8 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         let size: CGFloat = 40.0
         let padding: CGFloat = -16
         btnSend.backgroundColor = chataDrawerAccentColor
-        //btnSend.addTarget(self, action: #selector(actionSend), for: .touchUpInside)
-        //btnSend.addTarget(self, action: #selector(actionMicrophoneStart), for: .touchDown)
-        //btnSend.addTarget(self, action: #selector(actionMicrophoneStop), for: .touchUpInside)
+        btnSend.addTarget(self, action: #selector(actionSend), for: .touchUpInside)
+        btnSend.addTarget(self, action: #selector(actionMicrophoneStart), for: .touchDown)
         self.addSubview(btnSend)
         btnSend.edgeTo(self, safeArea: .rightCenterY, height: size, padding:padding)
         btnSend.circle(size)
@@ -120,17 +119,36 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         print(arrAutocomplete[indexPath.row])
         tbAutoComplete.isHidden = true
     }
+    @objc func actionSend() {
+        let query = self.tfMain.text ?? ""
+        if isMic {
+            stopRecording()
+            btnSend.backgroundColor = chataDrawerAccentColor
+        }
+        if query != "" {
+            //delegate?.sendText(query, true)
+        }
+        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
+    }
+    @objc func actionMicrophoneStart() {
+        isTypingMic = true
+        if isMic {
+            loadRecord(textbox: tfMain)
+            btnSend.backgroundColor = .red
+        }
+        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
+    }
     
 }
 public struct autoQLConfigInput {
-    var enableAutocomplete: Bool
+    public var enableAutocomplete: Bool
     init(enableAutocomplete: Bool = true) {
         self.enableAutocomplete = enableAutocomplete
     }
 }
 public struct themeConfigInput {
-    var theme: String
-    var accentColor: String
+    public var theme: String
+    public var accentColor: String
     init(theme: String = "light", accentColor: String = "#28a8e0") {
         self.theme = theme
         self.accentColor = accentColor

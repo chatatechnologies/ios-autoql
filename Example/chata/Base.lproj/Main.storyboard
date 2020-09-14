@@ -26,18 +26,28 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="qJy-mY-mRz">
+                                        <rect key="frame" x="137.5" y="260" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="37K-AT-2CO"/>
+                                            <constraint firstAttribute="height" constant="100" id="MAj-dj-8rN"/>
+                                        </constraints>
+                                        <color key="color" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="ic9-Oy-EgF" firstAttribute="centerX" secondItem="6Qq-a7-ycG" secondAttribute="centerX" id="BuS-s2-7ax"/>
                                     <constraint firstItem="ic9-Oy-EgF" firstAttribute="centerY" secondItem="6Qq-a7-ycG" secondAttribute="centerY" id="Qzm-hr-iTU"/>
+                                    <constraint firstItem="qJy-mY-mRz" firstAttribute="centerY" secondItem="6Qq-a7-ycG" secondAttribute="centerY" id="VWE-38-nxg"/>
+                                    <constraint firstItem="qJy-mY-mRz" firstAttribute="centerX" secondItem="6Qq-a7-ycG" secondAttribute="centerX" id="YF8-4S-wqL"/>
                                     <constraint firstAttribute="trailing" secondItem="ic9-Oy-EgF" secondAttribute="trailing" id="cCq-Il-jaN"/>
                                     <constraint firstItem="ic9-Oy-EgF" firstAttribute="top" secondItem="6Qq-a7-ycG" secondAttribute="top" id="rZs-IG-rPR"/>
                                     <constraint firstItem="ic9-Oy-EgF" firstAttribute="leading" secondItem="6Qq-a7-ycG" secondAttribute="leading" id="rru-cT-VcK"/>
                                     <constraint firstAttribute="bottom" secondItem="ic9-Oy-EgF" secondAttribute="bottom" id="sfK-tv-BDH"/>
                                 </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="L00-xJ-IA8">
+                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="L00-xJ-IA8">
                                 <rect key="frame" x="36" y="8" width="303" height="32"/>
                                 <segments>
                                     <segment title="Data Messenger"/>
@@ -61,6 +71,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aiMain" destination="qJy-mY-mRz" id="WnQ-DL-pp4"/>
                         <outlet property="scMain" destination="L00-xJ-IA8" id="RXh-gf-d3L"/>
                         <outlet property="tbMain" destination="ic9-Oy-EgF" id="tla-ho-KRo"/>
                         <outlet property="vwMain" destination="6Qq-a7-ycG" id="kox-HY-xSm"/>

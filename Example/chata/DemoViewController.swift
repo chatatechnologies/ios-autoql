@@ -9,6 +9,7 @@
 import UIKit
 import chata
 class DemoViewController: UIViewController, DemoParameterCellDelegate {
+    @IBOutlet weak var aiMain: UIActivityIndicatorView!
     let label = UILabel()
     let dataChat = DataMessenger(authentication: authentication(apiKey: "", domain: "", token: ""), projectID: "")
     var parameters: [String : Any] = [:]
@@ -52,6 +53,15 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         DemoParameter(label: "Authenticate", type: .button, key: "login")
     ])*/
     var allSection: [DemoSectionsModel] = []
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        dataChat.config.demo = false
+        loadSections()
+        loadColors()
+        loadConfig()
+        loadData()
+        loadOptions()
+    }
     @IBAction func changeSection(_ sender: Any) {
         switch scMain.selectedSegmentIndex {
         case 0:
@@ -108,15 +118,6 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 subView.isHidden = true
             }
         }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        dataChat.config.demo = false
-        loadSections()
-        loadColors()
-        loadConfig()
-        loadData()
-        loadOptions()
     }
     func loadOptions(login: Bool = false) {
         if !login {
@@ -182,6 +183,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     func loadData(){
         dataChat.config.isVisible = true
         dataChat.config.userDisplayName = "Test"
+        aiMain.backgroundColor = UIColor.darkGray.withAlphaComponent(0.7)
+        aiMain.cardView()
     }
     func searchValue(_ key: String) -> String{
         var value = ""
@@ -235,12 +238,17 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                         dict[input.key] = input.value
                     }
                 }
+                self.view.isUserInteractionEnabled = false
+                self.aiMain.isHidden = false
+                self.aiMain.startAnimating()
                 dataChat.login(body: dict) { (success) in
                     DispatchQueue.main.async {
                         let message = success ? "Login Successful!" : "Invalid Credentials"
                         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(alert, animated: true)
+                        self.view.isUserInteractionEnabled = true
+                        self.aiMain.stopAnimating()
                         if success {
                             self.setNewValue(fatherP: "Authentication", sonP: "Authenticate", value: "Logout", changeLabel: true)
                             self.loadOptions(login: success)
