@@ -1694,8 +1694,8 @@
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSChataServices.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
+                  startingLineNumber = "107"
+                  endingLineNumber = "107"
                   offsetFromSymbolStart = "2245">
                </Location>
                <Location
@@ -1709,8 +1709,8 @@
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSChataServices.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "90"
-                  endingLineNumber = "90"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
                   offsetFromSymbolStart = "152">
                </Location>
             </Locations>
@@ -7663,6 +7663,22 @@
             startingLineNumber = "228"
             endingLineNumber = "228"
             landmarkName = "butonAction(key:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BB079BB7-1510-440D-822F-7A39ECF2F648"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QueryInput.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "start(mainView:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

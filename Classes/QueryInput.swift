@@ -20,7 +20,8 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     let tfMain = UITextField()
     let btnSend = UIButton()
     let tbAutoComplete = UITableView()
-    public var isMic = true
+    var isMic = true
+    var arrAutocomplete: [String] = []
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -32,6 +33,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         mainView.addSubview(self)
         self.edgeTo(mainView, safeArea: finalAlign, height: 60 )
         DataConfig.authenticationObj = self.authenticationInput
+        wsUrlDynamic = self.authenticationInput.domain
         generateComponents()
     }
     private func generateComponents() {
@@ -52,9 +54,11 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     func loadTable() {
         tbAutoComplete.delegate = self
         tbAutoComplete.dataSource = self
+        tbAutoComplete.cardView()
         let vwFather: UIView = UIApplication.shared.keyWindow!
         vwFather.addSubview(tbAutoComplete)
-        tbAutoComplete.edgeTo(self, safeArea: .dropDownTopView, height: 200, tfMain )
+        tbAutoComplete.isHidden = true
+        tbAutoComplete.edgeTo(self, safeArea: .dropDownTopView, height: 200, tfMain, padding: -16 )
     }
     func loadTextField() {
         tfMain.borderRadius()
@@ -70,10 +74,16 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     @objc func actionTyping() {
         changeButton()
         let query = self.tfMain.text ?? ""
-        if DataConfig.autoQLConfigObj.enableAutocomplete {
+        if autoQLConfig.enableAutocomplete && query != ""{
             ChataServices().getQueries(query: query) { (queries) in
-                //self.delegate?.updateAutocomplete(queries, query.isEmpty)
-                //self.autoCompleteView.updateTable()
+                DispatchQueue.main.async {
+                    let invalidQ = (self.tfMain.text ?? "") == ""
+                    self.arrAutocomplete = invalidQ ? [] : queries
+                    self.tbAutoComplete.isHidden = invalidQ
+                    self.tbAutoComplete.reloadData()
+                    //self.delegate?.updateAutocomplete(queries, query.isEmpty)
+                    //self.autoCompleteView.updateTable()
+                }
             }
         }
         // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
@@ -98,16 +108,17 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         btnSend.setImage(image, for: .normal)
     }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return arrAutocomplete.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "test"
+        cell.textLabel?.text = arrAutocomplete[indexPath.row]
         return cell
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        print(arrAutocomplete[indexPath.row])
+        tbAutoComplete.isHidden = true
     }
     
 }
