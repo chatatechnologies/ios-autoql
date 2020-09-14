@@ -32,6 +32,7 @@
 		1771BF0E241C01E000BE1D4F /* CCChatTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771BF0D241C01E000BE1D4F /* CCChatTableModel.swift */; };
 		1771BF10241C57D000BE1D4F /* preloader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1771BF0F241C57D000BE1D4F /* preloader.gif */; };
 		1781762F23FF108F001A2F1F /* DMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781762E23FF108F001A2F1F /* DMToolbarView.swift */; };
+		179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F2013250FCCE4003EF3E9 /* QueryInput.swift */; };
 		17AE6B9C240F1EDD00CFD252 /* DMColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AE6B9B240F1EDD00CFD252 /* DMColors.swift */; };
 		17B19F872458876D00744EB3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B19F862458876D00744EB3 /* Dashboard.swift */; };
 		17B46762242526DD0098989C /* CCSafetynetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B46761242526DD0098989C /* CCSafetynetView.swift */; };
@@ -122,6 +123,7 @@
 		1771BF0D241C01E000BE1D4F /* CCChatTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCChatTableModel.swift; sourceTree = "<group>"; };
 		1771BF0F241C57D000BE1D4F /* preloader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader.gif; sourceTree = "<group>"; };
 		1781762E23FF108F001A2F1F /* DMToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMToolbarView.swift; sourceTree = "<group>"; };
+		179F2013250FCCE4003EF3E9 /* QueryInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInput.swift; sourceTree = "<group>"; };
 		17AE6B9B240F1EDD00CFD252 /* DMColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMColors.swift; sourceTree = "<group>"; };
 		17B19F862458876D00744EB3 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		17B46761242526DD0098989C /* CCSafetynetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCSafetynetView.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				17B19F862458876D00744EB3 /* Dashboard.swift */,
+				179F2013250FCCE4003EF3E9 /* QueryInput.swift */,
 				172BB06C2460858D001402D7 /* DashboardComponentView.swift */,
 				170612892419443D00ABE8AF /* WSConnection.swift */,
 				1706128B241949C400ABE8AF /* WSChataServices.swift */,
@@ -642,6 +645,7 @@
 				17113B59241FF92200EB9134 /* CCSuggestionView.swift in Sources */,
 				17B19F872458876D00744EB3 /* Dashboard.swift in Sources */,
 				17CDBBCE24FEC4DD00C9F535 /* QTMainView.swift in Sources */,
+				179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */,
 				17F6F1D524045D7000DE0133 /* CCChatComponentModel.swift in Sources */,
 				170350B32441097800974370 /* DMChartsFunctions.swift in Sources */,
 				17AE6B9C240F1EDD00CFD252 /* DMColors.swift in Sources */,

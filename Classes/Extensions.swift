@@ -10,7 +10,7 @@ import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
     case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, topHeightPadding, fullStatePaddingTop, dropDownBottomHeight,
-    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, dropDownTopHeight, centerSize, bottomRight
+    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, dropDownTopHeight, centerSize, bottomRight, centerSizeUp
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
             "\($0.description)" == str
@@ -635,6 +635,11 @@ extension UIView {
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         case .centerSize:
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+            widthAnchor.constraint(equalToConstant: padding).isActive = true
+        case .centerSizeUp:
+            centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130).isActive = true
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
             widthAnchor.constraint(equalToConstant: padding).isActive = true

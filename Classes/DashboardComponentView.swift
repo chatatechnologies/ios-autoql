@@ -239,7 +239,19 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                     let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
                     delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: msg, name: nameFinal, title: mainData.query)
                 } else {
-                    newDrilldown(data: msg)
+                    if secondQuery {
+                        if mainData.subDashboardModel.type == .Table || mainData.subDashboardModel.type == .Webview {
+                            
+                        } else{
+                            newDrilldown(data: msg)
+                        }
+                    } else {
+                        if mainData.type == .Table || mainData.type == .Webview {
+                            
+                        } else{
+                            newDrilldown(data: msg)
+                        }
+                    }
                 }
                 //delegate?.sendDrillDown(idQuery: data.idQuery, obj: columns, name: names, title: data.query)
                 /*let name = data.columnsInfo[0].originalName

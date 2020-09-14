@@ -10,12 +10,13 @@ import Foundation
 import UIKit
 import chata
 class QueryInputView: UIView {
+    let inputQuery = QueryInput()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .black
+        inputQuery.start(mainView: self, align: "topp")
         //loadTable()
     }
 }

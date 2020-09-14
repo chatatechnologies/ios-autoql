@@ -315,7 +315,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         newView.backgroundColor = .white
         newView.cardView()
         vwBackgroundMenu.addSubview(newView)
-        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSize, height: 260, padding: 300)
+        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
         let lblTitle = UILabel()
         lblTitle.textColor = chataDrawerTextColorPrimary
         lblTitle.text = "Report Problem"
@@ -338,6 +338,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         tfReport.edgeTo(newView, safeArea: .topHeightPadding, height: 100, lblInfo, padding: 16)
         tfReport.cardView()
         tfReport.setLeftPaddingPoints(10)
+        tfReport.configStyle()
         tfReport.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         let stackView = UIStackView()
         stackView.getSide()
