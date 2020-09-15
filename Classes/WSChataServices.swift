@@ -156,7 +156,19 @@ class ChataServices {
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
         httpRequest(urlFinal, "POST", body) { (response) in
             //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
-            let msg = response["message"] as? String ?? ""
+            //let msg = response["message"] as? String ?? ""
+            let referenceId = response["reference_id"] as? String ?? ""
+            let finalComponent = self.getDataComponent(response: response,
+                                                       query: query,
+                                                       referenceID: referenceId)
+            completion(finalComponent)
+            
+            /*if referenceId == "1.1.430" || referenceId == "1.1.431" {
+                 self.getSuggestionsQueries(query: query) { (items) in
+                 let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position, second: second)
+                 completion(finalComponent)
+                }
+            }
             if msg == "I want to make sure I understood your query. Did you mean:"{
                 self.getSuggestionsQueries(query: query) { (items) in
                     let finalComponent = self.getDataComponent(response: response, query: query, items: items)
@@ -165,7 +177,7 @@ class ChataServices {
             } else {
                 let finalComponent = self.getDataComponent(response: response, query: query)
                 completion(finalComponent)
-            }
+            }*/
             //completion(matches)
         }
     }
@@ -311,9 +323,13 @@ class ChataServices {
                           position: Int = 0,
                           secondQuery: String = "",
                           mainColumn: Int = -1,
-                          second: String = "") -> ChatComponentModel {
+                          second: String = "",
+                          referenceID: String = "") -> ChatComponentModel {
         let data = response["data"] as? [String: Any] ?? [:]
-        var dataModel = ChatComponentModel(webView: "error", options: items, position: position)
+        var dataModel = ChatComponentModel(webView: "error",
+                                           options: items,
+                                           position: position,
+                                           referenceID: referenceID)
         if items.count > 0{
             dataModel.type = .Suggestion
         }
@@ -391,7 +407,8 @@ class ChataServices {
                 drillDown: drilldown,
                 position: position,
                 biChart: biChart,
-                rowsClean: rowsFinalClean
+                rowsClean: rowsFinalClean,
+                referenceID: referenceID
             )
         }
         return dataModel

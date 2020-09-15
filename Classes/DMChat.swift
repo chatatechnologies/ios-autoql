@@ -189,6 +189,15 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             service.getDataChat(query: text) { (element) in
                 DispatchQueue.main.async {
                     self.limitData(element: element)
+                    //self.loadingQuery(true)
+                    if element.referenceID == "1.1.430" || element.referenceID == "1.1.431" {
+                        service.getSuggestionsQueries(query: text) { (items) in
+                            var cloneElement = element
+                            cloneElement.options = items
+                            cloneElement.type = .Suggestion
+                            self.limitData(element: cloneElement)
+                        }
+                    }
                 }
             }
         }
