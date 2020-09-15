@@ -26,6 +26,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     var selectString: [String] = []
     var posSelected = 0
     var lastQuery = false
+    let vwFather: UIView = UIApplication.shared.keyWindow!
     weak var delegate: ChatViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -165,7 +166,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         label.edgeTo(stack, safeArea: .fullStackV, height: 0, padding: 10 )
     }
     @objc func removeTransparentView() {
-        for element in self.superview!.superview!.superview!.subviews {
+        for element in vwFather.subviews {
         //for element in self.superview!.superview!.superview!.superview!.subviews {
             if let viewWithTag = element.viewWithTag(-2) {
                 viewWithTag.removeFromSuperview()
@@ -198,11 +199,11 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         vwTrasparent.addGestureRecognizer(tapgesture)
         //adaptar Vista centrada
         tbChange.tag = -2
-        self.superview?.superview?.superview?.addSubview(tbChange)
+        vwFather.addSubview(tbChange)
         //self.superview?.superview?.superview?.superview?.addSubview(tbChange)
         //self.superview?.superview?.superview?.isHidden = true
         //tbChange.cardView()
-        let height: CGFloat = lastQuery ? 60 : CGFloat(41 * list.count)
+        let height: CGFloat = CGFloat(41 * list.count)
         tbChange.backgroundColor = .none
         tbChange.bounces = false
         tbChange.clipsToBounds = true

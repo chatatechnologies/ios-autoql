@@ -36,7 +36,6 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
         if data.count >= numQuery {
             let numDeletes = validateDeletes(numQuery: numQuery)
             DispatchQueue.main.async {
-                var num = numDeletes
                 var indexs: [IndexPath] = []
                 for idx in 0..<numDeletes  {
                     let finalPos = numQuery - idx
@@ -45,7 +44,7 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                 }
                 self.tableView.deleteRows(at: indexs, with: .automatic)
                 //self.tableView.reloadData()
-                let endIndex = IndexPath(row: numQuery - num, section: 0)
+                let endIndex = IndexPath(row: numQuery - numDeletes, section: 0)
                 self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
             }
         }
