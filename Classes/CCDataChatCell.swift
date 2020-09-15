@@ -383,9 +383,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         vwMenu.cardView()
         contentView.subviews.forEach { (subView) in
             if subView.tag == 1 {
-                let finalSafe: DViewSafeArea = self.mainData.type == .Introduction ?
-                    .dropDownBottomHeight :
-                    .dropDownTopHeight
+                var finalSafe: DViewSafeArea = .dropDownTopHeight
+                if self.mainData.type == .Introduction {
+                    finalSafe = .dropDownBottomHeight
+                } else if lastQuery {
+                    let rowValidation = self.mainData.dataRows.count < 3
+                    finalSafe = rowValidation ? .dropDownBottomHeightLeft : finalSafe
+                }
                 vwMenu.edgeTo(self, safeArea: finalSafe, height: 120, subView)
             }
         }

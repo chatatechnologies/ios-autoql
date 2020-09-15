@@ -9,8 +9,8 @@
 import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, topHeightPadding, fullStatePaddingTop, dropDownBottomHeight,
-    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, dropDownTopView, dropDownTopHeight, centerSize, bottomRight, centerSizeUp
+    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, topHeightPadding, fullStatePaddingTop, dropDownBottomHeight, dropDownBottomHeightLeft,
+    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, dropDownTopView, dropDownTopHeight,dropDownTopHeightLeft, centerSize, bottomRight, centerSizeUp
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
             "\($0.description)" == str
@@ -714,10 +714,22 @@ extension UIView {
             trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             widthAnchor.constraint(equalToConstant: 250).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
+        case .dropDownTopHeightLeft:
+            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 1).isActive = true
+            leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
+            //trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
+            widthAnchor.constraint(equalToConstant: 250).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
         case .dropDownBottomHeight:
             bottomAnchor.constraint(equalTo: top.topAnchor, constant: 1).isActive = true
             leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
             //trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
+            widthAnchor.constraint(equalToConstant: 250).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        case .dropDownBottomHeightLeft:
+            bottomAnchor.constraint(equalTo: top.topAnchor, constant: 1).isActive = true
+            //leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
+            trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             widthAnchor.constraint(equalToConstant: 250).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }

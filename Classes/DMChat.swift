@@ -141,6 +141,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwAutoComplete.isHidden = true
         self.endEditing(true)
         vwTextBox.changeButton()
+        self.loadingQuery(true)
         safe && DataConfig.autoQLConfigObj.enableQueryValidation ? loadSafety(text: text) : loadQuery(text: text)
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
@@ -185,7 +186,6 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     private func loadQuery(text: String) {
         DispatchQueue.main.async {
             let service = ChataServices()
-            self.loadingQuery(true)
             service.getDataChat(query: text) { (element) in
                 DispatchQueue.main.async {
                     self.limitData(element: element)
