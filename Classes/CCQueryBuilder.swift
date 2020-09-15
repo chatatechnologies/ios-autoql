@@ -118,10 +118,12 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbSecond.dataSource = self
     }
     func loadData() {
+        loadingView(mainView: self, inView: tbMain)
         ChataServices.instance.getDataQueryBuilder { (options) in
-            self.dataQB = options
-            self.delegateQB?.updateSize(numQBOptions: options.count, index: 0)
             DispatchQueue.main.async {
+                self.dataQB = options
+                loadingView(mainView: self, inView: self.tbMain, false)
+                self.delegateQB?.updateSize(numQBOptions: options.count, index: 0)
                 self.tbMain.reloadData()
             }
         }

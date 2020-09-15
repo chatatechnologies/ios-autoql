@@ -31,6 +31,9 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
         return getSizeSafetynet()
     case .QueryBuilder:
         let base = 80
+        if row.numQBoptions == 0 {
+            return 150
+        }
         let finalSum = row.numQBoptions > 10 ? 200 : row.numQBoptions * 50
         return CGFloat(base + finalSum)
         //return 350
@@ -231,14 +234,10 @@ func loadingView(mainView: UIView, inView: UIView , _ load: Bool = true){
         imageView2.loadGif(url: url)
         //let jeremyGif = UIImage.gifImageWithName("preloader")
         //let imageView = UIImageView(image: image)
-        imageView2.tag = 5
+        imageView2.tag = 500
         inView.addSubview(imageView2)
         imageView2.edgeTo(inView, safeArea: .centerSize, height: 50, padding: 100)
     } else{
-        inView.subviews.forEach { (view) in
-            if view.tag == 5{
-                view.removeFromSuperview()
-            }
-        }
+        inView.removeView(tag: 500)
     }
 }
