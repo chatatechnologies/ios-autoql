@@ -34,29 +34,37 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     }
     func deleteQuery(numQuery: Int) {
         if data.count >= numQuery {
-            var two = false
-            data.remove(at: numQuery)
-            if data[numQuery-1].type == .Introduction{
-                if data[numQuery-1].user {
-                    two = true
-                    data.remove(at: numQuery - 1)
-                }
-            }
-            let index1 = IndexPath(row: numQuery, section: 0)
-            let index2 = IndexPath(row: numQuery - 1, section: 0)
+            let numDeletes = validateDeletes(numQuery: numQuery)
             DispatchQueue.main.async {
-                var num = 1
-                if two{
-                    self.tableView.deleteRows(at: [index1, index2], with: .automatic)
-                    num = 2
-                } else{
-                    self.tableView.deleteRows(at: [index1], with: .automatic)
+                var num = numDeletes
+                var indexs: [IndexPath] = []
+                for idx in 0..<numDeletes  {
+                    let finalPos = numQuery - idx
+                    let newIndex = IndexPath(row: finalPos, section: 0)
+                    indexs.append(newIndex)
                 }
+                self.tableView.deleteRows(at: indexs, with: .automatic)
                 //self.tableView.reloadData()
                 let endIndex = IndexPath(row: numQuery - num, section: 0)
                 self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
             }
         }
+    }
+    func validateDeletes(numQuery: Int) -> Int {
+        var numDeletes = 1
+        data.remove(at: numQuery)
+        if data[numQuery-1].type == .Introduction{
+            if data[numQuery-1].user {
+                numDeletes = 2
+                data.remove(at: numQuery - 1)
+            } else if data[numQuery-1].referenceID == "1.1.430" ||
+                data[numQuery-1].referenceID == "1.1.431" {
+                numDeletes = 3
+                data.remove(at: numQuery - 1)
+                data.remove(at: numQuery - 2)
+            }
+        }
+        return numDeletes
     }
 }
 extension ChatView : UITableViewDelegate, UITableViewDataSource {

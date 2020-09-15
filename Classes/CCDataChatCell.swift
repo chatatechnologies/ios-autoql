@@ -85,7 +85,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
             newView.addGestureRecognizer(tapgesture)
         }
         newView.lbl.textColor = mainData.user ? .white : chataDrawerTextColorPrimary
-        mainData.user || mainData.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
+        if mainData.referenceID != "1.1.430" && mainData.referenceID != "1.1.431" {
+            mainData.user || mainData.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
+        }
         newView.edgeTo(self, safeArea: align)
         if !mainData.user && mainData.text.count < 7 {
             newView.widthAnchor.constraint(equalToConstant: 100).isActive = true
