@@ -141,7 +141,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwAutoComplete.isHidden = true
         self.endEditing(true)
         vwTextBox.changeButton()
-        self.loadingQuery(true)
+        self.loadingQuery(true, async: safe)
         safe && DataConfig.autoQLConfigObj.enableQueryValidation ? loadSafety(text: text) : loadQuery(text: text)
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
@@ -178,8 +178,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
                     options: [text],
                     fullSuggestions: suggestion
                 )
-                self.vwDataMessenger.data.append(finalComponent)
-                self.vwDataMessenger.updateTable()
+                self.limitData(element: finalComponent, load: true)
             }
         }
     }
@@ -189,20 +188,20 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             service.getDataChat(query: text) { (element) in
                 DispatchQueue.main.async {
                     self.limitData(element: element)
-                    //self.loadingQuery(true)
                     if element.referenceID == "1.1.430" || element.referenceID == "1.1.431" {
+                        self.loadingQuery(true)
                         service.getSuggestionsQueries(query: text) { (items) in
                             var cloneElement = element
                             cloneElement.options = items
                             cloneElement.type = .Suggestion
-                            self.limitData(element: cloneElement)
+                            self.limitData(element: cloneElement, load: true)
                         }
                     }
                 }
             }
         }
     }
-    private func loadingQuery(_ load: Bool){
+    private func loadingQuery(_ load: Bool, async: Bool = false){
         if load{
             self.isUserInteractionEnabled = false
             let imageView = UIImageView(image: nil)
@@ -217,16 +216,19 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             imageView.edgeTo(self.vwDataMessenger, safeArea: .bottomRight, height: 40, padding: 80)
         } else {
             DRILLDOWNACTIVE = false
-            self.isUserInteractionEnabled = true
-            for sub in self.subviews {
-                if let viewWithTag = sub.viewWithTag(100) {
-                    viewWithTag.removeFromSuperview()
+            if async {
+                DispatchQueue.main.async {
+                    self.isUserInteractionEnabled = true
+                    self.removeView(tag: 100)
                 }
+            } else {
+                self.isUserInteractionEnabled = true
+                self.removeView(tag: 100)
             }
         }
     }
-    func limitData(element: ChatComponentModel){
-        loadingQuery(false)
+    func limitData(element: ChatComponentModel, load: Bool = false){
+        loadingQuery(false, async: load)
         if self.vwDataMessenger.data.count < DataConfig.maxMessages {
             self.vwDataMessenger.data.append(element)
             self.vwDataMessenger.updateTable()

@@ -19,19 +19,18 @@ class SuggestionView: UIView {
     }
     func loadConfig(options: [String], query: String, first: Bool = true) {
         firstView = first
-        label.text = "I want to make sure I understood your query. Did you mean:"
+        /*label.text = "I want to make sure I understood your query. Did you mean:"
         label.numberOfLines = 0
         label.setSize()
-        label.textColor = chataDrawerTextColorPrimary
+        label.textColor = chataDrawerTextColorPrimary*/
         stack.axis = NSLayoutConstraint.Axis.vertical
         stack.distribution  = UIStackView.Distribution.fillEqually
         stack.alignment = UIStackView.Alignment.center
         stack.spacing = 8
-        self.addSubview(label)
-        label.edgeTo(self, safeArea: .topPadding, height: 50, padding: 8)
-        self.vwOptions.backgroundColor = .red
+        /*self.addSubview(label)
+        label.edgeTo(self, safeArea: .topPadding, height: 50, padding: 8)*/
         self.addSubview(scrollView)
-        scrollView.edgeTo(self, safeArea: .fullStatePadding, height: 0, label, padding: 8)
+        scrollView.edgeTo(self, safeArea: .nonePadding, padding: 16)
         scrollView.addSubview(stack)
         let finalHeight = CGFloat(options.count * 40)
         stack.edgeTo(scrollView, safeArea: .fullStack, height: finalHeight)

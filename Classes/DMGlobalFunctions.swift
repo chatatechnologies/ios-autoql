@@ -80,7 +80,7 @@ private func getSizeTable() -> CGFloat{
     return 360
 }
 private func getSizeSuggestion() -> CGFloat {
-    return CGFloat(130 + (data.options.count * 40))
+    return CGFloat(data.options.count * 55)
 }
 private func getSizeSafetynet() -> CGFloat {
     let size = Float(data.options[0].components(separatedBy: " ").count)
