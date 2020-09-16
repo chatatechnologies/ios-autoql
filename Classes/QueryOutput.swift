@@ -6,7 +6,8 @@
 //
 
 import Foundation
-public class QueryOutput: UIView{
+import WebKit
+public class QueryOutput: UIView, WKNavigationDelegate{
     public var authenticationInput: authentication = authentication()
     
     
@@ -20,13 +21,9 @@ public class QueryOutput: UIView{
     public var autoSelectQueryValidationSuggestion: Bool = true
     public var queryValidationSelections : String = ""
     public var renderSuggestionsAsDropdown: Bool = false
-    public var suggestionSelection: String
+    public var suggestionSelection: String = ""
     //public var dataFormatting: [S
-    let tfMain = UITextField()
-    let btnSend = UIButton()
-    let tbAutoComplete = UITableView()
-    var isMic = true
-    var arrAutocomplete: [String] = []
+    var wvMain = WKWebView()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -40,6 +37,9 @@ public class QueryOutput: UIView{
         DataConfig.authenticationObj = self.authenticationInput
         wsUrlDynamic = self.authenticationInput.domain
         generateComponents()
+        wvMain.backgroundColor = .blue
+        //self.addSubview(wvMain)
+        wvMain.edgeTo(self, safeArea: .nonePadding, padding: 16)
     }
     private func generateComponents() {
         
