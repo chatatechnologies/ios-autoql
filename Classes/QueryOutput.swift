@@ -754,6 +754,8 @@ public class QueryOutput: UIView, WKNavigationDelegate{
     private func generateComponents() {
         self.addSubview(wvMain)
         wvMain.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
+    }
+    public func loadComponent(text: String){
         wvMain.loadHTMLString(Doingtest, baseURL: nil)
     }
     public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {

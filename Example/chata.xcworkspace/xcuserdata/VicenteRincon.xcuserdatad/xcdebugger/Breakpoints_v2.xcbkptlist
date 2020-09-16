@@ -7500,8 +7500,8 @@
             filePath = "../Classes/QueryInput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "start(mainView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7839,6 +7839,22 @@
             startingLineNumber = "176"
             endingLineNumber = "176"
             landmarkName = "loadSafety(text:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9D45642-B0BB-4941-9710-3180EDFAC4DD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "chata/QueryInputView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "requestQuery(text:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -6,6 +6,9 @@
 //
 
 import Foundation
+public protocol QueryInputDelegate: class {
+    func requestQuery(text: String)
+}
 public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     public var authenticationInput: authentication = authentication()
     public var autoQLConfig: autoQLConfigInput = autoQLConfigInput()
@@ -17,6 +20,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     public var enableVoiceRecord: Bool = true
     public var autoCompletePlacement: String = "above"
     public var inputPlacement: String = "top"
+    weak public var delegate: QueryInputDelegate?
     let tfMain = UITextField()
     let btnSend = UIButton()
     let tbAutoComplete = UITableView()
@@ -123,8 +127,10 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
             btnSend.backgroundColor = chataDrawerAccentColor
         }
         if query != "" {
+            delegate?.requestQuery(text: query)
             //delegate?.sendText(query, true)
         }
+        tbAutoComplete.isHidden = true
         // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionMicrophoneStart() {
