@@ -82,6 +82,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
                 DispatchQueue.main.async {
                     let invalidQ = (self.tfMain.text ?? "") == ""
                     self.arrAutocomplete = invalidQ ? [] : queries
+                    print("NN")
                     self.tbAutoComplete.isHidden = invalidQ
                     self.tbAutoComplete.reloadData()
                 }
@@ -117,8 +118,14 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(arrAutocomplete[indexPath.row])
+        let query = arrAutocomplete[indexPath.row]
+        sendQuery(query: query)
+    }
+    func sendQuery(query: String) {
+        delegate?.requestQuery(text: query)
+        tfMain.text = ""
         tbAutoComplete.isHidden = true
+        self.endEditing(true)
     }
     @objc func actionSend() {
         let query = self.tfMain.text ?? ""
@@ -127,10 +134,9 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
             btnSend.backgroundColor = chataDrawerAccentColor
         }
         if query != "" {
-            delegate?.requestQuery(text: query)
+            sendQuery(query: query)
             //delegate?.sendText(query, true)
         }
-        tbAutoComplete.isHidden = true
         // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionMicrophoneStart() {
@@ -139,9 +145,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
             loadRecord(textbox: tfMain)
             btnSend.backgroundColor = .red
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
-    
 }
 public struct autoQLConfigInput {
     public var enableAutocomplete: Bool
