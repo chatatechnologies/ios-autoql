@@ -80,12 +80,9 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
                     self.arrAutocomplete = invalidQ ? [] : queries
                     self.tbAutoComplete.isHidden = invalidQ
                     self.tbAutoComplete.reloadData()
-                    //self.delegate?.updateAutocomplete(queries, query.isEmpty)
-                    //self.autoCompleteView.updateTable()
                 }
             }
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     func toggleIcon() {
         if showChataIcon {

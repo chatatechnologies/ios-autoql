@@ -20,11 +20,6 @@ var backgroundDash = (dark ? "fafafa" : "fafafa").hexToColor()
 var chataDrawerBlue = "#28a8e0".hexToColor()
 var chataDrawerWebViewBackground = dark ? "#636363" : "#ffffff"
 var chataDrawerWebViewText = dark ? "#FFFFFF" : "#5D5D5D"
-/*var chataDashboardBackgroundColor = (dark ? "#fff").hexToColor()
-var chataDashboardBorderColor = (dark ? "#d3d3d3").hexToColor()
-var chataDashboardHoverColor = (dark ? "#ECECEC").hexToColor()
-var chataDashboardTextColorPrimary = (dark ? "#5D5D5D").hexToColor()
-var chataDashboardTextColorPlaceholder = (dark ? "#000000").hexToColor()*/
 
 
 

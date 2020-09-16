@@ -381,8 +381,6 @@ class ChataServices {
                                                     rowsFinalClean: rowsFinalClean,
                                                     columnsFinal: columnsFinal)
                 webView = webviewS
-                //let tableType = splitType == "table"
-                
             } else {
                 webView = "text"
             }
@@ -455,7 +453,6 @@ class ChataServices {
             dataPivotStr = tableString(
                 dataTable: dataPivot,
                 dataColumn: dataPivotColumnsTemp,
-                //dataColumn: arrFinal,
                 idTable: "idTableDataPivot",
                 columns: columnsFinal,
                 datePivot: true)
@@ -482,11 +479,9 @@ class ChataServices {
         ))
         """
         return webView
-        //let tableType = splitType == "table"
     }
     func getSplit(type: String, table: String = "") -> String {
         let wbSplit = "<div>SplitView</div>"
-        //let _ = type == "table" ? type : "container2"
         if type == "table" {
             
         }
@@ -496,7 +491,6 @@ class ChataServices {
         var columnsFinal: [ChatTableColumn] = []
         for (_, column) in columns.enumerated() {
             let isVisible: Bool = column["is_visible"] as? Bool ?? true
-            // siempre agregar isVisible
             let name: String = !DataConfig.demo ? (column["display_name"] as? String ?? "") : (column["name"] as? String ?? "")
             let originalName = column["name"] as? String ?? ""
             let type: String = column["type"] as? String ?? ""

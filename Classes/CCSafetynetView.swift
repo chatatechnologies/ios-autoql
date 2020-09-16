@@ -61,12 +61,8 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     
     func loadSafeLabel(){
-        //mainLabel.numberOfLines = 0
-        //mainLabel.sizeToFit()
         mainLabel.backgroundColor = .clear
         mainLabel.translatesAutoresizingMaskIntoConstraints = true
-        //mainLabel.isSelectable = false
-        //mainLabel.lineBreakMode = .byTruncatingTail
         mainLabel.textColor = chataDrawerTextColorPrimary
         originalText = data.options[0]
         mainLabel.textAlignment = .center
@@ -79,7 +75,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     func createLabel(_ first: Bool = true) {
         let paragraph = NSMutableParagraphStyle()
-        //originalTexts = []
         paragraph.alignment = .center
         let attributedString:[NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraph,
@@ -87,21 +82,13 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             .foregroundColor : chataDrawerTextColorPrimary,
         ]
         var mainAttr = NSMutableAttributedString(string: "\(originalText)")
-        //let range2 = NSRange(location: 0, length: originalText.count)
-        //mainAttr.addAttributes(attributedString, range: range2)
-        
         var newString = ""
         for (index, change) in data.fullSuggestions.enumerated() {
-            //var posStack = getPos(index: index, sumStr: sumStr)
             let start = originalText.index(originalText.startIndex, offsetBy: change.start)
             let end = originalText.index(originalText.endIndex, offsetBy: change.end - originalText.count)
-            //let rangeLast = start..<end
             let originText = getRange(start: start, end: end, original: originalText)
             var mySubstring = change.suggestionList[0].text
-            //var newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
-            //newString = originalText.replaceRange(range: rangeLast, start: start, newText: mySubstring)
             newString = originalText.replace(target: originText, withString: mySubstring)
-            //newTextTransform = newString
             if first{
                 originalTexts.append(originText)
                 listArr.append(mySubstring)
@@ -109,7 +96,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
             } else {
                 let newSelect = selectString[index]
                 newString = originalText.replace(target: originText, withString: newSelect)
-                //newString = newString.replaceRange(range: rangeLast, start: start, newText: newSelect)
                 mySubstring = newSelect
             }
             let msgAttributes: [NSAttributedString.Key: Any] = [
@@ -179,10 +165,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     private func addTrasparentViewLabel(labelText: String, pos: Int){
         vwTrasparent.tag = -1
         tbChange.cardView()
-        //self.addSubview(vwTrasparent)
-        //vwTrasparent.edgeTo(self, safeArea: .none)
         dataSource = []
-        //numBtn = button.tag
         let originalTerm = "\(originalTexts[pos]) (Original Term)"
         let list = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
             let text = data.valueLabel
@@ -197,18 +180,13 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
         vwTrasparent.addGestureRecognizer(tapgesture)
-        //adaptar Vista centrada
         tbChange.tag = -2
         vwFather.addSubview(tbChange)
-        //self.superview?.superview?.superview?.superview?.addSubview(tbChange)
-        //self.superview?.superview?.superview?.isHidden = true
-        //tbChange.cardView()
         let height: CGFloat = CGFloat(41 * list.count)
         tbChange.backgroundColor = .none
         tbChange.bounces = false
         tbChange.clipsToBounds = true
         tbChange.edgeTo(mainLabel, safeArea: .dropDown, height: height, padding: -24)
-        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector())
     }
     func loadBtn() {
         let image = UIImage(named: "icPlay.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
@@ -235,7 +213,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        //cell.cardView()
         cell.backgroundColor = chataDrawerBackgroundColor.withAlphaComponent(0.9)
         cell.textLabel?.text = dataSource[indexPath.row]
         cell.textLabel?.font = generalFont

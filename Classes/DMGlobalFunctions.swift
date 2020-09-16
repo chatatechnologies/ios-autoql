@@ -110,8 +110,6 @@ func startRecording(textbox: UITextField) throws {
                 isFinal = result.isFinal
                 speechResult = result
                 textbox.text = result.bestTranscription.formattedString
-                //txQuery.text = result.bestTranscription.formattedString
-                //self.finalToRecorder = true
             }
             if error != nil || isFinal {
                 audioEngine.stop()
@@ -127,14 +125,6 @@ func startRecording(textbox: UITextField) throws {
         }
         audioEngine.prepare()
         try audioEngine.start()
-        //UIView.animate(withDuration: 0.4, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
-            //btnSend.transform = CGAffineTransform(scaleX: 1.2, y: 1.2) }, completion: nil)
-        /*let img = UIImage(named: assetIcMicStop)
-        let img2 = UIImage(named: assetIcMicRecord)
-        btnSubMenu.setImage(img2, for: .normal)
-        btnSubMenu.flashI()
-        btnSubMenu.isEnabled = false
-        btnSend.setImage(img, for: .normal)*/
     } else {
         stopRecording()
     }
@@ -142,21 +132,10 @@ func startRecording(textbox: UITextField) throws {
 func stopRecording() {
     isTypingMic = false
     audioEngine.stop()
-    //toogleCommand(active: true)
     recognitionRequest?.endAudio()
-    //recognitionTask?.cancel()
-    // Cancel the previous task if it's running
     if let recognitionTask = recognitionTask {
         recognitionTask.cancel()
-        //recognitionTask = nil
     }
-    /*let img2 = UIImage(named: assetChatMenu)
-    let img = UIImage(named: assetIcSend)*/
-    /*btnSubMenu.setImage(img2, for: .normal)
-    btnSubMenu.layer.removeAllAnimations()
-    btnSubMenu.isEnabled = true
-    btnSend.setImage(img, for: .normal)
-    btnSend.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)*/
 }
 func loadRecord(textbox: UITextField) {
     SFSpeechRecognizer.requestAuthorization { authStatus in
@@ -196,17 +175,14 @@ func reloadColors () {
 }
 func supportPivot(columns: [ChatTableColumnType]) -> Bool {
     var support = false
-    //if columns.count >= 2 && columns.count <= 3{
     if columns.count == 3{
         let valid1 = (columns[0] == .date
-            //|| columns[0] == .dateString
             )
             || (columns[1] == .date
-            //||  columns[1] == .dateString
         )
         let valid2 = columns[1] == .dollar || columns[2] == .dollar
         support = valid1 && valid2
-        if support && columns.count == 3 {
+        if support {
             support = columns[2] == .dollar
         }
     }
@@ -232,8 +208,6 @@ func loadingView(mainView: UIView, inView: UIView , _ load: Bool = true){
         let url = URL(fileURLWithPath: path!)
         let imageView2 = UIImageView(image: nil)
         imageView2.loadGif(url: url)
-        //let jeremyGif = UIImage.gifImageWithName("preloader")
-        //let imageView = UIImageView(image: image)
         imageView2.tag = 500
         inView.addSubview(imageView2)
         imageView2.edgeTo(inView, safeArea: .centerSize, height: 50, padding: 100)

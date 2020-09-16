@@ -50,10 +50,8 @@ class TextboxView: UIView {
         if DataConfig.autoQLConfigObj.enableAutocomplete {
             ChataServices().getQueries(query: query) { (queries) in
                 self.delegate?.updateAutocomplete(queries, query.isEmpty)
-                //self.autoCompleteView.updateTable()
             }
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionSend() {
         let query = self.tfMain.text ?? ""
@@ -64,7 +62,6 @@ class TextboxView: UIView {
         if query != "" {
             delegate?.sendText(query, true)
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionMicrophoneStart() {
         isTypingMic = true
@@ -72,7 +69,6 @@ class TextboxView: UIView {
             loadRecord(textbox: tfMain)
             btnSend.backgroundColor = .red
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     func addNotifications(){
         NotificationCenter.default.addObserver(self,

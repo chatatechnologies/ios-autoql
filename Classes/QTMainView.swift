@@ -79,7 +79,6 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         btnSend.circle(size)
         vwTextBox.addSubview(tfMain)
         tfMain.edgeTo(vwTextBox, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
-        //tfMain.edgeTo(self, safeArea: .topHeight, height: 50.0, vwToolbar, padding: 16)
         tfMain.cardView(borderRadius: 20)
         tfMain.loadInputPlace("Search relevant queries by topic")
         tfMain.configStyle()
@@ -252,7 +251,6 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         NotificationCenter.default.post(name: notifcloseQueryTips,
                                         object: nil)
         removeFromSuperview()
-        //self.isHidden = true
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Qtips.items.count
@@ -263,8 +261,6 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                                         object: typingSend)
         NotificationCenter.default.post(name: notifcloseQueryTips,
                                         object: nil)
-        /*NotificationCenter.default.post(name: notifSendText,
-                                        object: Qtips.items[indexPath.row])*/
         self.dismiss(animated: DataConfig.clearOnClose)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

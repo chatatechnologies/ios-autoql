@@ -175,11 +175,6 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
                 cell.backgroundColor = chataDrawerAccentColor
                 imageView = imageView.changeColor(color: .white)
             }
-            /*let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
-            let image2 = image?.resizeT(maxWidthHeight: 30)
-            //image2.transform = image2.transform.rotated(by: .pi)
-            cell.imageView?.image = image2
-            cell.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)*/
             return cell
         } else {
             let backgroundView = UIView()
@@ -201,7 +196,6 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             dataSelection = dataQB[indexPath.row].queries
             selectSection = indexPath.row
             toggleAnimationSecond()
-            //vwSecond.isHidden = false
             tbSecond.reloadData()
         } else {
             let typingSend = TypingSend(text: dataSelection[indexPath.row], safe: true)
@@ -209,7 +203,6 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             tbSecond.reloadData()
             NotificationCenter.default.post(name: notifTypingText,
                                             object: typingSend)
-            //delegate?.sendText(dataSelection[indexPath.row], true)
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {

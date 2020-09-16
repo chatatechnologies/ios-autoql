@@ -132,8 +132,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             let path = bundle.path(forResource: "gifBalls", ofType: "gif")
             let url = URL(fileURLWithPath: path!)
             imageView2.loadGif(url: url)
-            //let jeremyGif = UIImage.gifImageWithName("preloader")
-            //let imageView = UIImageView(image: image)
             imageView2.tag = 5
             vwWebview.addSubview(imageView2)
             imageView2.edgeTo(vwWebview, safeArea: .centerSize, height: 50, padding: 100)
@@ -157,9 +155,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         loadingGeneral = 1
         tbMain.reloadData()
         for (index, dash) in self.dataDash.enumerated() {
-            //let indexPath = IndexPath(row: index, section: 0)
-            //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
-            //cell.loaderWebview()
             if dash.splitView {
                 loadTwoDash(query: dash.secondQuery, type: dash.secondDisplayType, index: index, column: dash.stringColumnIndexSecond)
             }
@@ -239,15 +234,11 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             let cell = DashboardComponentCell()
             cell.delegate = self
             cell.delegateSend = self
-            //if indexPath.row ==
             cell.configCell(data: dataDash[indexPath.row],
                             pos: indexPath.row,
                             loading: self.dataDash[indexPath.row].loading == 2 ? 2 : loadingGeneral,
                             secondLoading: self.dataDash[indexPath.row].subDashboardModel.loading == 2 ? 2 : loadingGeneral
             )
-            
-            
-            //cell.addSubview(newView)
             return cell
         }
         if tableView == tbListDashboard {

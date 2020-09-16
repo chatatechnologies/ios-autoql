@@ -12,6 +12,7 @@
 		1704C8C524632266001D599B /* WSDashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1704C8C424632266001D599B /* WSDashboardService.swift */; };
 		1706128A2419443D00ABE8AF /* WSConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170612892419443D00ABE8AF /* WSConnection.swift */; };
 		1706128C241949C400ABE8AF /* WSChataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1706128B241949C400ABE8AF /* WSChataServices.swift */; };
+		170B7D552512799B00A06147 /* QueryOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170B7D542512799B00A06147 /* QueryOutput.swift */; };
 		17113B59241FF92200EB9134 /* CCSuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17113B58241FF92200EB9134 /* CCSuggestionView.swift */; };
 		172207F423F71685001B23CE /* DMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172207F323F71685001B23CE /* DMChat.swift */; };
 		172207F823F74F01001B23CE /* icCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 172207F623F74F01001B23CE /* icCancel.png */; };
@@ -102,6 +103,7 @@
 		1704C8C424632266001D599B /* WSDashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSDashboardService.swift; sourceTree = "<group>"; };
 		170612892419443D00ABE8AF /* WSConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSConnection.swift; sourceTree = "<group>"; };
 		1706128B241949C400ABE8AF /* WSChataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSChataServices.swift; sourceTree = "<group>"; };
+		170B7D542512799B00A06147 /* QueryOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryOutput.swift; sourceTree = "<group>"; };
 		17113B58241FF92200EB9134 /* CCSuggestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCSuggestionView.swift; sourceTree = "<group>"; };
 		172207F323F71685001B23CE /* DMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChat.swift; sourceTree = "<group>"; };
 		172207F623F74F01001B23CE /* icCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icCancel.png; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			children = (
 				17B19F862458876D00744EB3 /* Dashboard.swift */,
 				179F2013250FCCE4003EF3E9 /* QueryInput.swift */,
+				170B7D542512799B00A06147 /* QueryOutput.swift */,
 				172BB06C2460858D001402D7 /* DashboardComponentView.swift */,
 				170612892419443D00ABE8AF /* WSConnection.swift */,
 				1706128B241949C400ABE8AF /* WSChataServices.swift */,
@@ -657,6 +660,7 @@
 				17F6F1D224045CA500DE0133 /* CCIntroductionView.swift in Sources */,
 				17EC9EB923F5C6DC004B453F /* DataMessenger.swift in Sources */,
 				172BB06D2460858D001402D7 /* DashboardComponentView.swift in Sources */,
+				170B7D552512799B00A06147 /* QueryOutput.swift in Sources */,
 				1706128C241949C400ABE8AF /* WSChataServices.swift in Sources */,
 				17489AB4241713F400825936 /* DMAutoCompleteView.swift in Sources */,
 				172207F423F71685001B23CE /* DMChat.swift in Sources */,

@@ -20,7 +20,6 @@ class DashboardView: UIView {
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        //loadTable()
     }
     func configLoad(authFinal: authentication, mainView: UIView = UIView()){
         let blueColor = "#28A8E0".hexToColor()
@@ -30,10 +29,7 @@ class DashboardView: UIView {
         btnExecute.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         lbTextrun.text = "Run Dashboard Automatically"
         lbTextrun.textAlignment = .center
-        //addSubview(lbTextrun)
-        //lbTextrun.edgeTo(self, safeArea: .topView, height: 40)
         addSubview(btnExecute)
-        //btnExecute.edgeTo(self, safeArea:.secondTop, height: 30, lbTextrun)
         btnExecute.edgeTo(self, safeArea: .secondTop, height: 30)
         addSubview(vwDash)
         vwDash.edgeTo(self, safeArea:.fullState, btnExecute)
@@ -41,11 +37,8 @@ class DashboardView: UIView {
         let auth: authentication = authentication(apiKey: authFinal.apiKey, domain: authFinal.domain, token: authFinal.token)
         dash.loadDashboard(view: vwDash, autentification: auth, mainView: mainView )
         btnExecute.addTarget(self, action: #selector(executeDashboard), for: .touchUpInside)
-        //loadTable()
     }
     @objc func executeDashboard(sender: UIButton) {
-        //if sender.isOn {
-            dash.executeDashboard()
-        //}
+        dash.executeDashboard()
     }
 }

@@ -1726,8 +1726,8 @@
             filePath = "../Classes/DataMessenger.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "login(body:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1774,8 +1774,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "loadSafety(text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1790,8 +1790,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "loadSafety(text:)"
             landmarkType = "7">
             <Locations>
@@ -2750,8 +2750,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "sendDrillDown(idQuery:obj:name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2846,8 +2846,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "supportPivot(columns:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2862,8 +2862,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "supportPivot(columns:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2878,8 +2878,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "supportPivot(columns:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -3086,8 +3086,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "loadSafeLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3390,8 +3390,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3438,8 +3438,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "validateArray(_:_:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -3566,8 +3566,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3614,8 +3614,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "addTrasparentViewLabel(labelText:pos:)"
             landmarkType = "7">
             <Locations>
@@ -3662,8 +3662,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3678,8 +3678,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "248"
-            endingLineNumber = "248"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3694,8 +3694,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "addTrasparentViewLabel(labelText:pos:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3788,8 +3788,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4012,8 +4012,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "loadTwoDash(query:type:index:column:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4540,8 +4540,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4581,38 +4581,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F3391843-3910-4AB5-A557-8E3D24F78831"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/CCQueryBuilder.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "95ACB70A-23C5-4CEF-B217-0370D600BE01"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/CCSafetynetView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "createLabel(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "5011E8B9-E52C-41EF-802A-B5230D29233C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4620,8 +4588,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4636,24 +4604,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "createLabel(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D5FE0890-9387-49A3-AB43-A4A7879E62E7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/CCSafetynetView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4668,8 +4620,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4684,24 +4636,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "createLabel(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "34BC60FF-0A1E-4BE7-A3BE-011F940A346E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/CCSafetynetView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4716,24 +4652,8 @@
             filePath = "../Classes/CCSafetynetView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "createLabel(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5606F796-842B-49D6-88EE-E011C4B6A316"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/CCSafetynetView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "createLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5068,8 +4988,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "530"
-            endingLineNumber = "530"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5084,8 +5004,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "531"
-            endingLineNumber = "531"
+            startingLineNumber = "525"
+            endingLineNumber = "525"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
             <Locations>
@@ -5132,8 +5052,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "526"
+            endingLineNumber = "526"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5148,8 +5068,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "554"
-            endingLineNumber = "554"
+            startingLineNumber = "548"
+            endingLineNumber = "548"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5452,8 +5372,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "loadPagination()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5468,8 +5388,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "actionChangePage(sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5478,6 +5398,22 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B000E03E-7FE0-4E39-9113-99F6A4F81E53"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QTMainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "selectPage(numberPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "36C5A0EC-E1B2-47E1-96D9-9EB80EEE66E6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -5493,15 +5429,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "36C5A0EC-E1B2-47E1-96D9-9EB80EEE66E6"
+            uuid = "1790B321-BB70-4EC6-8BC9-484D974B88A1"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "selectPage(numberPage:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5509,7 +5445,39 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1790B321-BB70-4EC6-8BC9-484D974B88A1"
+            uuid = "DAE6C95E-0DD6-45F5-8DD4-C76920DB3FDE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QTMainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "selectPage(numberPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9CDA4BED-535F-4A83-80DC-7427DF0F221C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QTMainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "selectPage(numberPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "96DE8C8E-853B-4D36-B5FB-EC85C660ECDD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -5525,54 +5493,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DAE6C95E-0DD6-45F5-8DD4-C76920DB3FDE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/QTMainView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "selectPage(numberPage:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9CDA4BED-535F-4A83-80DC-7427DF0F221C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/QTMainView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
-            landmarkName = "selectPage(numberPage:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "96DE8C8E-853B-4D36-B5FB-EC85C660ECDD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/QTMainView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "selectPage(numberPage:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "5B875933-F183-49BB-810B-DA91AC4509D7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -5580,8 +5500,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "loadSearch(number:pagination:sameBtn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5596,8 +5516,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "loadSearch(number:pagination:sameBtn:)"
             landmarkType = "7">
             <Locations>
@@ -5644,8 +5564,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
             landmarkName = "loadSearch(number:pagination:sameBtn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5660,8 +5580,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "loadSearch(number:pagination:sameBtn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5676,8 +5596,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "loadDefault()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5836,8 +5756,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
+            startingLineNumber = "394"
+            endingLineNumber = "394"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5948,8 +5868,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "loadTwoDash(query:type:index:column:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5964,8 +5884,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "loadTwoDash(query:type:index:column:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6252,8 +6172,8 @@
             filePath = "../Classes/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "loadOneDash(query:type:index:column:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6316,8 +6236,8 @@
             filePath = "../Classes/DMTextboxView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "receiveQuery(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6348,8 +6268,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "updateAutocomplete(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6364,8 +6284,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
             landmarkName = "updateAutocomplete(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6460,8 +6380,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "460"
-            endingLineNumber = "460"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6476,8 +6396,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6492,8 +6412,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6508,8 +6428,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6540,8 +6460,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "reloadColors()"
             landmarkType = "9">
          </BreakpointContent>
@@ -6556,8 +6476,8 @@
             filePath = "../Classes/DataMessenger.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "configBubble()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6572,8 +6492,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "refererToQueryTips()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6588,8 +6508,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "sendDrillDown(idQuery:obj:name:)"
             landmarkType = "7">
             <Locations>
@@ -6652,8 +6572,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "542"
-            endingLineNumber = "542"
+            startingLineNumber = "536"
+            endingLineNumber = "536"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6668,8 +6588,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "545"
-            endingLineNumber = "545"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6700,8 +6620,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "exit()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6764,8 +6684,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "230"
-            endingLineNumber = "230"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "dismiss(animated:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6780,8 +6700,8 @@
             filePath = "../Classes/QTMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "saveData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7004,8 +6924,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7020,8 +6940,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "468"
-            endingLineNumber = "468"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
             landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7052,8 +6972,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "sendDrillDownManual(newData:columns:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7500,8 +7420,8 @@
             filePath = "../Classes/CCQueryBuilder.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7596,8 +7516,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "loadQuery(text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7628,8 +7548,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "loadQuery(text:)"
             landmarkType = "7">
             <Locations>
@@ -7676,8 +7596,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "loadQuery(text:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7692,8 +7612,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "limitData(element:load:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7708,8 +7628,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "loadingQuery(_:async:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7724,8 +7644,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "loadingQuery(_:async:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7740,8 +7660,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "sendText(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7756,8 +7676,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "loadingQuery(_:async:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7772,8 +7692,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "loadingQuery(_:async:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7782,6 +7702,86 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "64D3D60E-BE53-4F6D-BDE4-E4534E78A612"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMChat.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "loadingQuery(_:async:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E41BB55-D19B-4FED-9102-8A73C4A6B482"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMChat.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "loadingQuery(_:async:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4D17CA0A-050E-4AF6-9E84-3F436E65EF1B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMChat.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "sendText(_:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ACE2FAC6-C920-44E6-8F18-FF03BE21CAF0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMChat.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "loadSafety(text:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C346DFD2-3BCF-4AB0-9BAF-7E97612A3284"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMChat.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "limitData(element:load:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "34AA23BF-0085-44D0-9721-8D948015B0F0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -7797,86 +7797,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7E41BB55-D19B-4FED-9102-8A73C4A6B482"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMChat.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
-            landmarkName = "loadingQuery(_:async:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4D17CA0A-050E-4AF6-9E84-3F436E65EF1B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMChat.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "sendText(_:_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "ACE2FAC6-C920-44E6-8F18-FF03BE21CAF0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMChat.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
-            landmarkName = "loadSafety(text:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C346DFD2-3BCF-4AB0-9BAF-7E97612A3284"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMChat.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "limitData(element:load:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "34AA23BF-0085-44D0-9721-8D948015B0F0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMChat.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
-            landmarkName = "loadingQuery(_:async:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "501559DD-719D-4BF0-95DD-D23E7ADCC3B8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -7884,8 +7804,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "loadingQuery(_:async:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7916,8 +7836,8 @@
             filePath = "../Classes/DMChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "loadSafety(text:)"
             landmarkType = "7">
          </BreakpointContent>

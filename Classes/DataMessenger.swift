@@ -9,15 +9,11 @@ import UIKit
 public class DataMessenger: UIButton {
     var buttonCenter = CGPoint()
     var father2 = UIView()
-    //var authentication: authentication
     public var config = DataConfiguration.instance
     var colorTextPrimary: UIColor = .blue
     public convenience init( authentication: authentication, projectID: String) {
-        //super.init(frame: frame)
         self.init(authenticationFinal: authentication, projectIDF: projectID)
         DataConfig = config
-        //DataConfig.setValue(value: "MX", "dataFormatting", "currencyCode")
-        //let isVisible = DataConfig.getDataValue("dataFormatting", "currencyCode")
     }
     convenience init(authenticationFinal: authentication, projectIDF: String) {
         self.init(authenticationF: authenticationFinal, projectIDFinal: projectIDF)
@@ -58,13 +54,8 @@ public class DataMessenger: UIButton {
         self.backgroundColor = chataDrawerBackgroundColor
     }
     public func login(body: [String: Any] = [:], completion: @escaping CompletionChatSuccess){
-        
-        /*if let finalAuth = auth as? authentication{
-            
-        }*/
         let service = ChataServices()
         service.login(parameters: body,  completion: { (success) in
-            // si hay problemas utilizar instance
             if success {
                 service.getJWT(parameters: body) { (success) in
                     DispatchQueue.main.async {
@@ -76,7 +67,6 @@ public class DataMessenger: UIButton {
                             let image = UIImage(named: "\(nameImage).png", in: Bundle(for: type(of: self)), compatibleWith: nil)
                             self.setImage(image, for: .normal)
                         }
-                        //self.setImage(self.imageView?.changeColor(color: .white).image, for: .normal)
                     }
                     completion(success)
                 }
@@ -106,7 +96,6 @@ public class DataMessenger: UIButton {
     }
     private func configBubble(){
         self.backgroundColor = chataDrawerAccentColor
-        //let jeremyGif = UIImage.gifImageWithName("preloader")
         let image = UIImage(named: "iconProjectBubble.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
         self.setImage(image, for: .normal)
         self.setImage(self.imageView?.changeColor(color: .white).image, for: .normal)
@@ -139,16 +128,13 @@ public class DataMessenger: UIButton {
             && loc.y > ((self.frame.height / 2) + 30)
             && loc.y < (self.father2.frame.height - self.frame.height / 2)
         {
-            //self.center = loc
             let posX = loc.x > (self.father2.frame.width / 2) ? safeXLeft : safeXRight
             let Test = CGPoint(x: posX, y: loc.y)
             if sender.state == .began {
-                //buttonCenter = Test // store old button center
             } else if sender.state == .ended || sender.state == .failed || sender.state == .cancelled {
                 UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
                     self.center = Test
                 })
-                //self.center = buttonCenter // restore button center
             } else {
                 let location = sender.location(in: father2) // get pan location
                 self.center = location // set button to where finger is
@@ -158,9 +144,6 @@ public class DataMessenger: UIButton {
     public func createChat() {
         let chat = Chat(frame: father2.frame)
         chat.show()
-        //let tips = QTMainView(frame: father2.frame)
-        //tips.show()
-        
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

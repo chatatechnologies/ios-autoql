@@ -81,7 +81,6 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     func saveData() {
         removeFromSuperview()
-        //self.isHidden = true
     }
     private func loadDataMessenger() {
         vwMainChat.addSubview(vwDataMessenger)
@@ -98,9 +97,6 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwMainChat.addSubview(vwTextBox)
         vwTextBox.edgeTo(self, safeArea: .bottomView, height: 50.0)
         addObservers()
-        //let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing(_:)))
-        //tap.cancelsTouchesInView = false
-        //self.addGestureRecognizer(tap)
     }
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -209,8 +205,6 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             let path = bundle.path(forResource: "gifBalls", ofType: "gif")
             let url = URL(fileURLWithPath: path!)
             imageView.loadGif(url: url)
-            //let jeremyGif = UIImage.gifImageWithName("preloader")
-            //let imageView = UIImageView(image: image)
             imageView.tag = 100
             self.addSubview(imageView)
             imageView.edgeTo(self.vwDataMessenger, safeArea: .bottomRight, height: 40, padding: 80)
