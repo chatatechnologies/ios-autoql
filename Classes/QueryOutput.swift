@@ -34,7 +34,7 @@ public class QueryOutput: UIView, WKNavigationDelegate{
         self.edgeTo(mainView, safeArea: .bottomPaddingtoTop, subView)
         //DataConfig.authenticationObj = self.authenticationInput
         //wsUrlDynamic = self.authenticationInput.domain
-        generateComponents()
+        
     }
     private func loadType() {
         switch finalComponent.type {
@@ -44,22 +44,35 @@ public class QueryOutput: UIView, WKNavigationDelegate{
             print("Suggestion")
             //loadSuggestion(view: view, list: list, firstView: firstView)
         case .Introduction:
-            print("intro")
+            loadIntro()
             //loadIntro(view: view, text: text)
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .Table, .Webview, .StackArea:
-            self.wvMain.loadHTMLString(finalComponent.webView, baseURL: nil)
-            loadingView(mainView: self, inView: self.wvMain, false)
+            loadWebview()
             //loadWebView(view: view, webview: webview, loading: loading)
         case .QueryBuilder:
             print("no supported for dashboard")
         }
     }
-    private func generateComponents() {
+    private func loadIntro() {
+        let lblComponent = UILabel()
+        lblComponent.font = generalFont
+        lblComponent.text = finalComponent.text
+        lblComponent.tag = 1
+        lblComponent.textColor = chataDrawerTextColorPrimary
+        lblComponent.textAlignment = .center
+        self.addSubview(lblComponent)
+        lblComponent.edgeTo(self, safeArea: .none)
+        loadingView(mainView: self, inView: self, false)
+    }
+    private func loadWebview() {
         self.addSubview(wvMain)
+        wvMain.tag = 1
         wvMain.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
+        self.wvMain.loadHTMLString(finalComponent.webView, baseURL: nil)
     }
     public func loadComponent(text: String){
-        loadingView(mainView: self, inView: wvMain)
+        loadingView(mainView: self, inView: self)
+        self.removeView(tag: 1)
         ChataServices.instance.getDataChat(query: text) { (component) in
             DispatchQueue.main.async {
                 self.finalComponent = component
@@ -68,7 +81,7 @@ public class QueryOutput: UIView, WKNavigationDelegate{
         }
     }
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loadingView(mainView: self, inView: self.wvMain, false)
+        loadingView(mainView: self, inView: self, false)
     }
 }
 

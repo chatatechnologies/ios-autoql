@@ -58,10 +58,12 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         tbAutoComplete.delegate = self
         tbAutoComplete.dataSource = self
         tbAutoComplete.cardView()
+        tbAutoComplete.bounces = false
+        tbAutoComplete.clipsToBounds = true
         let vwFather: UIView = UIApplication.shared.keyWindow!
         vwFather.addSubview(tbAutoComplete)
         tbAutoComplete.isHidden = true
-        tbAutoComplete.edgeTo(self, safeArea: .dropDownTopView, height: 200, tfMain, padding: -16 )
+        tbAutoComplete.edgeTo(self, safeArea: .dropDownTopView, height: 150, tfMain, padding: -16 )
     }
     func loadTextField() {
         tfMain.borderRadius()
@@ -77,9 +79,11 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     @objc func actionTyping() {
         changeButton()
         let query = self.tfMain.text ?? ""
+        loadingView(mainView: self, inView: tbAutoComplete)
         if autoQLConfig.enableAutocomplete && query != ""{
             ChataServices().getQueries(query: query) { (queries) in
                 DispatchQueue.main.async {
+                    loadingView(mainView: self, inView: self.tbAutoComplete, false)
                     let invalidQ = (self.tfMain.text ?? "") == ""
                     self.arrAutocomplete = invalidQ ? [] : queries
                     print("NN")

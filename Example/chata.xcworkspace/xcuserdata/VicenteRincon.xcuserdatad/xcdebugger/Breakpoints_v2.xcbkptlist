@@ -7868,8 +7868,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "loadComponent(text:)"
             landmarkType = "7">
             <Locations>
@@ -7884,9 +7884,9 @@
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/QueryOutput.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45"
-                  offsetFromSymbolStart = "117">
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "88">
                </Location>
                <Location
                   uuid = "19328C69-7132-4BBA-95F6-6817750F12AB - 3a9a69b44a281d60"
@@ -7899,8 +7899,8 @@
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/QueryOutput.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
                   offsetFromSymbolStart = "158">
                </Location>
             </Locations>
@@ -7916,8 +7916,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "loadComponent(text:)"
             landmarkType = "7">
             <Locations>
@@ -8012,8 +8012,8 @@
             filePath = "../Classes/QueryInput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "actionTyping()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8028,8 +8028,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "webView(_:didFinish:)"
             landmarkType = "7">
          </BreakpointContent>
