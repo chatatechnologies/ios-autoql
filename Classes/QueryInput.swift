@@ -26,6 +26,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     let tbAutoComplete = UITableView()
     var isMic = true
     var arrAutocomplete: [String] = []
+    var noFlicker = false
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,17 +79,20 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     @objc func actionTyping() {
         changeButton()
+        noFlicker = true
         let query = self.tfMain.text ?? ""
         loadingView(mainView: self, inView: tbAutoComplete)
         if autoQLConfig.enableAutocomplete && query != ""{
             ChataServices().getQueries(query: query) { (queries) in
-                DispatchQueue.main.async {
-                    loadingView(mainView: self, inView: self.tbAutoComplete, false)
-                    let invalidQ = (self.tfMain.text ?? "") == ""
-                    self.arrAutocomplete = invalidQ ? [] : queries
-                    print("NN")
-                    self.tbAutoComplete.isHidden = invalidQ
-                    self.tbAutoComplete.reloadData()
+                if self.noFlicker {
+                    DispatchQueue.main.async {
+                        loadingView(mainView: self, inView: self.tbAutoComplete, false)
+                        let invalidQ = (self.tfMain.text ?? "") == ""
+                        self.arrAutocomplete = invalidQ ? [] : queries
+                        print("NN")
+                        self.tbAutoComplete.isHidden = invalidQ
+                        self.tbAutoComplete.reloadData()
+                    }
                 }
             }
         }
@@ -129,6 +133,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         delegate?.requestQuery(text: query)
         tfMain.text = ""
         tbAutoComplete.isHidden = true
+        noFlicker = false
         self.endEditing(true)
     }
     @objc func actionSend() {

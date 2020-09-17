@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-public class QueryOutput: UIView, WKNavigationDelegate{
+public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
     public var authenticationInput: authentication = authentication()
     public var queryResponse: [String: Any] = [:]
     //public var queryInputRef = nil
@@ -42,7 +42,7 @@ public class QueryOutput: UIView, WKNavigationDelegate{
             print("fullSuggestion")
         case .Suggestion:
             print("Suggestion")
-            //loadSuggestion(view: view, list: list, firstView: firstView)
+            loadSuggestion()
         case .Introduction:
             loadIntro()
             //loadIntro(view: view, text: text)
@@ -53,11 +53,22 @@ public class QueryOutput: UIView, WKNavigationDelegate{
             print("no supported for dashboard")
         }
     }
+    private func loadSuggestion() {
+        let newView = SuggestionView()
+        newView.delegateSuggestion = self
+        newView.tag = 1
+        newView.loadConfig(options: finalComponent.options, query: finalComponent.text)
+        //newView.loadWebview(strWebview: data.webView)
+        self.addSubview(newView)
+        newView.edgeTo(self, safeArea: .paddingTop)
+        self.sizeToFit()
+    }
     private func loadIntro() {
         let lblComponent = UILabel()
         lblComponent.font = generalFont
         lblComponent.text = finalComponent.text
         lblComponent.tag = 1
+        lblComponent.numberOfLines = 0
         lblComponent.textColor = chataDrawerTextColorPrimary
         lblComponent.textAlignment = .center
         self.addSubview(lblComponent)
@@ -82,6 +93,9 @@ public class QueryOutput: UIView, WKNavigationDelegate{
     }
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loadingView(mainView: self, inView: self, false)
+    }
+    func selectSuggest(query: String) {
+        print(query)
     }
 }
 

@@ -1742,8 +1742,8 @@
             filePath = "../Classes/CCSuggestionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
             landmarkName = "loadConfig(options:query:first:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3948,8 +3948,8 @@
             filePath = "../Classes/CCSuggestionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "loadConfig(options:query:first:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3964,8 +3964,8 @@
             filePath = "../Classes/CCSuggestionView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "loadConfig(options:query:first:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3983,22 +3983,6 @@
             startingLineNumber = "293"
             endingLineNumber = "293"
             landmarkName = "sendText(_:_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2600789B-9CA6-4131-B348-D530E70E9BA1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/CCSuggestionView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "selectSuggest(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7500,8 +7484,8 @@
             filePath = "../Classes/QueryInput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "start(mainView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7868,8 +7852,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "loadComponent(text:)"
             landmarkType = "7">
             <Locations>
@@ -7916,8 +7900,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "loadComponent(text:)"
             landmarkType = "7">
             <Locations>
@@ -8005,22 +7989,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4CBD6080-2BE8-47B6-9B2D-CCA6624AD71F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/QueryInput.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "actionTyping()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "7CDD3CD1-4F23-4A98-8BB4-198EE185336D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -8028,8 +7996,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "webView(_:didFinish:)"
             landmarkType = "7">
          </BreakpointContent>
