@@ -85,9 +85,20 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
         loadingView(mainView: self, inView: self)
         self.removeView(tag: 1)
         ChataServices.instance.getDataChat(query: text) { (component) in
-            DispatchQueue.main.async {
-                self.finalComponent = component
-                self.loadType()
+            if component.referenceID != "1.1.430" && component.referenceID != "1.1.431" {
+                ChataServices.instance.getQueries(query: component.text) { (options) in
+                    DispatchQueue.main.async {
+                        self.finalComponent = component
+                        self.finalComponent.type = .Suggestion
+                        self.finalComponent.options = options
+                        self.loadType()
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.finalComponent = component
+                    self.loadType()
+                }
             }
         }
     }
