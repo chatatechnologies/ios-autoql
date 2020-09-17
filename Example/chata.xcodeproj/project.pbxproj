@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1700722E24574823002B2C5D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700722D24574823002B2C5D /* DashboardView.swift */; };
+		178763A7251409FE003903B7 /* GlobalsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178763A6251409FE003903B7 /* GlobalsTest.swift */; };
 		179DFE90250BF51600D4FC5D /* QueryInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179DFE8F250BF51600D4FC5D /* QueryInputView.swift */; };
 		17B9387024119D6F00B907EC /* DemoParametersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9386F24119D6F00B907EC /* DemoParametersModel.swift */; };
 		17B938722411A2EE00B907EC /* DemoParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B938712411A2EE00B907EC /* DemoParameterCell.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		1700722D24574823002B2C5D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		178763A6251409FE003903B7 /* GlobalsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalsTest.swift; sourceTree = "<group>"; };
 		179DFE8F250BF51600D4FC5D /* QueryInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputView.swift; sourceTree = "<group>"; };
 		17B9386F24119D6F00B907EC /* DemoParametersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoParametersModel.swift; sourceTree = "<group>"; };
 		17B938712411A2EE00B907EC /* DemoParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoParameterCell.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				17B9386F24119D6F00B907EC /* DemoParametersModel.swift */,
 				17B938712411A2EE00B907EC /* DemoParameterCell.swift */,
+				178763A6251409FE003903B7 /* GlobalsTest.swift */,
 			);
 			name = "Example for chata";
 			path = chata;
@@ -351,6 +354,7 @@
 				607FACD81AFB9204008FA782 /* DemoViewController.swift in Sources */,
 				1700722E24574823002B2C5D /* DashboardView.swift in Sources */,
 				17B9387024119D6F00B907EC /* DemoParametersModel.swift in Sources */,
+				178763A7251409FE003903B7 /* GlobalsTest.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

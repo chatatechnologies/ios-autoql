@@ -247,6 +247,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(alert, animated: true)
+                        auth = DataConfig.authenticationObj
                         self.view.isUserInteractionEnabled = true
                         self.aiMain.stopAnimating()
                         if success {

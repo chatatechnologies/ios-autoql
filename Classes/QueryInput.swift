@@ -15,7 +15,6 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     public var themeConfig: themeConfigInput = themeConfigInput()
     public var isDisabled: Bool = false
     public var placeholder: String = "Type Your Queries here"
-    public var showLoadingDots: Bool = true
     public var showChataIcon: Bool = true
     public var enableVoiceRecord: Bool = true
     public var autoCompletePlacement: String = "above"

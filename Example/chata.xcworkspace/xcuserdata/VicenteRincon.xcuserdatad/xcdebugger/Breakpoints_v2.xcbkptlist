@@ -958,8 +958,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
             landmarkName = "setDataValue(key:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6316,8 +6316,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6332,8 +6332,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "466"
-            endingLineNumber = "466"
+            startingLineNumber = "467"
+            endingLineNumber = "467"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6348,8 +6348,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "460"
-            endingLineNumber = "460"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6364,8 +6364,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "462"
-            endingLineNumber = "462"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6380,8 +6380,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
             landmarkName = "segmentAction(key:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7436,8 +7436,8 @@
             filePath = "../Classes/QueryInput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "start(mainView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7852,25 +7852,9 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "webView(_:didFinish:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0D70F224-8700-4180-879F-1052A4D0C5D5"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/QueryOutput.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "loadSuggestion()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7884,8 +7868,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "loadSuggestion()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7900,8 +7884,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "loadSuggestion()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7932,8 +7916,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
             landmarkName = "loadWS(query:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7948,25 +7932,9 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "loadWS(query:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1C195F91-DFD0-4FA5-A73A-5F542DA072B2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/QueryOutput.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "loadType()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7980,8 +7948,8 @@
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "loadWebview()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7989,32 +7957,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "40BE8B8F-D358-4CBB-9863-0735D7754B6D"
+            uuid = "F5677D47-96DD-4400-A677-4F20BF5BED46"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "loadType()"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "loadWS(query:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4ED0999C-DDB0-4E71-BC8F-092C39F0BAD2"
+            uuid = "116276D4-2A2A-4C57-BC5A-661E912898DA"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/QueryOutput.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "getSafetynet()"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "loadSafe(query:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "116276D4-2A2A-4C57-BC5A-661E912898DA - aa111be75263fc4e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.QueryOutput.(loadSafe in _3B097815AFC0108F196926B4B3901B16)(query: Swift.String) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/QueryOutput.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "66">
+               </Location>
+               <Location
+                  uuid = "116276D4-2A2A-4C57-BC5A-661E912898DA - bc96673e4d42d26a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;chata.ChatFullSuggestion&gt;) -&gt; () in chata.QueryOutput.(loadSafe in _3B097815AFC0108F196926B4B3901B16)(query: Swift.String) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/QueryOutput.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "102"
+                  endingLineNumber = "102"
+                  offsetFromSymbolStart = "277">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AEEDE8F3-8561-4AD1-AA54-84725F045059"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/QueryInput.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "sendQuery(query:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

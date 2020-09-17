@@ -8,12 +8,12 @@
 import Foundation
 import WebKit
 public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, SafetynetViewDelegate {
-    public var authenticationInput: authentication = authentication()
+    public var authenticationOutput: authentication = authentication()
     public var queryResponse: [String: Any] = [:]
     //public var queryInputRef = nil
-    public var displayType: String = ""
-    public var height: Int = 0
-    public var width: Int = 0
+    public var displayType: String = "default"
+    public var height: CGFloat = 0
+    public var width: CGFloat = 0
     public var activeChartElementKey: String = ""
     public var renderTooltips: Bool = true
     public var autoSelectQueryValidationSuggestion: Bool = true
@@ -32,9 +32,8 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     public func start(mainView: UIView, subView: UIView) {
         mainView.addSubview(self)
         self.edgeTo(mainView, safeArea: .bottomPaddingtoTop, subView)
-        //DataConfig.authenticationObj = self.authenticationInput
-        //wsUrlDynamic = self.authenticationInput.domain
-        
+        DataConfig.authenticationObj = self.authenticationOutput
+        wsUrlDynamic = self.authenticationOutput.domain
     }
     private func loadType() {
         switch finalComponent.type {
