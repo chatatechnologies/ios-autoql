@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
+public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, SafetynetViewDelegate {
     public var authenticationInput: authentication = authentication()
     public var queryResponse: [String: Any] = [:]
     //public var queryInputRef = nil
@@ -39,9 +39,8 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
     private func loadType() {
         switch finalComponent.type {
         case .Safetynet:
-            print("fullSuggestion")
+            getSafetynet()
         case .Suggestion:
-            print("Suggestion")
             loadSuggestion()
         case .Introduction:
             loadIntro()
@@ -52,6 +51,18 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
         case .QueryBuilder:
             print("no supported for dashboard")
         }
+    }
+    private func getSafetynet() {
+        let newView = SafetynetView()
+        self.addSubview(newView)
+        newView.tag = 1
+        let finalStr = finalComponent.options.count > 0 ? finalComponent.options[0] : ""
+        let finalHeight = getSizeSafetynet(originalQuery: finalStr)
+        newView.edgeTo(self, safeArea: .topPadding, height: finalHeight, padding: 16)
+        newView.loadConfig(finalComponent, lastQueryFinal: false)
+        newView.delegateSafetynet = self
+        self.sizeToFit()
+        loadingView(mainView: self, inView: self, false)
     }
     private func loadSuggestion() {
         let newView = SuggestionView()
@@ -73,7 +84,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
         lblComponent.textColor = chataDrawerTextColorPrimary
         lblComponent.textAlignment = .center
         self.addSubview(lblComponent)
-        lblComponent.edgeTo(self, safeArea: .none)
+        lblComponent.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
         loadingView(mainView: self, inView: self, false)
     }
     private func loadWebview() {
@@ -84,10 +95,30 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
     }
     public func loadComponent(text: String){
         loadingView(mainView: self, inView: self)
-        loadWS(query: text)
+        loadSafe(query: text)
+    }
+    private func loadSafe(query: String) {
+        self.removeView(tag: 1)
+        ChataServices.instance.getSafetynet(query: query) { (suggestion) in
+            if suggestion.count == 0 {
+                self.loadWS(query: query)
+            } else {
+                let finalComponentF = ChatComponentModel(
+                    type: .Safetynet,
+                    text: "Verify by selecting the correct term from the menu below:",
+                    user: true,
+                    webView: "",
+                    numRow: 0,
+                    options: [query],
+                    fullSuggestions: suggestion
+                )
+                DispatchQueue.main.async {
+                    self.loadFinalComponent(componentF: finalComponentF)
+                }
+            }
+        }
     }
     private func loadWS(query: String) {
-        self.removeView(tag: 1)
         ChataServices.instance.getDataChat(query: query) { (component) in
             if component.referenceID == "1.1.430" || component.referenceID == "1.1.431" {
                 ChataServices.instance.getSuggestionsQueries(query: query) { (options) in
@@ -100,18 +131,25 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.finalComponent = component
-                    self.loadType()
+                    self.loadFinalComponent(componentF: component)
                 }
             }
         }
+    }
+    func loadFinalComponent(componentF: ChatComponentModel) {
+        self.finalComponent = componentF
+        self.loadType()
     }
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loadingView(mainView: self, inView: self, false)
     }
     func selectSuggest(query: String) {
         loadingView(mainView: self, inView: self)
-        loadWS(query: query)
+        loadSafe(query: query)
+    }
+    func runquery(query: String) {
+        loadingView(mainView: self, inView: self)
+        loadSafe(query: query)
     }
 }
 

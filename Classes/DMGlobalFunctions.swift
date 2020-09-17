@@ -28,7 +28,8 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     case .Suggestion:
         return getSizeSuggestion()
     case .Safetynet:
-        return getSizeSafetynet()
+        let finalStr = row.options.count > 0 ? row.options[0] : ""
+        return getSizeSafetynet(originalQuery: finalStr)
     case .QueryBuilder:
         let base = 80
         if row.numQBoptions == 0 {
@@ -51,7 +52,7 @@ func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
     case .Suggestion:
         return getSizeSuggestion()
     case .Safetynet:
-        return getSizeSafetynet()
+        return 100
     case .QueryBuilder:
         return 0
     }
@@ -82,8 +83,8 @@ private func getSizeTable() -> CGFloat{
 private func getSizeSuggestion() -> CGFloat {
     return CGFloat(data.options.count * 55)
 }
-private func getSizeSafetynet() -> CGFloat {
-    let size = Float(data.options[0].components(separatedBy: " ").count)
+func getSizeSafetynet(originalQuery: String) -> CGFloat {
+    let size = Float(originalQuery.components(separatedBy: " ").count)
     let numRow: Float = Float(size / 3.0)
     let numInt: Int = Int(numRow.rounded(.up))
     let numRows = numInt == 0 ? 1 : numInt

@@ -7,6 +7,9 @@
 
 import Foundation
 import WebKit
+protocol SafetynetViewDelegate: class {
+    func runquery(query: String)
+}
 class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     let lbl = UILabel()
     let btnRunQuery = UIButton()
@@ -28,6 +31,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     var lastQuery = false
     let vwFather: UIView = UIApplication.shared.keyWindow!
     weak var delegate: ChatViewDelegate?
+    weak var delegateSafetynet: SafetynetViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -207,6 +211,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         let typingSend = TypingSend(text: text, safe: false)
         NotificationCenter.default.post(name: notifTypingText,
                                         object: typingSend)
+        delegateSafetynet?.runquery(query: text)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
