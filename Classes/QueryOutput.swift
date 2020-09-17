@@ -60,8 +60,9 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
         newView.loadConfig(options: finalComponent.options, query: finalComponent.text)
         //newView.loadWebview(strWebview: data.webView)
         self.addSubview(newView)
-        newView.edgeTo(self, safeArea: .paddingTop)
+        newView.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
         self.sizeToFit()
+        loadingView(mainView: self, inView: self, false)
     }
     private func loadIntro() {
         let lblComponent = UILabel()
@@ -83,10 +84,13 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
     }
     public func loadComponent(text: String){
         loadingView(mainView: self, inView: self)
+        loadWS(query: text)
+    }
+    private func loadWS(query: String) {
         self.removeView(tag: 1)
-        ChataServices.instance.getDataChat(query: text) { (component) in
-            if component.referenceID != "1.1.430" && component.referenceID != "1.1.431" {
-                ChataServices.instance.getQueries(query: component.text) { (options) in
+        ChataServices.instance.getDataChat(query: query) { (component) in
+            if component.referenceID == "1.1.430" || component.referenceID == "1.1.431" {
+                ChataServices.instance.getSuggestionsQueries(query: query) { (options) in
                     DispatchQueue.main.async {
                         self.finalComponent = component
                         self.finalComponent.type = .Suggestion
@@ -106,7 +110,8 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate{
         loadingView(mainView: self, inView: self, false)
     }
     func selectSuggest(query: String) {
-        print(query)
+        loadingView(mainView: self, inView: self)
+        loadWS(query: query)
     }
 }
 
