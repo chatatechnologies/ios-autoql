@@ -12,14 +12,11 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     public var queryResponse: [String: Any] = [:]
     //public var queryInputRef = nil
     public var displayType: String = "default"
-    public var height: CGFloat = 0
-    public var width: CGFloat = 0
-    public var activeChartElementKey: String = ""
-    public var renderTooltips: Bool = true
+    /*public var activeChartElementKey: String = ""
     public var autoSelectQueryValidationSuggestion: Bool = true
-    public var queryValidationSelections : String = ""
-    public var renderSuggestionsAsDropdown: Bool = false
-    public var suggestionSelection: String = ""
+    public var queryValidationSelections : String = ""*/
+    //public var renderSuggestionsAsDropdown: Bool = false
+    //public var suggestionSelection: String = ""
     var finalComponent = ChatComponentModel()
     //public var dataFormatting: [S
     var wvMain = WKWebView()
