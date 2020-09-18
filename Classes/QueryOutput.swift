@@ -11,7 +11,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     public var authenticationOutput: authentication = authentication()
     public var queryResponse: [String: Any] = [:]
     //public var queryInputRef = nil
-    public var displayType: String = "default"
+    public var displayType: String = "stacked_column"
     /*public var activeChartElementKey: String = ""
     public var autoSelectQueryValidationSuggestion: Bool = true
     public var queryValidationSelections : String = ""*/
@@ -115,7 +115,8 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         }
     }
     private func loadWS(query: String) {
-        let type = displayType == "default" ? "" : displayType
+        var type = displayType == "default" ? "" : displayType
+        type = whiteListTypes(type: type) ? type : ""
         ChataServices.instance.getDataChat(query: query, type: type) { (component) in
             if component.referenceID == "1.1.430" || component.referenceID == "1.1.431" {
                 ChataServices.instance.getSuggestionsQueries(query: query) { (options) in

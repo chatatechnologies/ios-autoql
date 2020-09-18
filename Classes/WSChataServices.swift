@@ -313,6 +313,9 @@ class ChataServices {
         }
         return valid
     }
+    func validType(rows: [[Any]]) {
+        
+    }
     func getDataComponent(response: [String: Any],
                           type: String = "",
                           split: Bool = false,
@@ -338,9 +341,9 @@ class ChataServices {
         if data.count > 0 && dataModel.text != "No Data Found" {
             let columns = data["columns"] as? [[String: Any]] ?? []
             let finalType = type == "" ? (data["display_type"] as? String ?? "") : type
-            var displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
             let idQuery = data["query_id"] as? String ?? ""
             let rows = data["rows"] as? [[Any]] ?? []
+            var displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
             let columnsFinal = getColumns(columns: columns)
             var textFinal = ""
             var user = true
@@ -361,6 +364,7 @@ class ChataServices {
                     return "\(element[0])"
             } : []
             var webView = ""
+            
             let chartsBi = displayType == .Pie || displayType == .Bar || displayType == .Column || displayType == .Line
             let chartsTri = displayType == .Heatmap || displayType == .Bubble || displayType == .StackColumn || displayType == .StackBar || displayType == .StackArea
             let columsType = columnsFinal.map({ (element) -> ChatTableColumnType in

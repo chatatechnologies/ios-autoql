@@ -216,3 +216,22 @@ func loadingView(mainView: UIView, inView: UIView , _ load: Bool = true){
         inView.removeView(tag: 500)
     }
 }
+func whiteListTypes(type: String) -> Bool {
+    var valid = false
+    switch type {
+    case "bar",
+    "line",
+    "column",
+    "pie",
+    "heatmap",
+    "bubble",
+    "stacked_column",
+    "stacked_line",
+    "stacked_bar",
+    "table":
+        valid = true
+    default:
+        valid = false
+    }
+    return valid
+}
