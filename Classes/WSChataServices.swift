@@ -137,7 +137,7 @@ class ChataServices {
             }
         }
     }
-    func getDataChat(query: String, completion: @escaping CompletionChatComponentModel){
+    func getDataChat(query: String, type: String = "", completion: @escaping CompletionChatComponentModel){
         let body: [String: Any] = !DataConfig.demo
             ?   [
                     "text": query,
@@ -159,7 +159,7 @@ class ChataServices {
             //let msg = response["message"] as? String ?? ""
             let referenceId = response["reference_id"] as? String ?? ""
             let finalComponent = self.getDataComponent(response: response,
-                                                       query: query,
+                                                       type: type, query: query,
                                                        referenceID: referenceId)
             completion(finalComponent)
             

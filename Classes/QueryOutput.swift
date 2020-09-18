@@ -11,7 +11,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     public var authenticationOutput: authentication = authentication()
     public var queryResponse: [String: Any] = [:]
     //public var queryInputRef = nil
-    public var displayType: String = "bar"
+    public var displayType: String = "default"
     /*public var activeChartElementKey: String = ""
     public var autoSelectQueryValidationSuggestion: Bool = true
     public var queryValidationSelections : String = ""*/
@@ -115,7 +115,8 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         }
     }
     private func loadWS(query: String) {
-        ChataServices.instance.getDataChat(query: query) { (component) in
+        let type = displayType == "default" ? "" : displayType
+        ChataServices.instance.getDataChat(query: query, type: type) { (component) in
             if component.referenceID == "1.1.430" || component.referenceID == "1.1.431" {
                 ChataServices.instance.getSuggestionsQueries(query: query) { (options) in
                     DispatchQueue.main.async {
@@ -134,10 +135,6 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     }
     func loadFinalComponent(componentF: ChatComponentModel) {
         self.finalComponent = componentF
-        if displayType != "default" {
-            let newType: ChatComponentType = ChatComponentType.withLabel(displayType)
-            self.finalComponent.type = newType
-        }
         self.loadType()
     }
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
