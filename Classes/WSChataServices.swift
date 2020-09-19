@@ -313,8 +313,16 @@ class ChataServices {
         }
         return valid
     }
-    func validType(rows: [[Any]]) {
-        
+    func validType(rows: [[Any]], type: String) -> String {
+        var finalType = type
+        let triChartValid = triChartList(type: type)
+        if triChartValid && rows[0].count > 3 {
+            finalType = ""
+        }
+        if rows[0].count <= 1 {
+            finalType = ""
+        }
+        return finalType
     }
     func getDataComponent(response: [String: Any],
                           type: String = "",
@@ -340,9 +348,10 @@ class ChataServices {
         dataModel.text = message
         if data.count > 0 && dataModel.text != "No Data Found" {
             let columns = data["columns"] as? [[String: Any]] ?? []
-            let finalType = type == "" ? (data["display_type"] as? String ?? "") : type
-            let idQuery = data["query_id"] as? String ?? ""
             let rows = data["rows"] as? [[Any]] ?? []
+            let typeF = validType(rows: rows, type: type)
+            let finalType = typeF == "" ? (data["display_type"] as? String ?? "") : typeF
+            let idQuery = data["query_id"] as? String ?? ""
             var displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
             let columnsFinal = getColumns(columns: columns)
             var textFinal = ""
@@ -378,7 +387,7 @@ class ChataServices {
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
                 
                 let webviewS = genereteFinalWebView(
-                                                    type: type,
+                                                    type: typeF,
                                                     second: second,
                                                     mainColumn: mainColumn,
                                                     rowsFinal: rowsFinal,

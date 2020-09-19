@@ -235,3 +235,18 @@ func whiteListTypes(type: String) -> Bool {
     }
     return valid
 }
+func triChartList(type: String) -> Bool {
+    var valid = false
+    switch type {
+    case
+    "heatmap",
+    "bubble",
+    "stacked_column",
+    "stacked_line",
+    "stacked_bar":
+        valid = true
+    default:
+        valid = false
+    }
+    return valid
+}
