@@ -191,15 +191,17 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                                         position: index) { (component) in
             DispatchQueue.main.async {
                 let pos = component.position
-                self.dataDash[pos].webview = component.webView
-                self.dataDash[pos].cleanRows = component.rowsClean
-                self.dataDash[pos].type = component.type
-                self.dataDash[pos].text = component.text
-                self.dataDash[pos].idQuery = component.idQuery
-                self.dataDash[pos].columnsInfo = component.columnsInfo
-                self.dataDash[pos].loading = 2
-                let indexPath = IndexPath(row: pos, section: 0)
-                self.tbMain.reloadRows(at: [indexPath], with: .none)
+                if self.dataDash.count > pos {
+                    self.dataDash[pos].webview = component.webView
+                    self.dataDash[pos].cleanRows = component.rowsClean
+                    self.dataDash[pos].type = component.type
+                    self.dataDash[pos].text = component.text
+                    self.dataDash[pos].idQuery = component.idQuery
+                    self.dataDash[pos].columnsInfo = component.columnsInfo
+                    self.dataDash[pos].loading = 2
+                    let indexPath = IndexPath(row: pos, section: 0)
+                    self.tbMain.reloadRows(at: [indexPath], with: .none)
+                }
             }
         }
     }

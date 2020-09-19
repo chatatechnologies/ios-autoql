@@ -524,11 +524,11 @@ extension UIView {
         case .paddingTopLeft:
             topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-            trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -48).isActive = true
+            trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -58).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .paddingTopRight:
             topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
-            leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 48).isActive = true
+            leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 58).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .secondTop:
