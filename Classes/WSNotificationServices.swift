@@ -18,8 +18,6 @@ class NotificationServices {
             podelModel.acknowledged = data["acknowledged"] as? Int ?? 0
             podelModel.dismissed = data["dismissed"] as? Int ?? 0
             podelModel.unacknowledged = data["unacknowledged"] as? Int ?? 0
-            print(podelModel)
-            print(podelModel)
             //completion(matches)
         }
     }

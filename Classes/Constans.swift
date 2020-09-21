@@ -11,6 +11,7 @@ var generalFont = UIFont.systemFont(ofSize: 16)
 let notifSendText = Notification.Name("sendText")
 let notifTypingText = Notification.Name("typingText")
 let notifcloseQueryTips = Notification.Name("closeQT")
+var LOGIN: Bool = false
 public class DataConfiguration {
     static let instance = DataConfiguration()
     public var authenticationObj = authentication(apiKey: "", domain: "", token: "")

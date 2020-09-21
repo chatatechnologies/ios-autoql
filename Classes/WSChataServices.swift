@@ -44,6 +44,7 @@ class ChataServices {
         completion(true)
     }
     func clearData(){
+        LOGIN = false
         DataConfig.authenticationObj.token = ""
         ChataServices.instance.jwt = ""
         DataConfig.authenticationObj.apiKey = ""

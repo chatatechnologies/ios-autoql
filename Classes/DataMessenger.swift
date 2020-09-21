@@ -67,8 +67,18 @@ public class DataMessenger: UIButton {
                             let image = UIImage(named: "\(nameImage).png", in: Bundle(for: type(of: self)), compatibleWith: nil)
                             self.setImage(image, for: .normal)
                         }
+                        LOGIN = true
+                        NotificationServices.instance.getNotifications(number: 0)
+                        Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
+                            (time) in
+                            if LOGIN{
+                                NotificationServices.instance.getNotifications(number: 0)
+                            }
+                            else{
+                                time.invalidate()
+                            }
+                        }
                     }
-                    NotificationServices.instance.getNotifications(number: 0)
                     completion(success)
                 }
             } else {
