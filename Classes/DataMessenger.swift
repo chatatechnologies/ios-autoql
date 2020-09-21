@@ -57,7 +57,7 @@ public class DataMessenger: UIButton {
         let service = ChataServices()
         service.login(parameters: body,  completion: { (success) in
             if success {
-                service.getJWT(parameters: body) { (success) in
+                service.getJWTResponse(parameters: body) { (success) in
                     DispatchQueue.main.async {
                         let nameImage = "iconProject" + self.getImageProject(url: wsUrlDynamic)
                         if nameImage == "iconProjectBubble"{
@@ -68,6 +68,7 @@ public class DataMessenger: UIButton {
                             self.setImage(image, for: .normal)
                         }
                     }
+                    NotificationServices.instance.getNotifications(number: 0)
                     completion(success)
                 }
             } else {

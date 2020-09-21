@@ -75,7 +75,7 @@ class ChataServices {
             }
         }
     }
-    func getJWT(parameters: [String: Any], completion: @escaping CompletionChatSuccess) {
+    func getJWTResponse(parameters: [String: Any], completion: @escaping CompletionChatSuccess) {
         let mail = parameters["userID"] ?? ""
         let project_id = parameters["projectID"] ?? ""
         let url = "\(wsJwt)\(mail)&project_id=\(project_id)"
