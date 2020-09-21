@@ -21,5 +21,36 @@ class WSNotificationServices {
     }
 }
 struct NotificationModel{
-    
+    var items: NotificationItemModel
+    var limit: Int
+    var notifications: NotificationItemModel
+    var offset: Int
+    var pageNumber: Int
+    var pagination: PaginationNotificationModel
+    var totalElements: Int
+    var totalPages: Int
+}
+struct NotificationItemModel {
+    var createdAt: String
+    var id: String
+    var notificationType: String
+    var ruleId: Int
+    var ruleMessage: String
+    var ruleQuery: String
+    var ruleTitle: String
+    var ruletype: String
+    var state: String
+}
+struct PollModel {
+    var acknowledged: Int
+    var dismissed: Int
+    var unacknowledged: Int
+}
+struct PaginationNotificationModel {
+    var currentPage: Int
+    var nextUrl: String
+    var pageSize: Int
+    var previousUrl: String
+    var totalItems: Int
+    var totalPages: Int
 }
