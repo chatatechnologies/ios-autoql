@@ -31,15 +31,30 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
         self.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction) )
+        self.addGestureRecognizer(tap)
         self.edgeTo(vwFather, safeArea: .safe)
         self.addSubview(vwMain)
         vwMain.backgroundColor = .black
-        vwMain.edgeTo(vwFather, safeArea: .safeChat)
+        vwMain.edgeTo(vwFather, safeArea: .safeChat, padding: 30)
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
                         self.loadView()
         }, completion: nil)
+    }
+    private func loadButtonsSide() {
+        let svButtons = UIStackView()
+        svButtons.getSide(spacing: 0, axis: .vertical)
+        let buttons = ["tt", "pp", "WW"]
+        for btn in buttons {
+            let newButton = UIButton()
+            newButton.backgroundColor = chataDrawerAccentColor
+            newButton.setTitle(btn, for: .normal)
+            svButtons.addArrangedSubview(newButton)
+        }
+        self.addSubview(svButtons)
+        svButtons.edgeTo(self, safeArea: .safeButtons, height: 150, vwMain, padding: 4)
     }
     private func loadView() {
         self.loadToolbar()
@@ -48,6 +63,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         self.loadMarkWater()
         self.loadDataMessenger()
         self.loadAutoComplete()
+        self.loadButtonsSide()
     }
     private func loadToolbar() {
         vwMain.addSubview(vwToolbar)
@@ -63,6 +79,9 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     private func loadAutoComplete() {
         self.vwMainChat.addSubview(vwAutoComplete)
         vwAutoComplete.edgeTo(vwMain, safeArea: .topY, height: 190.0, vwTextBox)
+    }
+    @objc func closeAction(sender: UITapGestureRecognizer) {
+        dismiss(animated: DataConfig.clearOnClose)
     }
     @objc func buttonAction(sender: UIButton!) {
         dismiss(animated: DataConfig.clearOnClose)
