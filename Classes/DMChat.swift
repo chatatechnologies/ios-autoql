@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDelegate {
+    var vwMain = UIView()
     var vwToolbar = ToolbarView()
     let vwMainScrollChat = UIScrollView()
     var vwMainChat = UIView()
@@ -29,7 +30,11 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         let vwFather: UIView = UIApplication.shared.keyWindow!
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
+        self.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         self.edgeTo(vwFather, safeArea: .safe)
+        self.addSubview(vwMain)
+        vwMain.backgroundColor = .black
+        vwMain.edgeTo(vwFather, safeArea: .safeChat)
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
@@ -45,19 +50,19 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         self.loadAutoComplete()
     }
     private func loadToolbar() {
-        self.addSubview(vwToolbar)
-        vwToolbar.edgeTo(self, safeArea: .topView, height: 40.0)
+        vwMain.addSubview(vwToolbar)
+        vwToolbar.edgeTo(vwMain, safeArea: .topView, height: 40.0)
     }
     private func loadMainChat() {
-        self.addSubview(vwMainScrollChat)
+        vwMain.addSubview(vwMainScrollChat)
         vwMainScrollChat.backgroundColor = .white
-        vwMainScrollChat.edgeTo(self, safeArea: .fullState, vwToolbar )
+        vwMainScrollChat.edgeTo(vwMain, safeArea: .fullState, vwToolbar )
         vwMainScrollChat.addSubview(vwMainChat)
-        vwMainChat.edgeTo(self, safeArea: .fullState, vwToolbar)
+        vwMainChat.edgeTo(vwMain, safeArea: .fullState, vwToolbar)
     }
     private func loadAutoComplete() {
         self.vwMainChat.addSubview(vwAutoComplete)
-        vwAutoComplete.edgeTo(self, safeArea: .topY, height: 190.0, vwTextBox)
+        vwAutoComplete.edgeTo(vwMain, safeArea: .topY, height: 190.0, vwTextBox)
     }
     @objc func buttonAction(sender: UIButton!) {
         dismiss(animated: DataConfig.clearOnClose)
@@ -87,15 +92,15 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwMainChat.backgroundColor = chataDrawerBackgroundColor
         vwDataMessenger.backgroundColor = .clear
         vwDataMessenger.delegate = self
-        vwDataMessenger.edgeTo(self, safeArea: .full, vwToolbar, vwWaterMark )
+        vwDataMessenger.edgeTo(vwMain, safeArea: .full, vwToolbar, vwWaterMark )
     }
     private func loadMarkWater() {
         vwMainChat.addSubview(vwWaterMark)
-        vwWaterMark.edgeTo(self, safeArea: .bottomSize, height: 30.0, vwTextBox)
+        vwWaterMark.edgeTo(vwMain, safeArea: .bottomSize, height: 30.0, vwTextBox)
     }
     private func loadTextBox() {
         vwMainChat.addSubview(vwTextBox)
-        vwTextBox.edgeTo(self, safeArea: .bottomView, height: 50.0)
+        vwTextBox.edgeTo(vwMain, safeArea: .bottomView, height: 50.0)
         addObservers()
     }
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -206,18 +211,18 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             let url = URL(fileURLWithPath: path!)
             imageView.loadGif(url: url)
             imageView.tag = 100
-            self.addSubview(imageView)
+            vwMain.addSubview(imageView)
             imageView.edgeTo(self.vwDataMessenger, safeArea: .bottomRight, height: 40, padding: 80)
         } else {
             DRILLDOWNACTIVE = false
             if async {
                 DispatchQueue.main.async {
                     self.isUserInteractionEnabled = true
-                    self.removeView(tag: 100)
+                    self.vwMain.removeView(tag: 100)
                 }
             } else {
                 self.isUserInteractionEnabled = true
-                self.removeView(tag: 100)
+                self.vwMain.removeView(tag: 100)
             }
         }
     }
