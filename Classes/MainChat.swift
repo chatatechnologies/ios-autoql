@@ -6,10 +6,14 @@
 //
 
 import Foundation
-public class MainChat: UIView, ToolbarViewDelegate {
+protocol MainChatDelegate: class {
+    func callTips()
+}
+public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate {
     //var vwToolbar = ToolbarView()
     var vwToolbar = ToolbarView()
     let newChat = Chat()
+    let newTips = QTMainView()
     var vwDynamicView = UIView()
     var vwMain = UIView()
     let svButtons = UIStackView()
@@ -25,18 +29,16 @@ public class MainChat: UIView, ToolbarViewDelegate {
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
         self.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction) )
-        let tapNothing = UITapGestureRecognizer(target: self, action: #selector(nothing) )
-        self.addGestureRecognizer(tap)
+        //self.addGestureRecognizer(tap)
         self.edgeTo(vwFather, safeArea: .safe)
         self.addSubview(vwMain)
-        vwMain.addGestureRecognizer(tapNothing)
         vwMain.edgeTo(self, safeArea: .safeChat, padding: 30)
+        self.newChat.tag = 1
+        self.newTips.tag = 2
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
-                        self.start()
-                        self.newChat.show(vwFather: self.vwDynamicView, query: query)
+                        self.start(query: query)
         }, completion: nil)
         //let newChat = Chat()
         //newChat.show(vwFather: self, query: query)
@@ -74,6 +76,11 @@ public class MainChat: UIView, ToolbarViewDelegate {
     }
     private func loadButtonsSide() {
         svButtons.getSide(spacing: 0, axis: .vertical)
+        let newView = UIView()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction) )
+        newView.addGestureRecognizer(tap)
+        self.addSubview(newView)
+        newView.edgeTo(self, safeArea: .safeFH, vwDynamicView)
         let buttons: [SideBtn] = [
             SideBtn(imageStr: "icSideChat", action: #selector(changeViewChat), tag: 1),
             SideBtn(imageStr: "icSideExplore", action: #selector(changeViewTips), tag: 2),
@@ -90,24 +97,26 @@ public class MainChat: UIView, ToolbarViewDelegate {
             newButton.setImage(newButton.imageView?.changeColor(color: UIColor.white).image, for: .normal)
             svButtons.addArrangedSubview(newButton)
         }
-        self.addSubview(svButtons)
+        newView.addSubview(svButtons)
         svButtons.edgeTo(self, safeArea: .safeButtons, height: 150, vwDynamicView, padding: 4)
-        loadSelectBtn(tag: 1)
     }
     @objc func changeViewChat() {
         loadSelectBtn(tag: 1)
         vwToolbar.updateTitle(text: DataConfig.title)
     }
     @objc func changeViewTips() {
-        loadSelectBtn(tag: 2)
-        vwToolbar.updateTitle(text: "Explore Queries", noDeleteBtn: true)
+        loadTips()
     }
     @objc func changeViewNotifications() {
         loadSelectBtn(tag: 3)
         vwToolbar.updateTitle(text: "Notifications", noDeleteBtn: true)
     }
+    func loadTips(){
+        loadSelectBtn(tag: 2)
+        vwToolbar.updateTitle(text: "Explore Queries", noDeleteBtn: true)
+    }
     func delete() {
-        print("Delete")
+        newChat.delete()
     }
 }
 extension MainChat {
@@ -120,10 +129,14 @@ extension MainChat {
         vwMain.addSubview(vwDynamicView)
         vwDynamicView.edgeTo(vwMain, safeArea: .fullState, vwToolbar)
     }
-    func start() {
+    func start(query: String) {
         loadToolbar()
         loadMainView()
         loadButtonsSide()
+        self.newChat.show(vwFather: self.vwDynamicView, query: query)
+        self.newChat.delegateQB = self
+        self.newTips.show(vwFather: self.vwDynamicView)
+        loadSelectBtn(tag: 1)
     }
     func loadSelectBtn(tag: Int) {
         svButtons.subviews.forEach { (view) in
@@ -131,10 +144,18 @@ extension MainChat {
             if viewT.tag == tag{
                 viewT.backgroundColor = .white
                 viewT.setImage(viewT.imageView?.changeColor().image, for: .normal)
+                //view.isHidden = false
             } else {
                 viewT.backgroundColor = chataDrawerAccentColor
                 viewT.setImage(viewT.imageView?.changeColor(color: UIColor.white).image, for: .normal)
+                //view.isHidden = true
             }
         }
+        vwDynamicView.subviews.forEach { (view) in
+            view.isHidden = tag != view.tag
+        }
+    }
+    func callTips() {
+        loadTips()
     }
 }

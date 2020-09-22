@@ -13,7 +13,7 @@ protocol DataChatCellDelegate: class {
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn])
 }
-class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate {    
+class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate {
     private var mainData = ChatComponentModel()
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
@@ -424,6 +424,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     func updateSize(numQBOptions: Int, index: Int) {
         delegateQB?.updateSize(numQBOptions: numQBOptions, index: self.index)
+    }
+    func callTips() {
+        delegateQB?.callTips()
     }
 }
 func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {

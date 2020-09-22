@@ -7,6 +7,9 @@
 
 import Foundation
 import UIKit
+protocol QBTipsDelegate: class {
+    func callTips()
+}
 protocol ChatViewDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
@@ -15,6 +18,7 @@ protocol ChatViewDelegate: class {
 class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderViewDelegate {
     let tableView = UITableView()
     weak var delegate: ChatViewDelegate?
+    weak var delegateQB: QBTipsDelegate?
     var data = [
         ChatComponentModel(type: .Introduction, text: "Hi \(DataConfig.userDisplayName)! \(DataConfig.introMessage)"),
         ChatComponentModel(type: .QueryBuilder, text: "")
@@ -160,5 +164,8 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
                 self.tableView.endUpdates()
             }
         }
+    }
+    func callTips() {
+        delegateQB?.callTips()
     }
 }

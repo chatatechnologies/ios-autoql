@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDelegate {
+public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate {
     let svButtons = UIStackView()
     let vwMainScrollChat = UIScrollView()
     var vwMainChat = UIView()
@@ -15,6 +15,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     let vwTextBox = TextboxView()
     let vwDataMessenger = ChatView()
     let vwAutoComplete = AutoCompleteView()
+    weak var delegateQB: QBTipsDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,6 +85,7 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     }
     private func loadDataMessenger() {
         vwMainChat.addSubview(vwDataMessenger)
+        vwDataMessenger.delegateQB = self
         vwMainChat.backgroundColor = chataDrawerBackgroundColor
         vwDataMessenger.backgroundColor = .clear
         vwDataMessenger.delegate = self
@@ -251,6 +253,9 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         let resetData: [ChatComponentModel] = DataConfig.authenticationObj.token == "" ? [self.vwDataMessenger.data[0]] : [self.vwDataMessenger.data[0], self.vwDataMessenger.data[1]]
         self.vwDataMessenger.data = resetData
         self.vwDataMessenger.tableView.reloadData()
+    }
+    func callTips() {
+        delegateQB?.callTips()
     }
 }
 struct SideBtn {

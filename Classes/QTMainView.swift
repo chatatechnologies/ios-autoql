@@ -8,7 +8,6 @@
 import Foundation
 import  UIKit
 class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
-    var vwToolbar = ToolbarView()
     var mainFrame: CGRect = CGRect()
     var tfMain = UITextField()
     let svPaginator = UIStackView()
@@ -31,8 +30,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         super.init(frame: frame)
         self.backgroundColor = .darkGray
     }
-    public func show() {
-        let vwFather: UIView = UIApplication.shared.keyWindow!
+    public func show(vwFather: UIView) {
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
         self.edgeTo(vwFather, safeArea: .safe)
@@ -43,31 +41,25 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         }, completion: nil)
     }
     private func loadView() {
-        loadToolbar()
         loadMainChat()
         loadInput()
         loadDefaultPagination()
         loadTable()
         loadDefault()
     }
-    private func loadToolbar() {
-        self.addSubview(vwToolbar)
-        vwToolbar.reloadData("Explore Queries")
-        vwToolbar.edgeTo(self, safeArea: .topView, height: 40.0)
-    }
     private func loadMainChat() {
         self.addSubview(vwMainScrollChat)
         vwMainScrollChat.backgroundColor = .white
-        vwMainScrollChat.edgeTo(self, safeArea: .fullState, vwToolbar )
+        vwMainScrollChat.edgeTo(self, safeArea: .none )
         vwMainScrollChat.addSubview(vwMainChat)
-        vwMainChat.edgeTo(self, safeArea: .fullState, vwToolbar)
+        vwMainChat.edgeTo(self, safeArea: .none)
         vwMainChat.backgroundColor = chataDrawerBackgroundColor
     }
     private func loadInput() {
         let size: CGFloat = 40.0
         let padding: CGFloat = -8
         addSubview(vwTextBox)
-        vwTextBox.edgeTo(self, safeArea: .topHeight, height: 50.0, vwToolbar, padding: 16)
+        vwTextBox.edgeTo(self, safeArea: .topPadding, height: 50.0, padding: 16)
         vwTextBox.addSubview(btnSend)
         btnSend.edgeTo(vwTextBox, safeArea: .rightCenterY, height: size, padding:padding)
         btnSend.backgroundColor = chataDrawerAccentColor

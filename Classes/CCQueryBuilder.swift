@@ -8,6 +8,7 @@
 import Foundation
 protocol QueryBuilderViewDelegate: class {
     func updateSize(numQBOptions: Int, index: Int)
+    func callTips()
 }
 class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     let lblMain = UILabel()
@@ -34,6 +35,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbSecond.bounces = false
         tbMain.allowsSelection = true
         tbMain.isUserInteractionEnabled = true
+        tbMain.delaysContentTouches = false
         tbSecond.allowsSelection = true
         tbSecond.isUserInteractionEnabled = true
         lblMain.text = "Some things you can ask me:"
@@ -236,9 +238,10 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblInfo.attributedText = mainAttr
     }
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        let tips = QTMainView(frame: self.frame)
-        tips.show()
-        lblInfo.isSelectable = false
+        //let tips = QTMainView(frame: self.frame)
+        //tips.show()
+        delegateQB?.callTips()
+        //lblInfo.isSelectable = false
         return true
     }
 }
