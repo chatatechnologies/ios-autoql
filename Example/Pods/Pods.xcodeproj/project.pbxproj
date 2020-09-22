@@ -33,6 +33,9 @@
 		175E9CC92502B2BC00375DEE /* icSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 175E9CC82502B2BC00375DEE /* icSearch.png */; };
 		1771BF0E241C01E000BE1D4F /* CCChatTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771BF0D241C01E000BE1D4F /* CCChatTableModel.swift */; };
 		1771BF10241C57D000BE1D4F /* preloader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1771BF0F241C57D000BE1D4F /* preloader.gif */; };
+		177E7A5B251A8497005CDDF3 /* icSideNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 177E7A58251A8497005CDDF3 /* icSideNotification.png */; };
+		177E7A5C251A8497005CDDF3 /* icSideExplore.png in Resources */ = {isa = PBXBuildFile; fileRef = 177E7A59251A8497005CDDF3 /* icSideExplore.png */; };
+		177E7A5D251A8497005CDDF3 /* icSideChat.png in Resources */ = {isa = PBXBuildFile; fileRef = 177E7A5A251A8497005CDDF3 /* icSideChat.png */; };
 		1781762F23FF108F001A2F1F /* DMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781762E23FF108F001A2F1F /* DMToolbarView.swift */; };
 		179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F2013250FCCE4003EF3E9 /* QueryInput.swift */; };
 		17AE6B9C240F1EDD00CFD252 /* DMColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AE6B9B240F1EDD00CFD252 /* DMColors.swift */; };
@@ -126,6 +129,9 @@
 		175E9CC82502B2BC00375DEE /* icSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSearch.png; sourceTree = "<group>"; };
 		1771BF0D241C01E000BE1D4F /* CCChatTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCChatTableModel.swift; sourceTree = "<group>"; };
 		1771BF0F241C57D000BE1D4F /* preloader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader.gif; sourceTree = "<group>"; };
+		177E7A58251A8497005CDDF3 /* icSideNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSideNotification.png; sourceTree = "<group>"; };
+		177E7A59251A8497005CDDF3 /* icSideExplore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSideExplore.png; sourceTree = "<group>"; };
+		177E7A5A251A8497005CDDF3 /* icSideChat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSideChat.png; sourceTree = "<group>"; };
 		1781762E23FF108F001A2F1F /* DMToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMToolbarView.swift; sourceTree = "<group>"; };
 		179F2013250FCCE4003EF3E9 /* QueryInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInput.swift; sourceTree = "<group>"; };
 		17AE6B9B240F1EDD00CFD252 /* DMColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMColors.swift; sourceTree = "<group>"; };
@@ -223,6 +229,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		177E7A51251A8173005CDDF3 /* sideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				177E7A5A251A8497005CDDF3 /* icSideChat.png */,
+				177E7A59251A8497005CDDF3 /* icSideExplore.png */,
+				177E7A58251A8497005CDDF3 /* icSideNotification.png */,
+			);
+			path = sideMenu;
+			sourceTree = "<group>";
+		};
 		17EC9EAD23F5B5BD004B453F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +282,7 @@
 		17EC9EBA23F5F483004B453F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				177E7A51251A8173005CDDF3 /* sideMenu */,
 				17F238812506BEA00040CC8B /* projects */,
 				17F238802506BE760040CC8B /* Bar */,
 				17F2387F2506BDFF0040CC8B /* Chat */,
@@ -580,6 +597,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				17F238762506AAE70040CC8B /* icPie.png in Resources */,
+				177E7A5B251A8497005CDDF3 /* icSideNotification.png in Resources */,
+				177E7A5D251A8497005CDDF3 /* icSideChat.png in Resources */,
 				17EC9EBC23F5F605004B453F /* iconProjectBubble.png in Resources */,
 				17F238722506AAE70040CC8B /* icBubble.png in Resources */,
 				17EF229023FC6B2B001C5F69 /* icSend.png in Resources */,
@@ -598,6 +617,7 @@
 				17ECB5E1242E83EF001E09BB /* icDoubleArrow.png in Resources */,
 				17F238732506AAE70040CC8B /* icColumn.png in Resources */,
 				17F238702506AAE70040CC8B /* icTableData.png in Resources */,
+				177E7A5C251A8497005CDDF3 /* icSideExplore.png in Resources */,
 				172207F823F74F01001B23CE /* icCancel.png in Resources */,
 				17BB95B523FDC15200677873 /* icChat.png in Resources */,
 				17F2387C2506BD100040CC8B /* icDelete.png in Resources */,

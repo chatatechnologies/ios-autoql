@@ -855,7 +855,7 @@ extension UIStackView{
     }
 }
 extension UILabel {
-    func setSize(_ size: CGFloat = 16) {
-        font = UIFont.systemFont(ofSize: size)
+    func setSize(_ size: CGFloat = 16, _ bold: Bool = false) {
+        font = !bold ? UIFont.systemFont(ofSize: size) : UIFont.boldSystemFont(ofSize: size)
     }
 }

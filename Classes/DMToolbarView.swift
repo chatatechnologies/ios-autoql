@@ -48,7 +48,7 @@ class ToolbarView: UIView {
         lblTitle.text = DataConfig.title
         lblTitle.textColor = .white
         lblTitle.textAlignment = .center
-        lblTitle.setSize(18)
+        lblTitle.setSize(16, true)
         self.addSubview(lblTitle)
         lblTitle.edgeTo(self, safeArea: .fullWidth, height: 40.0, cancel, btnDelete)
     }

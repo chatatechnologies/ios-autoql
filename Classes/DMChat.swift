@@ -46,16 +46,24 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
     private func loadButtonsSide() {
         let svButtons = UIStackView()
         svButtons.getSide(spacing: 0, axis: .vertical)
-        let buttons = ["tt", "pp", "WW"]
+        let buttons: [SideBtn] = [
+            SideBtn(imageStr: "icSideChat", action: #selector(buttonAction)),
+            SideBtn(imageStr: "icSideExplore", action: #selector(buttonAction)),
+            SideBtn(imageStr: "icSideNotification", action: #selector(buttonAction))
+        ]
         for btn in buttons {
             let newButton = UIButton()
             newButton.backgroundColor = chataDrawerAccentColor
-            newButton.setTitle(btn, for: .normal)
+            let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
+            let image2 = image.resizeT(maxWidthHeight: 25)
+            newButton.setImage(image2, for: .normal)
+            newButton.setImage(newButton.imageView?.changeColor(color: UIColor.white).image, for: .normal)
             svButtons.addArrangedSubview(newButton)
         }
         self.addSubview(svButtons)
         svButtons.edgeTo(self, safeArea: .safeButtons, height: 150, vwMain, padding: 4)
     }
+    
     private func loadView() {
         self.loadToolbar()
         self.loadMainChat()
@@ -276,4 +284,8 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         self.vwDataMessenger.data = resetData
         self.vwDataMessenger.tableView.reloadData()
     }
+}
+struct SideBtn {
+    var imageStr: String
+    var action: Selector
 }
