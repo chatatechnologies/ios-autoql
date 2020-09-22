@@ -36,6 +36,7 @@
 		177E7A5B251A8497005CDDF3 /* icSideNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 177E7A58251A8497005CDDF3 /* icSideNotification.png */; };
 		177E7A5C251A8497005CDDF3 /* icSideExplore.png in Resources */ = {isa = PBXBuildFile; fileRef = 177E7A59251A8497005CDDF3 /* icSideExplore.png */; };
 		177E7A5D251A8497005CDDF3 /* icSideChat.png in Resources */ = {isa = PBXBuildFile; fileRef = 177E7A5A251A8497005CDDF3 /* icSideChat.png */; };
+		177E7A5F251A91F9005CDDF3 /* MainChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177E7A5E251A91F9005CDDF3 /* MainChat.swift */; };
 		1781762F23FF108F001A2F1F /* DMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781762E23FF108F001A2F1F /* DMToolbarView.swift */; };
 		179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F2013250FCCE4003EF3E9 /* QueryInput.swift */; };
 		17AE6B9C240F1EDD00CFD252 /* DMColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AE6B9B240F1EDD00CFD252 /* DMColors.swift */; };
@@ -132,6 +133,7 @@
 		177E7A58251A8497005CDDF3 /* icSideNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSideNotification.png; sourceTree = "<group>"; };
 		177E7A59251A8497005CDDF3 /* icSideExplore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSideExplore.png; sourceTree = "<group>"; };
 		177E7A5A251A8497005CDDF3 /* icSideChat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSideChat.png; sourceTree = "<group>"; };
+		177E7A5E251A91F9005CDDF3 /* MainChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChat.swift; sourceTree = "<group>"; };
 		1781762E23FF108F001A2F1F /* DMToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMToolbarView.swift; sourceTree = "<group>"; };
 		179F2013250FCCE4003EF3E9 /* QueryInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInput.swift; sourceTree = "<group>"; };
 		17AE6B9B240F1EDD00CFD252 /* DMColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMColors.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				17EF228B23FC6432001C5F69 /* Constans.swift */,
 				1759829E242D1FF4002D504F /* gif.swift */,
 				17CDBBCD24FEC4DD00C9F535 /* QTMainView.swift */,
+				177E7A5E251A91F9005CDDF3 /* MainChat.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				17F6F1CF2404557500DE0133 /* CCDataChatCell.swift in Sources */,
 				17EF228C23FC6432001C5F69 /* Constans.swift in Sources */,
 				17113B59241FF92200EB9134 /* CCSuggestionView.swift in Sources */,
+				177E7A5F251A91F9005CDDF3 /* MainChat.swift in Sources */,
 				17B19F872458876D00744EB3 /* Dashboard.swift in Sources */,
 				17CDBBCE24FEC4DD00C9F535 /* QTMainView.swift in Sources */,
 				179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */,

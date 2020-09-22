@@ -60,6 +60,10 @@ class ToolbarView: UIView {
             father.dismiss(animated: DataConfig.clearOnClose)
         }
     }
+    func updateTitle(text: String, noDeleteBtn: Bool = false) {
+        lblTitle.text = text
+        btnDelete.isHidden = noDeleteBtn
+    }
     @objc func deleteAction(sender: UIButton!) {
         delegate?.delete()
     }

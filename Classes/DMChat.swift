@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDelegate {
     var vwMain = UIView()
+    let svButtons = UIStackView()
     var vwToolbar = ToolbarView()
     let vwMainScrollChat = UIScrollView()
     var vwMainChat = UIView()
@@ -44,12 +45,11 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         }, completion: nil)
     }
     private func loadButtonsSide() {
-        let svButtons = UIStackView()
         svButtons.getSide(spacing: 0, axis: .vertical)
         let buttons: [SideBtn] = [
-            SideBtn(imageStr: "icSideChat", action: #selector(buttonAction)),
-            SideBtn(imageStr: "icSideExplore", action: #selector(buttonAction)),
-            SideBtn(imageStr: "icSideNotification", action: #selector(buttonAction))
+            SideBtn(imageStr: "icSideChat", action: #selector(changeViewChat), tag: 1),
+            SideBtn(imageStr: "icSideExplore", action: #selector(changeViewTips), tag: 2),
+            SideBtn(imageStr: "icSideNotification", action: #selector(changeViewNotifications), tag: 3)
         ]
         for btn in buttons {
             let newButton = UIButton()
@@ -57,13 +57,39 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
             let image2 = image.resizeT(maxWidthHeight: 25)
             newButton.setImage(image2, for: .normal)
+            newButton.tag = btn.tag
+            newButton.addTarget(self, action: btn.action, for: .touchUpInside)
             newButton.setImage(newButton.imageView?.changeColor(color: UIColor.white).image, for: .normal)
             svButtons.addArrangedSubview(newButton)
         }
         self.addSubview(svButtons)
         svButtons.edgeTo(self, safeArea: .safeButtons, height: 150, vwMain, padding: 4)
+        loadSelectBtn(tag: 1)
     }
-    
+    @objc func changeViewChat() {
+        loadSelectBtn(tag: 1)
+        vwToolbar.updateTitle(text: DataConfig.title)
+    }
+    @objc func changeViewTips() {
+        loadSelectBtn(tag: 2)
+        vwToolbar.updateTitle(text: "Explore Queries", noDeleteBtn: true)
+    }
+    @objc func changeViewNotifications() {
+        loadSelectBtn(tag: 3)
+        vwToolbar.updateTitle(text: "Notifications", noDeleteBtn: true)
+    }
+    func loadSelectBtn(tag: Int) {
+        svButtons.subviews.forEach { (view) in
+            let viewT = view as? UIButton ?? UIButton()
+            if viewT.tag == tag{
+                viewT.backgroundColor = .white
+                viewT.setImage(viewT.imageView?.changeColor().image, for: .normal)
+            } else {
+                viewT.backgroundColor = chataDrawerAccentColor
+                viewT.setImage(viewT.imageView?.changeColor(color: UIColor.white).image, for: .normal)
+            }
+        }
+    }
     private func loadView() {
         self.loadToolbar()
         self.loadMainChat()
@@ -288,4 +314,5 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
 struct SideBtn {
     var imageStr: String
     var action: Selector
+    var tag: Int
 }
