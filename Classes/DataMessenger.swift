@@ -153,8 +153,10 @@ public class DataMessenger: UIButton {
         }
     }
     public func createChat() {
-        let chat = Chat(frame: father2.frame)
-        chat.show()
+        /*let chat = Chat(frame: father2.frame)
+        chat.show()*/
+        let mainChat = MainChat()
+        mainChat.show()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

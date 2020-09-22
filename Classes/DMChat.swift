@@ -8,9 +8,7 @@
 import Foundation
 import UIKit
 public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDelegate {
-    var vwMain = UIView()
     let svButtons = UIStackView()
-    var vwToolbar = ToolbarView()
     let vwMainScrollChat = UIScrollView()
     var vwMainChat = UIView()
     let vwWaterMark = WaterMarkView()
@@ -24,95 +22,39 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         super.init(frame: frame)
         vwAutoComplete.delegate = self
         vwTextBox.delegate = self
-        vwToolbar.delegate = self
         self.backgroundColor = chataDrawerBackgroundColor
     }
-    public func show(query: String = "") {
-        let vwFather: UIView = UIApplication.shared.keyWindow!
+    public func show(vwFather: UIView, query: String = "") {
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
-        self.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        /*self.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction) )
-        self.addGestureRecognizer(tap)
+        self.addGestureRecognizer(tap)*/
         self.edgeTo(vwFather, safeArea: .safe)
-        self.addSubview(vwMain)
-        vwMain.backgroundColor = .black
-        vwMain.edgeTo(vwFather, safeArea: .safeChat, padding: 30)
+        self.edgeTo(vwFather, safeArea: .safeChat, padding: 30)
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
                         self.loadView()
         }, completion: nil)
     }
-    private func loadButtonsSide() {
-        svButtons.getSide(spacing: 0, axis: .vertical)
-        let buttons: [SideBtn] = [
-            SideBtn(imageStr: "icSideChat", action: #selector(changeViewChat), tag: 1),
-            SideBtn(imageStr: "icSideExplore", action: #selector(changeViewTips), tag: 2),
-            SideBtn(imageStr: "icSideNotification", action: #selector(changeViewNotifications), tag: 3)
-        ]
-        for btn in buttons {
-            let newButton = UIButton()
-            newButton.backgroundColor = chataDrawerAccentColor
-            let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
-            let image2 = image.resizeT(maxWidthHeight: 25)
-            newButton.setImage(image2, for: .normal)
-            newButton.tag = btn.tag
-            newButton.addTarget(self, action: btn.action, for: .touchUpInside)
-            newButton.setImage(newButton.imageView?.changeColor(color: UIColor.white).image, for: .normal)
-            svButtons.addArrangedSubview(newButton)
-        }
-        self.addSubview(svButtons)
-        svButtons.edgeTo(self, safeArea: .safeButtons, height: 150, vwMain, padding: 4)
-        loadSelectBtn(tag: 1)
-    }
-    @objc func changeViewChat() {
-        loadSelectBtn(tag: 1)
-        vwToolbar.updateTitle(text: DataConfig.title)
-    }
-    @objc func changeViewTips() {
-        loadSelectBtn(tag: 2)
-        vwToolbar.updateTitle(text: "Explore Queries", noDeleteBtn: true)
-    }
-    @objc func changeViewNotifications() {
-        loadSelectBtn(tag: 3)
-        vwToolbar.updateTitle(text: "Notifications", noDeleteBtn: true)
-    }
-    func loadSelectBtn(tag: Int) {
-        svButtons.subviews.forEach { (view) in
-            let viewT = view as? UIButton ?? UIButton()
-            if viewT.tag == tag{
-                viewT.backgroundColor = .white
-                viewT.setImage(viewT.imageView?.changeColor().image, for: .normal)
-            } else {
-                viewT.backgroundColor = chataDrawerAccentColor
-                viewT.setImage(viewT.imageView?.changeColor(color: UIColor.white).image, for: .normal)
-            }
-        }
-    }
     private func loadView() {
-        self.loadToolbar()
         self.loadMainChat()
         self.loadTextBox()
         self.loadMarkWater()
         self.loadDataMessenger()
         self.loadAutoComplete()
-        self.loadButtonsSide()
-    }
-    private func loadToolbar() {
-        vwMain.addSubview(vwToolbar)
-        vwToolbar.edgeTo(vwMain, safeArea: .topView, height: 40.0)
     }
     private func loadMainChat() {
-        vwMain.addSubview(vwMainScrollChat)
+        self.addSubview(vwMainScrollChat)
         vwMainScrollChat.backgroundColor = .white
-        vwMainScrollChat.edgeTo(vwMain, safeArea: .fullState, vwToolbar )
+        vwMainScrollChat.edgeTo(self, safeArea: .none)
         vwMainScrollChat.addSubview(vwMainChat)
-        vwMainChat.edgeTo(vwMain, safeArea: .fullState, vwToolbar)
+        vwMainChat.edgeTo(self, safeArea: .none)
     }
     private func loadAutoComplete() {
         self.vwMainChat.addSubview(vwAutoComplete)
-        vwAutoComplete.edgeTo(vwMain, safeArea: .topY, height: 190.0, vwTextBox)
+        vwAutoComplete.edgeTo(self, safeArea: .topY, height: 190.0, vwTextBox)
     }
     @objc func closeAction(sender: UITapGestureRecognizer) {
         dismiss(animated: DataConfig.clearOnClose)
@@ -145,15 +87,15 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
         vwMainChat.backgroundColor = chataDrawerBackgroundColor
         vwDataMessenger.backgroundColor = .clear
         vwDataMessenger.delegate = self
-        vwDataMessenger.edgeTo(vwMain, safeArea: .full, vwToolbar, vwWaterMark )
+        vwDataMessenger.edgeTo(self, safeArea: .full, vwTextBox, vwWaterMark )
     }
     private func loadMarkWater() {
         vwMainChat.addSubview(vwWaterMark)
-        vwWaterMark.edgeTo(vwMain, safeArea: .bottomSize, height: 30.0, vwTextBox)
+        vwWaterMark.edgeTo(self, safeArea: .bottomSize, height: 30.0, vwTextBox)
     }
     private func loadTextBox() {
         vwMainChat.addSubview(vwTextBox)
-        vwTextBox.edgeTo(vwMain, safeArea: .bottomView, height: 50.0)
+        vwTextBox.edgeTo(self, safeArea: .bottomView, height: 50.0)
         addObservers()
     }
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -264,18 +206,18 @@ public class Chat: UIView, TextboxViewDelegate, ToolbarViewDelegate, ChatViewDel
             let url = URL(fileURLWithPath: path!)
             imageView.loadGif(url: url)
             imageView.tag = 100
-            vwMain.addSubview(imageView)
+            self.addSubview(imageView)
             imageView.edgeTo(self.vwDataMessenger, safeArea: .bottomRight, height: 40, padding: 80)
         } else {
             DRILLDOWNACTIVE = false
             if async {
                 DispatchQueue.main.async {
                     self.isUserInteractionEnabled = true
-                    self.vwMain.removeView(tag: 100)
+                    self.removeView(tag: 100)
                 }
             } else {
                 self.isUserInteractionEnabled = true
-                self.vwMain.removeView(tag: 100)
+                self.removeView(tag: 100)
             }
         }
     }
