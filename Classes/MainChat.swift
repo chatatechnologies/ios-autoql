@@ -13,6 +13,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate {
     //var vwToolbar = ToolbarView()
     var vwToolbar = ToolbarView()
     let newChat = Chat()
+    let viewNot = UIView()
     let newTips = QTMainView()
     var vwDynamicView = UIView()
     var vwMain = UIView()
@@ -157,5 +158,21 @@ extension MainChat {
     }
     func callTips() {
         loadTips()
+    }
+    @objc func ToogleNotification(_ hide: Bool = false) {
+        if hide {
+            self.removeView(tag: 100)
+        } else {
+            viewNot.backgroundColor = .red
+            viewNot.tag = 100
+            viewNot.cardView(border: true, borderRadius: 10)
+            svButtons.subviews.forEach { (btn) in
+                let originalBtn = btn as? UIButton ?? UIButton()
+                if originalBtn.tag == 3 {
+                    self.addSubview(viewNot)
+                    viewNot.edgeTo(originalBtn, safeArea: .widthRightY, height: 15, padding: 0)
+                }
+            }
+        }
     }
 }
