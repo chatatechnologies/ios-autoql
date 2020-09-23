@@ -52,6 +52,12 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate {
                         self.loadView()
         }, completion: nil)*/
     }
+    func addNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ToogleNotification),
+                                               name: notifAlert,
+                                               object: nil)
+    }
     @objc func closeAction(sender: UITapGestureRecognizer) {
         dismiss(animated: DataConfig.clearOnClose)
     }
@@ -138,6 +144,7 @@ extension MainChat {
         self.newChat.delegateQB = self
         self.newTips.show(vwFather: self.vwDynamicView)
         loadSelectBtn(tag: 1)
+        addNotifications()
     }
     func loadSelectBtn(tag: Int) {
         svButtons.subviews.forEach { (view) in
@@ -159,8 +166,9 @@ extension MainChat {
     func callTips() {
         loadTips()
     }
-    @objc func ToogleNotification(_ hide: Bool = false) {
-        if hide {
+    @objc func ToogleNotification(_ notification: NSNotification) {
+        let valid = notification.object as? Bool ?? false
+        if !valid {
             self.removeView(tag: 100)
         } else {
             viewNot.backgroundColor = .red
