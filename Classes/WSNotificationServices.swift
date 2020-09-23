@@ -21,9 +21,11 @@ class NotificationServices {
             self.podelModel.unacknowledged = data["unacknowledged"] as? Int ?? 0
             if self.unacknowledged == 0 {
                 self.unacknowledged = data["unacknowledged"] as? Int ?? 0
+                NotificationCenter.default.post(name: notifAlert,
+                                                object: self.unacknowledged > 0)
             }
-            NotificationCenter.default.post(name: notifAlert,
-                                            object: self.podelModel.unacknowledged > 0)
+            //NotificationCenter.default.post(name: notifAlert,
+                                            //object: self.podelModel.unacknowledged > 0)
             //completion(matches)
         }
     }

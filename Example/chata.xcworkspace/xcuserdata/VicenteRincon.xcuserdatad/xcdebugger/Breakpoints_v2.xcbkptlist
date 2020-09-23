@@ -8166,7 +8166,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C14111C4-BA63-4A25-BEA0-BB9F027BA30C"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/MainChat.swift"
@@ -8182,7 +8182,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0F2FE50E-11A4-4113-809B-DA8D12106F45"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/MainChat.swift"
@@ -8204,8 +8204,8 @@
             filePath = "../Classes/WSNotificationServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "getNotifications(number:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8224,38 +8224,6 @@
             endingLineNumber = "16"
             landmarkName = "getNotifications(number:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D3C3EFA2-104A-4222-969E-DD21F33531F8 - 219023ca2e1ca01f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "chata.NotificationServices.getNotifications(number: Swift.Int) -&gt; ()"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSNotificationServices.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "15"
-                  endingLineNumber = "15"
-                  offsetFromSymbolStart = "1054">
-               </Location>
-               <Location
-                  uuid = "D3C3EFA2-104A-4222-969E-DD21F33531F8 - e38963e27e0f0559"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; () in chata.NotificationServices.getNotifications(number: Swift.Int) -&gt; ()"
-                  moduleName = "chata"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSNotificationServices.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16"
-                  offsetFromSymbolStart = "79">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8277,22 +8245,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "72070F55-BE8C-4713-A6AA-EDCD558B406F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSNotificationServices.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "getNotifications(number:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9E27B6E0-6A03-435E-B6F6-1C2FCE13D375"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -8302,6 +8254,70 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "21"
             endingLineNumber = "21"
+            landmarkName = "getNotifications(number:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E82A2F8B-BB55-4411-8BB2-296DF137C1EE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSNotificationServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "getNotifications(number:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E82A2F8B-BB55-4411-8BB2-296DF137C1EE - 219023ca2e1ca01f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "chata.NotificationServices.getNotifications(number: Swift.Int) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSNotificationServices.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "1082">
+               </Location>
+               <Location
+                  uuid = "E82A2F8B-BB55-4411-8BB2-296DF137C1EE - e38963e27e0f0559"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; () in chata.NotificationServices.getNotifications(number: Swift.Int) -&gt; ()"
+                  moduleName = "chata"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/WSNotificationServices.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "111">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6C94A57B-A4AE-45B3-A9BF-C972B2DECCB0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSNotificationServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
             landmarkName = "getNotifications(number:)"
             landmarkType = "7">
          </BreakpointContent>
