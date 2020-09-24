@@ -68,18 +68,6 @@ public class DataMessenger: UIButton {
                             self.setImage(image, for: .normal)
                         }
                         LOGIN = true
-                        NotificationServices.instance.getNotifications(number: 0)
-                        DispatchQueue.main.async {
-                            Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
-                                (time) in
-                                if LOGIN{
-                                    NotificationServices.instance.getNotifications(number: 0)
-                                }
-                                else{
-                                    time.invalidate()
-                                }
-                            }
-                        }
                     }
                     completion(success)
                 }

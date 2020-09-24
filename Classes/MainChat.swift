@@ -145,6 +145,7 @@ extension MainChat {
         self.newTips.show(vwFather: self.vwDynamicView)
         loadSelectBtn(tag: 1)
         addNotifications()
+        initLogin()
     }
     func loadSelectBtn(tag: Int) {
         svButtons.subviews.forEach { (view) in
@@ -169,7 +170,9 @@ extension MainChat {
     @objc func ToogleNotification(_ notification: NSNotification) {
         let valid = notification.object as? Bool ?? false
         if !valid {
-            self.removeView(tag: 100)
+            DispatchQueue.main.async {
+                self.removeView(tag: 100)
+            }
         } else {
             DispatchQueue.main.async {
                 self.viewNot.backgroundColor = .red
@@ -180,6 +183,22 @@ extension MainChat {
                     if originalBtn.tag == 3 {
                         self.addSubview(self.viewNot)
                         self.viewNot.edgeTo(originalBtn, safeArea: .widthRightY, height: 15, padding: 0)
+                    }
+                }
+            }
+        }
+    }
+    func initLogin() {
+        if LOGIN {
+            DispatchQueue.main.async {
+                NotificationServices.instance.getNotifications(number: 0)
+                Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
+                    (time) in
+                    if LOGIN{
+                        NotificationServices.instance.getNotifications(number: 0)
+                    }
+                    else{
+                        time.invalidate()
                     }
                 }
             }
