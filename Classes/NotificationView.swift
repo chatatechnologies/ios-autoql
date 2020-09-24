@@ -40,11 +40,11 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
         tbMain.edgeTo(self, safeArea: .nonePadding, padding: 8)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return notifications.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationCell()
-        cell.configCell(item: notifications[indexPath.row], index: indexPath.row)
+        cell.configCell(item: notifications[indexPath.row].items, index: indexPath.row)
         cell.textLabel?.text = "TESt"
         return cell
     }

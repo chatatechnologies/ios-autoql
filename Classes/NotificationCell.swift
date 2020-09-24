@@ -22,16 +22,6 @@ class NotificationCell: UITableViewCell {
         contentView.backgroundColor = .clear
         self.index = index
     }
-    private func createButton(btn: ButtonMenu) -> myCustomButton {
-        let button = myCustomButton()
-        button.idButton = btn.idHTML
-        let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)
-        let image2 = image?.resizeT(maxWidthHeight: 30)
-        button.setImage(image2, for: .normal)
-        //button.setImage(button.imageView?.changeColor().image, for: .normal)
-        button.addTarget(self, action: btn.action, for: .touchUpInside)
-        return button
-    }
     @objc func showHide() {
         print("Func")
     }

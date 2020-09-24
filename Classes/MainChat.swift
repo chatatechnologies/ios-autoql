@@ -198,11 +198,11 @@ extension MainChat {
     func initLogin() {
         if LOGIN {
             DispatchQueue.main.async {
-                NotificationServices.instance.getNotifications(number: 0)
+                NotificationServices.instance.getStateNotifications(number: 0)
                 Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
                     (time) in
                     if LOGIN{
-                        NotificationServices.instance.getNotifications(number: 0)
+                        NotificationServices.instance.getStateNotifications(number: 0)
                     }
                     else{
                         time.invalidate()

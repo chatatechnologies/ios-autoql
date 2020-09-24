@@ -11,7 +11,7 @@ class NotificationServices {
     var podelModel = PollModel()
     var unacknowledged = 0
     //private var dashList: [DashboardList] = []
-    func getNotifications(number: Int = 0) {
+    func getStateNotifications(number: Int = 0) {
         //https://spira-staging.chata.io/autoql/api/v1/rules/notifications/summary/poll?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&unacknowledged=0
         let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications/summary/poll?key=\(DataConfig.authenticationObj.apiKey)&unacknowledged=\(unacknowledged)"
         httpRequest(url) { (response) in
@@ -34,6 +34,28 @@ class NotificationServices {
                                             //object: self.podelModel.unacknowledged > 0)
             //completion(matches)
         }
+    }
+    func readNotification() {
+        //https://spira-staging.chata.io/autoql/api/v1/rules/notifications?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU
+        let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications?key=\(DataConfig.authenticationObj.apiKey)"
+        let body: [String: Any] = [
+            "notification_id": "null",
+            "state": "ACKNOWLEDGED"
+        ]
+        httpRequest(url, "PUT", body) { (response) in
+            print(response)
+            //let referenceID = response["reference_id"] as? String ?? ""
+            //completion(referenceID == "1.1.200")
+        }
+    }
+    func getNotifications() {
+        //https://spira-staging.chata.io/autoql/api/v1/rules/notifications?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&offset=0&limit=10
+        let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications?key=\(DataConfig.authenticationObj.apiKey)&offset=0&limit=10"
+        httpRequest(url) { (response) in
+            let dataResponse = response["data"] as? [String: Any] ?? [:]
+            let newNotification =
+        }
+        
     }
 }
 
