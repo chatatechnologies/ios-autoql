@@ -69,13 +69,15 @@ public class DataMessenger: UIButton {
                         }
                         LOGIN = true
                         NotificationServices.instance.getNotifications(number: 0)
-                        Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
-                            (time) in
-                            if LOGIN{
-                                NotificationServices.instance.getNotifications(number: 0)
-                            }
-                            else{
-                                time.invalidate()
+                        DispatchQueue.main.async {
+                            Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
+                                (time) in
+                                if LOGIN{
+                                    NotificationServices.instance.getNotifications(number: 0)
+                                }
+                                else{
+                                    time.invalidate()
+                                }
                             }
                         }
                     }

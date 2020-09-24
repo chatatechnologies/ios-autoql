@@ -171,14 +171,16 @@ extension MainChat {
         if !valid {
             self.removeView(tag: 100)
         } else {
-            viewNot.backgroundColor = .red
-            viewNot.tag = 100
-            viewNot.cardView(border: true, borderRadius: 10)
-            svButtons.subviews.forEach { (btn) in
-                let originalBtn = btn as? UIButton ?? UIButton()
-                if originalBtn.tag == 3 {
-                    self.addSubview(viewNot)
-                    viewNot.edgeTo(originalBtn, safeArea: .widthRightY, height: 15, padding: 0)
+            DispatchQueue.main.async {
+                self.viewNot.backgroundColor = .red
+                self.viewNot.tag = 100
+                self.viewNot.cardView(border: true, borderRadius: 10)
+                self.svButtons.subviews.forEach { (btn) in
+                    let originalBtn = btn as? UIButton ?? UIButton()
+                    if originalBtn.tag == 3 {
+                        self.addSubview(self.viewNot)
+                        self.viewNot.edgeTo(originalBtn, safeArea: .widthRightY, height: 15, padding: 0)
+                    }
                 }
             }
         }
