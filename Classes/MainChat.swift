@@ -15,6 +15,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
     let newChat = Chat()
     let viewNot = UIView()
     let newTips = QTMainView()
+    let vwNotifications = NotificationView()
     var vwDynamicView = UIView()
     var vwMain = UIView()
     let svButtons = UIStackView()
@@ -36,6 +37,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         vwMain.edgeTo(self, safeArea: .safeChat, padding: 30)
         self.newChat.tag = 1
         self.newTips.tag = 2
+        self.vwNotifications.tag = 3
         self.newTips.delegate = self
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
@@ -147,6 +149,7 @@ extension MainChat {
         self.newChat.show(vwFather: self.vwDynamicView, query: query)
         self.newChat.delegateQB = self
         self.newTips.show(vwFather: self.vwDynamicView)
+        self.vwNotifications.show(vwFather: self.vwDynamicView)
         loadSelectBtn(tag: 1)
         addNotifications()
         initLogin()

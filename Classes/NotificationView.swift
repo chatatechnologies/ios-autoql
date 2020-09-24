@@ -9,6 +9,7 @@ import  UIKit
 
 class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
     let tbMain = UITableView()
+    var notifications: [NotificationModel] = []
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -26,7 +27,6 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
         }, completion: nil)
     }
     private func loadView() {
-        loadMainChat()
         loadTable()
     }
     private func loadTable() {
@@ -43,7 +43,9 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
         return 10
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = NotificationCell()
+        cell.configCell(item: notifications[indexPath.row], index: indexPath.row)
+        cell.textLabel?.text = "TESt"
         return cell
     }
 }

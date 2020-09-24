@@ -56,9 +56,6 @@ class ToolbarView: UIView {
         if let father = self.superview?.superview as? MainChat {
             father.dismiss(animated: DataConfig.clearOnClose)
         }
-        if let father = self.superview as? QTMainView {
-            father.dismiss(animated: DataConfig.clearOnClose)
-        }
     }
     func updateTitle(text: String, noDeleteBtn: Bool = false) {
         lblTitle.text = text

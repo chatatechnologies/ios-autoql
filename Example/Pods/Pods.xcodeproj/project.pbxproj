@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		16B9925DA75E7EF6458285746426F45A /* chata-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB43739B71314F419B65025EF387439D /* chata-dummy.m */; };
 		170291FB251D13F600AD1F03 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170291FA251D13F600AD1F03 /* NotificationView.swift */; };
+		170291FD251D1F8600AD1F03 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170291FC251D1F8600AD1F03 /* NotificationCell.swift */; };
 		170350B32441097800974370 /* DMChartsFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170350B22441097800974370 /* DMChartsFunctions.swift */; };
 		1704C8C524632266001D599B /* WSDashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1704C8C424632266001D599B /* WSDashboardService.swift */; };
 		1706128A2419443D00ABE8AF /* WSConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170612892419443D00ABE8AF /* WSConnection.swift */; };
@@ -106,6 +107,7 @@
 /* Begin PBXFileReference section */
 		0873C427FAD6A793700F571289F83EDB /* Pods-chata_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-chata_Example-frameworks.sh"; sourceTree = "<group>"; };
 		170291FA251D13F600AD1F03 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		170291FC251D1F8600AD1F03 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		170350B22441097800974370 /* DMChartsFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChartsFunctions.swift; sourceTree = "<group>"; };
 		1704C8C424632266001D599B /* WSDashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSDashboardService.swift; sourceTree = "<group>"; };
 		170612892419443D00ABE8AF /* WSConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSConnection.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				17CDBBCD24FEC4DD00C9F535 /* QTMainView.swift */,
 				170291FA251D13F600AD1F03 /* NotificationView.swift */,
 				177E7A5E251A91F9005CDDF3 /* MainChat.swift */,
+				170291FC251D1F8600AD1F03 /* NotificationCell.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				170B7D552512799B00A06147 /* QueryOutput.swift in Sources */,
 				1706128C241949C400ABE8AF /* WSChataServices.swift in Sources */,
 				17489AB4241713F400825936 /* DMAutoCompleteView.swift in Sources */,
+				170291FD251D1F8600AD1F03 /* NotificationCell.swift in Sources */,
 				172207F423F71685001B23CE /* DMChat.swift in Sources */,
 				170291FB251D13F600AD1F03 /* NotificationView.swift in Sources */,
 			);

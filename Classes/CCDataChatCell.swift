@@ -43,7 +43,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         self.backgroundColor = .clear
         contentView.backgroundColor = .clear
         genereteData()
-        self.index = index
     }
     func loadLeftMenu(report: Bool = false) {
         let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
