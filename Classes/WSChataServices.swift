@@ -13,6 +13,7 @@ typealias CompletionSecondData = (_ response: String) -> Void
 typealias CompletionDashboards = (_ response: [DashboardList]) -> Void
 typealias CompletionQueryTips = (_ response: QTModel) -> Void
 typealias CompletionSuggestions = (_ response: [String]) -> Void
+typealias CompletionNotifications = (_ response: [NotificationItemModel]) -> Void
 public typealias CompletionChatSuccess = (_ response: Bool) -> Void
 typealias CompletionChatSafetynet = (_ response: [ChatFullSuggestion]) -> Void
 class ChataServices {

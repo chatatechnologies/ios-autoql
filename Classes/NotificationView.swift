@@ -9,7 +9,7 @@ import  UIKit
 
 class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
     let tbMain = UITableView()
-    var notifications: [NotificationModel] = []
+    var notifications: [NotificationItemModel] = []
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,6 +27,12 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
         }, completion: nil)
     }
     private func loadView() {
+        NotificationServices.instance.getNotifications { (notifications) in
+            self.notifications = notifications
+            DispatchQueue.main.async {
+                self.tbMain.reloadData()
+            }
+        }
         loadTable()
     }
     private func loadTable() {
@@ -44,7 +50,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationCell()
-        cell.configCell(item: notifications[indexPath.row].items, index: indexPath.row)
+        cell.configCell(item: notifications[indexPath.row], index: indexPath.row)
         cell.textLabel?.text = "TESt"
         return cell
     }

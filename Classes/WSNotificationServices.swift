@@ -48,14 +48,28 @@ class NotificationServices {
             //completion(referenceID == "1.1.200")
         }
     }
-    func getNotifications() {
+    func getNotifications(completion: @escaping CompletionNotifications) {
         //https://spira-staging.chata.io/autoql/api/v1/rules/notifications?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&offset=0&limit=10
         let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications?key=\(DataConfig.authenticationObj.apiKey)&offset=0&limit=10"
         httpRequest(url) { (response) in
-            let dataResponse = response["data"] as? [String: Any] ?? [:]
-            let newNotification =
+            let dataResponse = response["data"] as? [String : Any] ?? [:]
+            let items = dataResponse["items"] as? [[String : Any]] ?? []
+            var finalNotifications: [NotificationItemModel] = []
+            items.forEach { (item) in
+                var newNotification = NotificationItemModel()
+                newNotification.createdAt = item["created_at"] as? String ?? ""
+                newNotification.id = item["id"] as? String ?? ""
+                newNotification.notificationType = item["notification_type"] as? String ?? ""
+                newNotification.ruleId = item["rule_id"] as? Int ?? 0
+                newNotification.ruletype = item["rule_type"] as? String ?? ""
+                newNotification.ruleQuery = item["rule_query"] as? String ?? ""
+                newNotification.ruleTitle = item["rule_titlque te"] as? String ?? ""
+                newNotification.ruleMessage = item["rule_message"] as? String ?? ""
+                newNotification.state = item["state"] as? String ?? ""
+                finalNotifications.append(newNotification)
+            }
+            completion(finalNotifications)
         }
-        
     }
 }
 

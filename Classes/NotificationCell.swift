@@ -21,6 +21,13 @@ class NotificationCell: UITableViewCell {
         self.backgroundColor = .clear
         contentView.backgroundColor = .clear
         self.index = index
+        loadComponents()
+    }
+    func loadComponents() {
+        
+    }
+    func loadTitle() {
+        
     }
     @objc func showHide() {
         print("Func")
