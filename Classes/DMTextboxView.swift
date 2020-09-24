@@ -72,7 +72,9 @@ class TextboxView: UIView {
     }
     func addNotifications(){
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(receiveQuery), name: notifTypingText, object: nil)
+                                               selector: #selector(receiveQuery),
+                                               name: notifTypingText,
+                                               object: nil)
     }
     func removeNotificatios() {
         NotificationCenter.default.removeObserver(self,

@@ -9,7 +9,7 @@ import Foundation
 protocol MainChatDelegate: class {
     func callTips()
 }
-public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate {
+public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDelegate {
     //var vwToolbar = ToolbarView()
     var vwToolbar = ToolbarView()
     let newChat = Chat()
@@ -36,6 +36,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate {
         vwMain.edgeTo(self, safeArea: .safeChat, padding: 30)
         self.newChat.tag = 1
         self.newTips.tag = 2
+        self.newTips.delegate = self
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
@@ -108,8 +109,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate {
         svButtons.edgeTo(self, safeArea: .safeButtons, height: 150, vwDynamicView, padding: 4)
     }
     @objc func changeViewChat() {
-        loadSelectBtn(tag: 1)
-        vwToolbar.updateTitle(text: DataConfig.title)
+        loadChat()
     }
     @objc func changeViewTips() {
         loadTips()
@@ -117,6 +117,10 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate {
     @objc func changeViewNotifications() {
         loadSelectBtn(tag: 3)
         vwToolbar.updateTitle(text: "Notifications", noDeleteBtn: true)
+    }
+    func loadChat() {
+        loadSelectBtn(tag: 1)
+        vwToolbar.updateTitle(text: DataConfig.title)
     }
     func loadTips(){
         loadSelectBtn(tag: 2)
@@ -203,5 +207,10 @@ extension MainChat {
                 }
             }
         }
+    }
+    func loadQueryTips(query: TypingSend) {
+        loadChat()
+        NotificationCenter.default.post(name: notifTypingText,
+                                        object: query)
     }
 }

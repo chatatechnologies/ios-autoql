@@ -7,8 +7,10 @@
 
 import Foundation
 import  UIKit
+protocol QTMainViewDelegate: class {
+    func loadQueryTips(query: TypingSend)
+}
 class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
-    var mainFrame: CGRect = CGRect()
     var tfMain = UITextField()
     let svPaginator = UIStackView()
     let vwMainScrollChat = UIScrollView()
@@ -23,6 +25,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     var btns: [String] = []
     var Qtips: QTModel = QTModel()
     var titleDefault = ""
+    weak var delegate: QTMainViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -216,44 +219,17 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
             selectBtn = numberPage
         }
     }
-    public func dismiss(animated: Bool) {
-        self.layoutIfNeeded()
-        if animated {
-            UIView.animate(withDuration: 0.50,
-                           delay: 0,
-                           usingSpringWithDamping: 1,
-                           initialSpringVelocity: 10,
-                           options: UIView.AnimationOptions(rawValue: 0),
-                           animations: {
-                            self.center = CGPoint(x: self.center.x,
-                                                             y: self.frame.height + self.frame.height/2)
-            }, completion: { (_) in
-                DataConfig.clearOnClose ? self.exit() : self.saveData()
-            })
-        } else {
-            DataConfig.clearOnClose ? self.exit() : saveData()
-        }
-    }
-    func exit() {
-        NotificationCenter.default.post(name: notifcloseQueryTips,
-                                        object: nil)
-        removeFromSuperview()
-    }
-    func saveData() {
-        NotificationCenter.default.post(name: notifcloseQueryTips,
-                                        object: nil)
-        removeFromSuperview()
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Qtips.items.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let typingSend = TypingSend(text: Qtips.items[indexPath.row], safe: true)
-        NotificationCenter.default.post(name: notifTypingText,
+        delegate?.loadQueryTips(query: typingSend)
+        /*NotificationCenter.default.post(name: notifTypingText,
                                         object: typingSend)
         NotificationCenter.default.post(name: notifcloseQueryTips,
-                                        object: nil)
-        self.dismiss(animated: DataConfig.clearOnClose)
+                                        object: nil)*/
+        //self.dismiss(animated: DataConfig.clearOnClose)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
