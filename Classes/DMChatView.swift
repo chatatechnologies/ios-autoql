@@ -37,32 +37,58 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
         configLoad()
     }
     func deleteQuery(numQuery: Int) {
+        let num = self.data[numQuery-1].referenceID == "1.1.430" ? 3 : 2
         if data.count >= numQuery {
             let numDeletes = validateDeletes(numQuery: numQuery)
             DispatchQueue.main.async {
+                let finalNum = numDeletes - num
                 var indexs: [IndexPath] = []
-                for idx in 0..<numDeletes  {
-                    let finalPos = numQuery - idx
-                    let newIndex = IndexPath(row: finalPos, section: 0)
-                    indexs.append(newIndex)
+                if numDeletes <= num {
+                    for idx in 0..<numDeletes  {
+                        let finalPos = numQuery - idx
+                        let newIndex = IndexPath(row: finalPos, section: 0)
+                        indexs.append(newIndex)
+                    }
+                } else {
+                    
+                    for idx in numQuery..<(numQuery+finalNum)  {
+                        let finalPos = idx + 1
+                        let newIndex = IndexPath(row: finalPos, section: 0)
+                        indexs.append(newIndex)
+                    }
+                    for idx in 0..<num  {
+                        let finalPos = numQuery - idx
+                        let newIndex = IndexPath(row: finalPos, section: 0)
+                        indexs.append(newIndex)
+                    }
                 }
                 self.tableView.deleteRows(at: indexs, with: .automatic)
                 //self.tableView.reloadData()
-                let endIndex = IndexPath(row: numQuery - numDeletes, section: 0)
+                let finalNN = numQuery == self.data.count ? 0 : 1
+                let endIndex = IndexPath(row: numQuery - (numDeletes-finalNN), section: 0)
                 self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
             }
         }
     }
     func validateDeletes(numQuery: Int) -> Int {
         var numDeletes = 1
+        let mainID = data[numQuery].idQuery
+        if numQuery < (data.count - 1) {
+            for chatC in ((numQuery + 1)...(data.count - 1)).reversed() {
+                if mainID == data[chatC].idQuery{
+                    numDeletes += 1
+                    data.remove(at: chatC)
+                }
+            }
+        }
         data.remove(at: numQuery)
         if data[numQuery-1].type == .Introduction{
             if data[numQuery-1].user {
-                numDeletes = 2
+                numDeletes += 1
                 data.remove(at: numQuery - 1)
             } else if data[numQuery-1].referenceID == "1.1.430" ||
                 data[numQuery-1].referenceID == "1.1.431" {
-                numDeletes = 3
+                numDeletes += 1
                 data.remove(at: numQuery - 1)
                 data.remove(at: numQuery - 2)
             }

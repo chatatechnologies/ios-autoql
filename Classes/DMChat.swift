@@ -149,7 +149,9 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
         service.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (component) in
             DispatchQueue.main.async {
                 self.loadingQuery(false)
-                self.limitData(element: component)
+                var finalComponent = component
+                finalComponent.idQuery = idQuery
+                self.limitData(element: finalComponent)
             }
         }
     }
