@@ -23,6 +23,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
     var csTrasparent: DViewSafeArea = .safeFH
     var csBottoms: DViewSafeArea = .safeButtons
     var buttonAxis: NSLayoutConstraint.Axis = .vertical
+    var heightButtonsStack: CGFloat = 150
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,21 +68,25 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
             csTrasparent = .safeFH
             csBottoms = .safeButtons
             buttonAxis = .vertical
+            heightButtonsStack = 150
         case "left":
             csMain = .safeChatLeft
             csTrasparent = .safeFHLeft
             csBottoms = .safeButtonsLeft
             buttonAxis = .vertical
+            heightButtonsStack = 150
         case "top":
             csMain = .safeChatTop
             csTrasparent = .safeFHTop
             csBottoms = .safeButtonsTop
             buttonAxis = .horizontal
+            heightButtonsStack = 150
         case "bottom":
             csMain = .safeChatBottom
             csTrasparent = .safeFHBottom
-            csBottoms = .safeFHBottom
+            csBottoms = .safeButtonsBottom
             buttonAxis = .horizontal
+            heightButtonsStack = 150
         default:
             print("defaultPosition")
         }
@@ -121,7 +126,8 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction) )
         newView.addGestureRecognizer(tap)
         self.addSubview(newView)
-        newView.edgeTo(self, safeArea: csTrasparent, vwDynamicView)
+        let referer = DataConfig.placement == "bottom" ? vwMain : vwDynamicView
+        newView.edgeTo(self, safeArea: csTrasparent, referer)
         let buttons: [SideBtn] = [
             SideBtn(imageStr: "icSideChat", action: #selector(changeViewChat), tag: 1),
             SideBtn(imageStr: "icSideExplore", action: #selector(changeViewTips), tag: 2),
@@ -131,16 +137,17 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
             let newButton = UIButton()
             newButton.backgroundColor = chataDrawerAccentColor
             let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
-            let image2 = image.resizeT(maxWidthHeight: 35)
+            let image2 = image.resizeT(maxWidthHeight: 30)
             newButton.setImage(image2, for: .normal)
             newButton.tag = btn.tag
             newButton.addTarget(self, action: btn.action, for: .touchUpInside)
             newButton.setImage(newButton.imageView?.changeColor(color: UIColor.white).image, for: .normal)
+            newButton.imageView?.contentMode = .scaleAspectFit
             svButtons.addArrangedSubview(newButton)
         }
-        self.addSubview(svButtons)
+        newView.addSubview(svButtons)
         //newView.edgeTo(self, safeArea: csTrasparent, vwDynamicView)
-        svButtons.edgeTo(self, safeArea: csTrasparent, height: 150, vwDynamicView)
+        svButtons.edgeTo(newView, safeArea: csBottoms, height: heightButtonsStack, referer, padding: 0)
     }
     @objc func changeViewChat() {
         loadChat()

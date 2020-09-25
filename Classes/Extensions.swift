@@ -502,14 +502,14 @@ extension UIView {
         case .safeButtonsTop:
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-            topAnchor.constraint(equalTo: top.safeAreaLayoutGuide.bottomAnchor, constant: 1).isActive = true
+            topAnchor.constraint(equalTo: top.safeAreaLayoutGuide.bottomAnchor, constant: -1).isActive = true
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding).isActive = true
             widthAnchor.constraint(equalToConstant: height).isActive = true
         case .safeButtonsBottom:
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-            bottomAnchor.constraint(equalTo: top.topAnchor, constant: -1).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
+            bottomAnchor.constraint(equalTo: top.topAnchor, constant: 1).isActive = true
             widthAnchor.constraint(equalToConstant: height).isActive = true
         case .safeFH:
             //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -527,18 +527,18 @@ extension UIView {
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .safeFHTop:
         //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            topAnchor.constraint(equalTo: top.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             //heightAnchor.constraint(equalToConstant: height).isActive = true
-            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .safeFHBottom:
         //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             //heightAnchor.constraint(equalToConstant: height).isActive = true
-            bottomAnchor.constraint(equalTo: top.safeAreaLayoutGuide.topAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: top.topAnchor).isActive = true
         case .safeChat:
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true

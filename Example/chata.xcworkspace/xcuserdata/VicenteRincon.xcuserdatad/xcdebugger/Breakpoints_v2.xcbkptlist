@@ -8044,8 +8044,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "loadButtonsSide()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8060,8 +8060,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "ToogleNotification(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8076,8 +8076,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "ToogleNotification(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8092,8 +8092,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "ToogleNotification(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8140,8 +8140,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "ToogleNotification(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8252,8 +8252,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "start(query:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8268,8 +8268,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "start(query:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8300,8 +8300,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "initLogin()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8316,8 +8316,8 @@
             filePath = "../Classes/MainChat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
             landmarkName = "initLogin()"
             landmarkType = "7">
          </BreakpointContent>
