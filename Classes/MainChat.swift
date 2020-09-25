@@ -119,6 +119,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
     @objc func changeViewNotifications() {
         loadSelectBtn(tag: 3)
         vwToolbar.updateTitle(text: "Notifications", noDeleteBtn: true)
+        NotificationServices.instance.readNotification()
     }
     func loadChat() {
         loadSelectBtn(tag: 1)
@@ -158,7 +159,7 @@ extension MainChat {
         svButtons.subviews.forEach { (view) in
             let viewT = view as? UIButton ?? UIButton()
             if viewT.tag == tag{
-                viewT.backgroundColor = .white
+                viewT.backgroundColor = chataDrawerBackgroundColor
                 viewT.setImage(viewT.imageView?.changeColor().image, for: .normal)
                 //view.isHidden = false
             } else {

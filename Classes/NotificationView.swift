@@ -9,6 +9,7 @@ import  UIKit
 
 class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
     let tbMain = UITableView()
+    let lblDefault = UILabel()
     var notifications: [NotificationItemModel] = []
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,10 +31,26 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
         loadNotifications()
         loadTable()
     }
+    func loadDefaul() {
+        if notifications.count == 0{
+            lblDefault.textColor = chataDrawerTextColorPrimary
+            lblDefault.font = generalFont
+            lblDefault.textAlignment = .center
+            lblDefault.text = "You don't have any notifications yet."
+            lblDefault.tag = 2
+            lblDefault.numberOfLines = 0
+            self.addSubview(lblDefault)
+            lblDefault.edgeTo(self, safeArea: .topPadding, height: 20, padding: 16)
+        }
+        else{
+            self.removeView(tag: 2)
+        }
+    }
     private func loadNotifications() {
         NotificationServices.instance.getNotifications(currentNumber: notifications.count) { (notifications) in
             self.notifications += notifications
             DispatchQueue.main.async {
+                self.loadDefaul()
                 self.tbMain.reloadData()
             }
         }

@@ -42,8 +42,11 @@ class NotificationServices {
             "notification_id": "null",
             "state": "ACKNOWLEDGED"
         ]
+        NotificationCenter.default.post(name: notifAlert,
+                                        object: false)
         httpRequest(url, "PUT", body) { (response) in
             print(response)
+            self.unacknowledged = 0
             //let referenceID = response["reference_id"] as? String ?? ""
             //completion(referenceID == "1.1.200")
         }
