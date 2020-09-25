@@ -19,6 +19,10 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
     var vwDynamicView = UIView()
     var vwMain = UIView()
     let svButtons = UIStackView()
+    var csMain: DViewSafeArea = .safeChat
+    var csTrasparent: DViewSafeArea = .safeFH
+    var csBottoms: DViewSafeArea = .safeButtons
+    var buttonAxis: NSLayoutConstraint.Axis = .vertical
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,6 +31,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         vwToolbar.delegate = self
     }
     public func show(query: String = "") {
+        getMainChatPosition()
         let vwFather: UIView = UIApplication.shared.keyWindow!
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
@@ -34,8 +39,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         //self.addGestureRecognizer(tap)
         self.edgeTo(vwFather, safeArea: .safe)
         self.addSubview(vwMain)
-        let csFinal: DViewSafeArea = DataConfig.placement == "right" ? .safeChat : .safeChatLeft
-        vwMain.edgeTo(self, safeArea: csFinal, padding: 30)
+        vwMain.edgeTo(self, safeArea: csMain, padding: 30)
         self.newChat.tag = 1
         self.newTips.tag = 2
         self.vwNotifications.tag = 3
@@ -55,6 +59,32 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
                         self.center = vwFather.center
                         self.loadView()
         }, completion: nil)*/
+    }
+    func getMainChatPosition(){
+        switch DataConfig.placement {
+        case "right":
+            csMain = .safeChat
+            csTrasparent = .safeFH
+            csBottoms = .safeButtons
+            buttonAxis = .vertical
+        case "left":
+            csMain = .safeChatLeft
+            csTrasparent = .safeFHLeft
+            csBottoms = .safeButtonsLeft
+            buttonAxis = .vertical
+        case "top":
+            csMain = .safeChatTop
+            csTrasparent = .safeFHTop
+            csBottoms = .safeButtonsTop
+            buttonAxis = .horizontal
+        case "bottom":
+            csMain = .safeChatBottom
+            csTrasparent = .safeFHBottom
+            csBottoms = .safeFHBottom
+            buttonAxis = .horizontal
+        default:
+            print("defaultPosition")
+        }
     }
     func addNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -86,12 +116,12 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         removeFromSuperview()
     }
     private func loadButtonsSide() {
-        svButtons.getSide(spacing: 0, axis: .vertical)
+        svButtons.getSide(spacing: 0, axis: buttonAxis)
         let newView = UIView()
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction) )
         newView.addGestureRecognizer(tap)
         self.addSubview(newView)
-        newView.edgeTo(self, safeArea: .safeFH, vwDynamicView)
+        newView.edgeTo(self, safeArea: csTrasparent, vwDynamicView)
         let buttons: [SideBtn] = [
             SideBtn(imageStr: "icSideChat", action: #selector(changeViewChat), tag: 1),
             SideBtn(imageStr: "icSideExplore", action: #selector(changeViewTips), tag: 2),
@@ -101,16 +131,16 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
             let newButton = UIButton()
             newButton.backgroundColor = chataDrawerAccentColor
             let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
-            let image2 = image.resizeT(maxWidthHeight: 25)
+            let image2 = image.resizeT(maxWidthHeight: 35)
             newButton.setImage(image2, for: .normal)
             newButton.tag = btn.tag
             newButton.addTarget(self, action: btn.action, for: .touchUpInside)
             newButton.setImage(newButton.imageView?.changeColor(color: UIColor.white).image, for: .normal)
             svButtons.addArrangedSubview(newButton)
         }
-        newView.addSubview(svButtons)
-        let csFinal: DViewSafeArea = DataConfig.placement == "right" ? .safeButtons : .safeButtonsLeft
-        svButtons.edgeTo(self, safeArea: csFinal, height: 150, vwDynamicView, padding: 4)
+        self.addSubview(svButtons)
+        //newView.edgeTo(self, safeArea: csTrasparent, vwDynamicView)
+        svButtons.edgeTo(self, safeArea: csTrasparent, height: 150, vwDynamicView)
     }
     @objc func changeViewChat() {
         loadChat()

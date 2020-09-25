@@ -9,7 +9,7 @@
 import UIKit
 var isTypingMic = false
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, widthRightY, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , safeChat, safeChatLeft, safeButtons, safeButtonsLeft, safeFH, safeFHLeft, leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, topHeightPadding, fullStatePaddingTop, dropDownBottomHeight, dropDownBottomHeightLeft,
+    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, widthRightY, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , safeChat, safeChatLeft, safeChatTop, safeChatBottom, safeButtons, safeButtonsLeft, safeButtonsTop, safeButtonsBottom, safeFH, safeFHLeft, safeFHTop, safeFHBottom, leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, topHeightPadding, fullStatePaddingTop, dropDownBottomHeight, dropDownBottomHeightLeft,
     topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, dropDownTopView, dropDownTopHeight,dropDownTopHeightLeft, centerSize, bottomRight, centerSizeUp
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
@@ -499,6 +499,18 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
             //bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        case .safeButtonsTop:
+            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            topAnchor.constraint(equalTo: top.safeAreaLayoutGuide.bottomAnchor, constant: 1).isActive = true
+            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding).isActive = true
+            widthAnchor.constraint(equalToConstant: height).isActive = true
+        case .safeButtonsBottom:
+            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+            bottomAnchor.constraint(equalTo: top.topAnchor, constant: -1).isActive = true
+            widthAnchor.constraint(equalToConstant: height).isActive = true
         case .safeFH:
             //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -510,9 +522,23 @@ extension UIView {
         //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             //heightAnchor.constraint(equalToConstant: height).isActive = true
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        case .safeFHTop:
+        //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            topAnchor.constraint(equalTo: top.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            //heightAnchor.constraint(equalToConstant: height).isActive = true
+            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        case .safeFHBottom:
+        //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            //heightAnchor.constraint(equalToConstant: height).isActive = true
+            bottomAnchor.constraint(equalTo: top.safeAreaLayoutGuide.topAnchor).isActive = true
         case .safeChat:
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
@@ -522,6 +548,16 @@ extension UIView {
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
+            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        case .safeChatTop:
+            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding).isActive = true
+        case .safeChatBottom:
+            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .nonePadding:
             topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
