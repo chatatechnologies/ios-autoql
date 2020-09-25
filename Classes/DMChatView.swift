@@ -13,7 +13,7 @@ protocol QBTipsDelegate: class {
 protocol ChatViewDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn])
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
 }
 class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderViewDelegate {
     let tableView = UITableView()
@@ -153,8 +153,8 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         delegate?.sendDrillDown(idQuery: idQuery, obj: obj, name: name)
     }
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
-        delegate?.sendDrillDownManual(newData: newData, columns: columns)
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {
+        delegate?.sendDrillDownManual(newData: newData, columns: columns, idQuery: idQuery)
     }
     func updateSize(numQBOptions: Int, index: Int) {
         if data.count > index {

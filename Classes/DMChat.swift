@@ -153,11 +153,12 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
             }
         }
     }
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {
         let service = ChataServices.instance
-        let newComponent = service.getDrillComponent(data: newData, columns: columns)
+        var newComponent = service.getDrillComponent(data: newData, columns: columns)
         DispatchQueue.main.async {
             self.loadingQuery(false)
+            newComponent.idQuery = idQuery
             self.limitData(element: newComponent)
         }
     }

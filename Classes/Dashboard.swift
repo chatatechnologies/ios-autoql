@@ -121,7 +121,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         wbMain.navigationDelegate = self
         loaderWebview()
     }
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], title: String) {
+    func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String) {
         createDrillDown(title: title)
         let newComponent = ChataServices.instance.getDrillComponent(data: newData, columns: columns)
         self.wbMain.loadHTMLString(newComponent.webView, baseURL: nil)
@@ -215,9 +215,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     func toggleListDashboard(_ show: Bool = true) {
         tbListDashboard.isHidden = !show
     }
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
-        print("T")
-    }
 }
 extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -280,6 +277,9 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
-        
     }
+    
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {
+    }
+    
 }

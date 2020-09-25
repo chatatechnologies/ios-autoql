@@ -9,7 +9,7 @@ import Foundation
 import WebKit
 protocol DashboardComponentCellDelegate: class{
     func sendDrillDown(idQuery: String, obj: String, name: String, title: String)
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], title: String)
+    func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String)
     func updateComponent(text: String, first: Bool, position: Int)
 }
 class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler, ChatViewDelegate {
@@ -278,7 +278,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                 }
             }
         }
-        delegate?.sendDrillDownManual(newData: newData,
+        delegate?.sendDrillDownManualDashboard(newData: newData,
                                       columns: mainData.columnsInfo,
                                       title: mainData.title)
     }
@@ -296,7 +296,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         
     }
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn]) {
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {
         
     }
 }
