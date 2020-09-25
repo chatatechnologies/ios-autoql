@@ -27,20 +27,23 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
         }, completion: nil)
     }
     private func loadView() {
-        NotificationServices.instance.getNotifications { (notifications) in
-            self.notifications = notifications
+        loadNotifications()
+        loadTable()
+    }
+    private func loadNotifications() {
+        NotificationServices.instance.getNotifications(currentNumber: notifications.count) { (notifications) in
+            self.notifications += notifications
             DispatchQueue.main.async {
                 self.tbMain.reloadData()
             }
         }
-        loadTable()
     }
     private func loadTable() {
         tbMain.delegate = self
         tbMain.dataSource = self
         tbMain.separatorStyle = .none
         tbMain.clipsToBounds = true
-        tbMain.bounces = true
+        tbMain.bounces = false
         tbMain.backgroundColor = chataDrawerBackgroundColor
         self.addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .nonePadding, padding: 8)
@@ -51,8 +54,18 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationCell()
         cell.configCell(item: notifications[indexPath.row], index: indexPath.row)
-        cell.textLabel?.text = "TESt"
         return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        if distanceFromBottom <= height {
+            loadNotifications()
+        }
     }
 }
 

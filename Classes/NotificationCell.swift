@@ -10,6 +10,7 @@ class NotificationCell: UITableViewCell {
     private var lblTitle = UILabel()
     private var lblDescription = UILabel()
     private var lblDate = UILabel()
+    private var vwMain = UIView()
     private var itemNotif = NotificationItemModel()
     var index = 0
     static var identifier: String {
@@ -24,10 +25,34 @@ class NotificationCell: UITableViewCell {
         loadComponents()
     }
     func loadComponents() {
-        
+        contentView.addSubview(vwMain)
+        contentView.backgroundColor = chataDrawerBackgroundColor
+        vwMain.edgeTo(self, safeArea: .nonePadding, height: 4, padding: 4)
+        vwMain.cardView()
+        loadTitle()
+        loadDate()
+        loadDescription()
     }
     func loadTitle() {
-        
+        lblTitle.text = itemNotif.ruleTitle
+        vwMain.addSubview(lblTitle)
+        lblDate.setSize(16, true)
+        lblDescription.textColor = chataDrawerTextColorPrimary
+        lblTitle.edgeTo(vwMain, safeArea: .topPadding, height: 16, padding: 16)
+    }
+    func loadDescription() {
+        lblDescription.text = itemNotif.ruleMessage
+        vwMain.addSubview(lblDescription)
+        lblDescription.setSize(14)
+        lblDescription.textColor = chataDrawerTextColorPrimary
+        lblDescription.edgeTo(lblTitle, safeArea: .fullPadding, lblTitle, lblDate)
+    }
+    func loadDate() {
+        lblDate.text = itemNotif.createdAt
+        vwMain.addSubview(lblDate)
+        lblDate.setSize(12)
+        lblDate.textColor = chataDrawerBorderColor
+        lblDate.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
     }
     @objc func showHide() {
         print("Func")

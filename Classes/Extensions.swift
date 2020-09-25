@@ -131,11 +131,14 @@ extension String {
         let dolar = format.string(from: NSNumber(value: money)) ?? "0"
         return "\(String(describing: dolar))%"
     }
-    func toDate(_ day: Bool = false) -> String {
+    func toDate(_ day: Bool = false, _ hour: Bool = false) -> String {
         let formater = DateFormatter()
         formater.dateFormat = day
             ? DataConfig.dataFormattingObj.dayMonthYearFormat
             : DataConfig.dataFormattingObj.monthYearFormat
+        if hour {
+            formater.dateFormat = "MMMM ddº, YYYY h:mm a"
+        }
         formater.timeZone = TimeZone(abbreviation: "GMT")
         let valid = Double(self) ?? 0.0
         let dates = NSDate(timeIntervalSince1970: valid)
