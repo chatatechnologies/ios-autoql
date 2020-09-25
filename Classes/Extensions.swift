@@ -490,7 +490,7 @@ extension UIView {
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            trailingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
+            trailingAnchor.constraint(equalTo: top.leadingAnchor, constant: 1).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
             //bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .safeFH:

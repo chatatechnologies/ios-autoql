@@ -36,8 +36,8 @@ class NotificationCell: UITableViewCell {
     func loadTitle() {
         lblTitle.text = itemNotif.ruleTitle
         vwMain.addSubview(lblTitle)
-        lblDate.setSize(16, true)
-        lblDescription.textColor = chataDrawerTextColorPrimary
+        lblTitle.setSize(16, true)
+        lblTitle.textColor = chataDrawerTextColorPrimary
         lblTitle.edgeTo(vwMain, safeArea: .topPadding, height: 16, padding: 16)
     }
     func loadDescription() {
