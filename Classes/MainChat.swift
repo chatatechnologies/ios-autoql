@@ -34,7 +34,8 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         //self.addGestureRecognizer(tap)
         self.edgeTo(vwFather, safeArea: .safe)
         self.addSubview(vwMain)
-        vwMain.edgeTo(self, safeArea: .safeChat, padding: 30)
+        let csFinal: DViewSafeArea = DataConfig.placement == "right" ? .safeChat : .safeChatLeft
+        vwMain.edgeTo(self, safeArea: csFinal, padding: 30)
         self.newChat.tag = 1
         self.newTips.tag = 2
         self.vwNotifications.tag = 3
@@ -108,7 +109,8 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
             svButtons.addArrangedSubview(newButton)
         }
         newView.addSubview(svButtons)
-        svButtons.edgeTo(self, safeArea: .safeButtons, height: 150, vwDynamicView, padding: 4)
+        let csFinal: DViewSafeArea = DataConfig.placement == "right" ? .safeButtons : .safeButtonsLeft
+        svButtons.edgeTo(self, safeArea: csFinal, height: 150, vwDynamicView, padding: 4)
     }
     @objc func changeViewChat() {
         loadChat()
