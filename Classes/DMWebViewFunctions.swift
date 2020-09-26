@@ -196,8 +196,16 @@ func getChartFooter(rows: [[String]],
         var positionsCharts: Int = -1
         var positionsChartsSecond: Int = -1
         for (index, type) in types.enumerated() {
-            if type == .quantity || type == .dollar{
-                positionsCharts = index
+            if type == .dollar{
+                for row in rows {
+                    if index <= (row.count-1) {
+                        let mValidation = Double(row[index]) ?? 0.0
+                        if mValidation > 0 {
+                            positionsCharts = index
+                            break
+                        }
+                    }
+                }
             }
             if  type == .date {
                 positionsChartsSecond = index
