@@ -132,7 +132,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
     }
     func sendText(_ text: String, _ safe: Bool) {
         let model = ChatComponentModel(type: .Introduction, text: text, user: true)
-        vwDataMessenger.data.append(model)
+        vwDataMessenger.mainData.append(model)
         //vwDataMessenger.tableView.reloadData()
         self.vwDataMessenger.updateTable()
         vwTextBox.tfMain.text = ""
@@ -228,12 +228,12 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
     }
     func limitData(element: ChatComponentModel, load: Bool = false){
         loadingQuery(false, async: load)
-        if self.vwDataMessenger.data.count < DataConfig.maxMessages {
-            self.vwDataMessenger.data.append(element)
+        if self.vwDataMessenger.mainData.count < DataConfig.maxMessages {
+            self.vwDataMessenger.mainData.append(element)
             self.vwDataMessenger.updateTable()
         } else {
-            self.vwDataMessenger.data.remove(at: 2)
-            self.vwDataMessenger.data.append(element)
+            self.vwDataMessenger.mainData.remove(at: 2)
+            self.vwDataMessenger.mainData.append(element)
             self.vwDataMessenger.updateWithLimit()
         }
     }
@@ -253,8 +253,8 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
         }
     }
     func delete() {
-        let resetData: [ChatComponentModel] = DataConfig.authenticationObj.token == "" ? [self.vwDataMessenger.data[0]] : [self.vwDataMessenger.data[0], self.vwDataMessenger.data[1]]
-        self.vwDataMessenger.data = resetData
+        let resetData: [ChatComponentModel] = DataConfig.authenticationObj.token == "" ? [self.vwDataMessenger.mainData[0]] : [self.vwDataMessenger.mainData[0], self.vwDataMessenger.mainData[1]]
+        self.vwDataMessenger.mainData = resetData
         self.vwDataMessenger.tableView.reloadData()
     }
     func callTips() {

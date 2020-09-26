@@ -19,7 +19,7 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     let tableView = UITableView()
     weak var delegate: ChatViewDelegate?
     weak var delegateQB: QBTipsDelegate?
-    var data = [
+    var mainData = [
         ChatComponentModel(type: .Introduction, text: "Hi \(DataConfig.userDisplayName)! \(DataConfig.introMessage)"),
         ChatComponentModel(type: .QueryBuilder, text: "")
     ]
@@ -30,67 +30,69 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     public override init(frame: CGRect) {
         super.init(frame: frame)
         if DataConfig.authenticationObj.token == "" {
-            data.remove(at: 1)
+            mainData.remove(at: 1)
         }
     }
     override func didMoveToSuperview() {
         configLoad()
     }
     func deleteQuery(numQuery: Int) {
-        let num = self.data[numQuery-1].referenceID == "1.1.430" ? 3 : 2
-        if data.count >= numQuery {
-            let numDeletes = validateDeletes(numQuery: numQuery)
-            DispatchQueue.main.async {
-                let finalNum = numDeletes - num
-                var indexs: [IndexPath] = []
-                if numDeletes <= num {
-                    for idx in 0..<numDeletes  {
-                        let finalPos = numQuery - idx
-                        let newIndex = IndexPath(row: finalPos, section: 0)
-                        indexs.append(newIndex)
+        if numQuery <= (mainData.count - 1){
+            let num = self.mainData[numQuery-1].referenceID == "1.1.430" ? 3 : 2
+            if mainData.count >= numQuery {
+                let numDeletes = validateDeletes(numQuery: numQuery)
+                DispatchQueue.main.async {
+                    let finalNum = numDeletes - num
+                    var indexs: [IndexPath] = []
+                    if numDeletes <= num {
+                        for idx in 0..<numDeletes  {
+                            let finalPos = numQuery - idx
+                            let newIndex = IndexPath(row: finalPos, section: 0)
+                            indexs.append(newIndex)
+                        }
+                    } else {
+                        
+                        for idx in numQuery..<(numQuery+finalNum)  {
+                            let finalPos = idx + 1
+                            let newIndex = IndexPath(row: finalPos, section: 0)
+                            indexs.append(newIndex)
+                        }
+                        for idx in 0..<num  {
+                            let finalPos = numQuery - idx
+                            let newIndex = IndexPath(row: finalPos, section: 0)
+                            indexs.append(newIndex)
+                        }
                     }
-                } else {
-                    
-                    for idx in numQuery..<(numQuery+finalNum)  {
-                        let finalPos = idx + 1
-                        let newIndex = IndexPath(row: finalPos, section: 0)
-                        indexs.append(newIndex)
-                    }
-                    for idx in 0..<num  {
-                        let finalPos = numQuery - idx
-                        let newIndex = IndexPath(row: finalPos, section: 0)
-                        indexs.append(newIndex)
-                    }
+                    self.tableView.deleteRows(at: indexs, with: .automatic)
+                    //self.tableView.reloadData()
+                    let finalNN = numQuery == self.mainData.count ? 0 : 1
+                    let endIndex = IndexPath(row: numQuery - (numDeletes-finalNN), section: 0)
+                    self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
                 }
-                self.tableView.deleteRows(at: indexs, with: .automatic)
-                //self.tableView.reloadData()
-                let finalNN = numQuery == self.data.count ? 0 : 1
-                let endIndex = IndexPath(row: numQuery - (numDeletes-finalNN), section: 0)
-                self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
             }
         }
     }
     func validateDeletes(numQuery: Int) -> Int {
         var numDeletes = 1
-        let mainID = data[numQuery].idQuery
-        if numQuery < (data.count - 1) {
-            for chatC in ((numQuery + 1)...(data.count - 1)).reversed() {
-                if mainID == data[chatC].idQuery{
+        let mainID = mainData[numQuery].idQuery
+        if numQuery < (mainData.count - 1) {
+            for chatC in ((numQuery + 1)...(mainData.count - 1)).reversed() {
+                if mainID == mainData[chatC].idQuery{
                     numDeletes += 1
-                    data.remove(at: chatC)
+                    mainData.remove(at: chatC)
                 }
             }
         }
-        data.remove(at: numQuery)
-        if data[numQuery-1].type == .Introduction{
-            if data[numQuery-1].user {
+        mainData.remove(at: numQuery)
+        if mainData[numQuery-1].type == .Introduction{
+            if mainData[numQuery-1].user {
                 numDeletes += 1
-                data.remove(at: numQuery - 1)
-            } else if data[numQuery-1].referenceID == "1.1.430" ||
-                data[numQuery-1].referenceID == "1.1.431" {
+                mainData.remove(at: numQuery - 1)
+            } else if mainData[numQuery-1].referenceID == "1.1.430" ||
+                mainData[numQuery-1].referenceID == "1.1.431" {
                 numDeletes += 1
-                data.remove(at: numQuery - 1)
-                data.remove(at: numQuery - 2)
+                mainData.remove(at: numQuery - 1)
+                mainData.remove(at: numQuery - 2)
             }
         }
         return numDeletes
@@ -98,14 +100,14 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
 }
 extension ChatView : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return mainData.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = DataChatCell()
         cell.selectionStyle = .none
         cell.delegate = self
         cell.delegateQB = self
-        cell.configCell(allData: data[indexPath.row], index: indexPath.row, lastQueryFinal: (indexPath.row == data.count - 1))
+        cell.configCell(allData: mainData[indexPath.row], index: indexPath.row, lastQueryFinal: (indexPath.row == mainData.count - 1))
         return cell
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -120,7 +122,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let finalSize = getSize(row: data[indexPath.row], width: self.frame.width)
+        let finalSize = getSize(row: mainData[indexPath.row], width: self.frame.width)
         return finalSize
     }
     private func configLoad() {
@@ -140,20 +142,20 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         tableView.delaysContentTouches = false
     }
     func updateTable(){
-        let index1 = IndexPath(row: self.data.count - 1, section: 0)
+        let index1 = IndexPath(row: self.mainData.count - 1, section: 0)
         //let index2 = IndexPath(row: self.data.count - 2 , section: 0)
         DispatchQueue.main.async {
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [index1], with: .automatic)
             self.tableView.endUpdates()
-            let endIndex = IndexPath(row: self.data.count - 1, section: 0)
+            let endIndex = IndexPath(row: self.mainData.count - 1, section: 0)
             self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: true)
         }
     }
     func updateWithLimit(){
         DispatchQueue.main.async {
             self.tableView.reloadData()
-            let endIndex = IndexPath(row: self.data.count - 1, section: 0)
+            let endIndex = IndexPath(row: self.mainData.count - 1, section: 0)
             self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: true)
         }
     }
@@ -166,9 +168,9 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         cell.updateChart()
         if toTable{
             // diferencias si es table o webview
-            if data.count > index {
-                data[index].numRow = numRows
-                data[index].type = isTable ? .Table : data[index].type
+            if mainData.count > index {
+                mainData[index].numRow = numRows
+                mainData[index].type = isTable ? .Table : mainData[index].type
                 //tableView.reloadRows(at: [indexPath], with: .none)
                 tableView.beginUpdates()
                 tableView.endUpdates()
@@ -183,9 +185,9 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         delegate?.sendDrillDownManual(newData: newData, columns: columns, idQuery: idQuery)
     }
     func updateSize(numQBOptions: Int, index: Int) {
-        if data.count > index {
+        if mainData.count > index {
             DispatchQueue.main.async {
-                self.data[index].numQBoptions = numQBOptions
+                self.mainData[index].numQBoptions = numQBOptions
                 self.tableView.beginUpdates()
                 self.tableView.endUpdates()
             }
