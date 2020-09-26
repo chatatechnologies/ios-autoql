@@ -79,7 +79,7 @@ class NotificationServices {
         let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications/\(idNotification)?key=\(DataConfig.authenticationObj.apiKey)"
         let body = ["key" : "\(DataConfig.authenticationObj.apiKey)"]
         httpRequest(url, "DELETE", body) { (response) in
-            
+            print(response)
         }
     }
 }

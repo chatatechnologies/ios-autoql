@@ -49,10 +49,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
     private func loadNotifications() {
         NotificationServices.instance.getNotifications(currentNumber: notifications.count) { (notifications) in
             self.notifications += notifications
-            DispatchQueue.main.async {
-                self.loadDefaul()
-                self.tbMain.reloadData()
-            }
+            self.checkNotification()
         }
     }
     private func loadTable() {
@@ -87,6 +84,23 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
     }
     func deleteNotification(index: Int, id: String) {
         print(id)
+        NotificationServices.instance.deleteNotification(idNotification: id)
+        let newIndex: Int = (notifications.firstIndex { (item) -> Bool in
+            item.id == id
+        }) ?? 0
+        self.notifications.remove(at: newIndex)
+        self.checkNotification(reload: false, index: newIndex)
+    }
+    func checkNotification(reload: Bool = true, index: Int = 0) {
+        DispatchQueue.main.async {
+            self.loadDefaul()
+            if reload {
+                self.tbMain.reloadData()
+            } else {
+                let indexPath = IndexPath(row: index, section: 0)
+                self.tbMain.deleteRows(at: [indexPath], with: .none)
+            }
+        }
     }
 }
 
