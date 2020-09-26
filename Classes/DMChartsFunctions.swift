@@ -465,7 +465,7 @@ func getTriTypeChart() -> String {
                     subTitle: subTitle,
                     yAxis: {
                         title: {
-                            text: xAxis
+                            text: yAxis
                         },
                         labels: {
                            style: {
@@ -488,7 +488,7 @@ func getTriTypeChart() -> String {
                             }
                         },
                         title: {
-                            text: yAxis
+                            text: xAxis
                         }
                     },
                     dataLabels: {

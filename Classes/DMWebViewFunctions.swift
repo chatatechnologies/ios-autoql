@@ -287,7 +287,7 @@ func getChartFooter(rows: [[String]],
     let positionSpecial = mainColum != -1 ? mainColum : 0
     let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : dataSpecialActive ? (validateArray(columns, positionDD) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
     let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
-        (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
+        (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "")
     return """
         var type = '\(mainType)';
         var xAxis = '\(xAxis)';
