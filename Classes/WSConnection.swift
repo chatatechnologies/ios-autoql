@@ -39,7 +39,7 @@ func httpRequest(_ urlFinal: String,
     var request = URLRequest(url: url) as URLRequest
     //var request = URLRequest(url: URL(string: url)!)
     request.httpMethod = method
-    if method == "POST" || method == "PUT" {
+    if method == "POST" || method == "PUT" || method == "DELETE" {
         let pjson = jsonToString(json: body)
         let data = (pjson.data(using: .utf8))! as Data
         request.httpBody = data

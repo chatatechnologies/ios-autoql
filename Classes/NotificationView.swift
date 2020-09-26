@@ -7,7 +7,7 @@
 import Foundation
 import  UIKit
 
-class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
+class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate {
     let tbMain = UITableView()
     let lblDefault = UILabel()
     var notifications: [NotificationItemModel] = []
@@ -70,6 +70,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationCell()
+        cell.delegate = self
         cell.configCell(item: notifications[indexPath.row], index: indexPath.row)
         return cell
     }
@@ -83,6 +84,9 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource {
         if distanceFromBottom <= height {
             loadNotifications()
         }
+    }
+    func deleteNotification(index: Int, id: String) {
+        print(id)
     }
 }
 

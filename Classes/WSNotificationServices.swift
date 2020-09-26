@@ -61,7 +61,7 @@ class NotificationServices {
             items.forEach { (item) in
                 var newNotification = NotificationItemModel()
                 newNotification.createdAt = String(item["created_at"] as? Int ?? 0).toDate(true, true)
-                newNotification.id = item["id"] as? String ?? ""
+                newNotification.id = String(item["id"] as? Int ?? 0) 
                 newNotification.notificationType = item["notification_type"] as? String ?? ""
                 newNotification.ruleId = item["rule_id"] as? Int ?? 0
                 newNotification.ruletype = item["rule_type"] as? String ?? ""
@@ -72,6 +72,14 @@ class NotificationServices {
                 finalNotifications.append(newNotification)
             }
             completion(finalNotifications)
+        }
+    }
+    func deleteNotification(idNotification: String) {
+        // https://spira-staging.chata.io/autoql/api/v1/rules/notifications/128276?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU
+        let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications/\(idNotification)?key=\(DataConfig.authenticationObj.apiKey)"
+        let body = ["key" : "\(DataConfig.authenticationObj.apiKey)"]
+        httpRequest(url, "DELETE", body) { (response) in
+            
         }
     }
 }

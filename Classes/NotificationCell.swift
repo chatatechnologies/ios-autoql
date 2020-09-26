@@ -6,13 +6,18 @@
 //
 
 import Foundation
+protocol NotificationCellDelegate: class {
+    func deleteNotification(index: Int, id: String)
+}
 class NotificationCell: UITableViewCell {
     private var lblTitle = UILabel()
     private var lblDescription = UILabel()
     private var lblDate = UILabel()
     private var vwMain = UIView()
+    private var btnDelete = UIButton()
     private var itemNotif = NotificationItemModel()
     var index = 0
+    weak var delegate: NotificationCellDelegate?
     static var identifier: String {
         return String(describing: self)
     }
@@ -29,16 +34,28 @@ class NotificationCell: UITableViewCell {
         contentView.backgroundColor = chataDrawerBackgroundColor
         vwMain.edgeTo(self, safeArea: .nonePadding, height: 4, padding: 4)
         vwMain.cardView()
+        loadDeleteBtn()
         loadTitle()
         loadDate()
         loadDescription()
+    }
+    func loadDeleteBtn() {
+        let image = UIImage(named: "icCancel.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        let image2 = image?.resizeT(maxWidthHeight: 20)
+        btnDelete.setImage(image2, for: .normal)
+        btnDelete.setImage(btnDelete.imageView?.changeColor().image, for: .normal)
+        btnDelete.addTarget(self, action: #selector(deleteNotification), for: .touchUpInside)
+        btnDelete.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
+        vwMain.addSubview(btnDelete)
+        btnDelete.edgeTo(vwMain, safeArea: .rightTop, height: 20.0, vwMain, padding: 16)
     }
     func loadTitle() {
         lblTitle.text = itemNotif.ruleTitle
         vwMain.addSubview(lblTitle)
         lblTitle.setSize(16, true)
+        lblTitle.numberOfLines = 0
         lblTitle.textColor = chataDrawerTextColorPrimary
-        lblTitle.edgeTo(vwMain, safeArea: .topPadding, height: 16, padding: 16)
+        lblTitle.edgeTo(vwMain, safeArea: .elementToRight, height: 16, btnDelete, padding: 16)
     }
     func loadDescription() {
         lblDescription.text = itemNotif.ruleMessage
@@ -54,11 +71,11 @@ class NotificationCell: UITableViewCell {
         lblDate.textColor = chataDrawerBorderColor
         lblDate.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
     }
-    @objc func showHide() {
-        print("Func")
-    }
     @IBAction func hideMenu(_ sender: AnyObject){
         superview?.removeView(tag: 2)
+    }
+    @objc func deleteNotification() {
+        delegate?.deleteNotification(index: index, id: itemNotif.id)
     }
 }
 struct NotificationModel{

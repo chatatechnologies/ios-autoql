@@ -23,7 +23,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     let loginSection: DemoSectionsModel =
         DemoSectionsModel(title: "Authentication", arrParameters: [
             DemoParameter(label: "* Project ID", type: .input, value: "spira-demo3", key: "projectID"),
-            DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
+            DemoParameter(label: "* User Email", type: .input, value:"carlos@rinro.com.mx", key: "userID", inputType: .mail),
             DemoParameter(label: "* API key", type: .input, value: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU", key: "apiKey"),
             DemoParameter(label: "* Domain URL", type: .input, value: "https://spira-staging.chata.io", key: "domain"),
             DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
