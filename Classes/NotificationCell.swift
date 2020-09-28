@@ -37,8 +37,8 @@ class NotificationCell: UITableViewCell {
         vwMain.cardView()
         loadDeleteBtn()
         loadTitle()
-        loadDate()
         loadDescription()
+        loadDate()
     }
     func loadDeleteBtn() {
         let image = UIImage(named: "icCancel.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
@@ -63,7 +63,7 @@ class NotificationCell: UITableViewCell {
         vwMain.addSubview(lblDescription)
         lblDescription.setSize(14)
         lblDescription.textColor = chataDrawerTextColorPrimary
-        lblDescription.edgeTo(lblTitle, safeArea: .fullPadding, lblTitle, lblDate)
+        lblDescription.edgeTo(vwMain, safeArea: .topHeightPadding, height: 16, lblTitle, padding: 16)
     }
     func loadDate() {
         lblDate.text = itemNotif.createdAt
@@ -71,7 +71,7 @@ class NotificationCell: UITableViewCell {
         lblDate.setSize(12)
         lblDate.textColor = chataDrawerBorderColor
         if itemNotif.expandable {
-            lblTitle.edgeTo(vwMain, safeArea: .topHeightPadding, height: 16, lblDate, padding: 16)
+            lblDate.edgeTo(vwMain, safeArea: .topHeightPadding, height: 16, lblDescription, padding: 16)
             loadViewQuery()
         } else{
             lblDate.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
@@ -79,8 +79,20 @@ class NotificationCell: UITableViewCell {
     }
     func loadViewQuery() {
         vwMain.addSubview(vwQuery)
-        vwMain.backgroundColor = .red
-        vwQuery.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
+        vwQuery.edgeTo(vwMain, safeArea: .safeFHTop,  lblDate)
+        let lblQuery = UILabel()
+        lblQuery.text = itemNotif.ruleQuery
+        lblQuery.textColor = chataDrawerTextColorPrimary
+        lblQuery.setSize(16, true)
+        lblQuery.textAlignment = .center
+        vwQuery.addSubview(lblQuery)
+        lblQuery.edgeTo(vwQuery, safeArea: .topPadding, height: 20, padding: 16)
+        lblQuery.addBorder()
+        let vwWebView = UIView()
+        let outputQuery = QueryOutput()
+        vwQuery.addSubview(vwWebView)
+        vwWebView.backgroundColor = .blue
+        vwWebView.edgeTo(vwQuery, safeArea: .fullStatePaddingAll, lblQuery)
     }
     @IBAction func hideMenu(_ sender: AnyObject){
         superview?.removeView(tag: 2)
