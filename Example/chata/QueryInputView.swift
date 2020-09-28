@@ -25,7 +25,7 @@ class QueryInputView: UIView, QueryInputDelegate {
         inputQuery.start(mainView: self)
         inputQuery.delegate = self
         outputQuery.authenticationOutput = auth
-        outputQuery.start(mainView: self, subView: inputQuery)
+        outputQuery.start(mainView: self, subViewTop: inputQuery)
     }
     func requestQuery(text: String) {
         print(text)

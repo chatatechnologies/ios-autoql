@@ -93,6 +93,9 @@ class NotificationCell: UITableViewCell {
         vwQuery.addSubview(vwWebView)
         vwWebView.backgroundColor = .blue
         vwWebView.edgeTo(vwQuery, safeArea: .fullStatePaddingAll, lblQuery)
+        outputQuery.authenticationOutput = DataConfig.authenticationObj
+        outputQuery.start(mainView: vwWebView)
+        outputQuery.loadComponent(text: itemNotif.ruleQuery)
     }
     @IBAction func hideMenu(_ sender: AnyObject){
         superview?.removeView(tag: 2)

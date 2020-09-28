@@ -26,9 +26,13 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    public func start(mainView: UIView, subView: UIView) {
+    public func start(mainView: UIView, subViewTop: UIView? = nil) {
         mainView.addSubview(self)
-        self.edgeTo(mainView, safeArea: .bottomPaddingtoTop, subView)
+        if let sub = subViewTop {
+            self.edgeTo(mainView, safeArea: .bottomPaddingtoTop, sub)
+        } else {
+            self.edgeTo(mainView, safeArea: .none)
+        }
         DataConfig.authenticationObj = self.authenticationOutput
         wsUrlDynamic = self.authenticationOutput.domain
     }
