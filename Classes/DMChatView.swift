@@ -44,13 +44,19 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                 DispatchQueue.main.async {
                     let finalNum = numDeletes - num
                     var indexs: [IndexPath] = []
-                    if numDeletes <= num {
+                    for idx in 0..<numDeletes  {
+                        let finalPos = numQuery - idx
+                        let newIndex = IndexPath(row: finalPos, section: 0)
+                        indexs.append(newIndex)
+                    }
+                    /*if numDeletes <= num {
                         for idx in 0..<numDeletes  {
                             let finalPos = numQuery - idx
                             let newIndex = IndexPath(row: finalPos, section: 0)
                             indexs.append(newIndex)
                         }
-                    } else {
+                    }
+                    else {
                         
                         for idx in numQuery..<(numQuery+finalNum)  {
                             let finalPos = idx + 1
@@ -62,10 +68,11 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                             let newIndex = IndexPath(row: finalPos, section: 0)
                             indexs.append(newIndex)
                         }
-                    }
+                    }*/
                     self.tableView.deleteRows(at: indexs, with: .automatic)
                     //self.tableView.reloadData()
-                    let finalNN = numQuery == self.mainData.count ? 0 : 1
+                    //let finalNN = numQuery == self.mainData.count ? 0 : 1
+                    let finalNN = 1
                     let endIndex = IndexPath(row: numQuery - (numDeletes-finalNN), section: 0)
                     self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
                 }
@@ -75,14 +82,15 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     func validateDeletes(numQuery: Int) -> Int {
         var numDeletes = 1
         let mainID = mainData[numQuery].idQuery
-        if numQuery < (mainData.count - 1) {
+        /*if numQuery < (mainData.count - 1) {
             for chatC in ((numQuery + 1)...(mainData.count - 1)).reversed() {
                 if mainID == mainData[chatC].idQuery{
                     numDeletes += 1
                     mainData.remove(at: chatC)
                 }
             }
-        }
+            
+        }*/
         mainData.remove(at: numQuery)
         if mainData[numQuery-1].type == .Introduction{
             if mainData[numQuery-1].user {

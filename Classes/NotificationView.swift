@@ -66,12 +66,13 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         return notifications.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Select notification\(indexPath.row)")
-        notifications[lastSelect].expandable = false
-        let lastIndex = IndexPath(row: lastSelect, section: 0)
-        lastSelect = indexPath.row
-        notifications[indexPath.row].expandable = true
-        tbMain.reloadRows(at: [lastIndex, indexPath], with: .automatic)
+        if lastSelect != indexPath.row {
+            notifications[lastSelect].expandable = false
+            let lastIndex = IndexPath(row: lastSelect, section: 0)
+            lastSelect = indexPath.row
+            notifications[indexPath.row].expandable = true
+            tbMain.reloadRows(at: [lastIndex, indexPath], with: .automatic)
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationCell()
