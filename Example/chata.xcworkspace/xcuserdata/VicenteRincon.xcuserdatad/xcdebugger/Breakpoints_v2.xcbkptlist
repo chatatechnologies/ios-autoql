@@ -8332,8 +8332,8 @@
             filePath = "../Classes/NotificationCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "loadTitle()"
             landmarkType = "7">
          </BreakpointContent>
@@ -8380,8 +8380,8 @@
             filePath = "../Classes/NotificationView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "scrollViewDidScroll(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8652,8 +8652,8 @@
             filePath = "../Classes/NotificationView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "deleteNotification(index:id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8668,8 +8668,8 @@
             filePath = "../Classes/NotificationView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "deleteNotification(index:id:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -6,11 +6,11 @@
 //
 import Foundation
 import  UIKit
-
 class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, NotificationCellDelegate {
     let tbMain = UITableView()
     let lblDefault = UILabel()
     var notifications: [NotificationItemModel] = []
+    var lastSelect = 0
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -65,6 +65,14 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notifications.count
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Select notification\(indexPath.row)")
+        notifications[lastSelect].expandable = false
+        let lastIndex = IndexPath(row: lastSelect, section: 0)
+        lastSelect = indexPath.row
+        notifications[indexPath.row].expandable = true
+        tbMain.reloadRows(at: [lastIndex, indexPath], with: .automatic)
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotificationCell()
         cell.delegate = self
@@ -72,7 +80,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return notifications[indexPath.row].expandable ? 450 : 100
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height

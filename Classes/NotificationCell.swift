@@ -16,6 +16,7 @@ class NotificationCell: UITableViewCell {
     private var vwMain = UIView()
     private var btnDelete = UIButton()
     private var itemNotif = NotificationItemModel()
+    private var vwQuery = UIView()
     var index = 0
     weak var delegate: NotificationCellDelegate?
     static var identifier: String {
@@ -69,7 +70,17 @@ class NotificationCell: UITableViewCell {
         vwMain.addSubview(lblDate)
         lblDate.setSize(12)
         lblDate.textColor = chataDrawerBorderColor
-        lblDate.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
+        if itemNotif.expandable {
+            lblTitle.edgeTo(vwMain, safeArea: .topHeightPadding, height: 16, lblDate, padding: 16)
+            loadViewQuery()
+        } else{
+            lblDate.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
+        }
+    }
+    func loadViewQuery() {
+        vwMain.addSubview(vwQuery)
+        vwMain.backgroundColor = .red
+        vwQuery.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
     }
     @IBAction func hideMenu(_ sender: AnyObject){
         superview?.removeView(tag: 2)
@@ -117,6 +128,7 @@ struct NotificationItemModel {
     var ruleTitle: String
     var ruletype: String
     var state: String
+    var expandable: Bool
     init(
         createdAt: String = "",
         id: String = "",
@@ -126,7 +138,8 @@ struct NotificationItemModel {
         ruleQuery: String = "",
         ruleTitle: String = "",
         ruletype: String = "",
-        state: String = ""
+        state: String = "",
+        expandable: Bool = false
     ) {
         self.createdAt = createdAt
         self.id = id
@@ -137,6 +150,7 @@ struct NotificationItemModel {
         self.ruleTitle = ruleTitle
         self.ruletype = ruletype
         self.state = state
+        self.expandable = expandable
     }
 }
 struct PollModel {
