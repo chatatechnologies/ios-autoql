@@ -36,7 +36,10 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     override func didMoveToSuperview() {
         configLoad()
     }
-    func deleteQuery(numQuery: Int) {
+    func deleteQuery(idQuery: String) {
+        let numQuery = mainData.firstIndex { (dataC) -> Bool in
+            dataC.idQuery == idQuery
+        } ?? 100
         if numQuery <= (mainData.count - 1){
             let num = self.mainData[numQuery-1].referenceID == "1.1.430" ? 3 : 2
             if mainData.count >= numQuery {
@@ -71,9 +74,9 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                     }*/
                     self.tableView.deleteRows(at: indexs, with: .automatic)
                     //self.tableView.reloadData()
-                    //let finalNN = numQuery == self.mainData.count ? 0 : 1
-                    let finalNN = 1
+                    let finalNN = numQuery == self.mainData.count ? 0 : 1
                     let endIndex = IndexPath(row: numQuery - (numDeletes-finalNN), section: 0)
+                    //let endIndex = IndexPath(row: 1, section: 0)
                     self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
                 }
             }

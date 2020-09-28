@@ -150,7 +150,8 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
             DispatchQueue.main.async {
                 self.loadingQuery(false)
                 var finalComponent = component
-                finalComponent.idQuery = idQuery
+                let random = Int.random(in: 0..<1000)
+                finalComponent.idQuery = idQuery+"drilldown\(random)"
                 self.limitData(element: finalComponent)
             }
         }
@@ -160,7 +161,8 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
         var newComponent = service.getDrillComponent(data: newData, columns: columns)
         DispatchQueue.main.async {
             self.loadingQuery(false)
-            newComponent.idQuery = idQuery
+            let random = Int.random(in: 0..<1000)
+            newComponent.idQuery = idQuery+"drilldown\(random)"
             self.limitData(element: newComponent)
         }
     }

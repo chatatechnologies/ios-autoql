@@ -8,7 +8,7 @@
 import Foundation
 protocol DataChatCellDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
-    func deleteQuery(numQuery: Int)
+    func deleteQuery(idQuery: String)
     func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
@@ -229,7 +229,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         delegate?.sendText(text, safe)
     }
     @IBAction func deleteQuery(_ sender: AnyObject){
-        delegate?.deleteQuery(numQuery: index)
+        delegate?.deleteQuery(idQuery: mainData.idQuery)
     }
     @IBAction func closeModal(_ sender: AnyObject) {
         vwFather.removeView(tag: 200)
