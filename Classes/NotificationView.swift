@@ -80,7 +80,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return notifications[indexPath.row].expandable ? 450 : 100
+        return notifications[indexPath.row].expandable ? 350 : 100
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
