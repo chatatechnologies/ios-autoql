@@ -472,7 +472,10 @@ class ChataServices {
                                 dataColumn: columnsF,
                                 idTable: "idTableBasic",
                                 columns: columnsFinal,
-                                datePivot: false)
+                                datePivot: false,
+                                reorder:  true,
+                                cleanRow: rowsFinalClean
+        )
         var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
         typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
         let webView = """

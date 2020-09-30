@@ -94,6 +94,9 @@ func getHTMLStyle() -> String {
         .red {
             color: red;
         }
+        .originalValue {
+            display: none;
+        }
         .highcharts-credits,.highcharts-button-symbol, .highcharts-exporting-group {
             display: none;
         }
@@ -132,6 +135,29 @@ func getHTMLFooter(rows: [[String]],
     <script>
     \(scriptJS)
     hideAll();
+    sortTable();
+    function sortTable() {
+      var table, rows, switching, i, x, y, shouldSwitch;
+      table = document.getElementById("idTableBasic");
+      switching = true;
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByClassName("originalValue")[0];
+          y = rows[i + 1].getElementsByClassName("originalValue")[0];
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
+    }
     function hideAll(){
         $('table').css({ "width": "100%", "position": "relative","height":"90%", "z-index": "0" });
         $( "#idTableBasic, #idTableDataPivot, #idTableDatePivot, #container" ).hide();
@@ -315,7 +341,7 @@ func getChartFooter(rows: [[String]],
     var color1 = "\(DataConfig.themeConfigObj.chartColors[0])";
     """
 }
-func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, columns: [ChatTableColumn], datePivot: Bool = false) -> String {
+func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, columns: [ChatTableColumn], datePivot: Bool = false, reorder: Bool = false, cleanRow: [[String]] = []) -> String {
     let star = "<table id='\(idTable)'>"
     var body = ""
     let end = "</table>"
@@ -331,15 +357,20 @@ func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, c
             }
         }
         body += "</tr></thead><tbody>"
-        for row in dataTable {
+        for (mainIndex, row) in dataTable.enumerated() {
             body += "<tr>"
             for (index, column) in row.enumerated() {
                 if columns.count == row.count {
                     if columns[index].isVisible{
+                        var reorderText = ""
+                        if reorder {
+                            let columnClean = cleanRow[mainIndex][index] 
+                            reorderText = "<span class='originalValue'>\(columnClean)</span>"
+                        }
                         let finalColumn = datePivot
                             ? column
                             : column.getTypeColumn(type: columns[index].type)
-                        body += "<td><span class='limit'>\(finalColumn)</span></td>"
+                        body += "<td>\(reorderText)<span class='limit'>\(finalColumn)</span></td>"
                     }
                 } else {
                     let finalColumn = datePivot
