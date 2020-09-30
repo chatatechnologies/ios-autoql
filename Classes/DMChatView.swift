@@ -75,9 +75,10 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                     self.tableView.deleteRows(at: indexs, with: .automatic)
                     //self.tableView.reloadData()
                     let finalNN = numQuery == self.mainData.count ? 0 : 1
-                    let posIndex = numQuery - (numDeletes-finalNN)
+                    let finalN = numDeletes > 1 ? numDeletes : (numDeletes-finalNN)
+                    let posIndex = numQuery - finalN
                     print(posIndex)
-                    let endIndex = IndexPath(row: posIndex - 1, section: 0)
+                    let endIndex = IndexPath(row: posIndex, section: 0)
                     //let endIndex = IndexPath(row: 1, section: 0)
                     self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
                 }

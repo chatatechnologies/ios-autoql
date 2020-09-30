@@ -6908,8 +6908,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "updateSize(numRows:index:toTable:isTable:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6924,8 +6924,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "updateSize(numRows:index:toTable:isTable:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6940,8 +6940,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "updateSize(numRows:index:toTable:isTable:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7196,8 +7196,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "updateSize(numQBOptions:index:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8412,8 +8412,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "validateDeletes(numQuery:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8428,8 +8428,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "validateDeletes(numQuery:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8444,8 +8444,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "validateDeletes(numQuery:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8460,8 +8460,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "validateDeletes(numQuery:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8476,8 +8476,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "validateDeletes(numQuery:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8700,8 +8700,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "deleteQuery(idQuery:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8780,8 +8780,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "deleteQuery(idQuery:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8796,8 +8796,8 @@
             filePath = "../Classes/DMChatView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "deleteQuery(idQuery:)"
             landmarkType = "7">
          </BreakpointContent>
