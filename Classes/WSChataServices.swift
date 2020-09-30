@@ -141,21 +141,13 @@ class ChataServices {
     }
     func getDataChat(query: String, type: String = "", queryOutput: Bool = false, completion: @escaping CompletionChatComponentModel){
         
-        let body: [String: Any] = !DataConfig.demo
-            ?   [
-                    "text": query,
-                    "source": !queryOutput ? "data_messenger.user" : "user",
-                    "debug": true,
-                    "test": true,
-                    "translation": "include"
-                ]
-            :   [
-                    "text": query,
-                    "source": "data_messenger",
-                    "user_id": "demo",
-                    "customer_id": "demo"
-                ]
-        
+        let body: [String: Any] =
+            [
+                "text": query,
+                "source": !queryOutput ? "data_messenger.user" : "user",
+                "test": true,
+                "translation": "include"
+            ]
         let urlRequest = wsQuery
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
@@ -349,7 +341,7 @@ class ChataServices {
         if items.count > 0{
             dataModel.type = .Suggestion
         }
-        let message = response["message"] as? String ?? "Uh oh.. It looks like you don't have access to this resource. Please double check that all the required authentication fields are provided."
+        let message = response["message"] as? String ?? "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
         dataModel.text = message
         if data.count > 0 && dataModel.text != "No Data Found" {
             let columns = data["columns"] as? [[String: Any]] ?? []
@@ -387,7 +379,7 @@ class ChataServices {
             if columnsF.count == 0 && rows.count == 0{
                 displayType = .Introduction
                 user = false
-                textFinal = "Uh oh.. It looks like you don't have access to this resource. Please double check that all the required authentication fields are provided."
+                textFinal = "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
             }
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
                 
