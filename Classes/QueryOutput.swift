@@ -121,7 +121,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     private func loadWS(query: String) {
         var type = displayType == "default" ? "" : displayType
         type = whiteListTypes(type: type) ? type : ""
-        ChataServices.instance.getDataChat(query: query, type: type) { (component) in
+        ChataServices.instance.getDataChat(query: query, type: type, queryOutput: true) { (component) in
             if component.referenceID == "1.1.430" || component.referenceID == "1.1.431" {
                 ChataServices.instance.getSuggestionsQueries(query: query) { (options) in
                     DispatchQueue.main.async {

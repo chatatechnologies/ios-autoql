@@ -139,13 +139,15 @@ class ChataServices {
             }
         }
     }
-    func getDataChat(query: String, type: String = "", completion: @escaping CompletionChatComponentModel){
+    func getDataChat(query: String, type: String = "", queryOutput: Bool = false, completion: @escaping CompletionChatComponentModel){
+        
         let body: [String: Any] = !DataConfig.demo
             ?   [
                     "text": query,
-                    "source": "data_messenger.user",
+                    "source": !queryOutput ? "data_messenger.user" : "user",
                     "debug": true,
-                    "test": true
+                    "test": true,
+                    "translation": "include"
                 ]
             :   [
                     "text": query,
@@ -153,6 +155,7 @@ class ChataServices {
                     "user_id": "demo",
                     "customer_id": "demo"
                 ]
+        
         let urlRequest = wsQuery
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
