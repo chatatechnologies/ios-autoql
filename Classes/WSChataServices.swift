@@ -467,6 +467,7 @@ class ChataServices {
                 columns: columnsFinal,
                 datePivot: true)
         }
+        
         tableBasicStr = tableString(dataTable: rowsFinal,
                                 dataColumn: columnsF,
                                 idTable: "idTableBasic",
@@ -729,5 +730,10 @@ struct DataPivotRow{
     var posX: Int
     var posY: Int
     var value: Double
+}
+struct dataResponse {
+    var mainColumn: Int
+    var data: [[String]]
+    
 }
 
