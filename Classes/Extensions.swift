@@ -603,7 +603,7 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 2).isActive = true
         case .paddingTop:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -613,7 +613,7 @@ extension UIView {
             trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -10).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .paddingTopRight:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+            topAnchor.constraint(equalTo: view.topAnchor, constant: 16).isActive = true
             leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 58).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

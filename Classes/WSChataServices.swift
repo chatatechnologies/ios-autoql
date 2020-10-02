@@ -426,7 +426,7 @@ class ChataServices {
     func getColumnPosition(columnsFinal: [ChatTableColumn]) -> Int {
         var mainPos = -1
         for (index, columT) in columnsFinal.enumerated() {
-            if columT.groupable{
+            if columT.groupable && columT.type == .dateString{
                 mainPos = index
                 break
             }

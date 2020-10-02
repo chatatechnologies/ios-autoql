@@ -39,7 +39,7 @@ public class DataConfiguration {
     public var dataFormattingObj = dataFormatting(
         currencyCode: "USD",
         languageCode: "en-US",
-        currencyDecimals: 0,
+        currencyDecimals: 2,
         quantityDecimals: 0,
         comparisonDisplay: "PERCENT",
         monthYearFormat: "MMM YYYY",
@@ -79,16 +79,16 @@ public class DataConfiguration {
         dataFormattingObj = dataFormatting(
             currencyCode: "USD",
             languageCode: "en-US",
-            currencyDecimals: 2,
-            quantityDecimals: 1,
+            currencyDecimals: 0,
+            quantityDecimals: 0,
             comparisonDisplay: "PERCENT",
             monthYearFormat: "MMM YYYY",
-            dayMonthYearFormat: "ll"
+            dayMonthYearFormat: "MMM d YYYY"
         )
         themeConfigObj = themeConfig(
             theme: "light",
             accentColor: "#28a8e0",
-            chartColors: ["#26A7E9", "#A5CD39", "#DD6A6A", "#FFA700", "#00C1B2"]
+            chartColors: ["#355C7D", "#6C5B7B", "#C06C84", "#F67280", "#F8B195"]
         )
     }
 }
