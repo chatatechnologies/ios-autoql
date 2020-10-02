@@ -575,14 +575,14 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .modal2:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+            topAnchor.constraint(equalTo: top.topAnchor, constant: -20).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
             widthAnchor.constraint(equalToConstant: padding).isActive = true
             //trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             //bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .modal2Right:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+            topAnchor.constraint(equalTo: top.topAnchor, constant: -20).isActive = true
             rightAnchor.constraint(equalTo: top.rightAnchor, constant: 5).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
             widthAnchor.constraint(equalToConstant: padding).isActive = true

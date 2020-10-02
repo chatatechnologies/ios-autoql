@@ -272,6 +272,14 @@ private func getBiTypeCharts() -> String{
                                text: xAxis
                              }
                            },
+                        plotOptions: {
+                            series: {
+                                borderWidth: 0,
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
                         series: [{
                                 colorByPoint: false,
                                 name: categoriesX,

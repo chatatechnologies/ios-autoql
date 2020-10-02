@@ -8773,15 +8773,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "ACE2158E-1F72-4D94-8394-4A532904F508"
+            uuid = "2FED84BD-550B-401C-A473-2798F956F53A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/CCDataChatCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "getWebView()"
             landmarkType = "7">
          </BreakpointContent>
