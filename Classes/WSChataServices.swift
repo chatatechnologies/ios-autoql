@@ -390,7 +390,8 @@ class ChataServices {
                                                     mainColumn: mainColumn,
                                                     rowsFinal: rowsFinal,
                                                     rowsFinalClean: rowsFinalClean,
-                                                    columnsFinal: columnsFinal)
+                                                    columnsFinal: columnsFinal,
+                                                    positionColumn: positionColumn)
                 webView = webviewS
             } else {
                 webView = "text"
@@ -503,7 +504,8 @@ class ChataServices {
                         drills: drills,
                         type: typeFinal,
                         mainColumn: mainColumn,
-                        second: second
+                        second: second,
+                        positionColumn: positionColumn
         ))
         """
         return webView

@@ -117,7 +117,8 @@ func getHTMLFooter(rows: [[String]],
                    type: String,
                    split: Bool = false,
                    mainColumn: Int = 0,
-                   second: String = "") -> String {
+                   second: String = "",
+                   positionColumn: Int = 0) -> String {
     var scriptJS = ""
     if rows.count > 0 && columns.count > 0 {
         scriptJS += getChartFooter(rows: rows,
@@ -130,12 +131,13 @@ func getHTMLFooter(rows: [[String]],
         )
         scriptJS += getFooterScript()
     }
+    let sortTable = positionColumn != -1 ? "sortTable();" : ""
     return """
     </div>
     <script>
     \(scriptJS)
     hideAll();
-    sortTable();
+    \(sortTable)
     function sortTable() {
       var table, rows, switching, i, x, y, shouldSwitch;
       table = document.getElementById("idTableBasic");
@@ -145,8 +147,8 @@ func getHTMLFooter(rows: [[String]],
         rows = table.rows;
         for (i = 1; i < (rows.length - 1); i++) {
           shouldSwitch = false;
-          x = rows[i].getElementsByClassName("originalValue")[0];
-          y = rows[i + 1].getElementsByClassName("originalValue")[0];
+          x = rows[i].getElementsByClassName("originalValue")[\(positionColumn)];
+          y = rows[i + 1].getElementsByClassName("originalValue")[\(positionColumn)];
           if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
             shouldSwitch = true;
             break;
