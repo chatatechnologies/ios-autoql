@@ -355,6 +355,7 @@ class ChataServices {
             var user = true
             var numRow = 20
             var biChart = false
+            let positionColumn = getColumnPosition(columnsFinal: columnsFinal)
             let (rowsFinal, rowsFinalClean, validBiChart) = getRows(rows: rows, columnsFinal: columnsFinal)
             biChart = validBiChart
             let (finalUser, finalText, newDisplayType) = getFinalText(rows: rows, user: user, text: textFinal, displayType: displayType, columnsFinal: columnsFinal)
@@ -369,10 +370,7 @@ class ChataServices {
                 rows.map{ (element) -> String in
                     return "\(element[0])"
             } : []
-            var mainPos = -1
-            for columT in columnsFinal.enumerated() {
-                
-            }
+            
             var webView = ""
             let chartsBi = displayType == .Pie || displayType == .Bar || displayType == .Column || displayType == .Line
             let chartsTri = displayType == .Heatmap || displayType == .Bubble || displayType == .StackColumn || displayType == .StackBar || displayType == .StackArea
@@ -424,13 +422,25 @@ class ChataServices {
         }
         return dataModel
     }
+    func getColumnPosition(columnsFinal: [ChatTableColumn]) -> Int {
+        var mainPos = -1
+        for (index, columT) in columnsFinal.enumerated() {
+            if columT.groupable{
+                mainPos = index
+                break
+            }
+        }
+        return mainPos
+        
+    }
     func genereteFinalWebView(
                          type: String = "",
                          second: String = "",
                          mainColumn: Int = -1,
                          rowsFinal: [[String]],
                          rowsFinalClean: [[String]],
-                         columnsFinal: [ChatTableColumn]) -> String {
+                         columnsFinal: [ChatTableColumn],
+                         positionColumn: Int = 0) -> String {
         let columsType = columnsFinal.map({ (element) -> ChatTableColumnType in
             return element.type
         })
@@ -451,7 +461,8 @@ class ChataServices {
                                     dataColumn: columnsTemp,
                                     idTable: "idTableDatePivot",
                                     columns: columnsFinal,
-                                    datePivot: true)
+                                    datePivot: true,
+                                    positionColumn: positionColumn)
         }
         if supportTri {
             var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])

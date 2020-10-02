@@ -341,7 +341,15 @@ func getChartFooter(rows: [[String]],
     var color1 = "\(DataConfig.themeConfigObj.chartColors[0])";
     """
 }
-func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, columns: [ChatTableColumn], datePivot: Bool = false, reorder: Bool = false, cleanRow: [[String]] = []) -> String {
+func tableString(dataTable: [[String]],
+                 dataColumn: [String],
+                 idTable: String,
+                 columns: [ChatTableColumn],
+                 datePivot: Bool = false,
+                 reorder: Bool = false,
+                 cleanRow: [[String]] = [],
+                 positionColumn: Int = 0
+                 ) -> String {
     let star = "<table id='\(idTable)'>"
     var body = ""
     let end = "</table>"
