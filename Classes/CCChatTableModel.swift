@@ -14,6 +14,7 @@ struct ChatTableColumn {
     var webView: String
     var formatDate: String
     var isVisible: Bool
+    var groupable: Bool
     init(
         name: String = "",
         type: ChatTableColumnType = .defaultType,
@@ -21,7 +22,8 @@ struct ChatTableColumn {
         webView: String = "",
         originalName: String = "",
         formatDate: String = "",
-        isVisible: Bool = true
+        isVisible: Bool = true,
+        groupable: Bool = false
     ) {
         self.name = name.replaceUnder()
         self.type = type
@@ -30,6 +32,7 @@ struct ChatTableColumn {
         self.originalName = originalName
         self.formatDate = formatDate
         self.isVisible = isVisible
+        self.groupable = groupable
     }
 }
 enum ChatTableColumnType: String, CaseIterable{

@@ -369,8 +369,11 @@ class ChataServices {
                 rows.map{ (element) -> String in
                     return "\(element[0])"
             } : []
+            var mainPos = -1
+            for columT in columnsFinal.enumerated() {
+                
+            }
             var webView = ""
-            
             let chartsBi = displayType == .Pie || displayType == .Bar || displayType == .Column || displayType == .Line
             let chartsTri = displayType == .Heatmap || displayType == .Bubble || displayType == .StackColumn || displayType == .StackBar || displayType == .StackArea
             let columsType = columnsFinal.map({ (element) -> ChatTableColumnType in
@@ -505,6 +508,7 @@ class ChataServices {
         var columnsFinal: [ChatTableColumn] = []
         for (_, column) in columns.enumerated() {
             let isVisible: Bool = column["is_visible"] as? Bool ?? true
+            let groupable: Bool = column["groupable"] as? Bool ?? false
             let name: String = !DataConfig.demo ? (column["display_name"] as? String ?? "") : (column["name"] as? String ?? "")
             let originalName = column["name"] as? String ?? ""
             let type: String = column["type"] as? String ?? ""
@@ -523,7 +527,8 @@ class ChataServices {
                                          type: finalType,
                                          originalName: originalName,
                                          formatDate: ffDate,
-                                         isVisible: isVisible)
+                                         isVisible: isVisible,
+                                         groupable: groupable)
             columnsFinal.append(column)
             
         }
