@@ -11,54 +11,57 @@ func getPieChart() {
     let wvStr = """
         <!DOCTYPE html>
         <meta charset="utf-8">
-        <style>
 
-        body {
-          text-align: center;
-        }
 
-        </style>
-        <body>
-        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <!-- Load d3.js -->
+        <script src="https://d3js.org/d3.v4.js"></script>
+
+        <!-- Create a div where the graph will take place -->
+        <div id="my_dataviz"></div>
+
         <script>
 
-        // Define the data as a two-dimensional array of numbers. If you had other
-        // data to associate with each number, replace each number with an object, e.g.,
-        // `{key: "value"}`.
-        var data = [
-          [11975,  5871, 8916, 2868]
-        ];
+        // set the dimensions and margins of the graph
+        var width = 450
+            height = 450
+            margin = 40
 
-        // Define the margin, radius, and color scale. The color scale will be
-        // assigned by index, but if you define your data using objects, you could pass
-        // in a named field from the data object instead, such as `d.name`. Colors
-        // are assigned lazily, so if you want deterministic behavior, define a domain
-        // for the color scale.
-        var m = 10,
-            r = 100,
-            z = d3.scale.category20c();
+        // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+        var radius = Math.min(width, height) / 2 - margin
 
-        // Insert an svg element (with margin) for each row in our dataset. A child g
-        // element translates the origin to the pie center.
-        var svg = d3.select("body").selectAll("svg")
-            .data(data)
-          .enter().append("svg")
-            .attr("width", (r + m) * 2)
-            .attr("height", (r + m) * 2)
+        // append the svg object to the div called 'my_dataviz'
+        var svg = d3.select("#my_dataviz")
+          .append("svg")
+            .attr("width", width)
+            .attr("height", height)
           .append("g")
-            .attr("transform", "translate(" + (r + m) + "," + (r + m) + ")");
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-        // The data for each svg element is a row of numbers (an array). We pass that to
-        // d3.layout.pie to compute the angles for each arc. These start and end angles
-        // are passed to d3.svg.arc to draw arcs! Note that the arc radius is specified
-        // on the arc, not the layout.
-        svg.selectAll("path")
-            .data(d3.layout.pie())
-          .enter().append("path")
-            .attr("d", d3.svg.arc()
-                .innerRadius(r / 2)
-                .outerRadius(r))
-            .style("fill", function(d, i) { return z(i); });
+        // Create dummy data
+        var data = {a: 3, b: 20, c:30, d:8, e:12}
+
+        // set the color scale
+        var color = d3.scaleOrdinal()
+          .domain(data)
+          .range(["#000", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
+
+        // Compute the position of each group on the pie:
+        var pie = d3.pie()
+          .value(function(d) {return d.value; })
+        var data_ready = pie(d3.entries(data))
+
+        // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+        svg
+          .selectAll('whatever')
+          .data(data_ready)
+          .enter()
+          .append('path')
+          .attr('d', d3.arc()
+            .innerRadius(100)         // This is the size of the donut hole
+            .outerRadius(radius)
+          )
+          .attr('fill', function(d){ return(color(d.data.key)) })
+          .style("opacity", 0.7)
 
         </script>
     """
