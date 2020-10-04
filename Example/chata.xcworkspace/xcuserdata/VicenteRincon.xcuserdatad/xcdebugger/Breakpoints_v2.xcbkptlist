@@ -1982,8 +1982,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2350,8 +2350,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2382,8 +2382,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4860,8 +4860,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4876,8 +4876,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5052,8 +5052,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5068,8 +5068,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5084,8 +5084,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
             <Locations>
@@ -5132,8 +5132,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5564,8 +5564,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5596,8 +5596,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5612,8 +5612,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5628,8 +5628,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5932,8 +5932,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6204,8 +6204,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6220,8 +6220,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8428,8 +8428,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8508,8 +8508,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8540,8 +8540,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8700,8 +8700,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8716,8 +8716,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "378"
-            endingLineNumber = "378"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8732,8 +8732,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "getHTMLFooter(rows:columns:types:drills:type:split:mainColumn:second:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8748,8 +8748,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
             landmarkName = "getHTMLFooter(rows:columns:types:drills:type:split:mainColumn:second:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>

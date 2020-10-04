@@ -7,12 +7,8 @@
 
 import Foundation
 
-func getPieChart() {
+func getPieChart() -> String {
     let wvStr = """
-        <!DOCTYPE html>
-        <meta charset="utf-8">
-
-
         <!-- Load d3.js -->
         <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -106,4 +102,5 @@ func getPieChart() {
 
         </script>
     """
+    return wvStr
 }

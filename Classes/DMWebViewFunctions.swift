@@ -15,6 +15,7 @@ func getHTMLHeader(triType: Bool = false) -> String {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://unpkg.com/sticky-table-headers"></script>
     \(getHTMLCharts(triType: triType))
     <link href=“https://fonts.googleapis.com/css?family=Titillium+Web” rel=“stylesheet”>
@@ -25,8 +26,9 @@ func getHTMLHeader(triType: Bool = false) -> String {
     <body>
     \(getHTMLStyle())
     <div class="splitView">
-    <div id='container' class='container'></div>
+    \(getPieChart())
     """
+    //getPieChart() <div id='container' class='container'></div>
 }
 func getHTMLCharts(triType: Bool) -> String {
     let headsBi = """
