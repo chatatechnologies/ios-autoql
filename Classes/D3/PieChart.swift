@@ -22,7 +22,7 @@ func getPieChart() {
         <script>
 
         // set the dimensions and margins of the graph
-        var width = 650
+        var width = 750
             height = 450
             margin = 40
 
@@ -44,11 +44,17 @@ func getPieChart() {
           .domain(data)
           .range(["#000", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
           console.log(color.range())
-        for (var i = 0; i <= color.range().length; i++) {
-            console.log(color.range()[index])
-          svg.append("circle").attr("cx",200).attr("cy",160).attr("r", 6).style("fill", "#404080")
-          svg.append("text").attr("x", 220).attr("y", 130).text("variable "+i+"").style("font-size", "15px").attr("alignment-baseline","middle")
+          var starCx = 50;
+          var arrData = Object.keys(data )
+        for (var i = 0; i < color.range().length; i++) {
+            var fColor = color.range()[i]
+            var fLabel = arrData[i]
+            console.log(color.domain())
+          svg.append("circle").attr("cx",200).attr("cy",starCx).attr("r", 6).style("fill", fColor)
+          svg.append("text").attr("x", 220).attr("y", starCx).text(fLabel).style("font-size", "15px").attr("alignment-baseline","middle")
+          starCx += 30
         }
+
         // Compute the position of each group on the pie:
         var pie = d3.pie()
           .value(function(d) {return d.value; })
