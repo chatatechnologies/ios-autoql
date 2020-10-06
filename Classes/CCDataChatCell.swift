@@ -259,7 +259,12 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     func showAlertResult(msg: String) {
         let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
         newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        ChataServices.instance.reportProblem(queryID: mainData.idQuery, problemType: msg) { (success) in
+        var finalID = mainData.idQuery
+        if finalID.contains("drilldown"){
+            let newFinalID = finalID.components(separatedBy: "drilldown")
+            finalID = newFinalID[0]
+        }
+        ChataServices.instance.reportProblem(queryID: finalID, problemType: msg) { (success) in
             DispatchQueue.main.async {
                 newAlert.message = success ? "Thank you for your feedback" : "Error in report"
                 UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
