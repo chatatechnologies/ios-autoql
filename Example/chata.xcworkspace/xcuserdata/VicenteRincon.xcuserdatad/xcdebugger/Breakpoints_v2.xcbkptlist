@@ -2142,8 +2142,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "getSizeSuggestion()"
             landmarkType = "9">
          </BreakpointContent>
@@ -2158,8 +2158,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "getSize(row:width:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2385,54 +2385,6 @@
             startingLineNumber = "319"
             endingLineNumber = "319"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C2B122F7-7BDA-4133-8206-93F852B249DC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMGlobalFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "getSizeTable()"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "27D2CAFC-B2E0-4249-94B2-D67FD844D052"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMGlobalFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "getSize(row:width:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "40851E21-DC22-45BF-B041-5C922D6D7A68"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/DMGlobalFunctions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "getSizeTable()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2782,8 +2734,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "supportPivot(columns:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2798,8 +2750,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "supportPivot(columns:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2814,8 +2766,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "supportPivot(columns:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -3358,8 +3310,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "validateArray(_:_:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6364,8 +6316,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "reloadColors()"
             landmarkType = "9">
          </BreakpointContent>
@@ -6844,8 +6796,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "getSizeWebView(numRow:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6860,8 +6812,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
             landmarkName = "getSize(row:width:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6876,8 +6828,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "getSizeDashboard(row:width:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -6892,8 +6844,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "getSizeDashboard(row:width:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -7180,8 +7132,8 @@
             filePath = "../Classes/DMGlobalFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "getSize(row:width:)"
             landmarkType = "9">
          </BreakpointContent>

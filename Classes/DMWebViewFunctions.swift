@@ -26,7 +26,7 @@ func getHTMLHeader(triType: Bool = false) -> String {
     <body>
     \(getHTMLStyle())
     <div class="splitView">
-    \(getPieChart())
+    <div id='container' class='container'></div>
     """
     //getPieChart() <div id='container' class='container'></div>
 }

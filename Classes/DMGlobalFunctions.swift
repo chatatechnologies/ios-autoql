@@ -21,9 +21,7 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     switch row.type {
     case .Introduction:
         return getSizeText(row.text, width)
-    case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-        return getSizeWebView(numRow: row.numRow)
-    case .Webview, .Table:
+    case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea, .Webview, .Table:
         return getSizeWebView(numRow: row.numRow)
     case .Suggestion:
         return getSizeSuggestion()
@@ -70,15 +68,8 @@ private func getSizeText(_ text: String, _ width: CGFloat) -> CGFloat {
     return finalHeight
 }
 private func getSizeWebView(numRow: Int) -> CGFloat{
-    let size: CGFloat = data.numRow > 12 ? 360 : (CGFloat(data.numRow * 30) + 80)
+    let size: CGFloat = data.numRow > 12 ? 380 : (CGFloat(data.numRow * 30) + 100)
     return size
-}
-private func getSizeTable() -> CGFloat{
-    if data.type == .Table{
-        let size: CGFloat = data.numRow > 12 ? 360 : (CGFloat(data.numRow * 30) + 80)
-        return size
-    }
-    return 360
 }
 private func getSizeSuggestion() -> CGFloat {
     return CGFloat(data.options.count * 55)

@@ -276,7 +276,7 @@ private func getBiTypeCharts() -> String{
                             series: {
                                 borderWidth: 0,
                                 dataLabels: {
-                                    enabled: true,
+                                    enabled: false,
                                     color: colorAxis,
                                 }
                             }
