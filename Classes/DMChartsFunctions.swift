@@ -487,7 +487,7 @@ func getTriTypeChart() -> String {
                         enabled: false
                     },
                     xAxis: {
-                        categories: categoriesY,
+                        categories: categoriesX,
                         labels: {
                             rotation: rotation,
                             step:1,
