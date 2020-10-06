@@ -79,7 +79,7 @@ func getSizeSafetynet(originalQuery: String) -> CGFloat {
     let numRow: Float = Float(size / 3.0)
     let numInt: Int = Int(numRow.rounded(.up))
     let numRows = numInt == 0 ? 1 : numInt
-    let finalSize = CGFloat(130 + (45 * numRows))
+    let finalSize = CGFloat(140 + (45 * numRows))
     return finalSize
 }
 func startRecording(textbox: UITextField) throws {

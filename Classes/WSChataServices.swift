@@ -568,7 +568,8 @@ class ChataServices {
                 if !validValue && (columnsFinal[index].type == .dollar || columnsFinal[index].type == .quantity) {
                     /*let doubleFinal = Double(element as? String ?? "") ?? 0*/
                     let intFinal = element as? Int ?? 0
-                    if intFinal != 0 {
+                    let doubleFinal = element as? Double ?? 0.0
+                    if intFinal != 0 || doubleFinal != 0.0 {
                         validValue = true
                     }
                 }
