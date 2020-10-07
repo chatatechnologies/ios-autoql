@@ -44,7 +44,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblMain.textColor = chataDrawerTextColorPrimary
         lblMain.font = generalFont
         addSubview(lblInfo)
-        lblInfo.edgeTo(self, safeArea: .bottomPadding, height: 50, padding: 8)
+        lblInfo.edgeTo(self, safeArea: .bottomPadding, height: 40, padding: 8)
         addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .fullPadding, lblMain, lblInfo, padding: 16)
         tbMain.backgroundColor = chataDrawerBackgroundColor

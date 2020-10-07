@@ -381,6 +381,7 @@ extension UIView {
     public func edgeTo(_ view: UIView,
                        safeArea: DViewSafeArea = .none,
                        height: CGFloat = 0,
+                       width: CGFloat = 0,
                        _ top: UIView = UIView(),
                        _ bottom: UIView = UIView(),
                        padding: CGFloat = -8) -> UIView {
@@ -599,8 +600,10 @@ extension UIView {
         case .padding:
             //topAnchor.constraint(equalTo: view.topAnchor, constant: 2).isActive = true
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 10).isActive = true
+            trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -10).isActive = true
+            widthAnchor.constraint(equalToConstant: width).isActive = true
             //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 2).isActive = true
         case .paddingTop:
             topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
@@ -671,10 +674,11 @@ extension UIView {
             bottomAnchor.constraint(equalTo: bottom.topAnchor).isActive = true
         case .fullBottom:
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+            leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20).isActive = true
+            trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
+            //widthAnchor.constraint(lessThanOrEqualToConstant: width).isActive = true
+            widthAnchor.constraint(equalToConstant: width).isActive = true
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         case .fullBottomCenter:
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: 10).isActive = true

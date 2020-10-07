@@ -55,6 +55,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     var allSection: [DemoSectionsModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        detectDevice()
         dataChat.config.demo = false
         loadSections()
         loadColors()
@@ -425,6 +426,10 @@ extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     @objc func changeStatus(){
         print("change")
+    }
+    func detectDevice () {
+        let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
+        isIpad = deviceIdiom == .pad
     }
 }
 extension String {

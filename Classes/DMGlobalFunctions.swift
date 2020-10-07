@@ -31,9 +31,9 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     case .QueryBuilder:
         let base = 80
         if row.numQBoptions == 0 {
-            return 150
+            return 170
         }
-        let finalSum = row.numQBoptions > 10 ? 200 : row.numQBoptions * 50
+        let finalSum = row.numQBoptions > 10 ? 220 : row.numQBoptions * 50
         return CGFloat(base + finalSum)
         //return 350
     }

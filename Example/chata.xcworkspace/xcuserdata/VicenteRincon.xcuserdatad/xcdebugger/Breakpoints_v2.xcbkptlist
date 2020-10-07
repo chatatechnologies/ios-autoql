@@ -942,8 +942,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
             landmarkName = "butonAction(key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -958,8 +958,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "setDataValue(key:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2592,8 +2592,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
             endingLineNumber = "94"
-            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2608,8 +2608,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "95"
             endingLineNumber = "95"
-            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3264,8 +3264,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "75"
             endingLineNumber = "75"
-            landmarkName = "loadDashboard(view:autentification:mainView:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3280,8 +3280,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "248"
             endingLineNumber = "248"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3342,8 +3342,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
             landmarkName = "toogleAction(value:key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3358,8 +3358,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "toogleAction(value:key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3374,8 +3374,8 @@
             filePath = "chata/DemoParameterCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "switchValueDidChange(sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3584,8 +3584,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "67"
             endingLineNumber = "67"
-            landmarkName = "loadDashboard(view:autentification:mainView:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - a7c12ea6911848d8"
@@ -3724,9 +3724,9 @@
             filePath = "../Classes/Extensions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412"
-            landmarkName = "edgeTo(_:safeArea:height:_:_:padding:)"
+            startingLineNumber = "413"
+            endingLineNumber = "413"
+            landmarkName = "edgeTo(_:safeArea:height:width:_:_:padding:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3870,8 +3870,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "183"
             endingLineNumber = "183"
-            landmarkName = "loadTwoDash(query:type:index:column:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3918,8 +3918,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "92"
             endingLineNumber = "92"
-            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "43DA4071-70DC-42F4-AC5B-F6F1AE5F8617 - 5ab4ce165d4476cb"
@@ -5710,8 +5710,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "171"
             endingLineNumber = "171"
-            landmarkName = "loadTwoDash(query:type:index:column:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5726,8 +5726,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "172"
             endingLineNumber = "172"
-            landmarkName = "loadTwoDash(query:type:index:column:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5838,8 +5838,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
-            landmarkName = "sendDrillDown(idQuery:obj:name:title:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6014,8 +6014,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "189"
             endingLineNumber = "189"
-            landmarkName = "loadOneDash(query:type:index:column:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6204,8 +6204,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "460"
-            endingLineNumber = "460"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6220,8 +6220,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
+            startingLineNumber = "472"
+            endingLineNumber = "472"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6236,8 +6236,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6252,8 +6252,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
+            startingLineNumber = "468"
+            endingLineNumber = "468"
             landmarkName = "getDataValue(allSection:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6268,8 +6268,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "segmentAction(key:value:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7164,8 +7164,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "butonAction(key:)"
             landmarkType = "7">
             <Locations>
@@ -7212,8 +7212,8 @@
             filePath = "chata/DemoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "butonAction(key:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8604,9 +8604,9 @@
             filePath = "../Classes/Extensions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "607"
-            endingLineNumber = "607"
-            landmarkName = "edgeTo(_:safeArea:height:_:_:padding:)"
+            startingLineNumber = "610"
+            endingLineNumber = "610"
+            landmarkName = "edgeTo(_:safeArea:height:width:_:_:padding:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -8767,6 +8767,22 @@
             startingLineNumber = "158"
             endingLineNumber = "158"
             landmarkName = "getButtons(num:columns:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F13A4EF4-1B4D-41CD-AD1F-E9312A8A0921"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/Extensions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
+            landmarkName = "edgeTo(_:safeArea:height:width:_:_:padding:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

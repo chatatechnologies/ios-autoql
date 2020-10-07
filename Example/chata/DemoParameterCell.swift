@@ -16,6 +16,7 @@ protocol DemoParameterCellDelegate: class {
 class DemoParameterCell: UITableViewCell {
     private var Data: DemoParameter = DemoParameter()
     var blueColor = "#28A8E0".hexToColor()
+    var widthElement: CGFloat = 300
     weak var delegate: DemoParameterCellDelegate?
     static var identifier: String {
         return String(describing: self)
@@ -23,6 +24,7 @@ class DemoParameterCell: UITableViewCell {
     func configCell(data: DemoParameter) {
         //self.textLabel = "test"
         Data = data
+        widthElement = isIpad ? 500 : 300
         genereteData(data.type)
     }
     private func genereteData(_ type: DemoParameterType) {
@@ -76,9 +78,11 @@ class DemoParameterCell: UITableViewCell {
         input.isSecureTextEntry = Data.inputType == DemoInputType.password
         input.textAlignment = .center
         input.addTarget(self, action: #selector(changeText), for: .editingChanged)
+        input.setPaddingPoints(10)
         input.borderRadius()
+        
         self.contentView.addSubview(input)
-        input.edgeTo(self.contentView, safeArea: .fullBottom, height: 50.0, label,self.contentView, padding: 10)
+        input.edgeTo(self.contentView, safeArea: .fullBottom, height: 50.0, width: widthElement, label,self.contentView, padding: 10)
     }
     private func getButton() {
         let button = UIButton()
@@ -86,7 +90,7 @@ class DemoParameterCell: UITableViewCell {
         button.backgroundColor = blueColor
         button.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
         self.contentView.addSubview(button)
-        button.edgeTo(self.contentView, safeArea: .padding)
+        button.edgeTo(self.contentView, safeArea: .padding, width: widthElement)
     }
     private func getSegment() {
         let label = getLabel()
@@ -105,7 +109,7 @@ class DemoParameterCell: UITableViewCell {
         segment.backgroundColor = .gray
         segment.selectedSegmentIndex = indexSelect
         segment.addTarget(self, action: #selector(segmentPress), for: .valueChanged)
-        segment.edgeTo(self.contentView, safeArea: .fullBottom, height: 100.0, label, self.contentView, padding: 0)
+        segment.edgeTo(self.contentView, safeArea: .fullBottom, height: 100.0, width: widthElement, label, self.contentView, padding: 0)
     }
     private func getColor() {
         let label = getLabel()
@@ -116,7 +120,7 @@ class DemoParameterCell: UITableViewCell {
         input.textColor = .white
         input.addTarget(self, action: #selector(changeText), for: .editingChanged)
         self.contentView.addSubview(input)
-        input.edgeTo(self.contentView, safeArea: .fullBottom, height: 40.0, label, self.contentView, padding: 0)
+        input.edgeTo(self.contentView, safeArea: .fullBottom, height: 40.0, width: widthElement, label, self.contentView, padding: 0)
     }
     private func getDefault() {
     }
