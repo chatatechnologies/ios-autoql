@@ -41,12 +41,25 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
             dataC.idQuery == idQuery
         } ?? 100
         if numQuery <= (mainData.count - 1){
+            var deleteSuggestion = false
+            if numQuery <= (mainData.count){
+                if mainData[numQuery + 1].type == .Suggestion {
+                    deleteSuggestion = true
+                }
+            }
             let num = self.mainData[numQuery-1].referenceID == "1.1.430" ? 3 : 2
             if mainData.count >= numQuery {
+                if deleteSuggestion {
+                    mainData.remove(at: (numQuery + 1))
+                }
                 let numDeletes = validateDeletes(numQuery: numQuery)
                 DispatchQueue.main.async {
-                    let finalNum = numDeletes - num
+                    //let finalNum = numDeletes - num
                     var indexs: [IndexPath] = []
+                    if deleteSuggestion {
+                        let newIndex = IndexPath(row: (numQuery+1), section: 0)
+                        indexs.append(newIndex)
+                    }
                     for idx in 0..<numDeletes  {
                         let finalPos = numQuery - idx
                         let newIndex = IndexPath(row: finalPos, section: 0)
