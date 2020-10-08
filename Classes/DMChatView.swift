@@ -77,7 +77,6 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                     let finalNN = numQuery == self.mainData.count ? 0 : 1
                     let finalN = numDeletes > 1 ? numDeletes : (numDeletes-finalNN)
                     let posIndex = numQuery - finalN
-                    print(posIndex)
                     let endIndex = IndexPath(row: posIndex, section: 0)
                     //let endIndex = IndexPath(row: 1, section: 0)
                     self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
@@ -87,7 +86,7 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     }
     func validateDeletes(numQuery: Int) -> Int {
         var numDeletes = 1
-        let mainID = mainData[numQuery].idQuery
+        //let mainID = mainData[numQuery].idQuery
         /*if numQuery < (mainData.count - 1) {
             for chatC in ((numQuery + 1)...(mainData.count - 1)).reversed() {
                 if mainID == mainData[chatC].idQuery{

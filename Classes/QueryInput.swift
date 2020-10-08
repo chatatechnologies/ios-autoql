@@ -88,7 +88,6 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
                         loadingView(mainView: self, inView: self.tbAutoComplete, false)
                         let invalidQ = (self.tfMain.text ?? "") == ""
                         self.arrAutocomplete = invalidQ ? [] : queries
-                        print("NN")
                         self.tbAutoComplete.isHidden = invalidQ
                         self.tbAutoComplete.reloadData()
                     }

@@ -424,9 +424,6 @@ extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    @objc func changeStatus(){
-        print("change")
-    }
     func detectDevice () {
         let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
         isIpad = deviceIdiom == .pad

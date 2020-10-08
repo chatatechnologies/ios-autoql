@@ -603,7 +603,9 @@ extension UIView {
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 10).isActive = true
             trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -10).isActive = true
-            widthAnchor.constraint(equalToConstant: width).isActive = true
+            if width > 0 {
+                widthAnchor.constraint(equalToConstant: width).isActive = true
+            }
             //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 2).isActive = true
         case .paddingTop:
             topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true

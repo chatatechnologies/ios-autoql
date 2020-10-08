@@ -92,7 +92,6 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         }
     }
     func deleteNotification(index: Int, id: String) {
-        print(id)
         NotificationServices.instance.deleteNotification(idNotification: id)
         let newIndex: Int = (notifications.firstIndex { (item) -> Bool in
             item.id == id

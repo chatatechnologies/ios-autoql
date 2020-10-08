@@ -28,7 +28,6 @@ class QueryInputView: UIView, QueryInputDelegate {
         outputQuery.start(mainView: self, subViewTop: inputQuery)
     }
     func requestQuery(text: String) {
-        print(text)
         outputQuery.loadComponent(text: text)
     }
     

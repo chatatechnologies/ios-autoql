@@ -184,7 +184,6 @@ func jsonToString(json: [String: Any]) -> String {
         let jsonString = NSString(data: json2, encoding: String.Encoding.utf8.rawValue)! as String
         return jsonString
     } catch {
-        print("problema con diccionario: \(String(describing: error))")
         return ""
     }
 }

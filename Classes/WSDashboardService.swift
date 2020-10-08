@@ -62,7 +62,6 @@ class DashboardService {
             completion(finalComponent)
         } else {
             httpRequest(url, "POST", body) { (response) in
-                print(query)
                 let referenceId = response["reference_id"] as? String ?? ""
                 let typeFinal = type == .Introduction ? "" : type.rawValue
                 /*if referenceId == "1.1.430" || referenceId == "1.1.431"{

@@ -198,9 +198,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
                          ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
         ]
     }
-    @objc func showHide() {
-        print("Func")
-    }
+    @objc func showHide() {}
     @objc func showDrillDown() {
         delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: "", name: "")
     }
@@ -236,7 +234,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         
     }
     @IBAction func showMenu(_ sender: AnyObject){
-        print("Show Menu")
         genereMenuReport()
     }
     @IBAction func hideMenu(_ sender: AnyObject){
@@ -287,7 +284,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         oldID = oldID.contains("cid") ? "container" : oldID
         let numRows = newID.contains("Table") ? self.mainData.dataRows.count : 12
         functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
-        print(functionJS)
         //if oldID != newID{
         self.delegate?.updateSize(numRows: numRows,
                                   index: self.index,
