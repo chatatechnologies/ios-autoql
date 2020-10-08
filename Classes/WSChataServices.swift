@@ -308,10 +308,12 @@ class ChataServices {
                           second: String = "",
                           referenceID: String = "") -> ChatComponentModel {
         let data = response["data"] as? [String: Any] ?? [:]
+        let idQueryDefault = data["query_id"] as? String ?? UUID().uuidString
         var dataModel = ChatComponentModel(webView: "error",
                                            options: items,
                                            position: position,
                                            referenceID: referenceID)
+        dataModel.idQuery = idQueryDefault
         if items.count > 0{
             dataModel.type = .Suggestion
         }
@@ -322,7 +324,7 @@ class ChataServices {
             let rows = data["rows"] as? [[Any]] ?? []
             let typeF = validType(rows: rows, type: type)
             let finalType = typeF == "" ? (data["display_type"] as? String ?? "") : typeF
-            let idQuery = data["query_id"] as? String ?? ""
+            let idQuery = data["query_id"] as? String ?? UUID().uuidString
             var displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
             let columnsFinal = getColumns(columns: columns)
             var textFinal = ""

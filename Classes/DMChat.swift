@@ -171,6 +171,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
             if suggestion.count == 0 {
                 self.loadQuery(text: text)
             } else {
+                let idQuery = UUID().uuidString
                 let finalComponent = ChatComponentModel(
                     type: .Safetynet,
                     text: "Verify by selecting the correct term from the menu below:",
@@ -178,7 +179,8 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
                     webView: "",
                     numRow: 0,
                     options: [text],
-                    fullSuggestions: suggestion
+                    fullSuggestions: suggestion,
+                    idQuery: idQuery
                 )
                 self.limitData(element: finalComponent, load: true)
             }
