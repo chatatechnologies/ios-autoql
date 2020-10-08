@@ -50,8 +50,6 @@ public class DataConfiguration {
         accentColor: "#28a8e0",
         chartColors: ["#355C7D", "#6C5B7B", "#C06C84", "#F67280", "#F8B195"]
     )
-    //public var mainChatView = Chat()
-    // public var chatView = Chat()
     func show(){
         
     }

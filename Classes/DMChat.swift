@@ -133,7 +133,6 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
     func sendText(_ text: String, _ safe: Bool) {
         let model = ChatComponentModel(type: .Introduction, text: text, user: true)
         vwDataMessenger.mainData.append(model)
-        //vwDataMessenger.tableView.reloadData()
         self.vwDataMessenger.updateTable()
         vwTextBox.tfMain.text = ""
         vwAutoComplete.isHidden = true

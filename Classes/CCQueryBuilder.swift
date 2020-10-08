@@ -104,13 +104,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
                        initialSpringVelocity: 0,
                        options: .curveEaseOut,
                        animations: {
-                        // Slide the views by -offset
                         self.vwSecond.isHidden = hide
                         self.vwSecond.transform = CGAffineTransform(translationX: pos2, y: 0)
-                        //self.tbMain.transform = CGAffineTransform.identity
-
         }, completion: { finished in
-            // Remove the old view from the tabbar view.
         })
     }
     func loadTable() {
@@ -239,10 +235,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblInfo.attributedText = mainAttr
     }
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        //let tips = QTMainView(frame: self.frame)
-        //tips.show()
         delegateQB?.callTips()
-        //lblInfo.isSelectable = false
         return true
     }
 }

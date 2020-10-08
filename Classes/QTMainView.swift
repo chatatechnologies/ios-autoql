@@ -225,11 +225,6 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let typingSend = TypingSend(text: Qtips.items[indexPath.row], safe: true)
         delegate?.loadQueryTips(query: typingSend)
-        /*NotificationCenter.default.post(name: notifTypingText,
-                                        object: typingSend)
-        NotificationCenter.default.post(name: notifcloseQueryTips,
-                                        object: nil)*/
-        //self.dismiss(animated: DataConfig.clearOnClose)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()

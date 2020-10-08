@@ -22,7 +22,6 @@ class DemoParameterCell: UITableViewCell {
         return String(describing: self)
     }
     func configCell(data: DemoParameter) {
-        //self.textLabel = "test"
         Data = data
         widthElement = isIpad ? 500 : 300
         genereteData(data.type)
@@ -49,7 +48,6 @@ class DemoParameterCell: UITableViewCell {
         button.onTintColor = blueColor
         button.isOn = Data.value == "true"
         button.addTarget(self, action: #selector(switchValueDidChange), for: .valueChanged)
-        //button.addTarget(self, action: #selector(executeDashboard), for: .valueChanged)
         self.contentView.addSubview(button)
         button.edgeTo(self.contentView, safeArea: .fullBottomCenter, height: 50.0, label)
     }
@@ -63,7 +61,6 @@ class DemoParameterCell: UITableViewCell {
         let pos = sender.selectedSegmentIndex
         let item = Data.options[pos]
         delegate?.segmentAction(key: Data.key, value: item)
-        //delegate?.butonAction(name: Data.label)
     }
     @objc func changeText(sender: UITextField){
         delegate?.chageText(name: "", value: sender.text ?? "", key: Data.key, color: Data.type == .color)
@@ -101,9 +98,7 @@ class DemoParameterCell: UITableViewCell {
         segment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         if #available(iOS 13.0, *) {
             segment.selectedSegmentTintColor = blueColor
-        } else {
-            // Fallback on earlier versions
-        }
+        } 
         segment.center = self.contentView.center
         segment.layer.cornerRadius = 5.0
         segment.backgroundColor = .gray

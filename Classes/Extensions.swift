@@ -114,19 +114,14 @@ extension String {
     }
     func toQuantity() -> String {
         let format = NumberFormatter()
-        //format.currencyCode = "$"
         format.minimumFractionDigits = DataConfig.dataFormattingObj.quantityDecimals
-        //format.locale = Locale.init(identifier: "en_us")
         let money: Double = Double(self) ?? 0.0
         let dolar = format.string(from: NSNumber(value: money)) ?? "0"
         return "\(String(describing: dolar))"
     }
     func toPercent() -> String {
         let format = NumberFormatter()
-        //format.currencyCode = "$"
-        //format.minimumFractionDigits = DataMessenger.dataFormattingObj.quantityDecimals
         format.minimumFractionDigits = 2
-        //format.locale = Locale.init(identifier: "en_us")
         let money: Double = (Double(self) ?? 0.0) * 100.0
         let dolar = format.string(from: NSNumber(value: money)) ?? "0"
         return "\(String(describing: dolar))%"
@@ -283,9 +278,6 @@ extension UIButton {
 extension UITextField {
     func addLeftImageTo(image: UIImage) {
         let size: CGFloat = 30
-        
-        //var image = UIImage(named: imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)
-        //image = image?.resizeT(maxWidthHeight: Double(size))
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         let imageView = UIImageView(frame: frame)
         imageView.image = image
@@ -409,11 +401,7 @@ extension UIView {
             trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
         case .bottomPaddingtoTopHalf:
-            //let finalHeight = (view.frame.height / 2) - top.frame.height
-            //heightAnchor.constraint(equalToConstant: finalHeight).isActive = true
-            
             heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.38).isActive = true
-            //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
             leadingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
@@ -494,56 +482,43 @@ extension UIView {
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .safeButtons:
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
             trailingAnchor.constraint(equalTo: top.leadingAnchor, constant: 1).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         case .safeButtonsLeft:
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: top.trailingAnchor, constant: -1).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
-            //bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .safeButtonsTop:
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             topAnchor.constraint(equalTo: top.safeAreaLayoutGuide.bottomAnchor, constant: -1).isActive = true
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding).isActive = true
             widthAnchor.constraint(equalToConstant: height).isActive = true
         case .safeButtonsBottom:
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            //topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
             bottomAnchor.constraint(equalTo: top.topAnchor, constant: 1).isActive = true
             widthAnchor.constraint(equalToConstant: height).isActive = true
         case .safeFH:
-            //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
-            //heightAnchor.constraint(equalToConstant: height).isActive = true
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .safeFHLeft:
-        //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            //heightAnchor.constraint(equalToConstant: height).isActive = true
             bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         case .safeFHTop:
-        //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            //heightAnchor.constraint(equalToConstant: height).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .safeFHBottom:
-        //centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            //heightAnchor.constraint(equalToConstant: height).isActive = true
             bottomAnchor.constraint(equalTo: top.topAnchor).isActive = true
         case .safeChat:
             topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -587,18 +562,10 @@ extension UIView {
             rightAnchor.constraint(equalTo: top.rightAnchor, constant: 5).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
             widthAnchor.constraint(equalToConstant: padding).isActive = true
-        //trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        //bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .modal:
-            //topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            //heightAnchor.constraint(equalToConstant: height).isActive = true
-            //widthAnchor.constraint(equalToConstant: 200).isActive = true
-        //trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        //bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         case .padding:
-            //topAnchor.constraint(equalTo: view.topAnchor, constant: 2).isActive = true
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 10).isActive = true
@@ -606,7 +573,6 @@ extension UIView {
             if width > 0 {
                 widthAnchor.constraint(equalToConstant: width).isActive = true
             }
-            //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 2).isActive = true
         case .paddingTop:
             topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
@@ -679,7 +645,6 @@ extension UIView {
             leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20).isActive = true
             trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            //widthAnchor.constraint(lessThanOrEqualToConstant: width).isActive = true
             widthAnchor.constraint(equalToConstant: width).isActive = true
             centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         case .fullBottomCenter:
@@ -781,7 +746,6 @@ extension UIView {
         case .fullStackV:
             topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            //leadingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             widthAnchor.constraint(equalToConstant: height).isActive = true
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         case .dropDown:
@@ -801,25 +765,21 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: height).isActive = true
         case .dropDownTopHeight:
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: 1).isActive = true
-            //leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
             trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             widthAnchor.constraint(equalToConstant: 250).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         case .dropDownTopHeightLeft:
             topAnchor.constraint(equalTo: top.bottomAnchor, constant: 1).isActive = true
             leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
-            //trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             widthAnchor.constraint(equalToConstant: 250).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         case .dropDownBottomHeight:
             bottomAnchor.constraint(equalTo: top.topAnchor, constant: 1).isActive = true
             leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
-            //trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             widthAnchor.constraint(equalToConstant: 250).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true
         case .dropDownBottomHeightLeft:
             bottomAnchor.constraint(equalTo: top.topAnchor, constant: 1).isActive = true
-            //leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
             trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
             widthAnchor.constraint(equalToConstant: 250).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true

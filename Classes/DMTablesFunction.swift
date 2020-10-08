@@ -82,7 +82,6 @@ func getAllDaysPivot(infoPivot: DataPivotModel, yearsOrder: [String]) -> [[Strin
             let final = String(suma).toMoney()
             datePivot[index][pos+1] = final
         } else {
-            //lastDate = "\(m) \(day)"
             index += 1
             lastDate = "\(monthM) \(dayM)"
             suma = Double(element.mount) ?? 0.0
@@ -122,7 +121,7 @@ func getDataPivot(rows: [[String]], columnsT: [ChatTableColumnType]) -> DataPivo
             if !dateStringActive {
                 let test = Date(timeIntervalSince1970: TimeInterval(date)!)
                 let dateFormatter = DateFormatter()
-                dateFormatter.timeZone = TimeZone(abbreviation: "GMC-5") //Set timezone that you want
+                dateFormatter.timeZone = TimeZone(abbreviation: "GMC-5")
                 dateFormatter.locale = NSLocale.current
                 dateFormatter.dateFormat = "yyyy"
                 let year = dateFormatter.string(from: test)
@@ -215,9 +214,6 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
         let test = DataPivotRow(posX: locX, posY: locY, value: data3)
         totalSum.append(test)
     }
-    
-    // hacer algoritmo para hacer pivots
-    // INvertir CatY
     var final: [[String]] = []
     for (indexY, cat) in categoriesY.enumerated(){
         var finalB = [cat]
@@ -239,7 +235,6 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
     var header = [""]
     var headerFree: [String] = []
     for catY in categoriesX {
-        //header.append(catY.toDate())
         header.append(catY)
         headerFree.append(catY)
     }

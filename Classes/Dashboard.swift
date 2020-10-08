@@ -210,7 +210,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     }
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loaderWebview(false)
-        //progress(off: true, viewT: wbChart!)
     }
     func toggleListDashboard(_ show: Bool = true) {
         tbListDashboard.isHidden = !show

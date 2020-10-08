@@ -10,15 +10,8 @@ import WebKit
 public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, SafetynetViewDelegate {
     public var authenticationOutput: authentication = authentication()
     public var queryResponse: [String: Any] = [:]
-    //public var queryInputRef = nil
     public var displayType: String = "stacked_column"
-    /*public var activeChartElementKey: String = ""
-    public var autoSelectQueryValidationSuggestion: Bool = true
-    public var queryValidationSelections : String = ""*/
-    //public var renderSuggestionsAsDropdown: Bool = false
-    //public var suggestionSelection: String = ""
     var finalComponent = ChatComponentModel()
-    //public var dataFormatting: [S
     var wvMain = WKWebView()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -44,10 +37,8 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
             loadSuggestion()
         case .Introduction:
             loadIntro()
-            //loadIntro(view: view, text: text)
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .Table, .Webview, .StackArea:
             loadWebview()
-            //loadWebView(view: view, webview: webview, loading: loading)
         case .QueryBuilder:
             print("no supported for dashboard")
         }
@@ -69,7 +60,6 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         newView.delegateSuggestion = self
         newView.tag = 1
         newView.loadConfig(options: finalComponent.options, query: finalComponent.text)
-        //newView.loadWebview(strWebview: data.webView)
         self.addSubview(newView)
         newView.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
         self.sizeToFit()

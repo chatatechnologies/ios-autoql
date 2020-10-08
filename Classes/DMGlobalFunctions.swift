@@ -35,17 +35,14 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
         }
         let finalSum = row.numQBoptions > 10 ? 220 : row.numQBoptions * 50
         return CGFloat(base + finalSum)
-        //return 350
     }
 }
 func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
     let base: CGFloat = 70.0
     switch row.type {
     case .Introduction:
-        //return getSizeText(row.text, width)
         return CGFloat(row.posH) * base
     case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-        //return row.splitView ? 800 : 400
         return CGFloat(row.posH) * base
     case .Suggestion:
         return getSizeSuggestion()
@@ -86,7 +83,6 @@ func startRecording(textbox: UITextField) throws {
     finalText = ""
     if !audioEngine.isRunning {
         AudioServicesPlayAlertSound(SystemSoundID(1113))
-        //toogleCommand(active: false)
         let audioSession = AVAudioSession.sharedInstance()
         try audioSession.setCategory(AVAudioSession.Category.record)
         try audioSession.setMode(AVAudioSession.Mode.measurement)
@@ -106,7 +102,6 @@ func startRecording(textbox: UITextField) throws {
             if error != nil || isFinal {
                 audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
-                //recognitionRequest = nil
                 recognitionTask = nil
             }
         }
@@ -131,8 +126,6 @@ func stopRecording() {
 }
 func loadRecord(textbox: UITextField) {
     SFSpeechRecognizer.requestAuthorization { authStatus in
-        // The callback may not be called on the main thread. Add an
-        // operation to the main queue to update the record button's state.
         OperationQueue.main.addOperation {
             switch authStatus {
             case .authorized:

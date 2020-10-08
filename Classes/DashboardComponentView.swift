@@ -127,15 +127,12 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         view.removeView(tag: 1)
         newView.delegate = self
         newView.loadConfig(options: list, query: mainData.text, first: firstView)
-        //newView.loadWebview(strWebview: data.webView)
         newView.cardView()
         view.addSubview(newView)
         newView.edgeTo(view, safeArea: .paddingTop)
         self.sizeToFit()
     }
     func loadWebView(view: UIView, webview: String, loading: Int = 0){
-        //self.wbMain = WKWebView(frame: self.bounds)
-        //wbMain.navigationDelegate = self
         if loading == 2 {
             let contentController = WKUserContentController()
             let userScript = WKUserScript(
@@ -193,8 +190,6 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                 let path = bundle.path(forResource: "gifBalls", ofType: "gif")
                 let url = URL(fileURLWithPath: path!)
                 imageView2.loadGif(url: url)
-                //let jeremyGif = UIImage.gifImageWithName("preloader")
-                //let imageView = UIImageView(image: image)
                 imageView2.tag = 5
                 view.addSubview(imageView2)
                 imageView2.edgeTo(view, safeArea: .centerSize, height: 50, padding: 100)
@@ -208,28 +203,11 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
-        //if data.columnsInfo.count  <= 3 {
             if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns {
-                /*var names: [String] = []
-                var columns: [String] = []
-                let name = message.body as? String ?? ""
-                let column = data.columnsInfo[0].originalName
-                columns.append(column)
-                if name.contains("_") {
-                    let column2 = data.columnsInfo[1].originalName
-                    let newArr = name.components(separatedBy: "_")
-                    names.append(newArr[0])
-                    names.append(newArr[1])
-                    columns.append(column2)
-                } else {
-                    names.append(name)
-                }*/
                 var msg = message.body as? String ?? ""
                 var secondQuery: Bool = false
-                //var column: Int = data.stringColumnIndex
                 if msg.contains("SecondQuery") {
                     msg = msg.replace(target: "SecondQuery" , withString: "")
-                    //column = data.stringColumnIndexSecond
                     secondQuery = true
                 }
                 let columns = secondQuery ? mainData.subDashboardModel.columnsInfo : mainData.columnsInfo
@@ -253,13 +231,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                         }
                     }
                 }
-                //delegate?.sendDrillDown(idQuery: data.idQuery, obj: columns, name: names, title: data.query)
-                /*let name = data.columnsInfo[0].originalName
-                let name2 = data.columnsInfo[1].originalName
-                let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
-                delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)*/
             }
-        //}
     }
     func newDrilldown(data: String) {
         var position = -1
@@ -287,7 +259,6 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loaderWebview(false, view: webView.superview ?? UIView(), type2: .Webview)
-        //progress(off: true, viewT: wbChart!)
     }
     func sendText(_ text: String, _ safe: Bool) {
         delegate?.updateComponent(text: text, first: safe, position: position)

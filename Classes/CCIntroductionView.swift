@@ -15,12 +15,10 @@ class IntroductionView: UIView {
         lbl.text = text
         lbl.textAlignment = .left
         lbl.numberOfLines = 0
-        // lbMain.backgroundColor = .yellow
         lbl.sizeToFit()
         lbl.translatesAutoresizingMaskIntoConstraints = true
         lbl.lineBreakMode = .byTruncatingTail
         lbl.setSize()
-        //self.edgeTo(self, safeArea: .paddingTop)
         self.addSubview(lbl)
         lbl.edgeTo(self, safeArea: .padding)
         layoutIfNeeded()

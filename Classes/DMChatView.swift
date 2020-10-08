@@ -52,33 +52,11 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                         let newIndex = IndexPath(row: finalPos, section: 0)
                         indexs.append(newIndex)
                     }
-                    /*if numDeletes <= num {
-                        for idx in 0..<numDeletes  {
-                            let finalPos = numQuery - idx
-                            let newIndex = IndexPath(row: finalPos, section: 0)
-                            indexs.append(newIndex)
-                        }
-                    }
-                    else {
-                        
-                        for idx in numQuery..<(numQuery+finalNum)  {
-                            let finalPos = idx + 1
-                            let newIndex = IndexPath(row: finalPos, section: 0)
-                            indexs.append(newIndex)
-                        }
-                        for idx in 0..<num  {
-                            let finalPos = numQuery - idx
-                            let newIndex = IndexPath(row: finalPos, section: 0)
-                            indexs.append(newIndex)
-                        }
-                    }*/
                     self.tableView.deleteRows(at: indexs, with: .automatic)
-                    //self.tableView.reloadData()
                     let finalNN = numQuery == self.mainData.count ? 0 : 1
                     let finalN = numDeletes > 1 ? numDeletes : (numDeletes-finalNN)
                     let posIndex = numQuery - finalN
                     let endIndex = IndexPath(row: posIndex, section: 0)
-                    //let endIndex = IndexPath(row: 1, section: 0)
                     self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
                 }
             }
@@ -86,16 +64,6 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     }
     func validateDeletes(numQuery: Int) -> Int {
         var numDeletes = 1
-        //let mainID = mainData[numQuery].idQuery
-        /*if numQuery < (mainData.count - 1) {
-            for chatC in ((numQuery + 1)...(mainData.count - 1)).reversed() {
-                if mainID == mainData[chatC].idQuery{
-                    numDeletes += 1
-                    mainData.remove(at: chatC)
-                }
-            }
-            
-        }*/
         mainData.remove(at: numQuery)
         if mainData[numQuery-1].type == .Introduction{
             if mainData[numQuery-1].user {
@@ -156,7 +124,6 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     }
     func updateTable(){
         let index1 = IndexPath(row: self.mainData.count - 1, section: 0)
-        //let index2 = IndexPath(row: self.data.count - 2 , section: 0)
         DispatchQueue.main.async {
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [index1], with: .automatic)
@@ -180,11 +147,9 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         guard let cell = self.tableView.cellForRow(at: indexPath) as? DataChatCell else {return}
         cell.updateChart()
         if toTable{
-            // diferencias si es table o webview
             if mainData.count > index {
                 mainData[index].numRow = numRows
                 mainData[index].type = isTable ? .Table : mainData[index].type
-                //tableView.reloadRows(at: [indexPath], with: .none)
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }

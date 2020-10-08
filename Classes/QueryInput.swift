@@ -142,9 +142,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         if query != "" {
             sendQuery(query: query)
-            //delegate?.sendText(query, true)
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionMicrophoneStart() {
         isTypingMic = true

@@ -97,8 +97,6 @@ class ChataServices {
                     completion(success)
                 }
             }
-            
-            //completion(matches)
         }
     }
     func getQueries(query: String, completion: @escaping CompletionArrString){
@@ -152,30 +150,11 @@ class ChataServices {
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
         httpRequest(urlFinal, "POST", body) { (response) in
-            //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
-            //let msg = response["message"] as? String ?? ""
             let referenceId = response["reference_id"] as? String ?? ""
             let finalComponent = self.getDataComponent(response: response,
                                                        type: type, query: query,
                                                        referenceID: referenceId)
             completion(finalComponent)
-            
-            /*if referenceId == "1.1.430" || referenceId == "1.1.431" {
-                 self.getSuggestionsQueries(query: query) { (items) in
-                 let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position, second: second)
-                 completion(finalComponent)
-                }
-            }
-            if msg == "I want to make sure I understood your query. Did you mean:"{
-                self.getSuggestionsQueries(query: query) { (items) in
-                    let finalComponent = self.getDataComponent(response: response, query: query, items: items)
-                    completion(finalComponent)
-                }
-            } else {
-                let finalComponent = self.getDataComponent(response: response, query: query)
-                completion(finalComponent)
-            }*/
-            //completion(matches)
         }
     }
     func getSuggestionsQueries(query: String, completion: @escaping CompletionSuggestions) {
@@ -188,7 +167,6 @@ class ChataServices {
         }
     }
     func getValidData(completion: @escaping CompletionChatSuccess) {
-        //HAcer bien la validacion, ya que marca fail
         let finalUrl = "\(wsUrlDynamic)/autoql/api/v1/query/related-queries?key=\(DataConfig.authenticationObj.apiKey)&search=test"
         httpRequest(finalUrl) { (response) in
             let result = response["result"] as? String ?? ""
@@ -245,18 +223,14 @@ class ChataServices {
                     "test": true,
                     "translation": "include"
                 ]
-        //let urlRequest = wsQuery
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query/\(idQuery)/drilldown?key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : "\(wsQuery)/drilldown"
         httpRequest(urlFinal, "POST", body) { (response) in
-            //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
             let finalComponent = self.getDataComponent(response: response, drilldown: true)
             completion(finalComponent)
-            //completion(matches)
         }
     }
     func getDataQueryBuilder(completion: @escaping CompletionChatQueryBuilderModel){
-        //https://backend-staging.chata.io/api/v1/topics?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&project_id=spira-demo3
         let projectID = ChataServices.instance.getProjectID()
         let finalUrl = "\(wsQueryBuilder)\(DataConfig.authenticationObj.apiKey)&project_id=\(projectID)"
         httpRequest(finalUrl, integrator: true) { (response) in

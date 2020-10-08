@@ -15,7 +15,6 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     var parameters: [String : Any] = [:]
     let dashboardView = DashboardView()
     let inputMainView = QueryInputView()
-    //let inputView = QueryInputView()
     @IBOutlet weak var tbMain: UITableView!
     @IBOutlet weak var vwMain: UIView!
     @IBOutlet weak var scMain: UISegmentedControl!

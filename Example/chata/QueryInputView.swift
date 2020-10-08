@@ -17,8 +17,6 @@ class QueryInputView: UIView, QueryInputDelegate {
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        // spira
-        //loadTable()
     }
     func loadView() {
         inputQuery.authenticationInput = auth

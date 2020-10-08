@@ -48,8 +48,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         let path = bundle.path(forResource: "gifBalls", ofType: "gif")
         let url = URL(fileURLWithPath: path!)
         imageView.loadGif(url: url)
-        //let jeremyGif = UIImage.gifImageWithName("preloader")
-        //let imageView = UIImageView(image: image)
         imageView.tag = 1
         imageView = imageView.changeColor()
         self.addSubview(imageView)
@@ -65,7 +63,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
                 viewWithTag.removeFromSuperview()
             }
         }
-        //progress(off: true, viewT: wbChart!)
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,7 +73,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         if dataMain.columnsInfo.count > 3 && table {
         } else {
             if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE
-                //&& !drilldown
             {
                 if dataMain.columnsInfo.count > 3 {
                     newDrilldown(data: message.body as? String ?? "")

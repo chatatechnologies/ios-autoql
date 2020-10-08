@@ -144,7 +144,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)
         let image2 = image?.resizeT(maxWidthHeight: 30)
         button.setImage(image2, for: .normal)
-        //button.setImage(button.imageView?.changeColor().image, for: .normal)
         button.addTarget(self, action: btn.action, for: .touchUpInside)
         return button
     }
@@ -174,7 +173,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
                         ButtonMenu(imageStr: "icStackedBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
                         ButtonMenu(imageStr: "icStackedColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)column"),
                         ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area")
-                        //ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cid\(contrast ? typeTry : "")line"),
                     ]
                 }
             }
@@ -206,7 +204,6 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         let newView = SuggestionView()
         newView.delegate = self
         newView.loadConfig(options: mainData.options, query: mainData.text)
-        //newView.loadWebview(strWebview: data.webView)
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
@@ -284,33 +281,19 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         oldID = oldID.contains("cid") ? "container" : oldID
         let numRows = newID.contains("Table") ? self.mainData.dataRows.count : 12
         functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
-        //if oldID != newID{
         self.delegate?.updateSize(numRows: numRows,
                                   index: self.index,
                                   toTable: oldID != newID,
                                   isTable: newID.contains("Table"))
-        //data.type =
         newTypeStr = newID.contains("Table") ? "table" : newTypeStr
         mainData.type = ChatComponentType.withLabel(newTypeStr)
         boxWeb.updateType(newType: mainData.type)
         mainData.isLoading = true
-        //}
-        /*delayWithSeconds(0.2) {
-            self.boxWeb.wbMain.evaluateJavaScript("hideTables('#\(oldID)','#\(newID)', '\(type)');", completionHandler: {
-               (_,_) in
-               
-           })
-        }*/
-        
     }
     func generatePopUp () {
-        //let vwFather: UIView = UIApplication.shared.keyWindow!
-        //let tap = UITapGestureRecognizer(target: self, action: #selector(closeModal))
-        //vwFather.addGestureRecognizer(tap)
         let vwBackgroundMenu = UIView()
         vwBackgroundMenu.tag = 200
         vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        //vwBackgroundMenu.cardView()
         vwFather.addSubview(vwBackgroundMenu)
         vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
         let newView = UIView()

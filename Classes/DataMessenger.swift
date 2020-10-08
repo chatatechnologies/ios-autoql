@@ -21,7 +21,6 @@ public class DataMessenger: UIButton {
     init(authenticationF: authentication,  projectIDFinal: String) {
         if authenticationF.token != "" && !DataConfig.demo{
             DataConfig.authenticationObj = authenticationF
-            //self.authentication = authenticationF
             DataConfig.authenticationObj.token = authenticationF.token
             wsUrlDynamic = DataConfig.authenticationObj.domain
             let service = ChataServices()
@@ -137,14 +136,12 @@ public class DataMessenger: UIButton {
                     self.center = Test
                 })
             } else {
-                let location = sender.location(in: father2) // get pan location
-                self.center = location // set button to where finger is
+                let location = sender.location(in: father2)
+                self.center = location
             }
         }
     }
     public func createChat() {
-        /*let chat = Chat(frame: father2.frame)
-        chat.show()*/
         let mainChat = MainChat()
         mainChat.show()
     }

@@ -29,7 +29,6 @@ class TextboxView: UIView {
         btnSend.backgroundColor = chataDrawerAccentColor
         btnSend.addTarget(self, action: #selector(actionSend), for: .touchUpInside)
         btnSend.addTarget(self, action: #selector(actionMicrophoneStart), for: .touchDown)
-        //btnSend.addTarget(self, action: #selector(actionMicrophoneStop), for: .touchUpInside)
         self.addSubview(btnSend)
         let padding: CGFloat = -8
         btnSend.edgeTo(self, safeArea: .rightCenterY, height: size, padding:padding)

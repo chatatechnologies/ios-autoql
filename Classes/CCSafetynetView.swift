@@ -52,13 +52,11 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         lbl.text = data.text
         lbl.textAlignment = .left
         lbl.numberOfLines = 0
-        // lbMain.backgroundColor = .yellow
         lbl.sizeToFit()
         lbl.translatesAutoresizingMaskIntoConstraints = true
         lbl.lineBreakMode = .byTruncatingTail
         lbl.setSize()
         lbl.textColor = chataDrawerTextColorPrimary
-        //self.edgeTo(self, safeArea: .paddingTop)
         self.addSubview(lbl)
         lbl.edgeTo(self, safeArea: .topPadding, height: 60, padding: 8)
         layoutIfNeeded()
@@ -143,12 +141,10 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     private func getRange(start: String.Index, end: String.Index, original: String) -> String {
         let rangeLast = start..<end
         let finalText = String(original[rangeLast])
-        //finalText.replace(target: " ", withString: "")
         return finalText
     }
     private func generateLabel(finalText: String, stack: UIStackView){
         let label = UILabel()
-        //label.cardView()
         label.textColor = chataDrawerTextColorPrimary
         label.text = String(finalText)
         label.textAlignment = .center
@@ -157,7 +153,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     @objc func removeTransparentView() {
         for element in vwFather.subviews {
-        //for element in self.superview!.superview!.superview!.superview!.subviews {
             if let viewWithTag = element.viewWithTag(-2) {
                 viewWithTag.removeFromSuperview()
             }
@@ -207,7 +202,6 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     @objc func runQuery(sender: UIButton!) {
         let text = mainLabel.text ?? ""
-        //delegate?.sendText(text, false)
         let typingSend = TypingSend(text: text, safe: false)
         NotificationCenter.default.post(name: notifTypingText,
                                         object: typingSend)
@@ -235,31 +229,19 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
 extension UITapGestureRecognizer {
 
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
-        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(size: CGSize.zero)
         let textStorage = NSTextStorage(attributedString: label.attributedText!)
-
-        // Configure layoutManager and textStorage
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
-
-        // Configure textContainer
         textContainer.lineFragmentPadding = 0.0
         textContainer.lineBreakMode = label.lineBreakMode
         textContainer.maximumNumberOfLines = label.numberOfLines
         let labelSize = label.bounds.size
         textContainer.size = labelSize
-
-        // Find the tapped character location and compare it to the specified range
         let locationOfTouchInLabel = self.location(in: label)
         let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        //let textContainerOffset = CGPointMake((labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
-                                              //(labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y);
         let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
-
-        //let locationOfTouchInTextContainer = CGPointMake(locationOfTouchInLabel.x - textContainerOffset.x,
-                                                        // locationOfTouchInLabel.y - textContainerOffset.y);
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         return NSLocationInRange(indexOfCharacter, targetRange)

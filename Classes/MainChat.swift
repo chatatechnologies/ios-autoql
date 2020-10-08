@@ -10,7 +10,6 @@ protocol MainChatDelegate: class {
     func callTips()
 }
 public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDelegate {
-    //var vwToolbar = ToolbarView()
     var vwToolbar = ToolbarView()
     let newChat = Chat()
     let viewNot = UIView()
@@ -37,7 +36,6 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
         self.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
-        //self.addGestureRecognizer(tap)
         self.edgeTo(vwFather, safeArea: .safe)
         self.addSubview(vwMain)
         vwMain.edgeTo(self, safeArea: csMain, padding: 30)
@@ -50,16 +48,6 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
                         self.center = vwFather.center
                         self.start(query: query)
         }, completion: nil)
-        //let newChat = Chat()
-        //newChat.show(vwFather: self, query: query)
-        /*self.addSubview(vwMain)
-        vwMain.backgroundColor = .black
-        vwMain.edgeTo(vwFather, safeArea: .safeChat, padding: 30)
-        UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
-                       initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
-                        self.center = vwFather.center
-                        self.loadView()
-        }, completion: nil)*/
     }
     func getMainChatPosition(){
         switch DataConfig.placement {
@@ -146,7 +134,6 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
             svButtons.addArrangedSubview(newButton)
         }
         newView.addSubview(svButtons)
-        //newView.edgeTo(self, safeArea: csTrasparent, vwDynamicView)
         svButtons.edgeTo(newView, safeArea: csBottoms, height: heightButtonsStack, referer, padding: 0)
     }
     @objc func changeViewChat() {
@@ -200,11 +187,9 @@ extension MainChat {
             if viewT.tag == tag{
                 viewT.backgroundColor = chataDrawerBackgroundColor
                 viewT.setImage(viewT.imageView?.changeColor().image, for: .normal)
-                //view.isHidden = false
             } else {
                 viewT.backgroundColor = chataDrawerAccentColor
                 viewT.setImage(viewT.imageView?.changeColor(color: UIColor.white).image, for: .normal)
-                //view.isHidden = true
             }
         }
         vwDynamicView.subviews.forEach { (view) in
