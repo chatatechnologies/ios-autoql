@@ -359,9 +359,9 @@ class ChataServices {
                 textFinal = "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
             }
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
-                
+                let typeInit = typeF.replace(target: "stacked_", withString: "")
                 let webviewS = genereteFinalWebView(
-                                                    type: typeF,
+                                                    type: typeInit,
                                                     second: second,
                                                     mainColumn: mainColumn,
                                                     rowsFinal: rowsFinal,
