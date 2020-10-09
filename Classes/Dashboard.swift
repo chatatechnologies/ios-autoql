@@ -17,6 +17,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     var mainView = UIView()
     var vwWebview = UIView()
     var wbMain = WKWebView()
+    var secondMain = WKWebView()
     var imageView2 = UIImageView(image: nil)
     var spinnerDashboard = UIButton()
     var listDash: [DashboardList] = []
@@ -82,8 +83,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         tbMain.isHidden = dataDash.count == 0
         vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
-    func sendDrillDown(idQuery: String, obj: String, name: String, title: String) {
-        createDrillDown(title: title)
+    func sendDrillDown(idQuery: String, obj: String, name: String, title: String, webview: String) {
+        createDrillDown(title: title, webview: webview)
         ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
             DispatchQueue.main.async {
                 self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
@@ -95,7 +96,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             }
         }*/
     }
-    func createDrillDown(title: String) {
+    func createDrillDown(title: String, webview: String = "" ) {
+        
         vwDrillDown.tag = 100
         vwDrillDown.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         mainView.addSubview(vwDrillDown)
@@ -121,8 +123,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         wbMain.navigationDelegate = self
         loaderWebview()
     }
-    func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String) {
-        createDrillDown(title: title)
+    func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String, webview: String) {
+        createDrillDown(title: title, webview: webview)
         let newComponent = ChataServices.instance.getDrillComponent(data: newData, columns: columns)
         self.wbMain.loadHTMLString(newComponent.webView, baseURL: nil)
     }
