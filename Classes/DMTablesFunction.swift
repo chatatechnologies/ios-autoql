@@ -215,9 +215,9 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
         totalSum.append(test)
     }
     var final: [[String]] = []
-    for (indexY, cat) in categoriesY.enumerated(){
+    for (indexY, cat) in categoriesX.enumerated(){
         var finalB = [cat]
-        for (indexX, _) in categoriesX.enumerated() {
+        for (indexX, _) in categoriesY.enumerated() {
             let position = totalSum.firstIndex(where: {
                 $0.posX == indexX && $0.posY == indexY
             })
@@ -234,7 +234,7 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
     }
     var header = [""]
     var headerFree: [String] = []
-    for catY in categoriesX {
+    for catY in categoriesY {
         header.append(catY)
         headerFree.append(catY)
     }
