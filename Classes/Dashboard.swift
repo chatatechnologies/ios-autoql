@@ -16,8 +16,9 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     let vwDrillDown = UIView()
     var mainView = UIView()
     var vwWebview = UIView()
+    var vwSecondWebview = UIView()
     var wbMain = WKWebView()
-    var secondMain = WKWebView()
+    var wbSecond = WKWebView()
     var imageView2 = UIImageView(image: nil)
     var spinnerDashboard = UIButton()
     var listDash: [DashboardList] = []
@@ -117,28 +118,42 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         lbTitle.addBorder()
         component.addSubview(vwWebview)
         vwWebview.backgroundColor = .gray
-        vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, lbTitle, padding: 20 )
+        if webview != "" {
+            component.addSubview(self.vwSecondWebview)
+            self.vwSecondWebview.backgroundColor = .blue
+            self.vwSecondWebview.edgeTo(component, safeArea: .bottomPaddingtoTopHalf, lbTitle, padding: 20 )
+            self.vwSecondWebview.addSubview(wbSecond)
+            wbSecond.edgeTo(vwSecondWebview, safeArea: .none)
+            wbSecond.navigationDelegate = self
+            loaderWebview(mView: vwSecondWebview)
+            DispatchQueue.main.async {
+                self.wbSecond.loadHTMLString(webview, baseURL: nil)
+            }
+            vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, vwSecondWebview, padding: 20 )
+        } else {
+            vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, lbTitle, padding: 20 )
+        }
         vwWebview.addSubview(wbMain)
         wbMain.edgeTo(vwWebview, safeArea: .none)
         wbMain.navigationDelegate = self
-        loaderWebview()
+        loaderWebview(mView: vwWebview)
     }
     func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String, webview: String) {
         createDrillDown(title: title, webview: webview)
         let newComponent = ChataServices.instance.getDrillComponent(data: newData, columns: columns)
         self.wbMain.loadHTMLString(newComponent.webView, baseURL: nil)
     }
-    func loaderWebview(_ load: Bool = true){
+    func loaderWebview(mView: UIView, _ load: Bool = true){
         if load {
             let bundle = Bundle(for: type(of: self))
             let path = bundle.path(forResource: "gifBalls", ofType: "gif")
             let url = URL(fileURLWithPath: path!)
             imageView2.loadGif(url: url)
             imageView2.tag = 5
-            vwWebview.addSubview(imageView2)
-            imageView2.edgeTo(vwWebview, safeArea: .centerSize, height: 50, padding: 100)
+            mView.addSubview(imageView2)
+            imageView2.edgeTo(mView, safeArea: .centerSize, height: 50, padding: 100)
         } else{
-            vwWebview.subviews.forEach { (view) in
+            mView.subviews.forEach { (view) in
                 if view.tag == 5{
                     view.removeFromSuperview()
                 }
@@ -211,7 +226,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         
     }
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loaderWebview(false)
+        loaderWebview(mView: webView.superview ?? UIView(), false)
     }
     func toggleListDashboard(_ show: Bool = true) {
         tbListDashboard.isHidden = !show
