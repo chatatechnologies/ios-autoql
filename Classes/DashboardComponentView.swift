@@ -8,8 +8,8 @@
 import Foundation
 import WebKit
 protocol DashboardComponentCellDelegate: class{
-    func sendDrillDown(idQuery: String, obj: String, name: String, title: String, webview: String)
-    func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String, webview: String)
+    func sendDrillDown(idQuery: String, obj: String, name: String, title: String, webview: String, mainData: DashboardModel)
+    func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String, webview: String, mainData: DashboardModel)
     func updateComponent(text: String, first: Bool, position: Int)
 }
 class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMessageHandler, ChatViewDelegate {
@@ -172,7 +172,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     }
     @objc func showDrillDown() {
         let finalWebview = mainData.type == .Webview || mainData.type == .Table ? "" : mainData.webview
-        delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: "", name: "", title: mainData.query, webview: finalWebview)
+        delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: "", name: "", title: mainData.query, webview: finalWebview, mainData: mainData)
     }
     func loaderWebview(_ load: Bool = true, view: UIView, type2: ChatComponentType){
         var isLoading = false
@@ -217,7 +217,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                     let name2 = mainData.columnsInfo.count > 1 ? mainData.columnsInfo[1].originalName : ""
                     let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
                     let finalWebview = mainData.type == .Webview || mainData.type == .Table ? "" : mainData.webview
-                    delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: msg, name: nameFinal, title: mainData.query, webview: finalWebview)
+                    delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: msg, name: nameFinal, title: mainData.query, webview: finalWebview, mainData: mainData)
                 } else {
                     if secondQuery {
                         if mainData.subDashboardModel.type == .Table || mainData.subDashboardModel.type == .Webview {
@@ -256,7 +256,8 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         delegate?.sendDrillDownManualDashboard(newData: newData,
                                       columns: mainData.columnsInfo,
                                       title: mainData.title,
-                                      webview: finalWebview
+                                      webview: finalWebview,
+                                      mainData: mainData
         )
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
