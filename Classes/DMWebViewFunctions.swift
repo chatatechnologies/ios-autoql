@@ -189,6 +189,32 @@ func getHTMLFooter(rows: [[String]],
     </html>
     """
 }
+func generateChart(rows: [[String]],
+                   columns: [String]) -> String {
+    let triType = columns.count  == 3
+    let dataChartBi = triType ? [] : rows.map { (row) -> [Any] in
+        let name = validateArray(row, 0) as? String ?? ""
+        let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
+        return [name, mount]
+    }
+    var finalJson = ""
+    dataChartBi.forEach { (row) in
+        print(row)
+        var text = ""
+        row.enumerated().forEach { (index, column) in
+            if index == 0 {
+                text += "'\(column)' : "
+            }
+            else if index == 1 {
+                text += "\(column),"
+            }
+        }
+        text.removeLast()
+        finalJson += "\(text),"
+    }
+    finalJson.removeLast()
+    return "var data = {\(finalJson)}"
+}
 func getChartFooter(rows: [[String]],
                     columns: [String],
                     types: [ChatTableColumnType],

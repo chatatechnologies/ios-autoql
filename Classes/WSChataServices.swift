@@ -469,6 +469,10 @@ class ChataServices {
         )
         var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
         typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
+        /*let dataPie = generateChart(rows: rowsFinal,
+                                    columns: columnsF)*/
+        //getPieChart(dataChart: dataPie)
+        //generateChart(rows: rowsFinal,columns: columnsF)
         let webView = """
             \(getHTMLHeader(triType: columnsF.count == 3))
             \(datePivotStr)
@@ -496,7 +500,7 @@ class ChataServices {
     func getColumns(columns: [[String: Any]] ) -> [ChatTableColumn] {
         var columnsFinal: [ChatTableColumn] = []
         for (_, column) in columns.enumerated() {
-            let isVisible: Bool = column["is_visible"] as? Bool ?? true
+            let isVisible: Bool = !DataConfig.autoQLConfigObj.enableColumnVisibilityManager ? true : column["is_visible"] as? Bool ?? true
             let groupable: Bool = column["groupable"] as? Bool ?? false
             let name: String = !DataConfig.demo ? (column["display_name"] as? String ?? "") : (column["name"] as? String ?? "")
             let originalName = column["name"] as? String ?? ""

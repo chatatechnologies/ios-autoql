@@ -42,7 +42,7 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
         } ?? 100
         if numQuery <= (mainData.count - 1){
             var deleteSuggestion = false
-            if numQuery <= (mainData.count){
+            if mainData.count > (numQuery + 1){
                 if mainData[numQuery + 1].type == .Suggestion {
                     deleteSuggestion = true
                 }

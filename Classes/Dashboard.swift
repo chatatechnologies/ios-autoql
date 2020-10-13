@@ -86,6 +86,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
     func sendDrillDown(idQuery: String, obj: String, name: String, title: String, webview: String, mainData: DashboardModel ) {
+        self.mainData = mainData
         createDrillDown(title: title, webview: webview)
         ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
             DispatchQueue.main.async {
@@ -151,6 +152,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         loaderWebview(mView: vwWebview)
     }
     func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String, webview: String, mainData: DashboardModel) {
+        self.mainData = mainData
         createDrillDown(title: title, webview: webview)
         let newComponent = ChataServices.instance.getDrillComponent(data: newData, columns: columns)
         self.wbMain.loadHTMLString(newComponent.webView, baseURL: nil)

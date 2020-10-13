@@ -140,7 +140,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 DemoParameter(label: "Enable Autocomplete", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableAutocomplete)", key: "enableAutocomplete"),
                 DemoParameter(label: "Enable Query Validator", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
                 DemoParameter(label: "Enable Query Suggestion", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
-                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableDrilldowns"),
+                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableDrilldowns)", key: "enableDrilldowns"),
+                DemoParameter(label: "Enable Column Visibility Editor", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableColumnVisibilityManager)", key: "enableColumnVisibilityManager")
             ]),
             DemoSectionsModel(title: "UI Configuration Options", arrParameters: [
                 DemoParameter(label: "Show Data Messenger Button", type: .toggle, value: "\(dataChat.config.isVisible)", key:"isVisible"),
@@ -149,7 +150,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 DemoParameter(label: "Currency Code", type: .input, value: dataChat.config.dataFormattingObj.currencyCode, key: "currencyCode"),
                 DemoParameter(label: "Language Code", type: .input, value: dataChat.config.dataFormattingObj.languageCode, key: "languageCode"),
                 DemoParameter(label: "Format for Month, Year", type: .input, value: dataChat.config.dataFormattingObj.monthYearFormat, key: "monthYearFormat"),
-                DemoParameter(label: "Format for Day, Month, Year", type: .input, value: dataChat.config.dataFormattingObj.dayMonthYearFormat, key: "year"),
+                DemoParameter(label: "Format for Day, Month, Year", type: .input, value: dataChat.config.dataFormattingObj.dayMonthYearFormat, key: "dayMonthYearFormat"),
                 DemoParameter(label: "Number of Decimals for Currency Values", type: .input, value: "\(dataChat.config.dataFormattingObj.currencyDecimals)", key: "currencyDecimals"),
                 DemoParameter(label: "Number of Decimals for Quantity Values", type: .input, value: "\(dataChat.config.dataFormattingObj.quantityDecimals)", key: "quantityDecimals"),
                 DemoParameter(label: "User Display Name", type: .input, value: dataChat.config.userDisplayName, key: "userDisplayName"),
@@ -216,6 +217,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             dataChat.config.autoQLConfigObj.enableQuerySuggestions = value
         case "enableDrilldowns":
             dataChat.config.autoQLConfigObj.enableDrilldowns = value
+        case "enableColumnVisibilityManager":
+            dataChat.config.autoQLConfigObj.enableColumnVisibilityManager = value
         case "enableVoiceRecord":
             dataChat.config.enableVoiceRecord = value
         case "clearOnClose":

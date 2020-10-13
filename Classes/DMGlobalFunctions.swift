@@ -29,7 +29,7 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
         let finalStr = row.options.count > 0 ? row.options[0] : ""
         return getSizeSafetynet(originalQuery: finalStr)
     case .QueryBuilder:
-        let base = 80
+        let base = 100
         if row.numQBoptions == 0 {
             return 170
         }
