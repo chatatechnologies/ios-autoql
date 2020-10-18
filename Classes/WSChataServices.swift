@@ -287,11 +287,13 @@ class ChataServices {
     func validType(rows: [[Any]], type: String) -> String {
         var finalType = type
         let triChartValid = triChartList(type: type)
-        if triChartValid && rows[0].count > 3 {
-            finalType = ""
-        }
-        if rows[0].count <= 1 {
-            finalType = ""
+        if rows.count > 0 {
+            if triChartValid && rows[0].count > 3 {
+                finalType = ""
+            }
+            if rows[0].count <= 1 {
+                finalType = ""
+            }
         }
         return finalType
     }
@@ -356,7 +358,7 @@ class ChataServices {
             if columnsF.count == 0 && rows.count == 0{
                 displayType = .Introduction
                 user = false
-                textFinal = "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
+                textFinal = message
             }
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
                 let typeInit = typeF.replace(target: "stacked_", withString: "")

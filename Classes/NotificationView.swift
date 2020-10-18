@@ -10,7 +10,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
     let tbMain = UITableView()
     let lblDefault = UILabel()
     var notifications: [NotificationItemModel] = []
-    var lastSelect = 0
+    var lastSelect = -1
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,7 +67,9 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if lastSelect != indexPath.row {
-            notifications[lastSelect].expandable = false
+            if lastSelect < notifications.count && lastSelect >= 0 {
+                notifications[lastSelect].expandable = false
+            }
             let lastIndex = IndexPath(row: lastSelect, section: 0)
             lastSelect = indexPath.row
             notifications[indexPath.row].expandable = true
