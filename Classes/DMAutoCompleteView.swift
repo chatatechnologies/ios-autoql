@@ -21,7 +21,7 @@ class AutoCompleteView: UIView {
         autoCompleteTable.delegate = self
         autoCompleteTable.dataSource = self
         autoCompleteTable.delaysContentTouches = false
-        self.backgroundColor = chataDrawerBackgroundColor
+        self.backgroundColor = chataDrawerBackgroundColorPrimary
     }
     private func loadConfig() {
         self.isHidden = true
@@ -48,8 +48,8 @@ extension AutoCompleteView: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.backgroundColor = chataDrawerBackgroundColor
-        cell.contentView.backgroundColor = chataDrawerBackgroundColor
+        cell.backgroundColor = chataDrawerBackgroundColorPrimary
+        cell.contentView.backgroundColor = chataDrawerBackgroundColorPrimary
         cell.textLabel?.text = data[indexPath.row]
         cell.textLabel?.textColor = chataDrawerTextColorPrimary
         cell.textLabel?.numberOfLines = 0

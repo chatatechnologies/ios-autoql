@@ -212,7 +212,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.backgroundColor = chataDrawerBackgroundColor.withAlphaComponent(0.9)
+        cell.backgroundColor = chataDrawerBackgroundColorPrimary.withAlphaComponent(0.9)
         cell.textLabel?.text = dataSource[indexPath.row]
         cell.textLabel?.font = generalFont
         cell.textLabel?.textColor = chataDrawerTextColorPrimary

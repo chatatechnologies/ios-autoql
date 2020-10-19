@@ -78,7 +78,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         self.contentView.addSubview(newView)
         newView.cardView(border: !mainData.user)
         let align: DViewSafeArea = mainData.user ? .paddingTopRight : .paddingTopLeft
-        newView.backgroundColor = mainData.user ? chataDrawerAccentColor : chataDrawerBackgroundColor
+        newView.backgroundColor = mainData.user ? chataDrawerAccentColor : chataDrawerBackgroundColorPrimary
         if !mainData.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && mainData.webView != "error"{
             let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
             newView.addGestureRecognizer(tapgesture)
@@ -125,7 +125,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         let nTag = area == .modal2Right ? 1 : 0
         changeViewMain.tag = nTag
         changeViewMain.cardView()
-        changeViewMain.backgroundColor = chataDrawerBackgroundColor
+        changeViewMain.backgroundColor = chataDrawerBackgroundColorPrimary
         self.contentView.addSubview(changeViewMain)
         changeViewMain.edgeTo(self, safeArea: area, height: 40, view, padding: CGFloat(buttons.count * 40) )
         changeView.cardView()
@@ -363,7 +363,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         let gesture = UITapGestureRecognizer(target: self, action: #selector(hideMenu))
         vwBackgroundMenu.addGestureRecognizer(gesture)
         let vwMenu = UIView()
-        vwMenu.backgroundColor = chataDrawerBackgroundColor
+        vwMenu.backgroundColor = chataDrawerBackgroundColorPrimary
         vwBackgroundMenu.addSubview(vwMenu)
         vwMenu.cardView()
         contentView.subviews.forEach { (subView) in

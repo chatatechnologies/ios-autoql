@@ -8,6 +8,8 @@
 import Foundation
 import WebKit
 public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate, ChatViewDelegate, WKScriptMessageHandler {
+    //public var themeConfig2: themeConfig = themeConfig
+    var themeConfigDashboard : themeConfigInput =  themeConfigInput()
     let tbMain = UITableView()
     let vwEmptyDash = UIView()
     let tbListDashboard = UITableView()
@@ -29,6 +31,9 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        //self.backgroundColor =
+    }
+    func loadDashboardView(){
         loadTableD(table: tbMain)
         loadTableD(table: tbListDashboard)
         self.addSubview(spinnerDashboard)
@@ -41,6 +46,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         tbMain.edgeTo(self, safeArea: .fullStatePaddingTop, spinnerDashboard, padding: 8)
         loadEmptyView()
         self.addSubview(tbListDashboard)
+        tbListDashboard.backgroundColor = chataDrawerBackgroundColorPrimary
         tbListDashboard.edgeTo(self, safeArea: .dropDownTop, height: 200, spinnerDashboard, padding: 0)
         tbListDashboard.cardView()
         tbListDashboard.clipsToBounds = true
@@ -55,6 +61,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         vwEmptyDash.isHidden = true
         let lblText = UILabel()
         lblText.text = "Empty Dashboard"
+        lblText.textColor = chataDrawerTextColorPrimary
         lblText.textAlignment = .center
         lblText.textColor = chataDrawerTextColorPrimary
         vwEmptyDash.addSubview(lblText)
@@ -63,8 +70,13 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     public func loadDashboard(
         view: UIView,
         autentification: authentication,
-        mainView: UIView
+        mainView: UIView,
+        theme : themeConfigInput = themeConfigInput()
     ){
+        self.themeConfigDashboard = theme
+        reloadColors(dark: themeConfigDashboard.theme == "dark")
+        self.backgroundColor = chataDrawerBackgroundColorSecondary
+        loadDashboardView()
         self.edgeTo(view, safeArea: .none)
         self.mainView = mainView
         DashboardService().getDashboards(apiKey: autentification.apiKey) { (dashboards) in
@@ -345,7 +357,10 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         }
         if tableView == tbListDashboard {
             let cell = UITableViewCell()
+            cell.backgroundColor = chataDrawerBackgroundColorPrimary
+            cell.tintColor = chataDrawerBackgroundColorPrimary
             cell.textLabel?.text = listDash[indexPath.row].name
+            cell.textLabel?.textColor = chataDrawerTextColorPrimary
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
             return cell

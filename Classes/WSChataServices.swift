@@ -151,9 +151,15 @@ class ChataServices {
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
         httpRequest(urlFinal, "POST", body) { (response) in
             let referenceId = response["reference_id"] as? String ?? ""
-            let finalComponent = self.getDataComponent(response: response,
+            var finalComponent = self.getDataComponent(response: response,
                                                        type: type, query: query,
                                                        referenceID: referenceId)
+            if referenceId == "1.1.211" {
+                let msg = response["message"] as? String ?? ""
+                finalComponent.type = .Introduction
+                finalComponent.user = false
+                finalComponent.text = msg
+            }
             completion(finalComponent)
         }
     }

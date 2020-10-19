@@ -30,6 +30,8 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         return String(describing: self)
     }
     func configCell(data: DashboardModel, pos: Int, loading: Int = 0, secondLoading: Int = 0) {
+        self.backgroundColor = chataDrawerBackgroundColorPrimary
+        self.contentView.backgroundColor = chataDrawerBackgroundColorPrimary
         self.mainData = data
         self.position = pos
         styleComponent()
@@ -70,14 +72,15 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         }
     }
     func styleComponent() {
-        self.contentView.backgroundColor = backgroundDash
+        self.contentView.backgroundColor = chataDrawerBackgroundColorSecondary
         vwComponent.cardView()
-        vwComponent.backgroundColor = .white
+        vwComponent.backgroundColor = chataDrawerBackgroundColorPrimary
         self.contentView.addSubview(vwComponent)
         vwComponent.edgeTo(self, safeArea: .nonePadding, height: 8, padding: 1)
     }
     func loadComponent(view: UIView, nsType: DViewSafeArea = .bottomPaddingtoTop, connect: UIView, loading: Int = 0, type: ChatComponentType) {
         vwComponent.addSubview(view)
+        vwComponent.backgroundColor = chataDrawerBackgroundColorPrimary
         view.edgeTo(vwComponent, safeArea: nsType, connect,  padding: 8)
         loadDefault(view: view, loading: loading, type: type)
     }

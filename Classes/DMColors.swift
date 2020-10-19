@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 var dark = DataConfig.themeConfigObj.theme == "dark"
 var chataDrawerAccentColor = (DataConfig.themeConfigObj.accentColor).hexToColor()
-var chataDrawerBackgroundColor = (dark ? "#636363" : "#ffffff").hexToColor()
+var chataDrawerBackgroundColorPrimary = (dark ? "#3B3F46" : "#ffffff").hexToColor()
+var chataDrawerBackgroundColorSecondary = (dark ? "#20252A" : "#F1F3F5").hexToColor()
+var chataDrawerBackgroundColorTertiary = (dark ? "#292929" : "#cccccc").hexToColor()
 var chataDrawerBorderColor = (dark ? "#838383" : "#d3d3d3").hexToColor()
 var chataDrawerHoverColor = (dark ? "#5A5A5A" : "#ECECEC").hexToColor()
 var chataDrawerTextColorPrimary = (dark ? "#FFFFFF" :  "#5D5D5D").hexToColor()

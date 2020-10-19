@@ -58,7 +58,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         tbMain.separatorStyle = .none
         tbMain.clipsToBounds = true
         tbMain.bounces = false
-        tbMain.backgroundColor = chataDrawerBackgroundColor
+        tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
         self.addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .nonePadding, padding: 8)
     }

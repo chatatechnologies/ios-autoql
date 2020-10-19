@@ -49,8 +49,8 @@ public class DataMessenger: UIButton {
         self.layoutIfNeeded()
     }
     public func changeColor() {
-        reloadColors()
-        self.backgroundColor = chataDrawerBackgroundColor
+        reloadColors(dark: DataConfig.themeConfigObj.theme == "dark")
+        self.backgroundColor = chataDrawerBackgroundColorPrimary
     }
     public func login(body: [String: Any] = [:], completion: @escaping CompletionChatSuccess){
         let service = ChataServices()
@@ -58,14 +58,16 @@ public class DataMessenger: UIButton {
             if success {
                 service.getJWTResponse(parameters: body) { (success) in
                     DispatchQueue.main.async {
-                        let nameImage = "iconProject" + self.getImageProject(url: wsUrlDynamic)
-                        if nameImage == "iconProjectBubble"{
+                        //let nameImage = "iconProject" + self.getImageProject(url: wsUrlDynamic)
+                        /*if nameImage == "iconProjectBubble"{
                             self.configBubble()
                         } else{
                             self.backgroundColor = chataDrawerBackgroundColor
                             let image = UIImage(named: "\(nameImage).png", in: Bundle(for: type(of: self)), compatibleWith: nil)
                             self.setImage(image, for: .normal)
-                        }
+                        }*/
+                        /*let image = UIImage(named: "iconProjectBubble.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+                        self.setImage(image, for: .normal)*/
                         LOGIN = true
                     }
                     completion(success)

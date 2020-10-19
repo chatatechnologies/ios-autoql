@@ -35,7 +35,9 @@ class DashboardView: UIView {
         vwDash.edgeTo(self, safeArea:.fullState, btnExecute)
         vwDash.addSubview(dash)
         let auth: authentication = authentication(apiKey: authFinal.apiKey, domain: authFinal.domain, token: authFinal.token)
-        dash.loadDashboard(view: vwDash, autentification: auth, mainView: mainView )
+        var theme: themeConfigInput = themeConfigInput()
+        theme.theme = "dark"
+        dash.loadDashboard(view: vwDash, autentification: auth, mainView: mainView, theme: theme )
         btnExecute.addTarget(self, action: #selector(executeDashboard), for: .touchUpInside)
     }
     @objc func executeDashboard(sender: UIButton) {

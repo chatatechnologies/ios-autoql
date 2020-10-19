@@ -267,7 +267,7 @@ extension UIButton {
     func loadStyleBtn(width: CGFloat) {
         self.layer.borderWidth = 0
         self.layer.cornerRadius = (width / 2)
-        self.layer.borderColor = chataDrawerBackgroundColor.cgColor
+        self.layer.borderColor = chataDrawerBackgroundColorPrimary.cgColor
         self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowOpacity = 0.5

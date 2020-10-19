@@ -23,7 +23,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
         super.init(frame: frame)
         vwAutoComplete.delegate = self
         vwTextBox.delegate = self
-        self.backgroundColor = chataDrawerBackgroundColor
+        self.backgroundColor = chataDrawerBackgroundColorPrimary
     }
     public func show(vwFather: UIView, query: String = "") {
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
@@ -86,7 +86,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
     private func loadDataMessenger() {
         vwMainChat.addSubview(vwDataMessenger)
         vwDataMessenger.delegateQB = self
-        vwMainChat.backgroundColor = chataDrawerBackgroundColor
+        vwMainChat.backgroundColor = chataDrawerBackgroundColorPrimary
         vwDataMessenger.backgroundColor = .clear
         vwDataMessenger.delegate = self
         vwDataMessenger.edgeTo(self, safeArea: .full, vwTextBox, vwWaterMark )

@@ -56,7 +56,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwMainScrollChat.edgeTo(self, safeArea: .none )
         vwMainScrollChat.addSubview(vwMainChat)
         vwMainChat.edgeTo(self, safeArea: .none)
-        vwMainChat.backgroundColor = chataDrawerBackgroundColor
+        vwMainChat.backgroundColor = chataDrawerBackgroundColorPrimary
     }
     private func loadInput() {
         let size: CGFloat = 40.0
@@ -85,7 +85,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tbMain.separatorStyle = .none
         tbMain.clipsToBounds = true
         tbMain.bounces = true
-        tbMain.backgroundColor = chataDrawerBackgroundColor
+        tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
         vwMainChat.addSubview(tbMain)
         tbMain.edgeTo(vwMainChat, safeArea: .fullPadding, tfMain, svPaginator, padding: 8)
     }
@@ -231,7 +231,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = Qtips.items[indexPath.row]
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.font = generalFont
-        cell.contentView.backgroundColor = chataDrawerBackgroundColor
+        cell.contentView.backgroundColor = chataDrawerBackgroundColorPrimary
         cell.textLabel?.textColor = chataDrawerTextColorPrimary
         return cell
     }

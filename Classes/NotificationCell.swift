@@ -32,7 +32,7 @@ class NotificationCell: UITableViewCell {
     }
     func loadComponents() {
         contentView.addSubview(vwMain)
-        contentView.backgroundColor = chataDrawerBackgroundColor
+        contentView.backgroundColor = chataDrawerBackgroundColorPrimary
         vwMain.edgeTo(self, safeArea: .nonePadding, height: 4, padding: 4)
         vwMain.cardView()
         loadDeleteBtn()

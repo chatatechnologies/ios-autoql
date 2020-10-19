@@ -71,7 +71,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         tfMain.loadInputPlace(placeholder)
         tfMain.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         tfMain.isEnabled = !isDisabled
-        tfMain.backgroundColor = isDisabled ? chataDrawerBorderColor : chataDrawerBackgroundColor
+        tfMain.backgroundColor = isDisabled ? chataDrawerBorderColor : chataDrawerBackgroundColorPrimary
         self.addSubview(tfMain)
         tfMain.edgeTo(self, safeArea: .leftCenterY, height: 30, btnSend, padding: -16)
         toggleIcon()
@@ -161,7 +161,7 @@ public struct autoQLConfigInput {
 public struct themeConfigInput {
     public var theme: String
     public var accentColor: String
-    init(theme: String = "light", accentColor: String = "#28a8e0") {
+    public init(theme: String = "light", accentColor: String = "#28a8e0") {
         self.theme = theme
         self.accentColor = accentColor
     }

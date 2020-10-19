@@ -47,20 +47,20 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblInfo.edgeTo(self, safeArea: .bottomPadding, height: 40, padding: 8)
         addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .fullPadding, lblMain, lblInfo, padding: 16)
-        tbMain.backgroundColor = chataDrawerBackgroundColor
+        tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
         lblInfo.clipsToBounds = true
         lblInfo.text = titleFooter
         lblInfo.isScrollEnabled = false
         lblInfo.bounces = false
         lblInfo.font = generalFont
         lblInfo.delegate = self
-        lblInfo.backgroundColor = chataDrawerBackgroundColor
+        lblInfo.backgroundColor = chataDrawerBackgroundColorPrimary
         lblInfo.textColor = chataDrawerTextColorPrimary
         refererToQueryTips()
         addSubview(vwSecond)
         vwSecond.edgeTo(tbMain, safeArea: .none)
         vwSecond.isHidden = true
-        vwSecond.backgroundColor = chataDrawerBackgroundColor
+        vwSecond.backgroundColor = chataDrawerBackgroundColorPrimary
         let button = UIButton()
         let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
         let image2 = image?.resizeT(maxWidthHeight: 30)
@@ -71,7 +71,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         button.edgeTo(vwSecond, safeArea: .widthLeft, height: 25, padding: 8 )
         vwSecond.addSubview(tbSecond)
         tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 32)
-        tbSecond.backgroundColor = chataDrawerBackgroundColor
+        tbSecond.backgroundColor = chataDrawerBackgroundColorPrimary
         loadTable()
         addNotifications()
     }
@@ -134,7 +134,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         let viewHeader = UIView()
         if tableView == tbSecond {
             let viewHeader = UIView()
-            viewHeader.backgroundColor = chataDrawerBackgroundColor
+            viewHeader.backgroundColor = chataDrawerBackgroundColorPrimary
             let lbl = UILabel()
             lbl.textColor = chataDrawerTextColorPrimary
             if selectSection != -1 {
@@ -162,7 +162,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             imageView = imageView.changeColor()
             imageView.edgeTo(cell.contentView, safeArea: .widthRight, height: 25, padding: 16)
             imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            cell.backgroundColor = chataDrawerBackgroundColor
+            cell.backgroundColor = chataDrawerBackgroundColorPrimary
             let backgroundView = UIView()
             backgroundView.backgroundColor = chataDrawerAccentColor
             cell.selectedBackgroundView = backgroundView
@@ -179,7 +179,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             let backgroundView = UIView()
             backgroundView.backgroundColor = chataDrawerAccentColor
             cell.selectedBackgroundView = backgroundView
-            cell.backgroundColor = chataDrawerBackgroundColor
+            cell.backgroundColor = chataDrawerBackgroundColorPrimary
             cell.textLabel?.text = dataSelection[indexPath.row]
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
