@@ -6,15 +6,29 @@
 //
 
 import Foundation
-func getFooterScript() -> String{
+func getFooterScript(dollar: Bool) -> String{
     return """
-            \(getConstants())
+            \(getConstants(dollar: dollar))
             \(getConfigScript())
             \(getBiTypeCharts())
             \(getTriTypeChart())
     """
 }
-private func getConstants() -> String {
+private func getConstants(dollar: Bool = false) -> String {
+    let format = NumberFormatter()
+    format.numberStyle = .currency
+    format.currencyCode = DataConfig.dataFormattingObj.currencyCode
+    format.locale = Locale.init(identifier: DataConfig.dataFormattingObj.languageCode)
+    let finalSymbol = format.currencySymbol ?? ""
+    let dollarString = dollar ? """
+        function() {
+          if (this.value >= 0) {
+            return '\(finalSymbol)' + this.value
+          } else {
+            return '-\(finalSymbol)' + (-this.value)
+          }
+        };
+    """ : ""
     return """
           var actual = "";
           var colors = \(DataConfig.themeConfigObj.chartColors);
@@ -30,6 +44,8 @@ private func getConstants() -> String {
                 }
             }
           }
+          var dollarFormat = \(dollarString);
+          
         var xAxisStyle = { color: colorAxis };
         var defaultChart =
           {
@@ -137,9 +153,9 @@ private func getBiTypeCharts() -> String{
                     fontSize:'15.5px',
                     fontFamily: ['-apple-system','HelveticaNeue']
                 },
-                
+                formatter: dollarFormat
               },
-              title: yAxisTitle
+              title: yAxisTitle,
             },
             colorAxis: {
               reversed: false,
@@ -201,7 +217,7 @@ private func getBiTypeCharts() -> String{
                                style: {
                                    color: colorAxis,
                                },
-                                
+                                formatter: dollarFormat
                              },
                         },
                         legend: {
@@ -210,6 +226,7 @@ private func getBiTypeCharts() -> String{
                                        fontWeight: 'bold'
                                    }
                                },
+                        yAxis: {labels: {formatter: dollarFormat}},
                         xAxis: {
                             categories: categoriesX,
                             legend:{
@@ -256,7 +273,11 @@ private func getBiTypeCharts() -> String{
                             type: type,
                             inverted: inverted
                         },
-                        
+                        yAxis: {
+                            labels: {
+                                formatter: dollarFormat
+                            }
+                        },
                         xAxis: {
                              gridLineWidth: 0,
                              categories: categoriesX,
@@ -305,6 +326,9 @@ private func getBiTypeCharts() -> String{
                             type: typeFinal
                         },
                         colors: colors,
+                        yAxis: {
+                            labels : {formatter: dollarFormat}
+                        },
                         xAxis: {
                              gridLineWidth: 0,
                              categories: categoriesX,
@@ -363,7 +387,7 @@ func getTriTypeChart() -> String {
                                style: {
                                    color: colorAxis
                                },
-                                
+                                formatter: dollarFormat
                              },
                         },
                         colorAxis: {
@@ -416,7 +440,7 @@ func getTriTypeChart() -> String {
                                style: {
                                    color: colorAxis,
                                },
-                                
+                                formatter: dollarFormat
                              },
                         },
                         legend: {
@@ -480,7 +504,7 @@ func getTriTypeChart() -> String {
                            style: {
                                color: colorAxis,
                            },
-                            
+                            formatter: dollarFormat
                          },
                     },
                     legend: {

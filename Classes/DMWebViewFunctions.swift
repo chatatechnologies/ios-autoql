@@ -122,6 +122,12 @@ func getHTMLFooter(rows: [[String]],
                    second: String = "",
                    positionColumn: Int = 0) -> String {
     var scriptJS = ""
+    var dolarFormat = false
+    types.forEach { (type) in
+        if type == .dollar {
+            dolarFormat = true
+        }
+    }
     if rows.count > 0 && columns.count > 0 {
         scriptJS += getChartFooter(rows: rows,
                                    columns: columns,
@@ -131,7 +137,7 @@ func getHTMLFooter(rows: [[String]],
                                    mainColum: mainColumn,
                                    second: second
         )
-        scriptJS += getFooterScript()
+        scriptJS += getFooterScript(dollar: dolarFormat)
     }
     let sortTable = positionColumn != -1 ? "sortTable();" : ""
     return """
