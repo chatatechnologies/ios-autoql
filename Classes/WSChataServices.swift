@@ -315,7 +315,11 @@ class ChataServices {
                           mainColumn: Int = -1,
                           second: String = "",
                           referenceID: String = "") -> ChatComponentModel {
-        let data = response["data"] as? [String: Any] ?? [:]
+        var data = response["data"] as? [String: Any] ?? [:]
+        let referenceID = response["reference_id"] as? String ?? ""
+        if referenceID == "1.1.211" {
+            data = [:]
+        }
         let idQueryDefault = data["query_id"] as? String ?? UUID().uuidString
         var dataModel = ChatComponentModel(webView: "error",
                                            options: items,
@@ -451,20 +455,31 @@ class ChataServices {
         }
         if supportTri {
             var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])
-            drills = drill
-            let dataPivotColumnsTemp = dataPivot[0]
-            var arrFinal: [String] = []
-            dataPivot.forEach { (arr) in
-                let header = arr[0]
-                arrFinal.append(header)
+            if !dataPivot.isEmpty{
+                drills = drill
+                let dataPivotColumnsTemp = dataPivot[0]
+                var arrFinal: [String] = []
+                dataPivot.forEach { (arr) in
+                    let header = arr[0]
+                    arrFinal.append(header)
+                }
+                dataPivot.remove(at: 0)
+                dataPivotStr = tableString(
+                    dataTable: dataPivot,
+                    dataColumn: dataPivotColumnsTemp,
+                    idTable: "idTableDataPivot",
+                    columns: columnsFinal,
+                    datePivot: true)
+            } else {
+                dataPivotStr = tableString(dataTable: rowsFinal,
+                                        dataColumn: columnsF,
+                                        idTable: "idTableDataPivot",
+                                        columns: columnsFinal,
+                                        datePivot: false,
+                                        reorder:  true,
+                                        cleanRow: rowsFinalClean)
             }
-            dataPivot.remove(at: 0)
-            dataPivotStr = tableString(
-                dataTable: dataPivot,
-                dataColumn: dataPivotColumnsTemp,
-                idTable: "idTableDataPivot",
-                columns: columnsFinal,
-                datePivot: true)
+            
         }
         
         tableBasicStr = tableString(dataTable: rowsFinal,

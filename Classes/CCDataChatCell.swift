@@ -128,7 +128,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         changeViewMain.backgroundColor = chataDrawerBackgroundColorPrimary
         self.contentView.addSubview(changeViewMain)
         changeViewMain.edgeTo(self, safeArea: area, height: 40, view, padding: CGFloat(buttons.count * 40) )
-        changeView.cardView()
+        //changeView.cardView()
         changeView.getSide()
         changeViewMain.addSubview(changeView)
         changeView.edgeTo(changeViewMain, safeArea: .modal, height: 40)

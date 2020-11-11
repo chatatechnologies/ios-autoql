@@ -215,6 +215,7 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
         totalSum.append(test)
     }
     var final: [[String]] = []
+    var validPivot = false
     for (indexY, cat) in categoriesX.enumerated(){
         var finalB = [cat]
         for (indexX, _) in categoriesY.enumerated() {
@@ -222,6 +223,7 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
                 $0.posX == indexX && $0.posY == indexY
             })
             if position != nil {
+                validPivot = position != 0
                 let valueFinal = type == .dollar ? "\(totalSum[position!].value)".toMoney() : "\(totalSum[position!].value)"
                 finalB.append(valueFinal)
             } else {
@@ -239,7 +241,8 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
         headerFree.append(catY)
     }
     final.insert(header, at: 0)
-    return (final, headerFree)
+    let finalTotal = validPivot ? final : []
+    return (finalTotal, headerFree)
 }
 struct DataPivotModel {
     var datePivotTable: [[String]] = []

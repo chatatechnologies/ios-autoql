@@ -313,9 +313,12 @@ func getChartFooter(rows: [[String]],
     }
     let datachartTri = triType ? rows.map { (column) -> [Any] in
         drillTableY.append(column[1])
-        let data1 = column[1]
-        let data2 = column[0].toDate()
-        let data3 = Double(column[2]) ?? 0.0
+        var data1 = column[1]
+        var data2 = column[0].toDate()
+        var data3 = Double(column[2]) ?? 0.0
+        if data1 == "<null>"{
+            data1 = data2
+        }
         if categoriesX.firstIndex(of: data1) == nil {
             categoriesX.append(data1)
         }

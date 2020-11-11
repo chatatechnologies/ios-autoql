@@ -212,7 +212,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "BA3BF8B4-C800-42C7-8258-C13E373EDF5F - 76052729202ab663"
+                  uuid = "BA3BF8B4-C800-42C7-8258-C13E373EDF5F - 544dd9c471d5223c"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -227,7 +227,7 @@
                   offsetFromSymbolStart = "382">
                </Location>
                <Location
-                  uuid = "BA3BF8B4-C800-42C7-8258-C13E373EDF5F - 42b80b37f8aabca7"
+                  uuid = "BA3BF8B4-C800-42C7-8258-C13E373EDF5F - 60f0f5daa9552886"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -548,7 +548,7 @@
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "7BE08AE3-B49A-4080-9656-319258C8B56E - bb4afb6f3152ba7e"
+                  uuid = "7BE08AE3-B49A-4080-9656-319258C8B56E - 661cb202c0f7fa80"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -563,7 +563,7 @@
                   offsetFromSymbolStart = "3290">
                </Location>
                <Location
-                  uuid = "7BE08AE3-B49A-4080-9656-319258C8B56E - 954201ceb10cd8f3"
+                  uuid = "7BE08AE3-B49A-4080-9656-319258C8B56E - 481448a340a998ec"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -676,7 +676,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "7DC9C7DC-855B-4203-8FBE-5CFF165B8D14 - 7e58c092916e8394"
+                  uuid = "7DC9C7DC-855B-4203-8FBE-5CFF165B8D14 - c52c48e37e7aa861"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -691,7 +691,7 @@
                   offsetFromSymbolStart = "2297">
                </Location>
                <Location
-                  uuid = "7DC9C7DC-855B-4203-8FBE-5CFF165B8D14 - 6cb06d8f24862720"
+                  uuid = "7DC9C7DC-855B-4203-8FBE-5CFF165B8D14 - d7c4e5fecb920cb2"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -884,7 +884,7 @@
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "5FD9F8FE-4FE9-48C9-A4ED-0E67011E151B - a66abbed1841a65d"
+                  uuid = "5FD9F8FE-4FE9-48C9-A4ED-0E67011E151B - e91fff05ed0bf765"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -899,7 +899,7 @@
                   offsetFromSymbolStart = "6">
                </Location>
                <Location
-                  uuid = "5FD9F8FE-4FE9-48C9-A4ED-0E67011E151B - bbf5baaf55b24379"
+                  uuid = "5FD9F8FE-4FE9-48C9-A4ED-0E67011E151B - f480fe47a0f81220"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -944,8 +944,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
             endingLineNumber = "249"
-            landmarkName = "butonAction(key:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -960,8 +960,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "315"
             endingLineNumber = "315"
-            landmarkName = "setDataValue(key:value:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -996,7 +996,7 @@
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "4F55D271-1298-4D7D-87EC-5A6F5F73E7C0 - ada9c691809d0401"
+                  uuid = "4F55D271-1298-4D7D-87EC-5A6F5F73E7C0 - 70ff8ffc71384e6d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1011,7 +1011,7 @@
                   offsetFromSymbolStart = "4607">
                </Location>
                <Location
-                  uuid = "4F55D271-1298-4D7D-87EC-5A6F5F73E7C0 - 472682e507389cb"
+                  uuid = "4F55D271-1298-4D7D-87EC-5A6F5F73E7C0 - d9242143a1d6c246"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1252,7 +1252,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "4A30B860-ABF2-4440-A806-327090FEA5E1 - 97ccc93c2729905c"
+                  uuid = "4A30B860-ABF2-4440-A806-327090FEA5E1 - 7780e231aca58a31"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1267,7 +1267,7 @@
                   offsetFromSymbolStart = "187">
                </Location>
                <Location
-                  uuid = "4A30B860-ABF2-4440-A806-327090FEA5E1 - ff89039fc5727c"
+                  uuid = "4A30B860-ABF2-4440-A806-327090FEA5E1 - e0b3a20e14496832"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1364,7 +1364,7 @@
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "B6F19199-563E-4587-87BF-64F47EC3FD18 - 7f750f41084a1634"
+                  uuid = "B6F19199-563E-4587-87BF-64F47EC3FD18 - 791a5ea0f061103d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1379,7 +1379,7 @@
                   offsetFromSymbolStart = "4610">
                </Location>
                <Location
-                  uuid = "B6F19199-563E-4587-87BF-64F47EC3FD18 - d6aea1fed8a49bfe"
+                  uuid = "B6F19199-563E-4587-87BF-64F47EC3FD18 - d0c1f01f208f9d96"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1524,7 +1524,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "BB25DE90-7815-4714-896B-E582A2C1CC36 - 93b3095dfcbcc982"
+                  uuid = "BB25DE90-7815-4714-896B-E582A2C1CC36 - 79997a0a44eb86b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1539,7 +1539,7 @@
                   offsetFromSymbolStart = "3203">
                </Location>
                <Location
-                  uuid = "BB25DE90-7815-4714-896B-E582A2C1CC36 - 4c4068e627b92e48"
+                  uuid = "BB25DE90-7815-4714-896B-E582A2C1CC36 - d86af61b7f4b5c67"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1748,7 +1748,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "D2B53E71-C275-460B-A017-7A2C0D83382D - e7614218bd3aa512"
+                  uuid = "D2B53E71-C275-460B-A017-7A2C0D83382D - 4cf2402153b3e7fa"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1763,7 +1763,7 @@
                   offsetFromSymbolStart = "160">
                </Location>
                <Location
-                  uuid = "D2B53E71-C275-460B-A017-7A2C0D83382D - bd70beab305b065a"
+                  uuid = "D2B53E71-C275-460B-A017-7A2C0D83382D - 16e3bc92ded24451"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1796,7 +1796,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "3C3A25AF-52E5-4E81-BE00-3D14F78F6398 - c6a5e49bfda7d7fe"
+                  uuid = "3C3A25AF-52E5-4E81-BE00-3D14F78F6398 - 2634755fe676fafb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1811,7 +1811,7 @@
                   offsetFromSymbolStart = "2361">
                </Location>
                <Location
-                  uuid = "3C3A25AF-52E5-4E81-BE00-3D14F78F6398 - 99f3a46f741a9dc9"
+                  uuid = "3C3A25AF-52E5-4E81-BE00-3D14F78F6398 - 796235ab6fcbb0ef"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1870,8 +1870,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1886,8 +1886,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1934,8 +1934,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "328"
-            endingLineNumber = "328"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1982,8 +1982,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "363"
-            endingLineNumber = "363"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2004,7 +2004,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "2BD6304A-AB57-4C33-AF02-5200A2F15986 - 293af8eee9f20b70"
+                  uuid = "2BD6304A-AB57-4C33-AF02-5200A2F15986 - c9ab692af2233b4a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2019,7 +2019,7 @@
                   offsetFromSymbolStart = "5642">
                </Location>
                <Location
-                  uuid = "2BD6304A-AB57-4C33-AF02-5200A2F15986 - a14571a7e50d144a"
+                  uuid = "2BD6304A-AB57-4C33-AF02-5200A2F15986 - 41d4e063fedc27b6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2062,8 +2062,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2100,7 +2100,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "83CD4D10-22DD-49C5-B9C6-07FB17E7C854 - d7821437b10db71"
+                  uuid = "83CD4D10-22DD-49C5-B9C6-07FB17E7C854 - da5ccfc043ee45e7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2115,7 +2115,7 @@
                   offsetFromSymbolStart = "22">
                </Location>
                <Location
-                  uuid = "83CD4D10-22DD-49C5-B9C6-07FB17E7C854 - d2aaee4f2cfe2e20"
+                  uuid = "83CD4D10-22DD-49C5-B9C6-07FB17E7C854 - 58e00cc1400b048"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2196,7 +2196,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "7E8629F7-70A9-40CD-A251-04BEBE3A09AA - 82035fcbdb0d340d"
+                  uuid = "7E8629F7-70A9-40CD-A251-04BEBE3A09AA - 6292ce0fc0dc0226"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2211,7 +2211,7 @@
                   offsetFromSymbolStart = "1380">
                </Location>
                <Location
-                  uuid = "7E8629F7-70A9-40CD-A251-04BEBE3A09AA - 59e15e743c180e5e"
+                  uuid = "7E8629F7-70A9-40CD-A251-04BEBE3A09AA - b970cfb027c93f92"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2270,8 +2270,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "394"
+            endingLineNumber = "394"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2302,8 +2302,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "353"
-            endingLineNumber = "353"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2388,7 +2388,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "1F05A5BC-A196-4ADC-8709-6AC16B52DA43 - 99f3a46f741a9dc9"
+                  uuid = "1F05A5BC-A196-4ADC-8709-6AC16B52DA43 - 796235ab6fcbb1b2"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2403,7 +2403,7 @@
                   offsetFromSymbolStart = "1304">
                </Location>
                <Location
-                  uuid = "1F05A5BC-A196-4ADC-8709-6AC16B52DA43 - 37df559558c2f534"
+                  uuid = "1F05A5BC-A196-4ADC-8709-6AC16B52DA43 - d74ec4514313d928"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2430,8 +2430,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2478,8 +2478,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2766,8 +2766,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2782,8 +2782,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -2820,7 +2820,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "03DE0C14-A3CF-4B3C-8E21-6368A9D8C6CD - 37df559558c2f534"
+                  uuid = "03DE0C14-A3CF-4B3C-8E21-6368A9D8C6CD - d74ec4514313dacb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2835,7 +2835,7 @@
                   offsetFromSymbolStart = "1463">
                </Location>
                <Location
-                  uuid = "03DE0C14-A3CF-4B3C-8E21-6368A9D8C6CD - db71f0762758d17c"
+                  uuid = "03DE0C14-A3CF-4B3C-8E21-6368A9D8C6CD - 3be061b23c89feec"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2916,7 +2916,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "F2DF0FBF-D213-48FF-8CA0-550C617FC81D - 2215756bcb752bc0"
+                  uuid = "F2DF0FBF-D213-48FF-8CA0-550C617FC81D - 4049c7ebc474a852"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2931,7 +2931,7 @@
                   offsetFromSymbolStart = "951">
                </Location>
                <Location
-                  uuid = "F2DF0FBF-D213-48FF-8CA0-550C617FC81D - 24a59b424c706acd"
+                  uuid = "F2DF0FBF-D213-48FF-8CA0-550C617FC81D - 46f929c24371e97c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2996,7 +2996,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C0F9F340-8894-49BC-9CC1-87E4EF9C8DE6 - bc4dd7b9b9abbc39"
+                  uuid = "C0F9F340-8894-49BC-9CC1-87E4EF9C8DE6 - 5cdc467da27a8b2b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3011,7 +3011,7 @@
                   offsetFromSymbolStart = "1011">
                </Location>
                <Location
-                  uuid = "C0F9F340-8894-49BC-9CC1-87E4EF9C8DE6 - eef4b0a03a0b3a06"
+                  uuid = "C0F9F340-8894-49BC-9CC1-87E4EF9C8DE6 - e65216421da0d35"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3060,7 +3060,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "77058E92-9ACA-4CCF-98C5-07F29F70B9F4 - 7e8df2ca610317d2"
+                  uuid = "77058E92-9ACA-4CCF-98C5-07F29F70B9F4 - 9e1c630e7ad23460"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3075,7 +3075,7 @@
                   offsetFromSymbolStart = "2917">
                </Location>
                <Location
-                  uuid = "77058E92-9ACA-4CCF-98C5-07F29F70B9F4 - 2fcbe217a5a68c27"
+                  uuid = "77058E92-9ACA-4CCF-98C5-07F29F70B9F4 - cf5a73d3be77af74"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3198,8 +3198,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3248,8 +3248,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "213"
             endingLineNumber = "213"
-            landmarkName = "toogleAction(value:key:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3264,8 +3264,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "202"
             endingLineNumber = "202"
-            landmarkName = "toogleAction(value:key:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3300,7 +3300,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "031E4826-38BE-4388-886D-2C1DEC34121D - ca807f61e2237331"
+                  uuid = "031E4826-38BE-4388-886D-2C1DEC34121D - b5ee57dbf3df97aa"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3315,7 +3315,7 @@
                   offsetFromSymbolStart = "626">
                </Location>
                <Location
-                  uuid = "031E4826-38BE-4388-886D-2C1DEC34121D - a4d64d51f18c723e"
+                  uuid = "031E4826-38BE-4388-886D-2C1DEC34121D - dbb865ebe07096c4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3396,7 +3396,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A3641A70-58ED-4446-8F43-FDD2403FD41C - bd5f09b4bf8af989"
+                  uuid = "A3641A70-58ED-4446-8F43-FDD2403FD41C - 1bcc6b6ca7fad2a7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3411,7 +3411,7 @@
                   offsetFromSymbolStart = "885">
                </Location>
                <Location
-                  uuid = "A3641A70-58ED-4446-8F43-FDD2403FD41C - b0cee2092a1e8e23"
+                  uuid = "A3641A70-58ED-4446-8F43-FDD2403FD41C - 165d80d1326ea52a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3492,7 +3492,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - a7c12ea6911848d8"
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - bc39557e8f603d73"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3507,7 +3507,7 @@
                   offsetFromSymbolStart = "344">
                </Location>
                <Location
-                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - f8ccc3fe96008d72"
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - e334b8268878f8b8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3522,7 +3522,7 @@
                   offsetFromSymbolStart = "180">
                </Location>
                <Location
-                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - a7c12ea6911848d8"
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - bc39557e8f603d73"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3537,7 +3537,7 @@
                   offsetFromSymbolStart = "259">
                </Location>
                <Location
-                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - f8ccc3fe96008d72"
+                  uuid = "B921DCEE-B483-478B-B481-DA2121B125B3 - e334b8268878f8b8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3564,8 +3564,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3580,8 +3580,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3778,7 +3778,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "43DA4071-70DC-42F4-AC5B-F6F1AE5F8617 - 5ab4ce165d4476cb"
+                  uuid = "43DA4071-70DC-42F4-AC5B-F6F1AE5F8617 - 414cb5ce433c0bfb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3793,7 +3793,7 @@
                   offsetFromSymbolStart = "2930">
                </Location>
                <Location
-                  uuid = "43DA4071-70DC-42F4-AC5B-F6F1AE5F8617 - dd48f20e4149b44d"
+                  uuid = "43DA4071-70DC-42F4-AC5B-F6F1AE5F8617 - c6b089d65f31c91a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3906,7 +3906,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C2660893-A3D4-4324-AC2A-B9995AE1429C - e357dba5e93b55ef"
+                  uuid = "C2660893-A3D4-4324-AC2A-B9995AE1429C - 21a8b12a310f0e83"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3921,7 +3921,7 @@
                   offsetFromSymbolStart = "174">
                </Location>
                <Location
-                  uuid = "C2660893-A3D4-4324-AC2A-B9995AE1429C - dc9ac2f15c891449"
+                  uuid = "C2660893-A3D4-4324-AC2A-B9995AE1429C - 1e65a87e84bd4f04"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4002,7 +4002,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "18456D91-5E01-4C34-94A5-66353F54D96E - bb5a20aa5e58fa6"
+                  uuid = "18456D91-5E01-4C34-94A5-66353F54D96E - eb2433cebe34b174"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4017,7 +4017,7 @@
                   offsetFromSymbolStart = "538">
                </Location>
                <Location
-                  uuid = "18456D91-5E01-4C34-94A5-66353F54D96E - 82dbb8e48cbd1354"
+                  uuid = "18456D91-5E01-4C34-94A5-66353F54D96E - 624a2920976c2da7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4082,7 +4082,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "B44280A7-0990-45D3-9192-7AAB43088388 - e5cc45231d2ec645"
+                  uuid = "B44280A7-0990-45D3-9192-7AAB43088388 - 55dd4e706fff93a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4097,7 +4097,7 @@
                   offsetFromSymbolStart = "1182">
                </Location>
                <Location
-                  uuid = "B44280A7-0990-45D3-9192-7AAB43088388 - bb5a20aa5e58fa6"
+                  uuid = "B44280A7-0990-45D3-9192-7AAB43088388 - eb2433cebe34b0b6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4444,8 +4444,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4460,8 +4460,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4476,8 +4476,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4588,13 +4588,13 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "3405DFE4-3451-4A26-B698-8E704ECB20B6 - a58d4f046eae8435"
+                  uuid = "3405DFE4-3451-4A26-B698-8E704ECB20B6 - 82888fe835178a9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4609,7 +4609,7 @@
                   offsetFromSymbolStart = "4506">
                </Location>
                <Location
-                  uuid = "3405DFE4-3451-4A26-B698-8E704ECB20B6 - 783caccfc049c1c6"
+                  uuid = "3405DFE4-3451-4A26-B698-8E704ECB20B6 - d5996b352db63d3b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4636,8 +4636,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4652,8 +4652,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4684,8 +4684,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4700,8 +4700,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "544"
-            endingLineNumber = "544"
+            startingLineNumber = "559"
+            endingLineNumber = "559"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4716,13 +4716,13 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "545"
-            endingLineNumber = "545"
+            startingLineNumber = "560"
+            endingLineNumber = "560"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "E25DAA74-4D18-443B-8F38-BFEAFC81E31B - a68a15f2d3ac0dc8"
+                  uuid = "E25DAA74-4D18-443B-8F38-BFEAFC81E31B - 461b8436c87d1af3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4737,7 +4737,7 @@
                   offsetFromSymbolStart = "538">
                </Location>
                <Location
-                  uuid = "E25DAA74-4D18-443B-8F38-BFEAFC81E31B - 96158191aad46a03"
+                  uuid = "E25DAA74-4D18-443B-8F38-BFEAFC81E31B - 76841055b1057cdf"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4764,8 +4764,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "546"
-            endingLineNumber = "546"
+            startingLineNumber = "561"
+            endingLineNumber = "561"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4780,8 +4780,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "569"
-            endingLineNumber = "569"
+            startingLineNumber = "584"
+            endingLineNumber = "584"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4876,8 +4876,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4892,13 +4892,13 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "CB87C8B5-83E3-4CCE-B984-D5B1455CC220 - bacc611df1ba6917"
+                  uuid = "CB87C8B5-83E3-4CCE-B984-D5B1455CC220 - ca8a811c43ba3744"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4913,7 +4913,7 @@
                   offsetFromSymbolStart = "3566">
                </Location>
                <Location
-                  uuid = "CB87C8B5-83E3-4CCE-B984-D5B1455CC220 - c554202026399580"
+                  uuid = "CB87C8B5-83E3-4CCE-B984-D5B1455CC220 - b512c0219439cbf2"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4940,8 +4940,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4962,7 +4962,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "22C7E60F-E67B-4386-8A0D-A651DFC9598C - 79954d39f9458035"
+                  uuid = "22C7E60F-E67B-4386-8A0D-A651DFC9598C - e240b2b594a3b285"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4977,7 +4977,7 @@
                   offsetFromSymbolStart = "1888">
                </Location>
                <Location
-                  uuid = "22C7E60F-E67B-4386-8A0D-A651DFC9598C - b1a1b69b8701fdac"
+                  uuid = "22C7E60F-E67B-4386-8A0D-A651DFC9598C - 2a744917eae7cf3f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -5234,7 +5234,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "9AA63244-F17D-4EBF-A73A-343CFFD55E8E - a71feaa9e3ecd4c2"
+                  uuid = "9AA63244-F17D-4EBF-A73A-343CFFD55E8E - 12463f576d2ec546"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -5249,7 +5249,7 @@
                   offsetFromSymbolStart = "262">
                </Location>
                <Location
-                  uuid = "9AA63244-F17D-4EBF-A73A-343CFFD55E8E - e320519c9240b81f"
+                  uuid = "9AA63244-F17D-4EBF-A73A-343CFFD55E8E - 567984621c82a9b8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -5324,8 +5324,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "319"
-            endingLineNumber = "319"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5372,8 +5372,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5404,8 +5404,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "394"
+            endingLineNumber = "394"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5660,8 +5660,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5836,8 +5836,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5884,8 +5884,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -5950,8 +5950,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "464"
             endingLineNumber = "464"
-            landmarkName = "getDataValue(allSection:value:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5966,8 +5966,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "471"
             endingLineNumber = "471"
-            landmarkName = "getDataValue(allSection:value:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5982,8 +5982,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "465"
             endingLineNumber = "465"
-            landmarkName = "getDataValue(allSection:value:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5998,8 +5998,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "467"
             endingLineNumber = "467"
-            landmarkName = "getDataValue(allSection:value:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6014,8 +6014,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "296"
             endingLineNumber = "296"
-            landmarkName = "segmentAction(key:value:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6082,7 +6082,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C0C05C05-D0F5-4E53-8523-2DA481766894 - 1e8febac1554866d"
+                  uuid = "C0C05C05-D0F5-4E53-8523-2DA481766894 - b51ce995fbddfb19"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6092,12 +6092,12 @@
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/DMChat.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "301">
+                  startingLineNumber = "148"
+                  endingLineNumber = "148"
+                  offsetFromSymbolStart = "359">
                </Location>
                <Location
-                  uuid = "C0C05C05-D0F5-4E53-8523-2DA481766894 - 89bcab93adb8644d"
+                  uuid = "C0C05C05-D0F5-4E53-8523-2DA481766894 - 222fa9aa433118da"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6107,9 +6107,9 @@
                   urlString = "file:///Users/VicenteRincon/IOS/autoql/Classes/DMChat.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "151"
-                  endingLineNumber = "151"
-                  offsetFromSymbolStart = "158">
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "211">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -6146,7 +6146,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "DD3A19D7-871B-4D9D-AA1D-4796E419720D - b00630598662050a"
+                  uuid = "DD3A19D7-871B-4D9D-AA1D-4796E419720D - 368733e7f238eeff"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6161,7 +6161,7 @@
                   offsetFromSymbolStart = "757">
                </Location>
                <Location
-                  uuid = "DD3A19D7-871B-4D9D-AA1D-4796E419720D - 398c0b3329ca6e2e"
+                  uuid = "DD3A19D7-871B-4D9D-AA1D-4796E419720D - bf0d088d5d9085db"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6194,7 +6194,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "D1062336-92E5-4C4A-860E-5524284E2DFE - 9b0248948d6ef946"
+                  uuid = "D1062336-92E5-4C4A-860E-5524284E2DFE - bf75c989ba0c8c52"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6209,7 +6209,7 @@
                   offsetFromSymbolStart = "522">
                </Location>
                <Location
-                  uuid = "D1062336-92E5-4C4A-860E-5524284E2DFE - 9b0248948d6ef946"
+                  uuid = "D1062336-92E5-4C4A-860E-5524284E2DFE - bf75c989ba0c8c52"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6242,7 +6242,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C48345E8-0D9C-49F7-BF34-A4CC8C6FE1D0 - e79805769053bdbc"
+                  uuid = "C48345E8-0D9C-49F7-BF34-A4CC8C6FE1D0 - 70994b28b828d59"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6257,7 +6257,7 @@
                   offsetFromSymbolStart = "1540">
                </Location>
                <Location
-                  uuid = "C48345E8-0D9C-49F7-BF34-A4CC8C6FE1D0 - 239e8d2231efc916"
+                  uuid = "C48345E8-0D9C-49F7-BF34-A4CC8C6FE1D0 - c30f1ce62a3ef990"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6338,7 +6338,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C4B21D39-94DC-4FA1-9E89-9DC81DDFC96A - af1413981480b7aa"
+                  uuid = "C4B21D39-94DC-4FA1-9E89-9DC81DDFC96A - 166fa6f44934333"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6353,7 +6353,7 @@
                   offsetFromSymbolStart = "548">
                </Location>
                <Location
-                  uuid = "C4B21D39-94DC-4FA1-9E89-9DC81DDFC96A - 189557e0fa8292dd"
+                  uuid = "C4B21D39-94DC-4FA1-9E89-9DC81DDFC96A - b6e7be17aa916665"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6380,8 +6380,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "470"
-            endingLineNumber = "470"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
             landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6396,8 +6396,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
+            startingLineNumber = "493"
+            endingLineNumber = "493"
             landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6610,7 +6610,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "B187FD69-A155-4D73-AC8D-AEEFFE1BAB41 - af1413981480b7aa"
+                  uuid = "B187FD69-A155-4D73-AC8D-AEEFFE1BAB41 - 166fa6f4493422b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6625,7 +6625,7 @@
                   offsetFromSymbolStart = "96">
                </Location>
                <Location
-                  uuid = "B187FD69-A155-4D73-AC8D-AEEFFE1BAB41 - 470a59a751f9797"
+                  uuid = "B187FD69-A155-4D73-AC8D-AEEFFE1BAB41 - aa024c6d250c6237"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6770,7 +6770,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "548E5916-3F88-4D2E-93C1-84AFB6F418FD - a08b6c969deaefd8"
+                  uuid = "548E5916-3F88-4D2E-93C1-84AFB6F418FD - 77af8215a5146a3f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6785,7 +6785,7 @@
                   offsetFromSymbolStart = "1518">
                </Location>
                <Location
-                  uuid = "548E5916-3F88-4D2E-93C1-84AFB6F418FD - 33c0008fca627acc"
+                  uuid = "548E5916-3F88-4D2E-93C1-84AFB6F418FD - e4e4ee0cf29cff54"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6830,11 +6830,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "247"
             endingLineNumber = "247"
-            landmarkName = "butonAction(key:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
-                  uuid = "0EB5ACD3-F6D1-4426-BD9A-778CB4C0F019 - 6c42276344de3704"
+                  uuid = "0EB5ACD3-F6D1-4426-BD9A-778CB4C0F019 - fa1657d012b406b2"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6849,7 +6849,7 @@
                   offsetFromSymbolStart = "2477">
                </Location>
                <Location
-                  uuid = "0EB5ACD3-F6D1-4426-BD9A-778CB4C0F019 - e792bbbce1d88922"
+                  uuid = "0EB5ACD3-F6D1-4426-BD9A-778CB4C0F019 - 71c6cb0fb7b2b8f5"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6878,8 +6878,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
             endingLineNumber = "234"
-            landmarkName = "butonAction(key:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6930,7 +6930,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A49A2638-0532-42AD-B71F-CBD2B4B794F8 - ea5b67d352285c76"
+                  uuid = "A49A2638-0532-42AD-B71F-CBD2B4B794F8 - 41c865eabca11b55"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -6945,7 +6945,7 @@
                   offsetFromSymbolStart = "687">
                </Location>
                <Location
-                  uuid = "A49A2638-0532-42AD-B71F-CBD2B4B794F8 - f0666313df185068"
+                  uuid = "A49A2638-0532-42AD-B71F-CBD2B4B794F8 - 5bf5612a3191172a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -7340,8 +7340,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7506,7 +7506,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "E82A2F8B-BB55-4411-8BB2-296DF137C1EE - 219023ca2e1ca01f"
+                  uuid = "E82A2F8B-BB55-4411-8BB2-296DF137C1EE - d5880a695833f3ac"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -7521,7 +7521,7 @@
                   offsetFromSymbolStart = "1082">
                </Location>
                <Location
-                  uuid = "E82A2F8B-BB55-4411-8BB2-296DF137C1EE - e38963e27e0f0559"
+                  uuid = "E82A2F8B-BB55-4411-8BB2-296DF137C1EE - 17914a41082056cb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -7650,7 +7650,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A81D916D-1C3A-4E07-94EB-BB7221672411 - ced88a4191296953"
+                  uuid = "A81D916D-1C3A-4E07-94EB-BB7221672411 - f10beab3bfcc31ef"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -7665,7 +7665,7 @@
                   offsetFromSymbolStart = "291">
                </Location>
                <Location
-                  uuid = "A81D916D-1C3A-4E07-94EB-BB7221672411 - fa3e00b731bbc6a9"
+                  uuid = "A81D916D-1C3A-4E07-94EB-BB7221672411 - c5ed60451f5e9e74"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -7756,13 +7756,13 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
             landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "81C753C9-A4B9-42FA-8557-0E752B093ABB - 9f441c4ece737185"
+                  uuid = "81C753C9-A4B9-42FA-8557-0E752B093ABB - 7fd58d8ad5a26032"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -7777,7 +7777,7 @@
                   offsetFromSymbolStart = "499">
                </Location>
                <Location
-                  uuid = "81C753C9-A4B9-42FA-8557-0E752B093ABB - c288ab43c57c3882"
+                  uuid = "81C753C9-A4B9-42FA-8557-0E752B093ABB - 22193a87dead29ca"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -7797,22 +7797,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0B6B6288-66A0-4EF1-9E82-D2BA440595C9"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/WSChataServices.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "435"
-            endingLineNumber = "435"
-            landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "40900158-43DC-4BFF-9CAA-6C13224BEFC8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -7820,8 +7804,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7932,8 +7916,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "416"
-            endingLineNumber = "416"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -7948,8 +7932,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
+            startingLineNumber = "417"
+            endingLineNumber = "417"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8018,7 +8002,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "41DC92E9-39EE-4F5E-B78E-7FF4B7FB9BE7 - df6a636703b1aee4"
+                  uuid = "41DC92E9-39EE-4F5E-B78E-7FF4B7FB9BE7 - 84e8de43b4f3b1f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -8033,7 +8017,7 @@
                   offsetFromSymbolStart = "1225">
                </Location>
                <Location
-                  uuid = "41DC92E9-39EE-4F5E-B78E-7FF4B7FB9BE7 - e3003f48117f0fc9"
+                  uuid = "41DC92E9-39EE-4F5E-B78E-7FF4B7FB9BE7 - 3424d1cb29819a55"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -8060,8 +8044,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "getDataComponent(response:type:split:splitType:query:items:drilldown:position:secondQuery:mainColumn:second:referenceID:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8076,8 +8060,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "568"
-            endingLineNumber = "568"
+            startingLineNumber = "583"
+            endingLineNumber = "583"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8092,8 +8076,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "560"
-            endingLineNumber = "560"
+            startingLineNumber = "575"
+            endingLineNumber = "575"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8108,8 +8092,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "542"
-            endingLineNumber = "542"
+            startingLineNumber = "557"
+            endingLineNumber = "557"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8124,8 +8108,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "561"
-            endingLineNumber = "561"
+            startingLineNumber = "576"
+            endingLineNumber = "576"
             landmarkName = "getRows(rows:columnsFinal:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8156,8 +8140,8 @@
             filePath = "../Classes/WSChataServices.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -8172,8 +8156,8 @@
             filePath = "../Classes/DMTablesFunction.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "getDataPivotColumn(rows:type:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8194,7 +8178,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "0CD28DD5-8AA7-4CBB-88BC-681FA5CE6FC4 - a8c0501817d38bc1"
+                  uuid = "0CD28DD5-8AA7-4CBB-88BC-681FA5CE6FC4 - b3382bc009abf18e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -8209,7 +8193,7 @@
                   offsetFromSymbolStart = "211">
                </Location>
                <Location
-                  uuid = "0CD28DD5-8AA7-4CBB-88BC-681FA5CE6FC4 - 3fb4ee55448a762e"
+                  uuid = "0CD28DD5-8AA7-4CBB-88BC-681FA5CE6FC4 - 244c958d5af20c40"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -8386,7 +8370,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "13A5F4B1-2C9D-4FA0-8996-685A81C806A8 - 44564353f53abf97"
+                  uuid = "13A5F4B1-2C9D-4FA0-8996-685A81C806A8 - 5fae388beb42efec"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -8401,7 +8385,7 @@
                   offsetFromSymbolStart = "117">
                </Location>
                <Location
-                  uuid = "13A5F4B1-2C9D-4FA0-8996-685A81C806A8 - 41e3b95b4ae2fa50"
+                  uuid = "13A5F4B1-2C9D-4FA0-8996-685A81C806A8 - 5a1bc283549aaaca"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -8460,8 +8444,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
             landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8476,8 +8460,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "409"
+            endingLineNumber = "409"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8492,8 +8476,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "425"
-            endingLineNumber = "425"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8508,8 +8492,8 @@
             filePath = "../Classes/DMWebViewFunctions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "422"
+            endingLineNumber = "422"
             landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -8655,6 +8639,214 @@
             startingLineNumber = "161"
             endingLineNumber = "161"
             landmarkName = "getDataChat(query:type:queryOutput:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9C0D370E-A7B7-4924-A3DC-67E9BF07464F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMGlobalFunctions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "supportPivot(columns:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D74CA3D7-1CC6-4E9A-80A3-D619CD69933F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMGlobalFunctions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "supportPivot(columns:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C84825C7-B92F-4EFF-9C1B-FC97B47FA97D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
+            landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0739BD28-A487-4FAB-9791-A675CC8FEE54"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
+            landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2CAF905E-8CF7-47AF-A4A7-5AFB8126399C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMTablesFunction.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "getDataPivotColumn(rows:type:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2354BA82-5125-46A3-8634-6E67498008AF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMTablesFunction.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
+            landmarkName = "getDataPivotColumn(rows:type:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A0D7054C-31CE-422F-B3B8-5FE36124047E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
+            landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5616B278-7B02-4ED6-B1C1-00A8AA57F866"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/WSChataServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
+            landmarkName = "genereteFinalWebView(type:second:mainColumn:rowsFinal:rowsFinalClean:columnsFinal:positionColumn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9287D194-0B02-4A22-BBF7-8A01F820BDC1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCDataChatCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "changeChart(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F67126BC-D3AD-42C7-98BB-D3A65C9A2468"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMWebViewFunctions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
+            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "29D65E42-FB2F-4D90-843C-93C70EB2DA44"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/DMWebViewFunctions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FA40DDFD-0F84-4DC4-A3C2-5756A0D2961B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCBoxWebviewView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "loadWebview(strWebview:idQuery:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A20B112B-9132-4D71-AB90-8ECB727D3092"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/CCBoxWebviewView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "userContentController(_:didReceive:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
