@@ -27,7 +27,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         StackSelection(title: "Other", action: #selector(reportProblem), tag: 2)
     ]
     let boxWeb = BoxWebviewView()
-    let defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
+    var defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
     var buttonDefault: myCustomButton?
     var lastQuery: Bool = false
     weak var delegate: DataChatCellDelegate?
@@ -103,6 +103,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         
     }
     private func getWebView() {
+        let imgStr = mainData.groupable ? "icColumn" : "icTable"
+        let idHTML = mainData.groupable ? "cidcolumn" : "idTableBasic"
+        defaultType = ButtonMenu(imageStr: imgStr, action: #selector(changeChart), idHTML: idHTML)
         buttonDefault = createButton(btn: defaultType)
         boxWeb.loadWebview(strWebview: mainData.webView, idQuery: mainData.idQuery)
         boxWeb.cardView()
@@ -154,7 +157,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         switch num {
         case 2:
             if mainData.biChart {
-                buttonsFinal = getBichart()
+                buttonsFinal = getBichart(dataCount: mainData.rowsClean.count)
             }
         case 3:
             if columns[0] == .string && columns[1] == .string && columns[2] == .string{
@@ -178,7 +181,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
             }
         default:
             if mainData.biChart{
-                buttonsFinal = getBichart()
+                buttonsFinal = getBichart(dataCount: mainData.rowsClean.count)
             }
             //buttonsFinal = []
         }
@@ -188,13 +191,18 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         }
         return buttonsFinal
     }
-    func getBichart() -> [ButtonMenu] {
-        return [
-                         ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
-                         ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
-                         ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
-                         ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
+    func getBichart(dataCount: Int = 0) -> [ButtonMenu] {
+        var final = [
+            ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic"),
+            ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
+            ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
+            
         ]
+        if dataCount < 6{
+            let pie = ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
+            final.append(pie)
+        }
+        return final
     }
     @objc func showHide() {}
     @objc func showDrillDown() {

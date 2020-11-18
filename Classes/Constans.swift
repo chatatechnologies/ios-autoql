@@ -13,6 +13,7 @@ let notifTypingText = Notification.Name("typingText")
 let notifcloseQueryTips = Notification.Name("closeQT")
 let notifAlert = Notification.Name("alert")
 var LOGIN: Bool = false
+var notificationsAttempts: Int = 0
 public class DataConfiguration {
     static let instance = DataConfiguration()
     public var authenticationObj = authentication(apiKey: "", domain: "", token: "")

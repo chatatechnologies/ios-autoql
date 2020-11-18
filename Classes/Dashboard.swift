@@ -132,7 +132,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         lbTitle.addBorder()
         component.addSubview(vwWebview)
         vwWebview.backgroundColor = .gray
-        if webview != "" {
+        if webview != "" && webview != "text" {
             let contentController = WKUserContentController()
             let userScript = WKUserScript(
                 source: "mobileHeader()",

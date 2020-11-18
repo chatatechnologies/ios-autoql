@@ -334,11 +334,17 @@ class ChataServices {
         if data.count > 0 && dataModel.text != "No Data Found" {
             let columns = data["columns"] as? [[String: Any]] ?? []
             let rows = data["rows"] as? [[Any]] ?? []
-            let typeF = validType(rows: rows, type: type)
+            let (columnsFinal, group) = getColumns(columns: columns)
+            var typeD = type
+            if group {
+                if type == "" {
+                    typeD = "column"
+                }
+            }
+            let typeF = validType(rows: rows, type: typeD)
             let finalType = typeF == "" ? (data["display_type"] as? String ?? "") : typeF
             let idQuery = data["query_id"] as? String ?? UUID().uuidString
             var displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
-            let columnsFinal = getColumns(columns: columns)
             var textFinal = ""
             var user = true
             var numRow = 20
@@ -406,7 +412,8 @@ class ChataServices {
                 position: position,
                 biChart: biChart,
                 rowsClean: rowsFinalClean,
-                referenceID: referenceID
+                referenceID: referenceID,
+                groupable: group
             )
         }
         return dataModel
@@ -520,8 +527,9 @@ class ChataServices {
         }
         return wbSplit
     }
-    func getColumns(columns: [[String: Any]] ) -> [ChatTableColumn] {
+    func getColumns(columns: [[String: Any]] ) -> ([ChatTableColumn], Bool) {
         var columnsFinal: [ChatTableColumn] = []
+        var group = false
         for (_, column) in columns.enumerated() {
             let isVisible: Bool = !DataConfig.autoQLConfigObj.enableColumnVisibilityManager ? true : column["is_visible"] as? Bool ?? true
             let groupable: Bool = column["groupable"] as? Bool ?? false
@@ -538,7 +546,9 @@ class ChataServices {
                 finalStr.removeFirst()
                 ffDate = finalStr
             }
-            
+            if groupable {
+                group = true
+            }
             let column = ChatTableColumn(name: name,
                                          type: finalType,
                                          originalName: originalName,
@@ -548,7 +558,7 @@ class ChataServices {
             columnsFinal.append(column)
             
         }
-        return columnsFinal
+        return (columnsFinal, group)
     }
     func getRows(rows: [[Any]], columnsFinal: [ChatTableColumn]) -> ([[String]], [[String]], Bool){
         var rowsFinal: [[String]] = []

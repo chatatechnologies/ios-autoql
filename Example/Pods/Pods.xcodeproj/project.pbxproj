@@ -25,6 +25,8 @@
 		1742C60624F9AE4D00213FDA /* icArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1742C60524F9AE4D00213FDA /* icArrowLeft.png */; };
 		17489AB4241713F400825936 /* DMAutoCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17489AB3241713F400825936 /* DMAutoCompleteView.swift */; };
 		1749743D252A32BA00A3B0BB /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1749743C252A32BA00A3B0BB /* PieChart.swift */; };
+		174EE20B25647C25003DF757 /* icDefaultNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 174EE20A25647C25003DF757 /* icDefaultNotification.png */; };
+		174EE21025647F39003DF757 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174EE20F25647F39003DF757 /* Components.swift */; };
 		1759829F242D1FF4002D504F /* gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759829E242D1FF4002D504F /* gif.swift */; };
 		175982A1242D39D4002D504F /* gifBalls.gif in Resources */ = {isa = PBXBuildFile; fileRef = 175982A0242D39D4002D504F /* gifBalls.gif */; };
 		175B809A240053D5001F52D8 /* DMTextboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B8099240053D5001F52D8 /* DMTextboxView.swift */; };
@@ -121,6 +123,8 @@
 		1742C60524F9AE4D00213FDA /* icArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icArrowLeft.png; sourceTree = "<group>"; };
 		17489AB3241713F400825936 /* DMAutoCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAutoCompleteView.swift; sourceTree = "<group>"; };
 		1749743C252A32BA00A3B0BB /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
+		174EE20A25647C25003DF757 /* icDefaultNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icDefaultNotification.png; sourceTree = "<group>"; };
+		174EE20F25647F39003DF757 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		1759829E242D1FF4002D504F /* gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gif.swift; sourceTree = "<group>"; };
 		175982A0242D39D4002D504F /* gifBalls.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gifBalls.gif; sourceTree = "<group>"; };
 		175B8099240053D5001F52D8 /* DMTextboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMTextboxView.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 				17EF228B23FC6432001C5F69 /* Constans.swift */,
 				1759829E242D1FF4002D504F /* gif.swift */,
 				173F4EDE2540C607008D6803 /* Contraints.swift */,
+				174EE20F25647F39003DF757 /* Components.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -303,6 +308,7 @@
 				17EF228D23FC6631001C5F69 /* icMic.png */,
 				17B46763242530F70098989C /* icPlay.png */,
 				175982A0242D39D4002D504F /* gifBalls.gif */,
+				174EE20A25647C25003DF757 /* icDefaultNotification.png */,
 				17ECB5E0242E83EE001E09BB /* icDoubleArrow.png */,
 				1742C60524F9AE4D00213FDA /* icArrowLeft.png */,
 				17EF228F23FC6B2B001C5F69 /* icSend.png */,
@@ -623,6 +629,7 @@
 				17F238732506AAE70040CC8B /* icColumn.png in Resources */,
 				17F238702506AAE70040CC8B /* icTableData.png in Resources */,
 				177E7A5C251A8497005CDDF3 /* icSideExplore.png in Resources */,
+				174EE20B25647C25003DF757 /* icDefaultNotification.png in Resources */,
 				172207F823F74F01001B23CE /* icCancel.png in Resources */,
 				17BB95B523FDC15200677873 /* icChat.png in Resources */,
 				17F2387C2506BD100040CC8B /* icDelete.png in Resources */,
@@ -674,6 +681,7 @@
 				17EF228C23FC6432001C5F69 /* Constans.swift in Sources */,
 				17113B59241FF92200EB9134 /* CCSuggestionView.swift in Sources */,
 				177E7A5F251A91F9005CDDF3 /* MainChat.swift in Sources */,
+				174EE21025647F39003DF757 /* Components.swift in Sources */,
 				17B19F872458876D00744EB3 /* Dashboard.swift in Sources */,
 				17CDBBCE24FEC4DD00C9F535 /* QTMainView.swift in Sources */,
 				179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */,

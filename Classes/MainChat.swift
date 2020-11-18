@@ -227,7 +227,11 @@ extension MainChat {
                 Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
                     (time) in
                     if LOGIN{
-                        NotificationServices.instance.getStateNotifications(number: 0)
+                        if notificationsAttempts < 6 {
+                            NotificationServices.instance.getStateNotifications(number: 0)
+                        } else {
+                            time.invalidate()
+                        }
                     }
                     else{
                         time.invalidate()

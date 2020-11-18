@@ -14,6 +14,12 @@ class NotificationServices {
         let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications/summary/poll?key=\(DataConfig.authenticationObj.apiKey)&unacknowledged=\(unacknowledged)"
         httpRequest(url) { (response) in
             let data = response["data"] as? [String : Any] ?? [:]
+            let referenceID = response["reference_id"] as? String ?? ""
+            if referenceID == "" || !referenceID.contains("13"){
+                notificationsAttempts += 1
+            } else {
+                notificationsAttempts = 0
+            }
             self.podelModel.acknowledged = data["acknowledged"] as? Int ?? 0
             self.podelModel.dismissed = data["dismissed"] as? Int ?? 0
             self.podelModel.unacknowledged = data["unacknowledged"] as? Int ?? 0

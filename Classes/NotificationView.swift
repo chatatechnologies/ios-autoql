@@ -33,14 +33,23 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
     }
     func loadDefaul() {
         if notifications.count == 0{
-            lblDefault.textColor = chataDrawerTextColorPrimary
-            lblDefault.font = generalFont
-            lblDefault.textAlignment = .center
-            lblDefault.text = "You don't have any notifications yet."
-            lblDefault.tag = 2
-            lblDefault.numberOfLines = 0
-            self.addSubview(lblDefault)
-            lblDefault.edgeTo(self, safeArea: .topPadding, height: 20, padding: 16)
+            let defaultView = UIView()
+            defaultView.tag = 2
+            self.addSubview(defaultView)
+            defaultView.edgeTo(self, safeArea: .none)
+            let image = UIImage(named: "icDefaultNotification.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            let imageView = UIImageView(image: image)
+            defaultView.addSubview(imageView)
+            imageView.edgeTo(defaultView, safeArea: .centerSizeUp, height: 200, padding: 200)
+            //lblDefault.edgeTo(self, safeArea: .topPadding, height: 20, padding: 16)
+            let lblDefault = getLabel(text: "No notification yet", size: 18, bold: true)
+            defaultView.addSubview(lblDefault)
+            lblDefault.edgeTo(defaultView, safeArea: .topHeight, height: 30, imageView)
+            let lblDefault2 = getLabel(text: "Stay tuned!")
+            defaultView.addSubview(lblDefault2)
+            lblDefault2.edgeTo(defaultView, safeArea: .topHeight, height: 30, lblDefault)
+            //self.addSubview(lblDefault)
+            //lblDefault.edgeTo(self, safeArea: .topPadding, height: 20, padding: 16)
         }
         else{
             self.removeView(tag: 2)
@@ -69,6 +78,9 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         if lastSelect != indexPath.row {
             if lastSelect < notifications.count && lastSelect >= 0 {
                 notifications[lastSelect].expandable = false
+            }
+            if lastSelect == -1 {
+                lastSelect = 0
             }
             let lastIndex = IndexPath(row: lastSelect, section: 0)
             lastSelect = indexPath.row

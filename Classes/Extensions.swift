@@ -164,6 +164,9 @@ extension String {
         return (finalTxtSend, true)
     }
     func toDate2(format: String = "yyyy-MM") -> String {
+        if self.contains("W") {
+            return self
+        }
         let separete = self.components(separatedBy: "-")
         let format2 = format.components(separatedBy: "-")
         var year = ""

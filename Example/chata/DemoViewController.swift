@@ -40,7 +40,6 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
         DemoParameter(label: "Authenticate", type: .button, key: "login")
     ])
-    
     /*let loginSection: DemoSectionsModel =
     DemoSectionsModel(title: "Authentication", arrParameters: [
         DemoParameter(label: "* Project ID", type: .input, value: "", key: "projectID"),

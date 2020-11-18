@@ -25,6 +25,7 @@ struct ChatComponentModel {
     var rowsClean: [[String]]
     var numQBoptions: Int
     var referenceID: String
+    var groupable: Bool
     init(type: ChatComponentType = .Introduction,
          text: String = "",
          user: Bool = false,
@@ -42,7 +43,8 @@ struct ChatComponentModel {
          biChart: Bool = false,
          rowsClean: [[String]] = [],
          numQBoptions: Int = 0,
-         referenceID: String = ""
+         referenceID: String = "",
+         groupable: Bool = false
          ) {
         self.type = type
         self.text = text
@@ -62,6 +64,7 @@ struct ChatComponentModel {
         self.rowsClean = rowsClean
         self.numQBoptions = numQBoptions
         self.referenceID = referenceID
+        self.groupable = groupable
     }
 }
 struct ChatFullSuggestion {
