@@ -1854,8 +1854,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1984,8 +1984,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "366"
             endingLineNumber = "366"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2272,8 +2272,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "394"
             endingLineNumber = "394"
-            landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2304,8 +2304,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "356"
             endingLineNumber = "356"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4140,8 +4140,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4156,8 +4156,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4172,8 +4172,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4188,8 +4188,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4204,8 +4204,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4220,8 +4220,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4236,8 +4236,8 @@
             filePath = "../Classes/WSConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "httpRequest(_:_:_:content:resultText:token:integrator:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4670,8 +4670,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "318"
             endingLineNumber = "318"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4686,8 +4686,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "360"
             endingLineNumber = "360"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4862,8 +4862,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "316"
             endingLineNumber = "316"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4878,8 +4878,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "332"
             endingLineNumber = "332"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4894,8 +4894,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "335"
             endingLineNumber = "335"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "CB87C8B5-83E3-4CCE-B984-D5B1455CC220 - ca8a811c43ba3744"
@@ -4942,8 +4942,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "341"
             endingLineNumber = "341"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5326,8 +5326,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "322"
             endingLineNumber = "322"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5358,8 +5358,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
             endingLineNumber = "231"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5374,8 +5374,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "363"
             endingLineNumber = "363"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5662,8 +5662,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "328"
             endingLineNumber = "328"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5886,8 +5886,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "364"
             endingLineNumber = "364"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7742,8 +7742,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "253"
             endingLineNumber = "253"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7918,8 +7918,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "419"
             endingLineNumber = "419"
-            landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7934,8 +7934,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "417"
             endingLineNumber = "417"
-            landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7950,8 +7950,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "143"
             endingLineNumber = "143"
-            landmarkName = "getHTMLFooter(rows:columns:types:drills:type:split:mainColumn:second:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7966,8 +7966,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "131"
             endingLineNumber = "131"
-            landmarkName = "getHTMLFooter(rows:columns:types:drills:type:split:mainColumn:second:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8038,7 +8038,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9B14C6CF-12DE-4DFD-A7CA-9A334D6DF18F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/WSChataServices.swift"
@@ -8430,8 +8430,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "357"
             endingLineNumber = "357"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8446,8 +8446,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "409"
             endingLineNumber = "409"
-            landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8462,8 +8462,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "428"
             endingLineNumber = "428"
-            landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8478,8 +8478,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "422"
             endingLineNumber = "422"
-            landmarkName = "tableString(dataTable:dataColumn:idTable:columns:datePivot:reorder:cleanRow:positionColumn:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8782,8 +8782,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "320"
             endingLineNumber = "320"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -8798,8 +8798,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "323"
             endingLineNumber = "323"
-            landmarkName = "getChartFooter(rows:columns:types:drills:mainType:mainColum:second:)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -9183,6 +9183,54 @@
             startingLineNumber = "170"
             endingLineNumber = "170"
             landmarkName = "toDate2(format:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E0221DAD-14FD-4DD9-AC0B-A164A8F9F013"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/NotificationView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "16C66D46-293A-4867-954A-BA9FF098E96E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/NotificationCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "loadViewQuery()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "53B308D0-ABFC-4BBC-BE39-526AAA3060DF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/NotificationCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "loadViewQuery()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

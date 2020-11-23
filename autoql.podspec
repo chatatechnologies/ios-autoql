@@ -39,7 +39,7 @@ TODO: Add long description of the pod here.
   s.resources = 'Assets/*.{png,storyboard,gif}'
 
   s.resource_bundles = {
-    'chata' => ['Assets/*.{png,gif}']
+    'autoql' => ['Assets/*.{png,gif}']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

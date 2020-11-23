@@ -47,7 +47,7 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                     deleteSuggestion = true
                 }
             }
-            let num = self.mainData[numQuery-1].referenceID == "1.1.430" ? 3 : 2
+            //let num = self.mainData[numQuery-1].referenceID == "1.1.430" ? 3 : 2
             if mainData.count >= numQuery {
                 if deleteSuggestion {
                     mainData.remove(at: (numQuery + 1))

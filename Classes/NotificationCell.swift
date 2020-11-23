@@ -51,7 +51,7 @@ class NotificationCell: UITableViewCell {
         btnDelete.edgeTo(vwMain, safeArea: .rightTop, height: 20.0, vwMain, padding: 16)
     }
     func loadTitle() {
-        lblTitle.text = itemNotif.ruleTitle
+        lblTitle.text = itemNotif.title
         vwMain.addSubview(lblTitle)
         lblTitle.setSize(16, true)
         lblTitle.numberOfLines = 0
@@ -59,7 +59,7 @@ class NotificationCell: UITableViewCell {
         lblTitle.edgeTo(vwMain, safeArea: .elementToRight, height: 16, btnDelete, padding: 16)
     }
     func loadDescription() {
-        lblDescription.text = itemNotif.ruleMessage
+        lblDescription.text = itemNotif.message
         vwMain.addSubview(lblDescription)
         lblDescription.setSize(14)
         lblDescription.textColor = chataDrawerTextColorPrimary
@@ -81,7 +81,7 @@ class NotificationCell: UITableViewCell {
         vwMain.addSubview(vwQuery)
         vwQuery.edgeTo(vwMain, safeArea: .safeFHTop,  lblDate)
         let lblQuery = UILabel()
-        lblQuery.text = itemNotif.ruleQuery
+        lblQuery.text = itemNotif.dataReturnQuery
         lblQuery.textColor = chataDrawerTextColorPrimary
         lblQuery.setSize(16, true)
         lblQuery.textAlignment = .center
@@ -94,7 +94,7 @@ class NotificationCell: UITableViewCell {
         vwWebView.edgeTo(vwQuery, safeArea: .fullStatePaddingAll, lblQuery)
         outputQuery.authenticationOutput = DataConfig.authenticationObj
         outputQuery.start(mainView: vwWebView, subViewTop: lblQuery)
-        outputQuery.loadComponent(text: itemNotif.ruleQuery)
+        outputQuery.loadComponent(text: itemNotif.dataReturnQuery)
     }
     @IBAction func hideMenu(_ sender: AnyObject){
         superview?.removeView(tag: 2)
@@ -136,11 +136,11 @@ struct NotificationItemModel {
     var createdAt: String
     var id: String
     var notificationType: String
-    var ruleId: Int
-    var ruleMessage: String
-    var ruleQuery: String
-    var ruleTitle: String
-    var ruletype: String
+    var dataAlertId: Int
+    var message: String
+    var dataReturnQuery: String
+    var title: String
+    var dataReturnType: String
     var state: String
     var expandable: Bool
     init(
@@ -158,11 +158,11 @@ struct NotificationItemModel {
         self.createdAt = createdAt
         self.id = id
         self.notificationType = notificationType
-        self.ruleId = ruleId
-        self.ruleMessage = ruleMessage
-        self.ruleQuery = ruleQuery
-        self.ruleTitle = ruleTitle
-        self.ruletype = ruletype
+        self.dataAlertId = ruleId
+        self.message = ruleMessage
+        self.dataReturnQuery = ruleQuery
+        self.title = ruleTitle
+        self.dataReturnType = ruletype
         self.state = state
         self.expandable = expandable
     }

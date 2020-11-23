@@ -400,12 +400,12 @@
 		9CDC7426E8BCE5B25BBDB9FB0D69B672 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B3BF7D1A991FCA8621173A5F0DB0E5C1 /* chata */,
+				B3BF7D1A991FCA8621173A5F0DB0E5C1 /* autoql */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		B3BF7D1A991FCA8621173A5F0DB0E5C1 /* chata */ = {
+		B3BF7D1A991FCA8621173A5F0DB0E5C1 /* autoql */ = {
 			isa = PBXGroup;
 			children = (
 				172EF669249ABBCD00EBEE57 /* autoql.podspec */,
@@ -414,7 +414,7 @@
 				F9071FA4CFE310032B12FB584FD786C3 /* Pod */,
 				BCF1B9D2BF9FEF9CD1E371F21726B815 /* Support Files */,
 			);
-			name = chata;
+			name = autoql;
 			path = ../..;
 			sourceTree = "<group>";
 		};

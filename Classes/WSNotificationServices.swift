@@ -11,7 +11,7 @@ class NotificationServices {
     var podelModel = PollModel()
     var unacknowledged = 0
     func getStateNotifications(number: Int = 0) {
-        let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications/summary/poll?key=\(DataConfig.authenticationObj.apiKey)&unacknowledged=\(unacknowledged)"
+        let url = "\(wsUrlDynamic)\(wsDataAlerts)/summary/poll?key=\(DataConfig.authenticationObj.apiKey)&unacknowledged=\(unacknowledged)"
         httpRequest(url) { (response) in
             let data = response["data"] as? [String : Any] ?? [:]
             let referenceID = response["reference_id"] as? String ?? ""
@@ -31,7 +31,7 @@ class NotificationServices {
         }
     }
     func readNotification() {
-        let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications?key=\(DataConfig.authenticationObj.apiKey)"
+        let url = "\(wsUrlDynamic)\(wsDataAlerts)?key=\(DataConfig.authenticationObj.apiKey)"
         let body: [String: Any] = [
             "notification_id": "null",
             "state": "ACKNOWLEDGED"
@@ -43,7 +43,7 @@ class NotificationServices {
         }
     }
     func getNotifications(currentNumber: Int = 0, completion: @escaping CompletionNotifications) {
-        let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications?key=\(DataConfig.authenticationObj.apiKey)&offset=\(currentNumber)&limit=10"
+        let url = "\(wsUrlDynamic)\(wsDataAlerts)?key=\(DataConfig.authenticationObj.apiKey)&offset=\(currentNumber)&limit=10"
         httpRequest(url) { (response) in
             let dataResponse = response["data"] as? [String : Any] ?? [:]
             let items = dataResponse["items"] as? [[String : Any]] ?? []
@@ -53,19 +53,31 @@ class NotificationServices {
                 newNotification.createdAt = String(item["created_at"] as? Int ?? 0).toDate(true, true)
                 newNotification.id = String(item["id"] as? Int ?? 0) 
                 newNotification.notificationType = item["notification_type"] as? String ?? ""
-                newNotification.ruleId = item["rule_id"] as? Int ?? 0
-                newNotification.ruletype = item["rule_type"] as? String ?? ""
-                newNotification.ruleQuery = item["rule_query"] as? String ?? ""
-                newNotification.ruleTitle = item["rule_title"] as? String ?? ""
-                newNotification.ruleMessage = item["rule_message"] as? String ?? ""
+                newNotification.dataAlertId = item["data_alert_id"] as? Int ?? 0
+                newNotification.dataReturnType = item["data_return_type"] as? String ?? ""
+                newNotification.dataReturnQuery = item["data_return_query"] as? String ?? ""
+                newNotification.title = item["title"] as? String ?? ""
+                newNotification.message = item["message"] as? String ?? ""
                 newNotification.state = item["state"] as? String ?? ""
                 finalNotifications.append(newNotification)
+
+/*created_at: 1605651303
+                 data_alert_id: "da_YTdjZTdhNDgtM2QzZS00NmJmLTg0ODktODAwOTBmNWE1NWY3"
+                 data_alert_type: "CUSTOM"
+                 data_return_query: "total sales"
+                 expression: [{id: "97742ab2-8c18-4c56-a893-00336b9b6532", term_type: "group", condition: "TERMINATOR",…}]
+                 id: "nt_NGM5Nzg1ODAtNWI4My00ZTg1LWFhZmQtNGEyNzY4ZjYyOWI5"
+                 message: "Test Message"
+                 notification_type: "PERIODIC"
+                 outcome: "TRUE"
+                 state: "ACKNOWLEDGED"
+                 title: "Test"*/
             }
             completion(finalNotifications)
         }
     }
     func deleteNotification(idNotification: String) {
-        let url = "\(wsUrlDynamic)/autoql/api/v1/rules/notifications/\(idNotification)?key=\(DataConfig.authenticationObj.apiKey)"
+        let url = "\(wsUrlDynamic)\(wsDataAlerts)/\(idNotification)?key=\(DataConfig.authenticationObj.apiKey)"
         let body = ["key" : "\(DataConfig.authenticationObj.apiKey)"]
         httpRequest(url, "DELETE", body) { (response) in
         }
