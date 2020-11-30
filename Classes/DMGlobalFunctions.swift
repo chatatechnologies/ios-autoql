@@ -148,10 +148,10 @@ func loadRecord(textbox: UITextField) {
 }
 func reloadColors (dark: Bool = false) {
     chataDrawerAccentColor = (DataConfig.themeConfigObj.accentColor).hexToColor()
-    chataDrawerBackgroundColorPrimary = (dark ? "#636363" : "#ffffff").hexToColor()
+    chataDrawerBackgroundColorPrimary = (dark ? "#3B3F46" : "#ffffff").hexToColor()
     chataDrawerBackgroundColorSecondary = (dark ? "#20252A" : "#F1F3F5").hexToColor()
     chataDrawerBackgroundColorTertiary = (dark ? "#292929" : "#cccccc").hexToColor()
-    chataDrawerBorderColor = (dark ? "#d3d3d3" : "#d3d3d3").hexToColor()
+    chataDrawerBorderColor = (dark ? "#53565c" : "#e6e6e6").hexToColor()
     chataDrawerHoverColor = (dark ? "#5A5A5A" : "#ECECEC").hexToColor()
     chataDrawerTextColorPrimary = (dark ? "#FFFFFF" :  "#5D5D5D").hexToColor()
     chataDrawerTextColorPlaceholder = (dark ? "#333333" : "#000000").hexToColor()

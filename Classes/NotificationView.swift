@@ -28,6 +28,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         }, completion: nil)
     }
     private func loadView() {
+        self.backgroundColor = chataDrawerBackgroundColorSecondary
         loadNotifications()
         loadTable()
     }
@@ -67,7 +68,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         tbMain.separatorStyle = .none
         tbMain.clipsToBounds = true
         tbMain.bounces = false
-        tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
+        tbMain.backgroundColor = chataDrawerBackgroundColorSecondary
         self.addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .nonePadding, padding: 8)
     }

@@ -35,6 +35,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     public func start(mainView: UIView) {
         let finalAlign: DViewSafeArea = inputPlacement == "top" ? .topPadding : .bottomPadding
         mainView.addSubview(self)
+        self.backgroundColor = chataDrawerBackgroundColorSecondary
         self.edgeTo(mainView, safeArea: finalAlign, height: 60 )
         DataConfig.authenticationObj = self.authenticationInput
         wsUrlDynamic = self.authenticationInput.domain

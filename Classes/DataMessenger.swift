@@ -50,7 +50,7 @@ public class DataMessenger: UIButton {
     }
     public func changeColor() {
         reloadColors(dark: DataConfig.themeConfigObj.theme == "dark")
-        self.backgroundColor = chataDrawerBackgroundColorPrimary
+        //self.backgroundColor = chataDrawerBackgroundColorPrimary
     }
     public func login(body: [String: Any] = [:], completion: @escaping CompletionChatSuccess){
         let service = ChataServices()

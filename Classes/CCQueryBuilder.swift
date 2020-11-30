@@ -31,6 +31,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         start()
     }
     func start() {
+        self.backgroundColor = chataDrawerBackgroundColorPrimary
         tbMain.bounces = false
         tbSecond.bounces = false
         tbMain.allowsSelection = true

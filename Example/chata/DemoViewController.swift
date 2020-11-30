@@ -53,6 +53,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     var allSection: [DemoSectionsModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        addObservers()
         detectDevice()
         dataChat.config.demo = false
         loadSections()
@@ -84,6 +85,29 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 loadInput()
             }
         }
+    }
+    func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.tbMain.frame.origin.y == 0 {
+                self.tbMain.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    @objc func keyboardWillHide() {
+        self.tbMain.frame.origin.y = 0
     }
     func loadDataSource() {
         let mainTag = 100

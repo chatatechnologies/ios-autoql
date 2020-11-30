@@ -113,12 +113,14 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         type = whiteListTypes(type: type) ? type : ""
         ChataServices.instance.getDataChat(query: query, type: type, queryOutput: true) { (component) in
             if component.referenceID == "1.1.430" || component.referenceID == "1.1.431" {
-                ChataServices.instance.getSuggestionsQueries(query: query) { (options) in
-                    DispatchQueue.main.async {
-                        self.finalComponent = component
-                        self.finalComponent.type = .Suggestion
-                        self.finalComponent.options = options
-                        self.loadType()
+                if DataConfig.autoQLConfigObj.enableQuerySuggestions{
+                    ChataServices.instance.getSuggestionsQueries(query: query) { (options) in
+                        DispatchQueue.main.async {
+                            self.finalComponent = component
+                            self.finalComponent.type = .Suggestion
+                            self.finalComponent.options = options
+                            self.loadType()
+                        }
                     }
                 }
             } else {

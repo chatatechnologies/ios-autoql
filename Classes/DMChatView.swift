@@ -128,7 +128,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         tableView.layoutIfNeeded()
         tableView.separatorStyle = .none
         tableView.bounces = false
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = chataDrawerBackgroundColorSecondary
         self.backgroundColor = .clear
         self.addSubview(tableView)
         

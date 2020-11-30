@@ -48,8 +48,8 @@ extension AutoCompleteView: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.backgroundColor = chataDrawerBackgroundColorPrimary
-        cell.contentView.backgroundColor = chataDrawerBackgroundColorPrimary
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .clear
         cell.textLabel?.text = data[indexPath.row]
         cell.textLabel?.textColor = chataDrawerTextColorPrimary
         cell.textLabel?.numberOfLines = 0

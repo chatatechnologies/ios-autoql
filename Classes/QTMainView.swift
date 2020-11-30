@@ -52,11 +52,11 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     private func loadMainChat() {
         self.addSubview(vwMainScrollChat)
-        vwMainScrollChat.backgroundColor = .white
+        vwMainScrollChat.backgroundColor = .clear
         vwMainScrollChat.edgeTo(self, safeArea: .none )
         vwMainScrollChat.addSubview(vwMainChat)
         vwMainChat.edgeTo(self, safeArea: .none)
-        vwMainChat.backgroundColor = chataDrawerBackgroundColorPrimary
+        vwMainChat.backgroundColor = chataDrawerBackgroundColorSecondary
     }
     private func loadInput() {
         let size: CGFloat = 40.0

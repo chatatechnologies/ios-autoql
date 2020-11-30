@@ -76,7 +76,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         let newView = IntroductionView()
         newView.loadLabel(text: mainData.text)
         self.contentView.addSubview(newView)
-        newView.cardView(border: !mainData.user)
+        newView.cardView()
         let align: DViewSafeArea = mainData.user ? .paddingTopRight : .paddingTopLeft
         newView.backgroundColor = mainData.user ? chataDrawerAccentColor : chataDrawerBackgroundColorPrimary
         if !mainData.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && mainData.webView != "error"{
@@ -103,12 +103,23 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         
     }
     private func getWebView() {
-        let imgStr = mainData.groupable ? "icColumn" : "icTable"
-        let idHTML = mainData.groupable ? "cidcolumn" : "idTableBasic"
+        var icImage = "icColumn"
+        var idChart = "cidColumn"
+        if mainData.groupable {
+            if mainData.dataRows.count > 0 {
+                if mainData.dataRows[0].count == 3 {
+                    icImage = "icStackedColumn"
+                    idChart = "cidstacked_column"
+                }
+            }
+        }
+        let imgStr = mainData.groupable ? icImage : "icTable"
+        let idHTML = mainData.groupable ? idChart : "idTableBasic"
         defaultType = ButtonMenu(imageStr: imgStr, action: #selector(changeChart), idHTML: idHTML)
         buttonDefault = createButton(btn: defaultType)
         boxWeb.loadWebview(strWebview: mainData.webView, idQuery: mainData.idQuery)
         boxWeb.cardView()
+        boxWeb.backgroundColor = chataDrawerBackgroundColorPrimary
         boxWeb.dataMain = mainData
         boxWeb.drilldown = mainData.drillDown
         boxWeb.delegate = self
@@ -172,9 +183,14 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
                     ButtonMenu(imageStr: "icHeat", action: #selector(changeChart), idHTML: "cidheatmap"),
                     ButtonMenu(imageStr: "icBubble", action: #selector(changeChart), idHTML: "cidbubble")
                     ]
+                    var firstButton = ButtonMenu(imageStr: "icStackedColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)Column")
+                    if mainData.groupable {
+                        firstButton = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
+
+                    }
                     buttonsFinal += [
+                        firstButton,
                         ButtonMenu(imageStr: "icStackedBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
-                        ButtonMenu(imageStr: "icStackedColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)column"),
                         ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area")
                     ]
                 }
@@ -192,8 +208,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         return buttonsFinal
     }
     func getBichart(dataCount: Int = 0) -> [ButtonMenu] {
+        var firstButton = ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn")
+        if mainData.groupable {
+            firstButton = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
+
+        }
         var final = [
-            ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic"),
+            firstButton,
             ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
             ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
             

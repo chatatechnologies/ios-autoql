@@ -336,16 +336,16 @@ extension UIView {
         }
         addSubview(newBorder)
     }
-    func cardViewShadow() {
+    func cardViewShadow(border: Bool = true) {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 20
-          self.layer.borderWidth = 1.0
-              self.layer.borderColor = UIColor.white.cgColor
-              self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
-              self.layer.shadowOffset = CGSize(width: 0, height: 0)
-              self.layer.shadowOpacity = 0.5
-              self.layer.shadowRadius = 5.0
-              self.layer.masksToBounds = false
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = border ? chataDrawerBorderColor.cgColor : UIColor.clear.cgColor
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowRadius = 5.0
+        self.layer.masksToBounds = false
     }
     func removeView(tag: Int) {
         subviews.forEach { (view) in

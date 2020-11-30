@@ -19,6 +19,7 @@ class WaterMarkView: UIView {
         self.addSubview(lbMarkWater)
         lbMarkWater.textAlignment = .center
         lbMarkWater.setSize()
+        self.backgroundColor = chataDrawerBackgroundColorSecondary
         lbMarkWater.textColor = chataDrawerMessengerTextColorPrimary
         lbMarkWater.edgeTo(self, safeArea: .center)
         let image = UIImage(named: "icChat.png", in: Bundle(for: type(of: self)), compatibleWith: nil)

@@ -26,6 +26,7 @@ class TextboxView: UIView {
     }
     func loadConfig() {
         let size: CGFloat = 40.0
+        self.backgroundColor = chataDrawerBackgroundColorSecondary
         btnSend.backgroundColor = chataDrawerAccentColor
         btnSend.addTarget(self, action: #selector(actionSend), for: .touchUpInside)
         btnSend.addTarget(self, action: #selector(actionMicrophoneStart), for: .touchDown)
@@ -36,6 +37,7 @@ class TextboxView: UIView {
         changeButton()
         tfMain.borderRadius()
         tfMain.configStyle()
+        tfMain.backgroundColor = chataDrawerBackgroundColorPrimary
         tfMain.loadInputPlace(DataConfig.inputPlaceholder)
         tfMain.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         tfMain.setLeftPaddingPoints(10)

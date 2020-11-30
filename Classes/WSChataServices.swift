@@ -339,6 +339,11 @@ class ChataServices {
             if group {
                 if type == "" {
                     typeD = "column"
+                    if rows.count > 0 {
+                        if rows[0].count == 3 {
+                            typeD = "stacked_column"
+                        }
+                    }
                 }
             }
             let typeF = validType(rows: rows, type: typeD)
@@ -377,9 +382,9 @@ class ChataServices {
                 textFinal = message
             }
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
-                let typeInit = typeF.replace(target: "stacked_", withString: "")
+                //let typeInit = typeF.replace(target: "stacked_", withString: "")
                 let webviewS = genereteFinalWebView(
-                                                    type: typeInit,
+                                                    type: typeF,
                                                     second: second,
                                                     mainColumn: mainColumn,
                                                     rowsFinal: rowsFinal,

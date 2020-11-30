@@ -165,7 +165,7 @@ extension MainChat {
         vwToolbar.edgeTo(vwMain, safeArea: .topView, height: 40.0)
     }
     private func loadMainView() {
-        vwDynamicView.backgroundColor = chataDrawerBackgroundColorPrimary
+        vwDynamicView.backgroundColor = chataDrawerBackgroundColorSecondary
         vwMain.addSubview(vwDynamicView)
         vwDynamicView.edgeTo(vwMain, safeArea: .fullState, vwToolbar)
     }
@@ -185,7 +185,7 @@ extension MainChat {
         svButtons.subviews.forEach { (view) in
             let viewT = view as? UIButton ?? UIButton()
             if viewT.tag == tag{
-                viewT.backgroundColor = chataDrawerBackgroundColorPrimary
+                viewT.backgroundColor = chataDrawerBackgroundColorSecondary
                 viewT.setImage(viewT.imageView?.changeColor().image, for: .normal)
             } else {
                 viewT.backgroundColor = chataDrawerAccentColor

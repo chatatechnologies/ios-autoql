@@ -28,7 +28,7 @@ private func getConstants(dollar: Bool = false) -> String {
             return '-\(finalSymbol)' + (-this.value)
           }
         };
-    """ : ""
+    """ : "$"
     return """
           var actual = "";
           var colors = \(DataConfig.themeConfigObj.chartColors);
@@ -274,6 +274,9 @@ private func getBiTypeCharts() -> String{
                             inverted: inverted
                         },
                         yAxis: {
+                            title: {
+                                text: yAxis
+                            },
                             labels: {
                                 formatter: dollarFormat
                             }
