@@ -22,6 +22,7 @@ let wsLogin = "\(versionBaseTestApi2)login"
 let wsJwt = "\(versionBaseTestApi2)jwt?display_name="
 let wsDrillDown = "\(versionBaseTestApi2)chata/query/drilldown"
 let wsDashboard = "\(versionBaseTestApi2)dashboards?key="
+let wsDataAlerts = "/autoql/api/v1/data-alerts/notifications"
 typealias CompletionResponse = (_ response: [String: Any]) -> Void
 func httpRequest(_ urlFinal: String,
                  _ method: String = "GET",
@@ -31,28 +32,20 @@ func httpRequest(_ urlFinal: String,
                  token: String = "",
                  integrator: Bool = false,
                  completion: @escaping CompletionResponse) {
-    //create the url with NSURL
     let url = URL(string: urlFinal)! //change the url
-    //create the session object
     let session = URLSession.shared
-    //now create the URLRequest object using the url object
     var request = URLRequest(url: url) as URLRequest
-    //var request = URLRequest(url: URL(string: url)!)
     request.httpMethod = method
-    if method == "POST" {
+    if method == "POST" || method == "PUT" || method == "DELETE" {
         let pjson = jsonToString(json: body)
         let data = (pjson.data(using: .utf8))! as Data
         request.httpBody = data
-        //let data2 = (pjson.data(using: .utf8))! as Data
-        //let postString = "text=A&source=data_messenger&user_id=demo&customer_id=demo"
-        //request.httpBody = postString.data(using: .utf8)
         if content == "application/json"{
             request.setValue(content, forHTTPHeaderField: "Content-Type")
         } else {
             let boundary = "Boundary-\(UUID().uuidString)"
             request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
             do{
-                //request.httpBody = try {
                 request.httpBody = {
                     var bodyFinal = Data()
                     for (rawName, rawValue) in body {
@@ -95,11 +88,6 @@ func httpRequest(_ urlFinal: String,
     if integrator {
         request.setValue(DataConfig.authenticationObj.domain, forHTTPHeaderField: "Integrator-Domain")
     }
-    //
-    
-    //request.addValue("application/json", forHTTPHeaderField: "Accept")
-    //request.setValue("Bearer \(UserDefault.instance.defaultAuthToken)", forHTTPHeaderField: "Authorization")
-    //create dataTask using the session object to send data to the server
     let task = session.dataTask(with: request, completionHandler: { data, response, error in
         guard error == nil else {
             completion(["result": "fail"])
@@ -120,8 +108,6 @@ func httpRequest(_ urlFinal: String,
             }
         } else {
             do {
-                //create json object from data
-                //let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
                 let responseJSON = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
                 if let json = responseJSON as? [String: Any] {
                     completion(json)
@@ -135,19 +121,12 @@ func httpRequest(_ urlFinal: String,
 }
 func httpFormDat(_ urlFinal: String, _ method: String = "GET",_ body: [String: Any] = [:] , completion: @escaping CompletionResponse) {
     let url = URL(string: urlFinal)! //change the url
-    //create the session object
     let session = URLSession.shared
-    //now create the URLRequest object using the url object
     var request = URLRequest(url: url) as URLRequest
-    //var request = URLRequest(url: URL(string: url)!)
     request.httpMethod = method
     if method == "POST" {
-        //let pjson = jsonToString(json: body)
-        //let data2 = (pjson.data(using: .utf8))! as Data
-        //let postString = "text=A&source=data_messenger&user_id=demo&customer_id=demo"
-        //request.httpBody = postString.data(using: .utf8)
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions()) // pass dictionary to nsdata object and set it as request body
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions())
         } catch let error {
             print(error.localizedDescription)
         }
@@ -166,8 +145,6 @@ func httpFormDat(_ urlFinal: String, _ method: String = "GET",_ body: [String: A
             print ("status code = \(statusCode)")
         }
         do {
-            //create json object from data
-            //let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
             if let json = responseJSON as? [String: Any] {
                 completion(json)
@@ -184,7 +161,6 @@ func jsonToString(json: [String: Any]) -> String {
         let jsonString = NSString(data: json2, encoding: String.Encoding.utf8.rawValue)! as String
         return jsonString
     } catch {
-        print("problema con diccionario: \(String(describing: error))")
         return ""
     }
 }

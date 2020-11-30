@@ -7,9 +7,10 @@
 
 import Foundation
 import  UIKit
+protocol QTMainViewDelegate: class {
+    func loadQueryTips(query: TypingSend)
+}
 class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
-    var vwToolbar = ToolbarView()
-    var mainFrame: CGRect = CGRect()
     var tfMain = UITextField()
     let svPaginator = UIStackView()
     let vwMainScrollChat = UIScrollView()
@@ -24,6 +25,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     var btns: [String] = []
     var Qtips: QTModel = QTModel()
     var titleDefault = ""
+    weak var delegate: QTMainViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -31,8 +33,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         super.init(frame: frame)
         self.backgroundColor = .darkGray
     }
-    public func show() {
-        let vwFather: UIView = UIApplication.shared.keyWindow!
+    public func show(vwFather: UIView) {
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
         self.edgeTo(vwFather, safeArea: .safe)
@@ -43,31 +44,25 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         }, completion: nil)
     }
     private func loadView() {
-        loadToolbar()
         loadMainChat()
         loadInput()
         loadDefaultPagination()
         loadTable()
         loadDefault()
     }
-    private func loadToolbar() {
-        self.addSubview(vwToolbar)
-        vwToolbar.reloadData("Explore Queries")
-        vwToolbar.edgeTo(self, safeArea: .topView, height: 40.0)
-    }
     private func loadMainChat() {
         self.addSubview(vwMainScrollChat)
-        vwMainScrollChat.backgroundColor = .white
-        vwMainScrollChat.edgeTo(self, safeArea: .fullState, vwToolbar )
+        vwMainScrollChat.backgroundColor = .clear
+        vwMainScrollChat.edgeTo(self, safeArea: .none )
         vwMainScrollChat.addSubview(vwMainChat)
-        vwMainChat.edgeTo(self, safeArea: .fullState, vwToolbar)
-        vwMainChat.backgroundColor = chataDrawerBackgroundColor
+        vwMainChat.edgeTo(self, safeArea: .none)
+        vwMainChat.backgroundColor = chataDrawerBackgroundColorSecondary
     }
     private func loadInput() {
         let size: CGFloat = 40.0
         let padding: CGFloat = -8
         addSubview(vwTextBox)
-        vwTextBox.edgeTo(self, safeArea: .topHeight, height: 50.0, vwToolbar, padding: 16)
+        vwTextBox.edgeTo(self, safeArea: .topPadding, height: 50.0, padding: 16)
         vwTextBox.addSubview(btnSend)
         btnSend.edgeTo(vwTextBox, safeArea: .rightCenterY, height: size, padding:padding)
         btnSend.backgroundColor = chataDrawerAccentColor
@@ -79,11 +74,10 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         btnSend.circle(size)
         vwTextBox.addSubview(tfMain)
         tfMain.edgeTo(vwTextBox, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
-        //tfMain.edgeTo(self, safeArea: .topHeight, height: 50.0, vwToolbar, padding: 16)
         tfMain.cardView(borderRadius: 20)
         tfMain.loadInputPlace("Search relevant queries by topic")
         tfMain.configStyle()
-        tfMain.setLeftPaddingPoints(20)
+        tfMain.setLeftPaddingPoints(10)
     }
     private func loadTable() {
         tbMain.delegate = self
@@ -91,14 +85,14 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tbMain.separatorStyle = .none
         tbMain.clipsToBounds = true
         tbMain.bounces = true
-        tbMain.backgroundColor = chataDrawerBackgroundColor
+        tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
         vwMainChat.addSubview(tbMain)
         tbMain.edgeTo(vwMainChat, safeArea: .fullPadding, tfMain, svPaginator, padding: 8)
     }
     func loadDefaultPagination() {
         vwMainChat.addSubview(svPaginator)
         svPaginator.edgeTo(vwMainChat, safeArea: .bottomPadding, height: 50.0, padding: 16)
-        svPaginator.getHorizontal(dist: .equalCentering,spacing: 0)
+        svPaginator.getSide(dist: .equalCentering,spacing: 0)
     }
     func loadPagination() {
         btns = btnsBase
@@ -225,46 +219,19 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
             selectBtn = numberPage
         }
     }
-    public func dismiss(animated: Bool) {
-        self.layoutIfNeeded()
-        if animated {
-            UIView.animate(withDuration: 0.50,
-                           delay: 0,
-                           usingSpringWithDamping: 1,
-                           initialSpringVelocity: 10,
-                           options: UIView.AnimationOptions(rawValue: 0),
-                           animations: {
-                            self.center = CGPoint(x: self.center.x,
-                                                             y: self.frame.height + self.frame.height/2)
-            }, completion: { (_) in
-                DataConfig.clearOnClose ? self.exit() : self.saveData()
-            })
-        } else {
-            DataConfig.clearOnClose ? self.exit() : saveData()
-        }
-    }
-    func exit() {
-        removeFromSuperview()
-    }
-    func saveData() {
-        removeFromSuperview()
-        //self.isHidden = true
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Qtips.items.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        NotificationCenter.default.post(name: notifSendText,
-                                        object: Qtips.items[indexPath.row])
-        self.dismiss(animated: DataConfig.clearOnClose)
-        
+        let typingSend = TypingSend(text: Qtips.items[indexPath.row], safe: true)
+        delegate?.loadQueryTips(query: typingSend)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = Qtips.items[indexPath.row]
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.font = generalFont
-        cell.contentView.backgroundColor = chataDrawerBackgroundColor
+        cell.contentView.backgroundColor = chataDrawerBackgroundColorPrimary
         cell.textLabel?.textColor = chataDrawerTextColorPrimary
         return cell
     }

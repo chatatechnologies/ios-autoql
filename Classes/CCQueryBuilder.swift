@@ -6,6 +6,10 @@
 //
 
 import Foundation
+protocol QueryBuilderViewDelegate: class {
+    func updateSize(numQBOptions: Int, index: Int)
+    func callTips()
+}
 class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     let lblMain = UILabel()
     let tbMain = UITableView()
@@ -15,7 +19,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     var dataQB: [QueryBuilderModel] = []
     var dataSelection: [String] = []
     weak var delegate: ChatViewDelegate?
+    weak var delegateQB: QueryBuilderViewDelegate?
     var selectSection = -1
+    var selectOption = -1
     var titleFooter = "Use 💡Explore Queries to further explore the possibilities"
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -25,38 +31,69 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         start()
     }
     func start() {
+        self.backgroundColor = chataDrawerBackgroundColorPrimary
+        tbMain.bounces = false
+        tbSecond.bounces = false
+        tbMain.allowsSelection = true
+        tbMain.isUserInteractionEnabled = true
+        tbMain.delaysContentTouches = false
+        tbSecond.allowsSelection = true
+        tbSecond.isUserInteractionEnabled = true
         lblMain.text = "Some things you can ask me:"
         addSubview(lblMain)
         lblMain.edgeTo(self, safeArea: .topPadding, height: 30, padding: 8)
         lblMain.textColor = chataDrawerTextColorPrimary
         lblMain.font = generalFont
-        addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .topHeight, height: 280, lblMain)
         addSubview(lblInfo)
-        lblInfo.edgeTo(self, safeArea: .bottomPaddingtoTop, tbMain)
+        lblInfo.edgeTo(self, safeArea: .bottomPadding, height: 40, padding: 8)
+        addSubview(tbMain)
+        tbMain.edgeTo(self, safeArea: .fullPadding, lblMain, lblInfo, padding: 16)
+        tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
+        lblInfo.clipsToBounds = true
         lblInfo.text = titleFooter
+        lblInfo.isScrollEnabled = false
+        lblInfo.bounces = false
         lblInfo.font = generalFont
         lblInfo.delegate = self
+        lblInfo.backgroundColor = chataDrawerBackgroundColorPrimary
         lblInfo.textColor = chataDrawerTextColorPrimary
         refererToQueryTips()
         addSubview(vwSecond)
         vwSecond.edgeTo(tbMain, safeArea: .none)
         vwSecond.isHidden = true
-        vwSecond.backgroundColor = chataDrawerBackgroundColor
+        vwSecond.backgroundColor = chataDrawerBackgroundColorPrimary
         let button = UIButton()
         let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
         let image2 = image?.resizeT(maxWidthHeight: 30)
         button.setImage(image2, for: .normal)
+        button.setImage(button.imageView?.changeColor().image, for: .normal)
         button.addTarget(self, action: #selector(returnSelection), for: .touchUpInside)
         vwSecond.addSubview(button)
-        button.edgeTo(vwSecond, safeArea: .widthLeft, height: 25 )
+        button.edgeTo(vwSecond, safeArea: .widthLeft, height: 25, padding: 8 )
         vwSecond.addSubview(tbSecond)
-        tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 25)
-        tbSecond.addBorder(side: .left)
+        tbSecond.edgeTo(vwSecond, safeArea: .noneLeft, padding: 32)
+        tbSecond.backgroundColor = chataDrawerBackgroundColorPrimary
         loadTable()
+        addNotifications()
     }
     @IBAction func returnSelection(_ sender: AnyObject){
         toggleAnimationSecond(hide: true)
+        selectOption = -1
+        tbMain.reloadData()
+    }
+    func addNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(closeModal),
+                                               name: notifcloseQueryTips,
+                                               object: nil)
+    }
+    func removeNotifications() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: notifcloseQueryTips,
+                                                  object: nil)
+    }
+    @objc func closeModal() {
+        lblInfo.isSelectable = true
     }
     func toggleAnimationSecond(hide: Bool = false){
         let pos: CGFloat = !hide ? 500 : 0
@@ -68,13 +105,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
                        initialSpringVelocity: 0,
                        options: .curveEaseOut,
                        animations: {
-                        // Slide the views by -offset
                         self.vwSecond.isHidden = hide
                         self.vwSecond.transform = CGAffineTransform(translationX: pos2, y: 0)
-                        //self.tbMain.transform = CGAffineTransform.identity
-
         }, completion: { finished in
-            // Remove the old view from the tabbar view.
         })
     }
     func loadTable() {
@@ -85,9 +118,12 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbSecond.dataSource = self
     }
     func loadData() {
+        loadingView(mainView: self, inView: tbMain)
         ChataServices.instance.getDataQueryBuilder { (options) in
-            self.dataQB = options
             DispatchQueue.main.async {
+                self.dataQB = options
+                loadingView(mainView: self, inView: self.tbMain, false)
+                self.delegateQB?.updateSize(numQBOptions: options.count, index: 0)
                 self.tbMain.reloadData()
             }
         }
@@ -95,29 +131,63 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableView == tbMain ? dataQB.count : dataSelection.count
     }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let viewHeader = UIView()
+        if tableView == tbSecond {
+            let viewHeader = UIView()
+            viewHeader.backgroundColor = chataDrawerBackgroundColorPrimary
+            let lbl = UILabel()
+            lbl.textColor = chataDrawerTextColorPrimary
+            if selectSection != -1 {
+                lbl.text = dataQB[selectSection].topic
+            }
+            viewHeader.addSubview(lbl)
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(returnSelection))
+            viewHeader.addGestureRecognizer(gesture)
+            lbl.edgeTo(viewHeader, safeArea: .nonePadding, padding: 4)
+            return viewHeader
+        }
+        return viewHeader
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tableView == tbMain ? 0 : 25
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         if tableView == tbMain {
-            let imageView = UIImageView()
+            var imageView = UIImageView()
             cell.contentView.addSubview(imageView)
             let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
             let image2 = image?.resizeT(maxWidthHeight: 30)
             imageView.image = image2
+            imageView = imageView.changeColor()
             imageView.edgeTo(cell.contentView, safeArea: .widthRight, height: 25, padding: 16)
             imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            cell.backgroundColor = chataDrawerBackgroundColorPrimary
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = chataDrawerAccentColor
+            cell.selectedBackgroundView = backgroundView
             cell.textLabel?.text = dataQB[indexPath.row].topic
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
-            /*let image = UIImage(named: "icArrowLeft.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
-            let image2 = image?.resizeT(maxWidthHeight: 30)
-            //image2.transform = image2.transform.rotated(by: .pi)
-            cell.imageView?.image = image2
-            cell.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat.pi)*/
+            if selectSection == indexPath.row {
+                cell.textLabel?.textColor = .white
+                cell.backgroundColor = chataDrawerAccentColor
+                imageView = imageView.changeColor(color: .white)
+            }
             return cell
         } else {
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = chataDrawerAccentColor
+            cell.selectedBackgroundView = backgroundView
+            cell.backgroundColor = chataDrawerBackgroundColorPrimary
             cell.textLabel?.text = dataSelection[indexPath.row]
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
+            if selectOption == indexPath.row {
+                cell.backgroundColor = chataDrawerAccentColor
+                cell.textLabel?.textColor = .white
+            }
             return cell
         }
     }
@@ -126,10 +196,13 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             dataSelection = dataQB[indexPath.row].queries
             selectSection = indexPath.row
             toggleAnimationSecond()
-            //vwSecond.isHidden = false
             tbSecond.reloadData()
         } else {
-            delegate?.sendText(dataSelection[indexPath.row], true)
+            let typingSend = TypingSend(text: dataSelection[indexPath.row], safe: true)
+            selectOption = indexPath.row
+            tbSecond.reloadData()
+            NotificationCenter.default.post(name: notifTypingText,
+                                            object: typingSend)
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -144,8 +217,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         return ""
     }
     func refererToQueryTips() {
+        let finalColor = "#28A8E0".hexToColor()
         let msgAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor : chataDrawerAccentColor,
+            .foregroundColor : finalColor,
             .underlineStyle: NSUnderlineStyle.double.rawValue,
             .font: generalFont
         ]
@@ -153,7 +227,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         let mainAttr = NSMutableAttributedString(string: "\(titleFooter)")
         mainAttr.addAttribute(.link, value: "\(0)", range: range)
         mainAttr.addAttributes(msgAttributes, range: range)
-        let range2 = NSRange(location: 0, length: titleFooter.count)
+        let range2 = NSRange(location: 0, length: titleFooter.count + 1)
         let attributedString:[NSAttributedString.Key: Any] = [
             .font: generalFont,
             .foregroundColor : chataDrawerTextColorPrimary,
@@ -162,8 +236,7 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         lblInfo.attributedText = mainAttr
     }
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        let tips = QTMainView(frame: self.frame)
-        tips.show()
+        delegateQB?.callTips()
         return true
     }
 }

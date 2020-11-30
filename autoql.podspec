@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'autoql'
-  s.version          = '0.0.1'
+  s.version          = '1.0.3'
   s.summary          = 'You can create a chat connected with your data.'
   s.swift_version    = '4.2'
 
@@ -27,7 +27,7 @@ TODO: Add long description of the pod here.
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Chata' => 'vicente@rinro.com.mx' }
-  s.source           = { :git => 'https://github.com/chatatechnologies/ios-autoql.git', :tag => "0.0.1" }
+  s.source           = { :git => 'https://github.com/chatatechnologies/ios-autoql.git', :tag => "1.0.3" }
   #s.source           = { :git => 'https://github.com/chatatechnologies/ios-autoql', :tag => s.version.to_s }
   
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
@@ -39,7 +39,7 @@ TODO: Add long description of the pod here.
   s.resources = 'Assets/*.{png,storyboard,gif}'
 
   s.resource_bundles = {
-    'chata' => ['Assets/*.{png,gif}']
+    'autoql' => ['Assets/*.{png,gif}']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

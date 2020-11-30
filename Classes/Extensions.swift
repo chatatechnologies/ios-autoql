@@ -8,18 +8,7 @@
 
 import UIKit
 var isTypingMic = false
-public enum DViewSafeArea: String, CaseIterable {
-    case topView, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, fullStatePaddingTop,
-    topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, centerSize, bottomRight
-    static func withLabel(_ str: String) -> DViewSafeArea? {
-        return self.allCases.first {
-            "\($0.description)" == str
-        }
-    }
-    var description: String {
-        return self.rawValue
-    }
-}
+
 extension String {
     func replaceRange(range: Range<Index>, start: Index, newText: String) -> String{
         var newString = self
@@ -102,40 +91,38 @@ extension String {
     }
     func toMoney() -> String {
         let format = NumberFormatter()
-        format.numberStyle = .decimal
-        //format.currencyCode = "$"
+        format.numberStyle = .currency
         format.currencyCode = DataConfig.dataFormattingObj.currencyCode
         format.minimumFractionDigits = DataConfig.dataFormattingObj.currencyDecimals
-        //format.locale = Locale.init(identifier: "en_us")
+        format.maximumFractionDigits = DataConfig.dataFormattingObj.currencyDecimals
+        format.locale = Locale.init(identifier: DataConfig.dataFormattingObj.languageCode)
         let money: Double = Double(self) ?? 0.0
         let dolar = format.string(from: NSNumber(value: money)) ?? ""
-        let finalStr = self == "" ? "" : "$\(String(describing: dolar))"
+        let finalStr = self == "" ? "" : "\(String(describing: dolar))"
         return finalStr
     }
     func toQuantity() -> String {
         let format = NumberFormatter()
-        //format.currencyCode = "$"
         format.minimumFractionDigits = DataConfig.dataFormattingObj.quantityDecimals
-        //format.locale = Locale.init(identifier: "en_us")
         let money: Double = Double(self) ?? 0.0
         let dolar = format.string(from: NSNumber(value: money)) ?? "0"
         return "\(String(describing: dolar))"
     }
     func toPercent() -> String {
         let format = NumberFormatter()
-        //format.currencyCode = "$"
-        //format.minimumFractionDigits = DataMessenger.dataFormattingObj.quantityDecimals
         format.minimumFractionDigits = 2
-        //format.locale = Locale.init(identifier: "en_us")
         let money: Double = (Double(self) ?? 0.0) * 100.0
         let dolar = format.string(from: NSNumber(value: money)) ?? "0"
         return "\(String(describing: dolar))%"
     }
-    func toDate(_ day: Bool = false) -> String {
+    func toDate(_ day: Bool = false, _ hour: Bool = false) -> String {
         let formater = DateFormatter()
         formater.dateFormat = day
             ? DataConfig.dataFormattingObj.dayMonthYearFormat
             : DataConfig.dataFormattingObj.monthYearFormat
+        if hour {
+            formater.dateFormat = "MMMM ddº, YYYY h:mm a"
+        }
         formater.timeZone = TimeZone(abbreviation: "GMT")
         let valid = Double(self) ?? 0.0
         let dates = NSDate(timeIntervalSince1970: valid)
@@ -177,20 +164,27 @@ extension String {
         return (finalTxtSend, true)
     }
     func toDate2(format: String = "yyyy-MM") -> String {
+        if self.contains("W") {
+            return self
+        }
         let separete = self.components(separatedBy: "-")
         let format2 = format.components(separatedBy: "-")
         var year = ""
         var month = ""
-        format2.enumerated().forEach { (index, formatE) in
-            let ff = formatE.lowercased()
-            if ff == "yyyy"{
-                year = "\(separete[index])"
-            } else if ff == "mm" || ff == "m"{
-                month = "\(separete[index].toMonth().prefix(3))"
-            } else if ff == "mmm" {
-                month = separete[index]
-            } else if ff == "mmmm" {
-                month = String(separete[index].prefix(3))
+        if format2.count > 0 {
+            format2.enumerated().forEach { (index, formatE) in
+                if separete.count > index {
+                    let ff = formatE.lowercased()
+                    if ff == "yyyy"{
+                        year = "\(separete[index])"
+                    } else if ff == "mm" || ff == "m"{
+                        month = "\(separete[index].toMonth().prefix(3))"
+                    } else if ff == "mmm" {
+                        month = separete[index]
+                    } else if ff == "mmmm" {
+                        month = String(separete[index].prefix(3))
+                    }
+                }
             }
         }
         let finalDate = "\(month) \(year)"
@@ -265,7 +259,7 @@ extension UIButton {
     func loadStyleBtn(width: CGFloat) {
         self.layer.borderWidth = 0
         self.layer.cornerRadius = (width / 2)
-        self.layer.borderColor = chataDrawerBackgroundColor.cgColor
+        self.layer.borderColor = chataDrawerBackgroundColorPrimary.cgColor
         self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowOpacity = 0.5
@@ -274,6 +268,14 @@ extension UIButton {
     }
 }
 extension UITextField {
+    func addLeftImageTo(image: UIImage) {
+        let size: CGFloat = 30
+        let frame = CGRect(x: 0, y: 0, width: size, height: size)
+        let imageView = UIImageView(frame: frame)
+        imageView.image = image
+        self.leftView = imageView
+        self.leftViewMode = .always
+    }
     func borderRadius() {
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.lightGray.cgColor
@@ -334,16 +336,16 @@ extension UIView {
         }
         addSubview(newBorder)
     }
-    func cardViewShadow() {
+    func cardViewShadow(border: Bool = true) {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 20
-          self.layer.borderWidth = 1.0
-              self.layer.borderColor = UIColor.white.cgColor
-              self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
-              self.layer.shadowOffset = CGSize(width: 0, height: 0)
-              self.layer.shadowOpacity = 0.5
-              self.layer.shadowRadius = 5.0
-              self.layer.masksToBounds = false
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = border ? chataDrawerBorderColor.cgColor : UIColor.clear.cgColor
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowRadius = 5.0
+        self.layer.masksToBounds = false
     }
     func removeView(tag: Int) {
         subviews.forEach { (view) in
@@ -360,335 +362,10 @@ extension UIView {
         }
     }
     @discardableResult
-    public func edgeTo(_ view: UIView,
-                       safeArea: DViewSafeArea = .none,
-                       height: CGFloat = 0,
-                       _ top: UIView = UIView(),
-                       _ bottom: UIView = UIView(),
-                       padding: CGFloat = -8) -> UIView {
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        switch safeArea {
-        case .topView:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .topPadding:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .bottomPaddingtoTop:
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            leadingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-        case .bottomPaddingtoTopHalf:
-            //let finalHeight = (view.frame.height / 2) - top.frame.height
-            //heightAnchor.constraint(equalToConstant: finalHeight).isActive = true
-            
-            heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.38).isActive = true
-            //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            leadingAnchor.constraint(equalTo: top.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-            //self.addConstraint(heightConstraint)
-        case .bottomPadding:
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .bottomRight:
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: padding).isActive = true
-        case .leading:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .trailing:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .bottomView:
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .bottomSize:
-            bottomAnchor.constraint(equalTo: top.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .vertical:
-            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        case .horizontal:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .all:
-            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        case .none:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .noneLeft:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .widthLeft:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .widthRight:
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        case .safe:
-            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        case .nonePadding:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: height).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -height).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -height).isActive = true
-        case .none2:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .modal2:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: padding).isActive = true
-            //trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-            //bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .modal2Right:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-            rightAnchor.constraint(equalTo: top.rightAnchor, constant: 5).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: padding).isActive = true
-        //trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        //bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .modal:
-            //topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            //heightAnchor.constraint(equalToConstant: height).isActive = true
-            //widthAnchor.constraint(equalToConstant: 200).isActive = true
-        //trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        //bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .padding:
-            //topAnchor.constraint(equalTo: view.topAnchor, constant: 2).isActive = true
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-            //bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 2).isActive = true
-        case .paddingTop:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .paddingTopLeft:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-            trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -48).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .paddingTopRight:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
-            leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 48).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .secondTop:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height * 4).isActive = true
-            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        case .fullState:
-            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .fullStatePadding:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-        case .fullStatePaddingAll:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-        case .fullStatePaddingTop:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        case .fullState2:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: 300.0).isActive = true
-        case .full:
-            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: bottom.topAnchor).isActive = true
-        case .fullStack:
-            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .fullPadding:
-            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: bottom.topAnchor).isActive = true
-        case .fullLimit:
-            topAnchor.constraint(equalTo: top.bottomAnchor).isActive = true
-            leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor).isActive = true
-            trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: bottom.topAnchor).isActive = true
-        case .fullBottom:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        case .fullBottomCenter:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 10).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        case .topY:
-            bottomAnchor.constraint(equalTo: top.topAnchor, constant: 0).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .topHeight:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .fullWidth:
-            leadingAnchor.constraint(equalTo: top.trailingAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: bottom.leadingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .leftBottom:
-            leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-        case .leftCenterY:
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -padding).isActive = true
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            heightAnchor.constraint(equalTo: top.heightAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: top.leadingAnchor, constant: padding).isActive = true
-        case .rightCenterY:
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        case .rightBottom:
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-        case .rightTop:
-            trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-        case .center:
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        case .centerSize:
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: padding).isActive = true
-        case .leftAdjust:
-            centerYAnchor.constraint(equalTo: top.centerYAnchor).isActive = true
-            trailingAnchor.constraint(equalTo: top.leadingAnchor, constant: -8).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-        case .rightMiddle:
-            self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            self.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-            self.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            self.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        case .leftMiddle:
-            self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            self.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            self.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            self.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        case .topMiddle:
-            self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            self.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-            self.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            self.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        case .bottomMiddle:
-            self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            self.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            self.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            self.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        case .fullStackH:
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .fullStackHH:
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .fullStackV:
-            topAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
-            //leadingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
-            widthAnchor.constraint(equalToConstant: height).isActive = true
-            centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        case .dropDown:
-            topAnchor.constraint(equalTo: view.bottomAnchor, constant: padding).isActive = true
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -padding).isActive = true
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .dropDownTop:
-            topAnchor.constraint(equalTo: top.bottomAnchor, constant: 1).isActive = true
-            leadingAnchor.constraint(equalTo: top.leadingAnchor, constant: -padding).isActive = true
-            trailingAnchor.constraint(equalTo: top.trailingAnchor, constant: padding).isActive = true
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        }
-        
-        return self
-    }
-    
-    @discardableResult
     public func withBackground(color: UIColor) -> UIView {
         backgroundColor = color
         return self
     }
-    
     @discardableResult
     public func withBackground(image: UIImage, contentMode: ContentMode = .scaleAspectFit) -> UIView {
         let imageView = UIImageView(image: image.withRenderingMode(.alwaysOriginal))
@@ -777,15 +454,19 @@ extension UIImageView {
     }
 }
 extension UIStackView{
-    func getHorizontal(dist: Distribution = .fillEqually, spacing: CGFloat = 8){
-        self.axis = NSLayoutConstraint.Axis.horizontal
+    func getSide(dist: Distribution = .fillEqually,
+                       spacing: CGFloat = 8,
+                       axis: NSLayoutConstraint.Axis = .horizontal
+                       
+    ){
+        self.axis = axis
         self.distribution  = dist
         self.alignment = UIStackView.Alignment.center
         self.spacing = spacing
     }
 }
 extension UILabel {
-    func setSize(_ size: CGFloat = 16) {
-        font = UIFont.systemFont(ofSize: size)
+    func setSize(_ size: CGFloat = 16, _ bold: Bool = false) {
+        font = !bold ? UIFont.systemFont(ofSize: size) : UIFont.boldSystemFont(ofSize: size)
     }
 }

@@ -7,8 +7,9 @@
 
 import Foundation
 import WebKit
-public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate, ChatViewDelegate {
-    
+public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDelegate, ChatViewDelegate, WKScriptMessageHandler {
+    //public var themeConfig2: themeConfig = themeConfig
+    var themeConfigDashboard : themeConfigInput =  themeConfigInput()
     let tbMain = UITableView()
     let vwEmptyDash = UIView()
     let tbListDashboard = UITableView()
@@ -17,16 +18,22 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     let vwDrillDown = UIView()
     var mainView = UIView()
     var vwWebview = UIView()
+    var vwSecondWebview = UIView()
     var wbMain = WKWebView()
+    var wbSecond = WKWebView()
     var imageView2 = UIImageView(image: nil)
     var spinnerDashboard = UIButton()
     var listDash: [DashboardList] = []
     var loadingGeneral: Int = 0
+    var mainData: DashboardModel = DashboardModel()
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        //self.backgroundColor =
+    }
+    func loadDashboardView(){
         loadTableD(table: tbMain)
         loadTableD(table: tbListDashboard)
         self.addSubview(spinnerDashboard)
@@ -39,6 +46,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         tbMain.edgeTo(self, safeArea: .fullStatePaddingTop, spinnerDashboard, padding: 8)
         loadEmptyView()
         self.addSubview(tbListDashboard)
+        tbListDashboard.backgroundColor = chataDrawerBackgroundColorPrimary
         tbListDashboard.edgeTo(self, safeArea: .dropDownTop, height: 200, spinnerDashboard, padding: 0)
         tbListDashboard.cardView()
         tbListDashboard.clipsToBounds = true
@@ -53,6 +61,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         vwEmptyDash.isHidden = true
         let lblText = UILabel()
         lblText.text = "Empty Dashboard"
+        lblText.textColor = chataDrawerTextColorPrimary
         lblText.textAlignment = .center
         lblText.textColor = chataDrawerTextColorPrimary
         vwEmptyDash.addSubview(lblText)
@@ -61,8 +70,13 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     public func loadDashboard(
         view: UIView,
         autentification: authentication,
-        mainView: UIView
+        mainView: UIView,
+        theme : themeConfigInput = themeConfigInput()
     ){
+        self.themeConfigDashboard = theme
+        reloadColors(dark: themeConfigDashboard.theme == "dark")
+        self.backgroundColor = chataDrawerBackgroundColorSecondary
+        loadDashboardView()
         self.edgeTo(view, safeArea: .none)
         self.mainView = mainView
         DashboardService().getDashboards(apiKey: autentification.apiKey) { (dashboards) in
@@ -83,7 +97,22 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         tbMain.isHidden = dataDash.count == 0
         vwEmptyDash.isHidden = !(dataDash.count == 0)
     }
-    func sendDrillDown(idQuery: String, obj: String, name: String, title: String) {
+    func sendDrillDown(idQuery: String, obj: String, name: String, title: String, webview: String, mainData: DashboardModel ) {
+        self.mainData = mainData
+        createDrillDown(title: title, webview: webview)
+        ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
+            DispatchQueue.main.async {
+                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
+            }
+        }
+        /*DashboardService.instance.getDrillDownDashboard(idQuery: idQuery, name: , value: name) { (dataComponent) in
+            DispatchQueue.main.async {
+                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
+            }
+        }*/
+    }
+    func createDrillDown(title: String, webview: String = "" ) {
+        
         vwDrillDown.tag = 100
         vwDrillDown.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         mainView.addSubview(vwDrillDown)
@@ -103,35 +132,54 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         lbTitle.addBorder()
         component.addSubview(vwWebview)
         vwWebview.backgroundColor = .gray
-        vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, lbTitle, padding: 20 )
+        if webview != "" && webview != "text" {
+            let contentController = WKUserContentController()
+            let userScript = WKUserScript(
+                source: "mobileHeader()",
+                injectionTime: WKUserScriptInjectionTime.atDocumentEnd,
+                forMainFrameOnly: true
+            )
+            contentController.addUserScript(userScript)
+            contentController.add(self, name: "drillDown")
+            let config = WKWebViewConfiguration()
+            config.userContentController = contentController
+            wbSecond = WKWebView(frame: self.bounds, configuration: config)
+            component.addSubview(self.vwSecondWebview)
+            self.vwSecondWebview.backgroundColor = .blue
+            self.vwSecondWebview.edgeTo(component, safeArea: .bottomPaddingtoTopHalf, lbTitle, padding: 20 )
+            self.vwSecondWebview.addSubview(wbSecond)
+            wbSecond.edgeTo(vwSecondWebview, safeArea: .none)
+            wbSecond.navigationDelegate = self
+            loaderWebview(mView: vwSecondWebview)
+            DispatchQueue.main.async {
+                self.wbSecond.loadHTMLString(webview, baseURL: nil)
+            }
+            vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, vwSecondWebview, padding: 20 )
+        } else {
+            vwWebview.edgeTo(component, safeArea: .bottomPaddingtoTop, lbTitle, padding: 20 )
+        }
         vwWebview.addSubview(wbMain)
         wbMain.edgeTo(vwWebview, safeArea: .none)
         wbMain.navigationDelegate = self
-        loaderWebview()
-        ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
-            DispatchQueue.main.async {
-                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
-            }
-        }
-        /*DashboardService.instance.getDrillDownDashboard(idQuery: idQuery, name: , value: name) { (dataComponent) in
-            DispatchQueue.main.async {
-                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
-            }
-        }*/
+        loaderWebview(mView: vwWebview)
     }
-    func loaderWebview(_ load: Bool = true){
+    func sendDrillDownManualDashboard(newData: [[String]], columns: [ChatTableColumn], title: String, webview: String, mainData: DashboardModel) {
+        self.mainData = mainData
+        createDrillDown(title: title, webview: webview)
+        let newComponent = ChataServices.instance.getDrillComponent(data: newData, columns: columns)
+        self.wbMain.loadHTMLString(newComponent.webView, baseURL: nil)
+    }
+    func loaderWebview(mView: UIView, _ load: Bool = true){
         if load {
             let bundle = Bundle(for: type(of: self))
             let path = bundle.path(forResource: "gifBalls", ofType: "gif")
             let url = URL(fileURLWithPath: path!)
             imageView2.loadGif(url: url)
-            //let jeremyGif = UIImage.gifImageWithName("preloader")
-            //let imageView = UIImageView(image: image)
             imageView2.tag = 5
-            vwWebview.addSubview(imageView2)
-            imageView2.edgeTo(vwWebview, safeArea: .centerSize, height: 50, padding: 100)
+            mView.addSubview(imageView2)
+            imageView2.edgeTo(mView, safeArea: .centerSize, height: 50, padding: 100)
         } else{
-            vwWebview.subviews.forEach { (view) in
+            mView.subviews.forEach { (view) in
                 if view.tag == 5{
                     view.removeFromSuperview()
                 }
@@ -150,9 +198,6 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         loadingGeneral = 1
         tbMain.reloadData()
         for (index, dash) in self.dataDash.enumerated() {
-            //let indexPath = IndexPath(row: index, section: 0)
-            //guard let cell = self.tbMain.cellForRow(at: indexPath) as? DashboardComponentCell else {return}
-            //cell.loaderWebview()
             if dash.splitView {
                 loadTwoDash(query: dash.secondQuery, type: dash.secondDisplayType, index: index, column: dash.stringColumnIndexSecond)
             }
@@ -174,7 +219,8 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                         idQuery: component.idQuery,
                         loading: 2,
                         items: component.options,
-                        columnsInfo: component.columnsInfo
+                        columnsInfo: component.columnsInfo,
+                        rowsClean: component.rowsClean
                 )
                 self.dataDash[pos].subDashboardModel = newSub
                 let indexPath = IndexPath(row: pos, section: 0)
@@ -188,14 +234,17 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                                         position: index) { (component) in
             DispatchQueue.main.async {
                 let pos = component.position
-                self.dataDash[pos].webview = component.webView
-                self.dataDash[pos].type = component.type
-                self.dataDash[pos].text = component.text
-                self.dataDash[pos].idQuery = component.idQuery
-                self.dataDash[pos].columnsInfo = component.columnsInfo
-                self.dataDash[pos].loading = 2
-                let indexPath = IndexPath(row: pos, section: 0)
-                self.tbMain.reloadRows(at: [indexPath], with: .none)
+                if self.dataDash.count > pos {
+                    self.dataDash[pos].webview = component.webView
+                    self.dataDash[pos].cleanRows = component.rowsClean
+                    self.dataDash[pos].type = component.type
+                    self.dataDash[pos].text = component.text
+                    self.dataDash[pos].idQuery = component.idQuery
+                    self.dataDash[pos].columnsInfo = component.columnsInfo
+                    self.dataDash[pos].loading = 2
+                    let indexPath = IndexPath(row: pos, section: 0)
+                    self.tbMain.reloadRows(at: [indexPath], with: .none)
+                }
             }
         }
     }
@@ -203,13 +252,84 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         
     }
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loaderWebview(false)
-        //progress(off: true, viewT: wbChart!)
+        loaderWebview(mView: webView.superview ?? UIView(), false)
     }
     func toggleListDashboard(_ show: Bool = true) {
         tbListDashboard.isHidden = !show
     }
-    
+    func refreshDrillDown(idQuery: String, obj: String, name: String, title: String, webview: String ) {
+        ChataServices.instance.getDataChatDrillDown(obj: obj, idQuery: idQuery, name: name) { (dataComponent) in
+            DispatchQueue.main.async {
+                self.wbMain.loadHTMLString(dataComponent.webView, baseURL: nil)
+            }
+        }
+    }
+    func refreshManualDrillDown(newData: [[String]], columns: [ChatTableColumn], title: String, webview: String) {
+        let newComponent = ChataServices.instance.getDrillComponent(data: newData, columns: columns)
+        self.wbMain.loadHTMLString(newComponent.webView, baseURL: nil)
+    }
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+            if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns {
+                var msg = message.body as? String ?? ""
+                var secondQuery: Bool = false
+                if msg.contains("SecondQuery") {
+                    msg = msg.replace(target: "SecondQuery" , withString: "")
+                    secondQuery = true
+                }
+                let columns = secondQuery ? mainData.subDashboardModel.columnsInfo : mainData.columnsInfo
+                if columns.count <= 3{
+                    let name = mainData.columnsInfo.count > 0 ? mainData.columnsInfo[0].originalName : ""
+                    let name2 = mainData.columnsInfo.count > 1 ? mainData.columnsInfo[1].originalName : ""
+                    let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
+                    let finalWebview = mainData.type == .Webview || mainData.type == .Table ? "" : mainData.webview
+                    refreshDrillDown(idQuery: mainData.idQuery, obj: msg, name: nameFinal, title: mainData.query, webview: finalWebview)
+                    //delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: msg, name: nameFinal, title: mainData.query, webview: finalWebview, mainData: ma)
+                } else {
+                    if secondQuery {
+                        if mainData.subDashboardModel.type == .Table || mainData.subDashboardModel.type == .Webview {
+                            
+                        } else{
+                            newDrilldown(data: msg)
+                        }
+                    } else {
+                        if mainData.type == .Table || mainData.type == .Webview {
+                            
+                        } else{
+                            newDrilldown(data: msg)
+                        }
+                    }
+                }
+            }
+    }
+    func newDrilldown(data: String) {
+        var position = -1
+        mainData.columnsInfo.enumerated().forEach { (index, type) in
+            if type.type == .date{
+                if position == -1{
+                    position = index
+                }
+            }
+        }
+        var newData: [[String]] = []
+        mainData.cleanRows.forEach { (row) in
+            row.forEach { (column) in
+                if column == data {
+                    newData.append(row)
+                }
+            }
+        }
+        let finalWebview = mainData.type == .Webview || mainData.type == .Table ? "" : mainData.webview
+        refreshManualDrillDown(newData: newData,
+                         columns: mainData.columnsInfo,
+                         title: mainData.title,
+                         webview: finalWebview)
+        /*delegate?.sendDrillDownManualDashboard(newData: newData,
+                                      columns: mainData.columnsInfo,
+                                      title: mainData.title,
+                                      webview: finalWebview
+        )*/
+    }
 }
 extension Dashboard: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -228,20 +348,19 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             let cell = DashboardComponentCell()
             cell.delegate = self
             cell.delegateSend = self
-            //if indexPath.row ==
             cell.configCell(data: dataDash[indexPath.row],
                             pos: indexPath.row,
                             loading: self.dataDash[indexPath.row].loading == 2 ? 2 : loadingGeneral,
                             secondLoading: self.dataDash[indexPath.row].subDashboardModel.loading == 2 ? 2 : loadingGeneral
             )
-            
-            
-            //cell.addSubview(newView)
             return cell
         }
         if tableView == tbListDashboard {
             let cell = UITableViewCell()
+            cell.backgroundColor = chataDrawerBackgroundColorPrimary
+            cell.tintColor = chataDrawerBackgroundColorPrimary
             cell.textLabel?.text = listDash[indexPath.row].name
+            cell.textLabel?.textColor = chataDrawerTextColorPrimary
             cell.textLabel?.font = generalFont
             cell.textLabel?.textColor = chataDrawerTextColorPrimary
             return cell
@@ -276,6 +395,9 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
-        
     }
+    
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {
+    }
+    
 }

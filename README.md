@@ -194,7 +194,7 @@ config.autoQLConfig.enableColumnVisibilityManager = enableColumnVisibilityManage
     <tr><td>currencyDecimals</td><td>Int</td><td>2</td></tr>
     <tr><td>quantityDecimals</td><td>Int</td><td>1</td></tr>
     <tr><td>monthYearFormat</td><td>String</td><td>"MMM YYYY"</td></tr>
-    <tr><td>dayMonthYearFormat</td><td>String</td><td>"MMM DD, YYYY"</td></tr>
+    <tr><td>dayMonthYearFormat</td><td>String</td><td>"MMM d, YYYY"</td></tr>
   </tbody>
 </table>
 

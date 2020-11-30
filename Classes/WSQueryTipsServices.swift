@@ -9,8 +9,6 @@ import Foundation
 class QTServices {
     static let instance = QTServices()
     func getTips(txtSearch: String, page: Int = 1, pageSize: Int = 7, completion: @escaping CompletionQueryTips) {
-        //https://spira-staging.chata.io/autoql/api/v1/query/related-queries?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&search=sales&page_size=7&page=1
-        //https://spira-staging.chata.io/autoql/api/v1/query/related-queries?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&search=Allsales&page_size=7&page=1
         let handleQuery = txtSearch.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let url = "\(wsUrlDynamic)/autoql/api/v1/query/related-queries?key=\(DataConfig.authenticationObj.apiKey)&search=\(handleQuery)&page_size=\(pageSize)&page=\(page)"
         httpRequest(url) { (response) in

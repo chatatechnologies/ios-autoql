@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1700722E24574823002B2C5D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700722D24574823002B2C5D /* DashboardView.swift */; };
+		178763A7251409FE003903B7 /* GlobalsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178763A6251409FE003903B7 /* GlobalsTest.swift */; };
+		179DFE90250BF51600D4FC5D /* QueryInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179DFE8F250BF51600D4FC5D /* QueryInputView.swift */; };
 		17B9387024119D6F00B907EC /* DemoParametersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9386F24119D6F00B907EC /* DemoParametersModel.swift */; };
 		17B938722411A2EE00B907EC /* DemoParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B938712411A2EE00B907EC /* DemoParameterCell.swift */; };
 		432A89DB83E3559B480EAFDD /* Pods_chata_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9836CCA971E565DF19FCC051 /* Pods_chata_Example.framework */; };
@@ -32,6 +34,8 @@
 
 /* Begin PBXFileReference section */
 		1700722D24574823002B2C5D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		178763A6251409FE003903B7 /* GlobalsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalsTest.swift; sourceTree = "<group>"; };
+		179DFE8F250BF51600D4FC5D /* QueryInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputView.swift; sourceTree = "<group>"; };
 		17B9386F24119D6F00B907EC /* DemoParametersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoParametersModel.swift; sourceTree = "<group>"; };
 		17B938712411A2EE00B907EC /* DemoParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoParameterCell.swift; sourceTree = "<group>"; };
 		3175FAB9544FCF702BC2C406 /* Pods-chata_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chata_Tests.release.xcconfig"; path = "Target Support Files/Pods-chata_Tests/Pods-chata_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,12 +106,14 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* DemoViewController.swift */,
 				1700722D24574823002B2C5D /* DashboardView.swift */,
+				179DFE8F250BF51600D4FC5D /* QueryInputView.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				17B9386F24119D6F00B907EC /* DemoParametersModel.swift */,
 				17B938712411A2EE00B907EC /* DemoParameterCell.swift */,
+				178763A6251409FE003903B7 /* GlobalsTest.swift */,
 			);
 			name = "Example for chata";
 			path = chata;
@@ -216,7 +222,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -343,10 +349,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				179DFE90250BF51600D4FC5D /* QueryInputView.swift in Sources */,
 				17B938722411A2EE00B907EC /* DemoParameterCell.swift in Sources */,
 				607FACD81AFB9204008FA782 /* DemoViewController.swift in Sources */,
 				1700722E24574823002B2C5D /* DashboardView.swift in Sources */,
 				17B9387024119D6F00B907EC /* DemoParametersModel.swift in Sources */,
+				178763A7251409FE003903B7 /* GlobalsTest.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +420,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -468,6 +477,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -503,6 +513,7 @@
 				CODE_SIGN_STYLE = Automatic;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 20;
 =======
 				CURRENT_PROJECT_VERSION = 24;
@@ -510,15 +521,20 @@
 =======
 				CURRENT_PROJECT_VERSION = 32;
 >>>>>>> develop
+=======
+				CURRENT_PROJECT_VERSION = 55;
+>>>>>>> develop
 				DEVELOPMENT_TEAM = CZWR4T2KVW;
 				INFOPLIST_FILE = chata/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = chata.beta;
 				PRODUCT_NAME = AutoQL;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -531,6 +547,7 @@
 				CODE_SIGN_STYLE = Automatic;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 20;
 =======
 				CURRENT_PROJECT_VERSION = 24;
@@ -538,15 +555,20 @@
 =======
 				CURRENT_PROJECT_VERSION = 32;
 >>>>>>> develop
+=======
+				CURRENT_PROJECT_VERSION = 55;
+>>>>>>> develop
 				DEVELOPMENT_TEAM = CZWR4T2KVW;
 				INFOPLIST_FILE = chata/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = chata.beta;
 				PRODUCT_NAME = AutoQL;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

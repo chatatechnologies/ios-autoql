@@ -15,6 +15,7 @@ func getHTMLHeader(triType: Bool = false) -> String {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://unpkg.com/sticky-table-headers"></script>
     \(getHTMLCharts(triType: triType))
     <link href=“https://fonts.googleapis.com/css?family=Titillium+Web” rel=“stylesheet”>
@@ -27,6 +28,7 @@ func getHTMLHeader(triType: Bool = false) -> String {
     <div class="splitView">
     <div id='container' class='container'></div>
     """
+    //getPieChart() <div id='container' class='container'></div>
 }
 func getHTMLCharts(triType: Bool) -> String {
     let headsBi = """
@@ -94,6 +96,9 @@ func getHTMLStyle() -> String {
         .red {
             color: red;
         }
+        .originalValue {
+            display: none;
+        }
         .highcharts-credits,.highcharts-button-symbol, .highcharts-exporting-group {
             display: none;
         }
@@ -114,8 +119,15 @@ func getHTMLFooter(rows: [[String]],
                    type: String,
                    split: Bool = false,
                    mainColumn: Int = 0,
-                   second: String = "") -> String {
+                   second: String = "",
+                   positionColumn: Int = 0) -> String {
     var scriptJS = ""
+    var dolarFormat = false
+    types.forEach { (type) in
+        if type == .dollar {
+            dolarFormat = true
+        }
+    }
     if rows.count > 0 && columns.count > 0 {
         scriptJS += getChartFooter(rows: rows,
                                    columns: columns,
@@ -125,13 +137,37 @@ func getHTMLFooter(rows: [[String]],
                                    mainColum: mainColumn,
                                    second: second
         )
-        scriptJS += getFooterScript()
+        scriptJS += getFooterScript(dollar: dolarFormat)
     }
+    let sortTable = positionColumn != -1 ? "sortTable();" : ""
     return """
     </div>
     <script>
     \(scriptJS)
     hideAll();
+    \(sortTable)
+    function sortTable() {
+      var table, rows, switching, i, x, y, shouldSwitch;
+      table = document.getElementById("idTableBasic");
+      switching = true;
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByClassName("originalValue")[\(positionColumn)];
+          y = rows[i + 1].getElementsByClassName("originalValue")[\(positionColumn)];
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
+    }
     function hideAll(){
         $('table').css({ "width": "100%", "position": "relative","height":"90%", "z-index": "0" });
         $( "#idTableBasic, #idTableDataPivot, #idTableDatePivot, #container" ).hide();
@@ -159,6 +195,32 @@ func getHTMLFooter(rows: [[String]],
     </html>
     """
 }
+func generateChart(rows: [[String]],
+                   columns: [String]) -> String {
+    let triType = columns.count  == 3
+    let dataChartBi = triType ? [] : rows.map { (row) -> [Any] in
+        let name = validateArray(row, 0) as? String ?? ""
+        let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
+        return [name, mount]
+    }
+    var finalJson = ""
+    dataChartBi.forEach { (row) in
+        print(row)
+        var text = ""
+        row.enumerated().forEach { (index, column) in
+            if index == 0 {
+                text += "'\(column)' : "
+            }
+            else if index == 1 {
+                text += "\(column),"
+            }
+        }
+        text.removeLast()
+        finalJson += "\(text),"
+    }
+    finalJson.removeLast()
+    return "var data = {\(finalJson)}"
+}
 func getChartFooter(rows: [[String]],
                     columns: [String],
                     types: [ChatTableColumnType],
@@ -173,6 +235,7 @@ func getChartFooter(rows: [[String]],
     var drillTableY: [String] = []
     var drillY: [String] = []
     var stacked: [[Double]] = []
+    var positionDD = 0
     var catXFormat = rows.map {
         (row) -> String in
         let name = (validateArray(row, 0) as? String ?? "").toDate()
@@ -182,39 +245,63 @@ func getChartFooter(rows: [[String]],
         let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
         return mount
     }
+    var catX = rows.map { (row) -> String in
+        var name = ""
+        name = validateArray(row, 0) as? String ?? ""
+        return name
+    }
     if types.count > 3 {
+        catX = []
         catXFormat = []
         dataChartLine = []
         //var positionsCharts: [Int] = []
         var positionsCharts: Int = -1
         var positionsChartsSecond: Int = -1
         for (index, type) in types.enumerated() {
-            if type == .quantity || type == .dollar{
-                positionsCharts = index
+            if (positionsCharts == -1){
+                if type == .dollar || type == .quantity{
+                    for row in rows {
+                        if index <= (row.count-1) {
+                            let mValidation = Double(row[index]) ?? 0.0
+                            if mValidation != 0.0 {
+                                positionsCharts = index
+                                break
+                            }
+                        }
+                    }
+                }
             }
             if  type == .date {
                 positionsChartsSecond = index
+                positionDD = index
             }
             if positionsCharts != -1 && positionsChartsSecond != -1{
                 break
             }
             
         }
-        dataSpecial = rows.map { (row) -> [Any] in
+        rows.enumerated().forEach { (index, row) in
             var name = validateArray(row, positionsChartsSecond) as? String ?? ""
-            name = name.toDate()
+            catX.append(name)
+            name = name.toDate(true)
             if mainColum != -1 {
                 name = validateArray(row, mainColum) as? String ?? ""
                 if types[mainColum] == .date {
                     name = name.toDate()
                 }
             }
-            if catXFormat.firstIndex(of: name) == nil {
-                catXFormat.append(name)
-            }
             let mount = validateArray(row, positionsCharts) as? String ?? "0"
             let mountFinal = Double(mount) ?? 0.0
-            return [name, mountFinal]
+            if catXFormat.firstIndex(of: name) == nil {
+                catXFormat.append(name)
+                dataSpecial.append([name, mountFinal])
+            } else {
+                var pos = catXFormat.firstIndex(of: name) ?? 0
+                pos = Int(pos)
+                let mountBase = dataSpecial[pos][1] as? Double ?? 0.0
+                let mountFinalColumn = mountBase + mountFinal
+                dataSpecial[pos][1] = mountFinalColumn
+            }
         }
         dataSpecialActive = true
     }
@@ -224,19 +311,14 @@ func getChartFooter(rows: [[String]],
         let mount = Double(validateArray(row, 1) as? String ?? "") ?? 0.0
         return [name, mount]
     }
-    let catX = rows.map { (row) -> String in
-        var name = ""
-        name = validateArray(row, 0) as? String ?? ""
-        if dataSpecialActive {
-            name = validateArray(row, mainColum) as? String ?? ""
-        }
-        return name
-    }
     let datachartTri = triType ? rows.map { (column) -> [Any] in
         drillTableY.append(column[1])
-        let data1 = column[1]
+        var data1 = column[1]
         let data2 = column[0].toDate()
         let data3 = Double(column[2]) ?? 0.0
+        if data1 == "<null>"{
+            data1 = data2
+        }
         if categoriesX.firstIndex(of: data1) == nil {
             categoriesX.append(data1)
         }
@@ -278,9 +360,10 @@ func getChartFooter(rows: [[String]],
     let stringChartLine = arrayDictionaryToJson(json: dataChartLineTri)
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
     let positionSpecial = mainColum != -1 ? mainColum : 0
-    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
+    let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : dataSpecialActive ? (validateArray(columns, positionDD) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
+    let pos = columns.count - 1
     let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
-        (validateArray(columns, 1) as? String ?? "").replace(target: "'", withString: "")
+        (validateArray(columns, pos) as? String ?? "").replace(target: "'", withString: "")
     return """
         var type = '\(mainType)';
         var xAxis = '\(xAxis)';
@@ -300,7 +383,15 @@ func getChartFooter(rows: [[String]],
     var color1 = "\(DataConfig.themeConfigObj.chartColors[0])";
     """
 }
-func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, columns: [ChatTableColumn], datePivot: Bool = false) -> String {
+func tableString(dataTable: [[String]],
+                 dataColumn: [String],
+                 idTable: String,
+                 columns: [ChatTableColumn],
+                 datePivot: Bool = false,
+                 reorder: Bool = false,
+                 cleanRow: [[String]] = [],
+                 positionColumn: Int = 0
+                 ) -> String {
     let star = "<table id='\(idTable)'>"
     var body = ""
     let end = "</table>"
@@ -316,15 +407,20 @@ func tableString(dataTable: [[String]], dataColumn: [String], idTable: String, c
             }
         }
         body += "</tr></thead><tbody>"
-        for row in dataTable {
+        for (mainIndex, row) in dataTable.enumerated() {
             body += "<tr>"
             for (index, column) in row.enumerated() {
                 if columns.count == row.count {
                     if columns[index].isVisible{
+                        var reorderText = ""
+                        if reorder {
+                            let columnClean = cleanRow[mainIndex][index] 
+                            reorderText = "<span class='originalValue'>\(columnClean)</span>"
+                        }
                         let finalColumn = datePivot
                             ? column
                             : column.getTypeColumn(type: columns[index].type)
-                        body += "<td><span class='limit'>\(finalColumn)</span></td>"
+                        body += "<td>\(reorderText)<span class='limit'>\(finalColumn)</span></td>"
                     }
                 } else {
                     let finalColumn = datePivot
@@ -345,7 +441,6 @@ func arrayDictionaryToJson(json: [[String: Any]]) -> String {
         let jsonString = NSString(data: json2, encoding: String.Encoding.utf8.rawValue)! as String
         return jsonString
     } catch {
-        print("problema con diccionario: \(String(describing: error))")
         return ""
     }
 }

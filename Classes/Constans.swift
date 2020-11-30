@@ -9,6 +9,11 @@ import Foundation
 public var DataConfig = DataConfiguration.instance
 var generalFont = UIFont.systemFont(ofSize: 16)
 let notifSendText = Notification.Name("sendText")
+let notifTypingText = Notification.Name("typingText")
+let notifcloseQueryTips = Notification.Name("closeQT")
+let notifAlert = Notification.Name("alert")
+var LOGIN: Bool = false
+var notificationsAttempts: Int = 0
 public class DataConfiguration {
     static let instance = DataConfiguration()
     public var authenticationObj = authentication(apiKey: "", domain: "", token: "")
@@ -35,19 +40,17 @@ public class DataConfiguration {
     public var dataFormattingObj = dataFormatting(
         currencyCode: "USD",
         languageCode: "en-US",
-        currencyDecimals: 0,
+        currencyDecimals: 2,
         quantityDecimals: 0,
         comparisonDisplay: "PERCENT",
         monthYearFormat: "MMM YYYY",
-        dayMonthYearFormat: "MMM YYYY"
+        dayMonthYearFormat: "MMM d YYYY"
     )
     public var themeConfigObj = themeConfig(
         theme: "light",
         accentColor: "#28a8e0",
         chartColors: ["#355C7D", "#6C5B7B", "#C06C84", "#F67280", "#F8B195"]
     )
-    //public var mainChatView = Chat()
-    // public var chatView = Chat()
     func show(){
         
     }
@@ -75,16 +78,16 @@ public class DataConfiguration {
         dataFormattingObj = dataFormatting(
             currencyCode: "USD",
             languageCode: "en-US",
-            currencyDecimals: 2,
-            quantityDecimals: 1,
+            currencyDecimals: 0,
+            quantityDecimals: 0,
             comparisonDisplay: "PERCENT",
             monthYearFormat: "MMM YYYY",
-            dayMonthYearFormat: "ll"
+            dayMonthYearFormat: "MMM d YYYY"
         )
         themeConfigObj = themeConfig(
             theme: "light",
             accentColor: "#28a8e0",
-            chartColors: ["#26A7E9", "#A5CD39", "#DD6A6A", "#FFA700", "#00C1B2"]
+            chartColors: ["#355C7D", "#6C5B7B", "#C06C84", "#F67280", "#F8B195"]
         )
     }
 }
@@ -92,9 +95,9 @@ public struct authentication {
     public var apiKey: String
     public var domain: String
     public var token: String
-    public init(apiKey: String,
-         domain: String,
-         token: String) {
+    public init(apiKey: String = "",
+         domain: String = "",
+         token: String = "") {
         self.apiKey = apiKey
         self.domain = domain
         self.token = token

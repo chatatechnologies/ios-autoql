@@ -26,10 +26,10 @@ class TextboxView: UIView {
     }
     func loadConfig() {
         let size: CGFloat = 40.0
+        self.backgroundColor = chataDrawerBackgroundColorSecondary
         btnSend.backgroundColor = chataDrawerAccentColor
         btnSend.addTarget(self, action: #selector(actionSend), for: .touchUpInside)
         btnSend.addTarget(self, action: #selector(actionMicrophoneStart), for: .touchDown)
-        //btnSend.addTarget(self, action: #selector(actionMicrophoneStop), for: .touchUpInside)
         self.addSubview(btnSend)
         let padding: CGFloat = -8
         btnSend.edgeTo(self, safeArea: .rightCenterY, height: size, padding:padding)
@@ -37,11 +37,13 @@ class TextboxView: UIView {
         changeButton()
         tfMain.borderRadius()
         tfMain.configStyle()
+        tfMain.backgroundColor = chataDrawerBackgroundColorPrimary
         tfMain.loadInputPlace(DataConfig.inputPlaceholder)
         tfMain.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         tfMain.setLeftPaddingPoints(10)
         self.addSubview(tfMain)
         tfMain.edgeTo(self, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
+        addNotifications()
     }
     @objc func actionTyping() {
         changeButton()
@@ -49,10 +51,8 @@ class TextboxView: UIView {
         if DataConfig.autoQLConfigObj.enableAutocomplete {
             ChataServices().getQueries(query: query) { (queries) in
                 self.delegate?.updateAutocomplete(queries, query.isEmpty)
-                //self.autoCompleteView.updateTable()
             }
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionSend() {
         let query = self.tfMain.text ?? ""
@@ -63,7 +63,6 @@ class TextboxView: UIView {
         if query != "" {
             delegate?.sendText(query, true)
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
     }
     @objc func actionMicrophoneStart() {
         isTypingMic = true
@@ -71,7 +70,20 @@ class TextboxView: UIView {
             loadRecord(textbox: tfMain)
             btnSend.backgroundColor = .red
         }
-        // self.textbox.text?.isEmpty ?? true ? autoCompleteView.removeFromSuperview() : nil
+    }
+    func addNotifications(){
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveQuery),
+                                               name: notifTypingText,
+                                               object: nil)
+    }
+    func removeNotificatios() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: notifTypingText, object: nil)
+    }
+    @objc func receiveQuery(_ notif: Notification) {
+        let query = notif.object as? TypingSend ?? TypingSend()
+        self.animateAppName(query: query.text, safe: query.safe)
     }
     func changeButton() {
         let emptyInput = self.tfMain.text?.isEmpty ?? true
@@ -85,6 +97,21 @@ class TextboxView: UIView {
     }
     override func didMoveToSuperview() {
         loadConfig()
+    }
+    func animateAppName(query: String, safe: Bool) {
+        tfMain.text = ""
+        let characters = query.map { $0 }
+        var index = 0
+        Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] timer in
+            if index < query.count {
+                let char = characters[index]
+                self?.tfMain.text! += "\(char)"
+                index += 1
+            } else {
+                timer.invalidate()
+                self?.delegate?.sendText(query, safe)
+            }
+        })
     }
 }
 extension TextboxView: UITableViewDataSource, UITableViewDelegate {

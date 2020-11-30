@@ -13,6 +13,7 @@ typealias CompletionSecondData = (_ response: String) -> Void
 typealias CompletionDashboards = (_ response: [DashboardList]) -> Void
 typealias CompletionQueryTips = (_ response: QTModel) -> Void
 typealias CompletionSuggestions = (_ response: [String]) -> Void
+typealias CompletionNotifications = (_ response: [NotificationItemModel]) -> Void
 public typealias CompletionChatSuccess = (_ response: Bool) -> Void
 typealias CompletionChatSafetynet = (_ response: [ChatFullSuggestion]) -> Void
 class ChataServices {
@@ -44,6 +45,7 @@ class ChataServices {
         completion(true)
     }
     func clearData(){
+        LOGIN = false
         DataConfig.authenticationObj.token = ""
         ChataServices.instance.jwt = ""
         DataConfig.authenticationObj.apiKey = ""
@@ -75,7 +77,7 @@ class ChataServices {
             }
         }
     }
-    func getJWT(parameters: [String: Any], completion: @escaping CompletionChatSuccess) {
+    func getJWTResponse(parameters: [String: Any], completion: @escaping CompletionChatSuccess) {
         let mail = parameters["userID"] ?? ""
         let project_id = parameters["projectID"] ?? ""
         let url = "\(wsJwt)\(mail)&project_id=\(project_id)"
@@ -95,8 +97,6 @@ class ChataServices {
                     completion(success)
                 }
             }
-            
-            //completion(matches)
         }
     }
     func getQueries(query: String, completion: @escaping CompletionArrString){
@@ -137,36 +137,30 @@ class ChataServices {
             }
         }
     }
-    func getDataChat(query: String, completion: @escaping CompletionChatComponentModel){
-        let body: [String: Any] = !DataConfig.demo
-            ?   [
-                    "text": query,
-                    "source": "data_messenger.user",
-                    "debug": true,
-                    "test": true
-                ]
-            :   [
-                    "text": query,
-                    "source": "data_messenger",
-                    "user_id": "demo",
-                    "customer_id": "demo"
-                ]
+    func getDataChat(query: String, type: String = "", queryOutput: Bool = false, completion: @escaping CompletionChatComponentModel){
+        
+        let body: [String: Any] =
+            [
+                "text": query,
+                "source": !queryOutput ? "data_messenger.user" : "user",
+                "test": true,
+                "translation": "include"
+            ]
         let urlRequest = wsQuery
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
         httpRequest(urlFinal, "POST", body) { (response) in
-            //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
-            let msg = response["message"] as? String ?? ""
-            if msg == "I want to make sure I understood your query. Did you mean:"{
-                self.getSuggestionsQueries(query: query) { (items) in
-                    let finalComponent = self.getDataComponent(response: response, query: query, items: items)
-                    completion(finalComponent)
-                }
-            } else {
-                let finalComponent = self.getDataComponent(response: response, query: query)
-                completion(finalComponent)
+            let referenceId = response["reference_id"] as? String ?? ""
+            var finalComponent = self.getDataComponent(response: response,
+                                                       type: type, query: query,
+                                                       referenceID: referenceId)
+            if referenceId == "1.1.211" {
+                let msg = response["message"] as? String ?? ""
+                finalComponent.type = .Introduction
+                finalComponent.user = false
+                finalComponent.text = msg
             }
-            //completion(matches)
+            completion(finalComponent)
         }
     }
     func getSuggestionsQueries(query: String, completion: @escaping CompletionSuggestions) {
@@ -179,12 +173,22 @@ class ChataServices {
         }
     }
     func getValidData(completion: @escaping CompletionChatSuccess) {
-        //HAcer bien la validacion, ya que marca fail
         let finalUrl = "\(wsUrlDynamic)/autoql/api/v1/query/related-queries?key=\(DataConfig.authenticationObj.apiKey)&search=test"
         httpRequest(finalUrl) { (response) in
             let result = response["result"] as? String ?? ""
             let msg = response["message"] as? String ?? result
             completion(msg == "" || msg == "Success")
+        }
+    }
+    func reportProblem(queryID: String, problemType: String, completion: @escaping CompletionChatSuccess) {
+        let url = "\(wsUrlDynamic)/autoql/api/v1/query/\(queryID)?key=\(DataConfig.authenticationObj.apiKey)"
+        let body: [String: Any] = [
+            "is_correct": false,
+            "message": problemType
+        ]
+        httpRequest(url, "PUT", body) { (response) in
+            let referenceID = response["reference_id"] as? String ?? ""
+            completion(referenceID == "1.1.200")
         }
     }
     func getDataChatDrillDown(obj: String, idQuery: String, name: String, completion: @escaping CompletionChatComponentModel){
@@ -194,15 +198,15 @@ class ChataServices {
             let values = obj.split(separator: "_")
             let keys = name.split(separator: "º")
             if keys.count > 1 && values.count > 1{
-                var test = String(values[0])
-                test = test.toStrDate()
+                let valueOne = String(values[0]).toStrDate()
+                let valueTwo = String(values[1]).toStrDate()
                 group_bys = [[
-                        "name": String(keys[0]),
-                        "value": String(values[1])
+                        "name": String(keys[1]),
+                        "value": valueTwo
                     ],
                     [
-                        "name": String(keys[1]),
-                        "value": test
+                        "name": String(keys[0]),
+                        "value": valueOne
                     ]
                 ]
             }
@@ -225,18 +229,14 @@ class ChataServices {
                     "test": true,
                     "translation": "include"
                 ]
-        //let urlRequest = wsQuery
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query/\(idQuery)/drilldown?key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : "\(wsQuery)/drilldown"
         httpRequest(urlFinal, "POST", body) { (response) in
-            //let responseFinal: [String: Any] = ChataServices.instance.isLoggin ? response["data"] as? [String: Any] ?? [:] : response
             let finalComponent = self.getDataComponent(response: response, drilldown: true)
             completion(finalComponent)
-            //completion(matches)
         }
     }
     func getDataQueryBuilder(completion: @escaping CompletionChatQueryBuilderModel){
-        //https://backend-staging.chata.io/api/v1/topics?key=AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU&project_id=spira-demo3
         let projectID = ChataServices.instance.getProjectID()
         let finalUrl = "\(wsQueryBuilder)\(DataConfig.authenticationObj.apiKey)&project_id=\(projectID)"
         httpRequest(finalUrl, integrator: true) { (response) in
@@ -251,6 +251,58 @@ class ChataServices {
             completion(qboptions)
         }
     }
+    func getDrillComponent(data: [[String]], columns: [ChatTableColumn]) -> ChatComponentModel {
+        var newComponent = ChatComponentModel()
+        let webviewS = genereteFinalWebView(
+                                            type: "table",
+                                            second: "",
+                                            mainColumn: -1,
+                                            rowsFinal: data,
+                                            rowsFinalClean: data,
+                                            columnsFinal: columns)
+        let numRows = data.count > 0 ? data.count : 0
+        let columnsFilter = columns.map { (column) -> ChatTableColumnType in
+            return column.type
+        }
+        newComponent.webView = webviewS
+        newComponent.type = .Table
+        newComponent.biChart = validBiCharts(rows: data, columnsFinal: columns)
+        newComponent.numRow = numRows
+        newComponent.rowsClean = data
+        newComponent.dataRows = data
+        newComponent.columnsInfo = columns
+        newComponent.columns = columnsFilter
+        return newComponent
+    }
+    func validBiCharts(rows: [[String]], columnsFinal: [ChatTableColumn]) -> Bool {
+        var valid = false
+        rows.forEach { (row) in
+            row.enumerated().forEach { (index, column) in
+                if !valid && (columnsFinal[index].type == .dollar || columnsFinal[index].type == .quantity) {
+                    /*let doubleFinal = Double(element as? String ?? "") ?? 0*/
+                    if let intFinal = Int(column) {
+                        if intFinal > 0 {
+                            valid = true
+                        }
+                    }
+                }
+            }
+        }
+        return valid
+    }
+    func validType(rows: [[Any]], type: String) -> String {
+        var finalType = type
+        let triChartValid = triChartList(type: type)
+        if rows.count > 0 {
+            if triChartValid && rows[0].count > 3 {
+                finalType = ""
+            }
+            if rows[0].count <= 1 {
+                finalType = ""
+            }
+        }
+        return finalType
+    }
     func getDataComponent(response: [String: Any],
                           type: String = "",
                           split: Bool = false,
@@ -261,37 +313,54 @@ class ChataServices {
                           position: Int = 0,
                           secondQuery: String = "",
                           mainColumn: Int = -1,
-                          second: String = "") -> ChatComponentModel {
-        let data = response["data"] as? [String: Any] ?? [:]
-        var dataModel = ChatComponentModel(webView: "error", options: items, position: position)
+                          second: String = "",
+                          referenceID: String = "") -> ChatComponentModel {
+        var data = response["data"] as? [String: Any] ?? [:]
+        let referenceID = response["reference_id"] as? String ?? ""
+        if referenceID == "1.1.211" {
+            data = [:]
+        }
+        let idQueryDefault = data["query_id"] as? String ?? UUID().uuidString
+        var dataModel = ChatComponentModel(webView: "error",
+                                           options: items,
+                                           position: position,
+                                           referenceID: referenceID)
+        dataModel.idQuery = idQueryDefault
         if items.count > 0{
             dataModel.type = .Suggestion
         }
-        let message = response["message"] as? String ?? "Uh oh.. It looks like you don't have access to this resource. Please double check that all the required authentication fields are provided."
+        let message = response["message"] as? String ?? "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
         dataModel.text = message
         if data.count > 0 && dataModel.text != "No Data Found" {
             let columns = data["columns"] as? [[String: Any]] ?? []
-            let finalType = type == "" ? (data["display_type"] as? String ?? "") : type
-            var displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
-            let idQuery = data["query_id"] as? String ?? ""
             let rows = data["rows"] as? [[Any]] ?? []
-            let columnsFinal = getColumns(columns: columns)
+            let (columnsFinal, group) = getColumns(columns: columns)
+            var typeD = type
+            if group {
+                if type == "" {
+                    typeD = "column"
+                    if rows.count > 0 {
+                        if rows[0].count == 3 {
+                            typeD = "stacked_column"
+                        }
+                    }
+                }
+            }
+            let typeF = validType(rows: rows, type: typeD)
+            let finalType = typeF == "" ? (data["display_type"] as? String ?? "") : typeF
+            let idQuery = data["query_id"] as? String ?? UUID().uuidString
+            var displayType: ChatComponentType = ChatComponentType.withLabel(finalType)
             var textFinal = ""
             var user = true
             var numRow = 20
-            let (rowsFinal, rowsFinalClean) = getRows(rows: rows, columnsFinal: columnsFinal)
-            if rows.count == 1{
-                if rows[0].count == 1{
-                    displayType = .Introduction
-                    if columnsFinal[0].type == .dollar {
-                        textFinal = "\(rows[0][0] )".toMoney()
-                    }
-                    else {
-                        textFinal = "\(rows[0][0] )"
-                    }
-                    user = false
-                }
-            }
+            var biChart = false
+            let positionColumn = getColumnPosition(columnsFinal: columnsFinal)
+            let (rowsFinal, rowsFinalClean, validBiChart) = getRows(rows: rows, columnsFinal: columnsFinal)
+            biChart = validBiChart
+            let (finalUser, finalText, newDisplayType) = getFinalText(rows: rows, user: user, text: textFinal, displayType: displayType, columnsFinal: columnsFinal)
+            user = finalUser
+            textFinal = finalText
+            displayType = newDisplayType
             numRow = rows.count
             let columnsF = columnsFinal.map { (element) -> String in
                 return element.name
@@ -300,6 +369,7 @@ class ChataServices {
                 rows.map{ (element) -> String in
                     return "\(element[0])"
             } : []
+            
             var webView = ""
             let chartsBi = displayType == .Pie || displayType == .Bar || displayType == .Column || displayType == .Line
             let chartsTri = displayType == .Heatmap || displayType == .Bubble || displayType == .StackColumn || displayType == .StackBar || displayType == .StackArea
@@ -309,67 +379,19 @@ class ChataServices {
             if columnsF.count == 0 && rows.count == 0{
                 displayType = .Introduction
                 user = false
-                textFinal = "Uh oh.. It looks like you don't have access to this resource. Please double check that all the required authentication fields are provided."
+                textFinal = message
             }
             if displayType == .Webview || displayType == .Table || chartsBi || chartsTri{
-                
-                let existsDatePivot = supportPivot(columns: columsType)
-                let supportTri = columnsFinal.count == 3
-                var datePivotStr = ""
-                var dataPivotStr = ""
-                var tableBasicStr = ""
-                var drills: [String] = []
-                if existsDatePivot {
-                    var datePivot =  getDatePivot(rows: rowsFinalClean, columnsT: columsType)
-                    let columnsTemp = datePivot[0]
-                    datePivot.remove(at: 0)
-                    datePivotStr = tableString(dataTable: datePivot,
-                                            dataColumn: columnsTemp,
-                                            idTable: "idTableDatePivot",
-                                            columns: columnsFinal,
-                                            datePivot: true)
-                }
-                if supportTri {
-                    var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])
-                    drills = drill
-                    let dataPivotColumnsTemp = dataPivot[0]
-                    var arrFinal: [String] = []
-                    dataPivot.forEach { (arr) in
-                        let header = arr[0]
-                        arrFinal.append(header)
-                    }
-                    dataPivot.remove(at: 0)
-                    dataPivotStr = tableString(
-                        dataTable: dataPivot,
-                        dataColumn: dataPivotColumnsTemp,
-                        //dataColumn: arrFinal,
-                        idTable: "idTableDataPivot",
-                        columns: columnsFinal,
-                        datePivot: true)
-                }
-                tableBasicStr = tableString(dataTable: rowsFinal,
-                                        dataColumn: columnsF,
-                                        idTable: "idTableBasic",
-                                        columns: columnsFinal,
-                                        datePivot: false)
-                //let tableType = splitType == "table"
-                var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
-                typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
-                webView = """
-                    \(getHTMLHeader(triType: columnsF.count == 3))
-                    \(datePivotStr)
-                    \(dataPivotStr)
-                    \(tableBasicStr)
-                    \(split ? secondQuery : "")
-                \(getHTMLFooter(rows: rowsFinal,
-                                columns: columnsF,
-                                types: columsType,
-                                drills: drills,
-                                type: typeFinal,
-                                mainColumn: mainColumn,
-                                second: second
-                ))
-                """
+                //let typeInit = typeF.replace(target: "stacked_", withString: "")
+                let webviewS = genereteFinalWebView(
+                                                    type: typeF,
+                                                    second: second,
+                                                    mainColumn: mainColumn,
+                                                    rowsFinal: rowsFinal,
+                                                    rowsFinalClean: rowsFinalClean,
+                                                    columnsFinal: columnsFinal,
+                                                    positionColumn: positionColumn)
+                webView = webviewS
             } else {
                 webView = "text"
             }
@@ -392,24 +414,130 @@ class ChataServices {
                 idQuery: idQuery,
                 columnsInfo: columnsFinal,
                 drillDown: drilldown,
-                position: position
+                position: position,
+                biChart: biChart,
+                rowsClean: rowsFinalClean,
+                referenceID: referenceID,
+                groupable: group
             )
         }
         return dataModel
     }
+    func getColumnPosition(columnsFinal: [ChatTableColumn]) -> Int {
+        var mainPos = -1
+        for (index, columT) in columnsFinal.enumerated() {
+            if columT.groupable && columT.type == .dateString{
+                mainPos = index
+                break
+            }
+        }
+        return mainPos
+        
+    }
+    func genereteFinalWebView(
+                         type: String = "",
+                         second: String = "",
+                         mainColumn: Int = -1,
+                         rowsFinal: [[String]],
+                         rowsFinalClean: [[String]],
+                         columnsFinal: [ChatTableColumn],
+                         positionColumn: Int = 0) -> String {
+        let columsType = columnsFinal.map({ (element) -> ChatTableColumnType in
+            return element.type
+        })
+        let columnsF = columnsFinal.map { (element) -> String in
+            return element.name
+        }
+        let existsDatePivot = supportPivot(columns: columsType)
+        let supportTri = columnsFinal.count == 3
+        var datePivotStr = ""
+        var dataPivotStr = ""
+        var tableBasicStr = ""
+        var drills: [String] = []
+        if existsDatePivot {
+            var datePivot =  getDatePivot(rows: rowsFinalClean, columnsT: columsType)
+            let columnsTemp = datePivot[0]
+            datePivot.remove(at: 0)
+            datePivotStr = tableString(dataTable: datePivot,
+                                    dataColumn: columnsTemp,
+                                    idTable: "idTableDatePivot",
+                                    columns: columnsFinal,
+                                    datePivot: true,
+                                    positionColumn: positionColumn)
+        }
+        if supportTri {
+            var (dataPivot, drill) = getDataPivotColumn(rows: rowsFinal, type: columsType[2])
+            if !dataPivot.isEmpty{
+                drills = drill
+                let dataPivotColumnsTemp = dataPivot[0]
+                var arrFinal: [String] = []
+                dataPivot.forEach { (arr) in
+                    let header = arr[0]
+                    arrFinal.append(header)
+                }
+                dataPivot.remove(at: 0)
+                dataPivotStr = tableString(
+                    dataTable: dataPivot,
+                    dataColumn: dataPivotColumnsTemp,
+                    idTable: "idTableDataPivot",
+                    columns: columnsFinal,
+                    datePivot: true)
+            } else {
+                dataPivotStr = tableString(dataTable: rowsFinal,
+                                        dataColumn: columnsF,
+                                        idTable: "idTableDataPivot",
+                                        columns: columnsFinal,
+                                        datePivot: false,
+                                        reorder:  true,
+                                        cleanRow: rowsFinalClean)
+            }
+            
+        }
+        
+        tableBasicStr = tableString(dataTable: rowsFinal,
+                                dataColumn: columnsF,
+                                idTable: "idTableBasic",
+                                columns: columnsFinal,
+                                datePivot: false,
+                                reorder:  true,
+                                cleanRow: rowsFinalClean
+        )
+        var typeFinal = type == "" || type == "data" ? "#idTableBasic" : type
+        typeFinal = typeFinal == "table" ? "#idTableBasic" : typeFinal
+        /*let dataPie = generateChart(rows: rowsFinal,
+                                    columns: columnsF)*/
+        //getPieChart(dataChart: dataPie)
+        //generateChart(rows: rowsFinal,columns: columnsF)
+        let webView = """
+            \(getHTMLHeader(triType: columnsF.count == 3))
+            \(datePivotStr)
+            \(dataPivotStr)
+            \(tableBasicStr)
+        \(getHTMLFooter(rows: rowsFinal,
+                        columns: columnsF,
+                        types: columsType,
+                        drills: drills,
+                        type: typeFinal,
+                        mainColumn: mainColumn,
+                        second: second,
+                        positionColumn: positionColumn
+        ))
+        """
+        return webView
+    }
     func getSplit(type: String, table: String = "") -> String {
         let wbSplit = "<div>SplitView</div>"
-        //let _ = type == "table" ? type : "container2"
         if type == "table" {
             
         }
         return wbSplit
     }
-    func getColumns(columns: [[String: Any]] ) -> [ChatTableColumn] {
+    func getColumns(columns: [[String: Any]] ) -> ([ChatTableColumn], Bool) {
         var columnsFinal: [ChatTableColumn] = []
+        var group = false
         for (_, column) in columns.enumerated() {
-            let isVisible: Bool = column["is_visible"] as? Bool ?? true
-            // siempre agregar isVisible
+            let isVisible: Bool = !DataConfig.autoQLConfigObj.enableColumnVisibilityManager ? true : column["is_visible"] as? Bool ?? true
+            let groupable: Bool = column["groupable"] as? Bool ?? false
             let name: String = !DataConfig.demo ? (column["display_name"] as? String ?? "") : (column["name"] as? String ?? "")
             let originalName = column["name"] as? String ?? ""
             let type: String = column["type"] as? String ?? ""
@@ -423,37 +551,74 @@ class ChataServices {
                 finalStr.removeFirst()
                 ffDate = finalStr
             }
-            
+            if groupable {
+                group = true
+            }
             let column = ChatTableColumn(name: name,
                                          type: finalType,
                                          originalName: originalName,
                                          formatDate: ffDate,
-                                         isVisible: isVisible)
+                                         isVisible: isVisible,
+                                         groupable: groupable)
             columnsFinal.append(column)
             
         }
-        return columnsFinal
+        return (columnsFinal, group)
     }
-    func getRows(rows: [[Any]], columnsFinal: [ChatTableColumn]) -> ([[String]], [[String]]){
+    func getRows(rows: [[Any]], columnsFinal: [ChatTableColumn]) -> ([[String]], [[String]], Bool){
         var rowsFinal: [[String]] = []
+        var validValue = false
         var rowsFinalClean: [[String]] = []
         for row in rows {
             var finalRow: [String] = []
             var finalRowClean: [String] = []
             row.enumerated().forEach { (index, element) in
                 if columnsFinal[index].type == .dateString {
-                    let strDate = "\(element)"
-                    finalRow.append(strDate.toDate2(format: columnsFinal[index].formatDate))
-                    finalRowClean.append(strDate)
+                    if columnsFinal.count > index {
+                        let strDate = "\(element)"
+                        finalRow.append(strDate.toDate2(format: columnsFinal[index].formatDate))
+                        finalRowClean.append(strDate)
+                    }
                 } else {
                     finalRow.append("\(element)")
                     finalRowClean.append("\(element)")
+                }
+                if !validValue && (columnsFinal[index].type == .dollar || columnsFinal[index].type == .quantity) {
+                    /*let doubleFinal = Double(element as? String ?? "") ?? 0*/
+                    let intFinal = element as? Int ?? 0
+                    let doubleFinal = element as? Double ?? 0.0
+                    if intFinal != 0 || doubleFinal != 0.0 {
+                        validValue = true
+                    }
                 }
             }
             rowsFinalClean.append(finalRowClean)
             rowsFinal.append(finalRow)
         }
-        return (rowsFinal, rowsFinalClean)
+        validValue = rows.count > 1 ? validValue : false
+        return (rowsFinal, rowsFinalClean, validValue)
+    }
+    func getFinalText(rows: [[Any]],
+                      user: Bool,
+                      text: String,
+                      displayType: ChatComponentType,
+                      columnsFinal: [ChatTableColumn]) -> (Bool, String, ChatComponentType) {
+        var finalText = text
+        var newDisplayType = displayType
+        var finalUser = user
+        if rows.count == 1{
+            if rows[0].count == 1{
+                newDisplayType = .Introduction
+                if columnsFinal[0].type == .dollar {
+                    finalText = "\(rows[0][0] )".toMoney()
+                }
+                else {
+                    finalText = "\(rows[0][0] )"
+                }
+                finalUser = false
+            }
+        }
+        return (finalUser, finalText, newDisplayType)
     }
 }
 struct DashboardList {
@@ -483,6 +648,7 @@ struct SubDashboardModel {
     var loading: Int
     var items: [String]
     var columnsInfo: [ChatTableColumn]
+    var rowsClean: [[String]]
     init(
         displayType: String = "",
         webview: String = "",
@@ -491,7 +657,8 @@ struct SubDashboardModel {
         idQuery: String = "",
         loading: Int = 0,
         items: [String] = [],
-        columnsInfo: [ChatTableColumn] = []
+        columnsInfo: [ChatTableColumn] = [],
+        rowsClean: [[String]] = []
     ) {
         self.displayType = displayType
         self.webview = webview
@@ -501,6 +668,7 @@ struct SubDashboardModel {
         self.loading = loading
         self.items = items
         self.columnsInfo = columnsInfo
+        self.rowsClean = rowsClean
     }
 }
 struct DashboardModel {
@@ -520,6 +688,7 @@ struct DashboardModel {
     var posH: Int
     var posW: Int
     var webview: String
+    var cleanRows: [[String]]
     var type: ChatComponentType
     var text: String
     var splitView: Bool
@@ -550,6 +719,7 @@ struct DashboardModel {
         posH: Int = 0,
         posW: Int = 0,
         webview: String = "",
+        cleanRows: [[String]] = [],
         type: ChatComponentType = ChatComponentType.Introduction,
         text: String = "",
         splitView: Bool = false,
@@ -580,6 +750,7 @@ struct DashboardModel {
         self.posH = posH
         self.posW = posW
         self.webview = webview
+        self.cleanRows = cleanRows
         self.type = type
         self.text = text
         self.splitView = splitView
@@ -599,5 +770,10 @@ struct DataPivotRow{
     var posX: Int
     var posY: Int
     var value: Double
+}
+struct dataResponse {
+    var mainColumn: Int
+    var data: [[String]]
+    
 }
 

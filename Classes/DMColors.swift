@@ -9,8 +9,10 @@ import Foundation
 import UIKit
 var dark = DataConfig.themeConfigObj.theme == "dark"
 var chataDrawerAccentColor = (DataConfig.themeConfigObj.accentColor).hexToColor()
-var chataDrawerBackgroundColor = (dark ? "#636363" : "#ffffff").hexToColor()
-var chataDrawerBorderColor = (dark ? "#838383" : "#d3d3d3").hexToColor()
+var chataDrawerBackgroundColorPrimary = (dark ? "#3B3F46" : "#ffffff").hexToColor()
+var chataDrawerBackgroundColorSecondary = (dark ? "#20252A" : "#F1F3F5").hexToColor()
+var chataDrawerBackgroundColorTertiary = (dark ? "#292929" : "#cccccc").hexToColor()
+var chataDrawerBorderColor = (dark ? "#53565c" : "#e6e6e6").hexToColor()
 var chataDrawerHoverColor = (dark ? "#5A5A5A" : "#ECECEC").hexToColor()
 var chataDrawerTextColorPrimary = (dark ? "#FFFFFF" :  "#5D5D5D").hexToColor()
 var chataDrawerTextColorPlaceholder = (dark ? "#333333" : "#000000").hexToColor()
@@ -20,11 +22,6 @@ var backgroundDash = (dark ? "fafafa" : "fafafa").hexToColor()
 var chataDrawerBlue = "#28a8e0".hexToColor()
 var chataDrawerWebViewBackground = dark ? "#636363" : "#ffffff"
 var chataDrawerWebViewText = dark ? "#FFFFFF" : "#5D5D5D"
-/*var chataDashboardBackgroundColor = (dark ? "#fff").hexToColor()
-var chataDashboardBorderColor = (dark ? "#d3d3d3").hexToColor()
-var chataDashboardHoverColor = (dark ? "#ECECEC").hexToColor()
-var chataDashboardTextColorPrimary = (dark ? "#5D5D5D").hexToColor()
-var chataDashboardTextColorPlaceholder = (dark ? "#000000").hexToColor()*/
 
 
 

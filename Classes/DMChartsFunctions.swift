@@ -6,15 +6,29 @@
 //
 
 import Foundation
-func getFooterScript() -> String{
+func getFooterScript(dollar: Bool) -> String{
     return """
-            \(getConstants())
+            \(getConstants(dollar: dollar))
             \(getConfigScript())
             \(getBiTypeCharts())
             \(getTriTypeChart())
     """
 }
-private func getConstants() -> String {
+private func getConstants(dollar: Bool = false) -> String {
+    let format = NumberFormatter()
+    format.numberStyle = .currency
+    format.currencyCode = DataConfig.dataFormattingObj.currencyCode
+    format.locale = Locale.init(identifier: DataConfig.dataFormattingObj.languageCode)
+    let finalSymbol = format.currencySymbol ?? ""
+    let dollarString = dollar ? """
+        function() {
+          if (this.value >= 0) {
+            return '\(finalSymbol)' + this.value
+          } else {
+            return '-\(finalSymbol)' + (-this.value)
+          }
+        };
+    """ : "$"
     return """
           var actual = "";
           var colors = \(DataConfig.themeConfigObj.chartColors);
@@ -30,6 +44,8 @@ private func getConstants() -> String {
                 }
             }
           }
+          var dollarFormat = \(dollarString);
+          
         var xAxisStyle = { color: colorAxis };
         var defaultChart =
           {
@@ -137,9 +153,9 @@ private func getBiTypeCharts() -> String{
                     fontSize:'15.5px',
                     fontFamily: ['-apple-system','HelveticaNeue']
                 },
-                
+                formatter: dollarFormat
               },
-              title: yAxisTitle
+              title: yAxisTitle,
             },
             colorAxis: {
               reversed: false,
@@ -201,7 +217,7 @@ private func getBiTypeCharts() -> String{
                                style: {
                                    color: colorAxis,
                                },
-                                
+                                formatter: dollarFormat
                              },
                         },
                         legend: {
@@ -210,6 +226,7 @@ private func getBiTypeCharts() -> String{
                                        fontWeight: 'bold'
                                    }
                                },
+                        yAxis: {labels: {formatter: dollarFormat}},
                         xAxis: {
                             categories: categoriesX,
                             legend:{
@@ -256,7 +273,14 @@ private func getBiTypeCharts() -> String{
                             type: type,
                             inverted: inverted
                         },
-                        
+                        yAxis: {
+                            title: {
+                                text: yAxis
+                            },
+                            labels: {
+                                formatter: dollarFormat
+                            }
+                        },
                         xAxis: {
                              gridLineWidth: 0,
                              categories: categoriesX,
@@ -272,6 +296,15 @@ private func getBiTypeCharts() -> String{
                                text: xAxis
                              }
                            },
+                        plotOptions: {
+                            series: {
+                                borderWidth: 0,
+                                dataLabels: {
+                                    enabled: false,
+                                    color: colorAxis,
+                                }
+                            }
+                        },
                         series: [{
                                 colorByPoint: false,
                                 name: categoriesX,
@@ -296,6 +329,9 @@ private func getBiTypeCharts() -> String{
                             type: typeFinal
                         },
                         colors: colors,
+                        yAxis: {
+                            labels : {formatter: dollarFormat}
+                        },
                         xAxis: {
                              gridLineWidth: 0,
                              categories: categoriesX,
@@ -354,7 +390,7 @@ func getTriTypeChart() -> String {
                                style: {
                                    color: colorAxis
                                },
-                                
+                                formatter: dollarFormat
                              },
                         },
                         colorAxis: {
@@ -407,7 +443,7 @@ func getTriTypeChart() -> String {
                                style: {
                                    color: colorAxis,
                                },
-                                
+                                formatter: dollarFormat
                              },
                         },
                         legend: {
@@ -465,20 +501,20 @@ func getTriTypeChart() -> String {
                     subTitle: subTitle,
                     yAxis: {
                         title: {
-                            text: xAxis
+                            text: yAxis
                         },
                         labels: {
                            style: {
                                color: colorAxis,
                            },
-                            
+                            formatter: dollarFormat
                          },
                     },
                     legend: {
                         enabled: false
                     },
                     xAxis: {
-                        categories: categoriesY,
+                        categories: categoriesX,
                         labels: {
                             rotation: rotation,
                             step:1,
@@ -488,7 +524,7 @@ func getTriTypeChart() -> String {
                             }
                         },
                         title: {
-                            text: yAxis
+                            text: xAxis
                         }
                     },
                     dataLabels: {
@@ -569,7 +605,7 @@ func getConfigScript() -> String {
         function finalSize(invert){
             var defaultWidth = "100%";
             var defaultHeight = "90%";
-            var dynamicWidthSize = ""+categoriesX.length * 100+"%";
+            var dynamicWidthSize = ""+categoriesX.length * 10+"%";
             var widthSize = categoriesX.length <= 10 ? defaultWidth : dynamicWidthSize;
             var dynamicHeightSize = ""+categoriesY.length * 10+"%";
             var heightSize = categoriesY.length <= 10 ? defaultHeight : dynamicHeightSize;

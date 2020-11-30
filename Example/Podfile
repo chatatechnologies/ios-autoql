@@ -1,7 +1,7 @@
 use_frameworks!
 
 target 'chata_Example' do
-  pod 'chata', :path => '../'
+  pod 'autoql', :path => '../'
 
   target 'chata_Tests' do
     inherit! :search_paths

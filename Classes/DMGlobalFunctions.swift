@@ -21,32 +21,33 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     switch row.type {
     case .Introduction:
         return getSizeText(row.text, width)
-    case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-        return getSizeWebView()
-    case .Webview, .Table:
-        return getSizeWebView()
+    case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea, .Webview, .Table:
+        return getSizeWebView(numRow: row.numRow)
     case .Suggestion:
         return getSizeSuggestion()
     case .Safetynet:
-        return getSizeSafetynet()
+        let finalStr = row.options.count > 0 ? row.options[0] : ""
+        return getSizeSafetynet(originalQuery: finalStr)
     case .QueryBuilder:
-        return 400
-        //return 350
+        let base = 100
+        if row.numQBoptions == 0 {
+            return 170
+        }
+        let finalSum = row.numQBoptions > 10 ? 220 : row.numQBoptions * 50
+        return CGFloat(base + finalSum)
     }
 }
 func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
     let base: CGFloat = 70.0
     switch row.type {
     case .Introduction:
-        //return getSizeText(row.text, width)
         return CGFloat(row.posH) * base
     case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-        //return row.splitView ? 800 : 400
         return CGFloat(row.posH) * base
     case .Suggestion:
         return getSizeSuggestion()
     case .Safetynet:
-        return getSizeSafetynet()
+        return 100
     case .QueryBuilder:
         return 0
     }
@@ -63,33 +64,25 @@ private func getSizeText(_ text: String, _ width: CGFloat) -> CGFloat {
     let finalHeight = estimatedFrame.height + 50 + sum
     return finalHeight
 }
-private func getSizeWebView() -> CGFloat{
-    let size: CGFloat = data.numRow > 12 ? 360 : (CGFloat(data.numRow * 30) + 80)
+private func getSizeWebView(numRow: Int) -> CGFloat{
+    let size: CGFloat = data.numRow > 12 ? 380 : (CGFloat(data.numRow * 30) + 100)
     return size
 }
-private func getSizeTable() -> CGFloat{
-    if data.type == .Table{
-        let size: CGFloat = data.numRow > 12 ? 360 : (CGFloat(data.numRow * 30) + 80)
-        return size
-    }
-    return 360
-}
 private func getSizeSuggestion() -> CGFloat {
-    return CGFloat(130 + (data.options.count * 40))
+    return CGFloat(data.options.count * 55)
 }
-private func getSizeSafetynet() -> CGFloat {
-    let size = Float(data.options[0].components(separatedBy: " ").count)
+func getSizeSafetynet(originalQuery: String) -> CGFloat {
+    let size = Float(originalQuery.components(separatedBy: " ").count)
     let numRow: Float = Float(size / 3.0)
     let numInt: Int = Int(numRow.rounded(.up))
     let numRows = numInt == 0 ? 1 : numInt
-    let finalSize = CGFloat(130 + (45 * numRows))
+    let finalSize = CGFloat(140 + (45 * numRows))
     return finalSize
 }
 func startRecording(textbox: UITextField) throws {
     finalText = ""
     if !audioEngine.isRunning {
         AudioServicesPlayAlertSound(SystemSoundID(1113))
-        //toogleCommand(active: false)
         let audioSession = AVAudioSession.sharedInstance()
         try audioSession.setCategory(AVAudioSession.Category.record)
         try audioSession.setMode(AVAudioSession.Mode.measurement)
@@ -105,13 +98,10 @@ func startRecording(textbox: UITextField) throws {
                 isFinal = result.isFinal
                 speechResult = result
                 textbox.text = result.bestTranscription.formattedString
-                //txQuery.text = result.bestTranscription.formattedString
-                //self.finalToRecorder = true
             }
             if error != nil || isFinal {
                 audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
-                //recognitionRequest = nil
                 recognitionTask = nil
             }
         }
@@ -122,14 +112,6 @@ func startRecording(textbox: UITextField) throws {
         }
         audioEngine.prepare()
         try audioEngine.start()
-        //UIView.animate(withDuration: 0.4, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
-            //btnSend.transform = CGAffineTransform(scaleX: 1.2, y: 1.2) }, completion: nil)
-        /*let img = UIImage(named: assetIcMicStop)
-        let img2 = UIImage(named: assetIcMicRecord)
-        btnSubMenu.setImage(img2, for: .normal)
-        btnSubMenu.flashI()
-        btnSubMenu.isEnabled = false
-        btnSend.setImage(img, for: .normal)*/
     } else {
         stopRecording()
     }
@@ -137,26 +119,13 @@ func startRecording(textbox: UITextField) throws {
 func stopRecording() {
     isTypingMic = false
     audioEngine.stop()
-    //toogleCommand(active: true)
     recognitionRequest?.endAudio()
-    //recognitionTask?.cancel()
-    // Cancel the previous task if it's running
     if let recognitionTask = recognitionTask {
         recognitionTask.cancel()
-        //recognitionTask = nil
     }
-    /*let img2 = UIImage(named: assetChatMenu)
-    let img = UIImage(named: assetIcSend)*/
-    /*btnSubMenu.setImage(img2, for: .normal)
-    btnSubMenu.layer.removeAllAnimations()
-    btnSubMenu.isEnabled = true
-    btnSend.setImage(img, for: .normal)
-    btnSend.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)*/
 }
 func loadRecord(textbox: UITextField) {
     SFSpeechRecognizer.requestAuthorization { authStatus in
-        // The callback may not be called on the main thread. Add an
-        // operation to the main queue to update the record button's state.
         OperationQueue.main.addOperation {
             switch authStatus {
             case .authorized:
@@ -177,11 +146,12 @@ func loadRecord(textbox: UITextField) {
         }
     }
 }
-func reloadColors () {
-    dark = DataConfig.themeConfigObj.theme == "dark"
+func reloadColors (dark: Bool = false) {
     chataDrawerAccentColor = (DataConfig.themeConfigObj.accentColor).hexToColor()
-    chataDrawerBackgroundColor = (dark ? "#636363" : "#ffffff").hexToColor()
-    chataDrawerBorderColor = (dark ? "#d3d3d3" : "#d3d3d3").hexToColor()
+    chataDrawerBackgroundColorPrimary = (dark ? "#3B3F46" : "#ffffff").hexToColor()
+    chataDrawerBackgroundColorSecondary = (dark ? "#20252A" : "#F1F3F5").hexToColor()
+    chataDrawerBackgroundColorTertiary = (dark ? "#292929" : "#cccccc").hexToColor()
+    chataDrawerBorderColor = (dark ? "#53565c" : "#e6e6e6").hexToColor()
     chataDrawerHoverColor = (dark ? "#5A5A5A" : "#ECECEC").hexToColor()
     chataDrawerTextColorPrimary = (dark ? "#FFFFFF" :  "#5D5D5D").hexToColor()
     chataDrawerTextColorPlaceholder = (dark ? "#333333" : "#000000").hexToColor()
@@ -191,17 +161,14 @@ func reloadColors () {
 }
 func supportPivot(columns: [ChatTableColumnType]) -> Bool {
     var support = false
-    //if columns.count >= 2 && columns.count <= 3{
     if columns.count == 3{
         let valid1 = (columns[0] == .date
-            //|| columns[0] == .dateString
             )
             || (columns[1] == .date
-            //||  columns[1] == .dateString
         )
         let valid2 = columns[1] == .dollar || columns[2] == .dollar
         support = valid1 && valid2
-        if support && columns.count == 3 {
+        if support {
             support = columns[2] == .dollar
         }
     }
@@ -227,16 +194,44 @@ func loadingView(mainView: UIView, inView: UIView , _ load: Bool = true){
         let url = URL(fileURLWithPath: path!)
         let imageView2 = UIImageView(image: nil)
         imageView2.loadGif(url: url)
-        //let jeremyGif = UIImage.gifImageWithName("preloader")
-        //let imageView = UIImageView(image: image)
-        imageView2.tag = 5
+        imageView2.tag = 500
         inView.addSubview(imageView2)
         imageView2.edgeTo(inView, safeArea: .centerSize, height: 50, padding: 100)
     } else{
-        inView.subviews.forEach { (view) in
-            if view.tag == 5{
-                view.removeFromSuperview()
-            }
-        }
+        inView.removeView(tag: 500)
     }
+}
+func whiteListTypes(type: String) -> Bool {
+    var valid = false
+    switch type {
+    case "bar",
+    "line",
+    "column",
+    "pie",
+    "heatmap",
+    "bubble",
+    "stacked_column",
+    "stacked_line",
+    "stacked_bar",
+    "table":
+        valid = true
+    default:
+        valid = false
+    }
+    return valid
+}
+func triChartList(type: String) -> Bool {
+    var valid = false
+    switch type {
+    case
+    "heatmap",
+    "bubble",
+    "stacked_column",
+    "stacked_line",
+    "stacked_bar":
+        valid = true
+    default:
+        valid = false
+    }
+    return valid
 }

@@ -82,7 +82,6 @@ func getAllDaysPivot(infoPivot: DataPivotModel, yearsOrder: [String]) -> [[Strin
             let final = String(suma).toMoney()
             datePivot[index][pos+1] = final
         } else {
-            //lastDate = "\(m) \(day)"
             index += 1
             lastDate = "\(monthM) \(dayM)"
             suma = Double(element.mount) ?? 0.0
@@ -122,7 +121,7 @@ func getDataPivot(rows: [[String]], columnsT: [ChatTableColumnType]) -> DataPivo
             if !dateStringActive {
                 let test = Date(timeIntervalSince1970: TimeInterval(date)!)
                 let dateFormatter = DateFormatter()
-                dateFormatter.timeZone = TimeZone(abbreviation: "GMC-5") //Set timezone that you want
+                dateFormatter.timeZone = TimeZone(abbreviation: "GMC-5")
                 dateFormatter.locale = NSLocale.current
                 dateFormatter.dateFormat = "yyyy"
                 let year = dateFormatter.string(from: test)
@@ -215,17 +214,16 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
         let test = DataPivotRow(posX: locX, posY: locY, value: data3)
         totalSum.append(test)
     }
-    
-    // hacer algoritmo para hacer pivots
-    // INvertir CatY
     var final: [[String]] = []
-    for (indexY, cat) in categoriesY.enumerated(){
+    var validPivot = false
+    for (indexY, cat) in categoriesX.enumerated(){
         var finalB = [cat]
-        for (indexX, _) in categoriesX.enumerated() {
+        for (indexX, _) in categoriesY.enumerated() {
             let position = totalSum.firstIndex(where: {
                 $0.posX == indexX && $0.posY == indexY
             })
             if position != nil {
+                validPivot = position != 0
                 let valueFinal = type == .dollar ? "\(totalSum[position!].value)".toMoney() : "\(totalSum[position!].value)"
                 finalB.append(valueFinal)
             } else {
@@ -238,13 +236,13 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
     }
     var header = [""]
     var headerFree: [String] = []
-    for catY in categoriesX {
-        //header.append(catY.toDate())
+    for catY in categoriesY {
         header.append(catY)
         headerFree.append(catY)
     }
     final.insert(header, at: 0)
-    return (final, headerFree)
+    let finalTotal = validPivot ? final : []
+    return (finalTotal, headerFree)
 }
 struct DataPivotModel {
     var datePivotTable: [[String]] = []

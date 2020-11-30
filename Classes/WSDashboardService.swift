@@ -34,7 +34,6 @@ class DashboardService {
                 DashboardService.instance.dashList.append(dashFinal)
             }
             completion(DashboardService.instance.dashList)
-            //completion(matches)
         }
     }
     func getDashQuery(query: String,
@@ -62,16 +61,8 @@ class DashboardService {
             completion(finalComponent)
         } else {
             httpRequest(url, "POST", body) { (response) in
-                print(query)
                 let referenceId = response["reference_id"] as? String ?? ""
                 let typeFinal = type == .Introduction ? "" : type.rawValue
-                /*if referenceId == "1.1.430" || referenceId == "1.1.431"{
-                    
-                    ChataServices.instance.getSuggestionsQueries(query: query) { (items) in
-                        let finalComponent = ChataServices().getDataComponent(response: response, type: typeFinal, items: items, position: position, second: second)
-                        completion(finalComponent)
-                    }
-                } else {*/
                 var finalComponent = ChataServices().getDataComponent(response: response,
                                                                       type: typeFinal,
                                                                       position: position,
@@ -81,7 +72,6 @@ class DashboardService {
                     finalComponent.text = "Invalid Request Parameters"
                 }
                     completion(finalComponent)
-                //}
             }
         }
     }

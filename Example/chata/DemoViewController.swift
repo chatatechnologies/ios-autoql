@@ -9,14 +9,12 @@
 import UIKit
 import chata
 class DemoViewController: UIViewController, DemoParameterCellDelegate {
+    @IBOutlet weak var aiMain: UIActivityIndicatorView!
     let label = UILabel()
-    /*let dataChat = DataMessenger(authentication: authentication(
-        apiKey: "AIzaSyD4ewBvQdgdYfXl3yIzXbVaSyWGOcRFVeU",
-        domain: "https://spira-staging.chata.io",
-        token: "eyJ0eXAiOiAiSldUIiwgImFsZyI6ICJSUzI1NiIsICJraWQiOiAiNzUxZmYzY2YxMjA2ZGUwODJhNzM1MjY5OTI2ZDg0NTgzYjcyOTZmNCJ9.eyJpYXQiOiAxNTkxNjM0OTI4LCAiZXhwIjogMTU5MTY1NjUyOCwgImlzcyI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImF1ZCI6ICJkZW1vMy1zdGFnaW5nLmNoYXRhLmlvIiwgInN1YiI6ICJkZW1vMy1qd3RhY2NvdW50QHN0YWdpbmctMjQ1NTE0LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImVtYWlsIjogImRlbW8zLWp3dGFjY291bnRAc3RhZ2luZy0yNDU1MTQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAicHJvamVjdF9pZCI6ICJzcGlyYS1kZW1vMyIsICJ1c2VyX2lkIjogInNwaXJhLWRlbW8zIiwgImRpc3BsYXlfbmFtZSI6ICJzcGlyYS1kZW1vMyIsICJyZXNvdXJjZV9hY2Nlc3MiOiBbIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5LyoqIiwgIi9hdXRvcWwvYXBpL3YxL3F1ZXJ5Il19.qaFeQW-8jiy9smijQnAX0ThYGi9cWycToqBBV9EzKSBzt2SIEZUhftNEyV-AE1rmIRAdsh4S9CjtzdZVEVF65lmfYklf_lH1yWpMx67LMg625L0P9E6U1atVhAqha3X0_qcA6QUB4Qx1kyl-iTtQI_EjylLDXAbtfbyj-ekQFI6ej-tpL0Fxek2y1cUaGj8Iqfb82GAZdRsRnQ-zqoodm6JZ_J4RvTjEYBNKkRl4t_4WoPPjoxpq4hDzH1_0z-4xktAN0Kk6749BHE4ENFY2zs-FgVdCnd7Ub6FQLPZMHrPR5dwJf9vbsAYofrdG5AePcYCUCNVMkeDk3iVMcy0UMQ=="),
-        projectID: "spira-demo3" )*/
     let dataChat = DataMessenger(authentication: authentication(apiKey: "", domain: "", token: ""), projectID: "")
     var parameters: [String : Any] = [:]
+    let dashboardView = DashboardView()
+    let inputMainView = QueryInputView()
     @IBOutlet weak var tbMain: UITableView!
     @IBOutlet weak var vwMain: UIView!
     @IBOutlet weak var scMain: UISegmentedControl!
@@ -32,7 +30,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             DemoParameter(label: "Authenticate", type: .button, key: "login")
         ])*/
     /*Accounting Demo*/
-    /*let loginSection: DemoSectionsModel =
+    let loginSection: DemoSectionsModel =
     DemoSectionsModel(title: "Authentication", arrParameters: [
         DemoParameter(label: "* Project ID", type: .input, value: "accounting-demo", key: "projectID"),
         DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
@@ -41,9 +39,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
         DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
         DemoParameter(label: "Authenticate", type: .button, key: "login")
-    ])*/
-    
-    let loginSection: DemoSectionsModel =
+    ])
+    /*let loginSection: DemoSectionsModel =
     DemoSectionsModel(title: "Authentication", arrParameters: [
         DemoParameter(label: "* Project ID", type: .input, value: "", key: "projectID"),
         DemoParameter(label: "* User Email", type: .input, key: "userID", inputType: .mail),
@@ -52,8 +49,19 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         DemoParameter(label: "* Username", type: .input, key: "username" ),
         DemoParameter(label: "* Password", type: .input, key: "password", inputType: .password),
         DemoParameter(label: "Authenticate", type: .button, key: "login")
-    ])
+    ])*/
     var allSection: [DemoSectionsModel] = []
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addObservers()
+        detectDevice()
+        dataChat.config.demo = false
+        loadSections()
+        loadColors()
+        loadConfig()
+        loadData()
+        loadOptions()
+    }
     @IBAction func changeSection(_ sender: Any) {
         switch scMain.selectedSegmentIndex {
         case 0:
@@ -68,32 +76,80 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 loadDashboard()
             }
         default:
-            print("error")
-        }
-    }
-    func loadDataSource() {
-        tbMain.isHidden = false
-        for sub in vwMain.subviews {
-            if let viewWithTag = sub.viewWithTag(10) {
-                viewWithTag.removeFromSuperview()
+            if dataChat.config.authenticationObj.token == "" {
+                let alert = UIAlertController(title: "", message: "Please log in", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                scMain.selectedSegmentIndex = 0
+            } else {
+                loadInput()
             }
         }
     }
-    func loadDashboard() {
-        tbMain.isHidden = true
-        let newView = DashboardView()
-        newView.tag = 10
-        vwMain.addSubview(newView)
-        newView.edgeTo(vwMain, safeArea: .none)
-        newView.configLoad(authFinal: dataChat.config.authenticationObj, mainView: self.view)
+    func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        dataChat.config.demo = false
-        loadSections()
-        loadColors()
-        loadConfig()
-        loadData()
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.tbMain.frame.origin.y == 0 {
+                self.tbMain.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    @objc func keyboardWillHide() {
+        self.tbMain.frame.origin.y = 0
+    }
+    func loadDataSource() {
+        let mainTag = 100
+        tbMain.isHidden = false
+        tbMain.tag = mainTag
+        toggleView(tag: mainTag)
+    }
+    func loadDashboard() {
+        let mainTag = 101
+        tbMain.isHidden = true
+        inputMainView.isHidden = true
+        dashboardView.tag = mainTag
+        vwMain.addSubview(dashboardView)
+        toggleView(tag: mainTag)
+        dashboardView.edgeTo(vwMain, safeArea: .none)
+        dashboardView.configLoad(authFinal: dataChat.config.authenticationObj, mainView: self.view)
+    }
+    func loadInput() {
+        let mainTag = 102
+        inputMainView.tag = mainTag
+        vwMain.addSubview(inputMainView)
+        inputMainView.loadView()
+        toggleView(tag: mainTag)
+        inputMainView.edgeTo(vwMain, safeArea: .none)
+    }
+    func toggleView(tag: Int) {
+        vwMain.subviews.forEach { (subView) in
+            if subView.tag == tag {
+                subView.isHidden = false
+            } else {
+                subView.isHidden = true
+            }
+        }
+    }
+    func loadOptions(login: Bool = false) {
+        if !login {
+            scMain.removeSegment(at: 2, animated: false)
+            scMain.removeSegment(at: 1, animated: false)
+        } else {
+            scMain.insertSegment(withTitle: "Dashboard", at: 1, animated: true)
+            scMain.insertSegment(withTitle: "Input/Output", at: 2, animated: true)
+        }
     }
     func loadSections(){
         allSection = [
@@ -107,7 +163,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 DemoParameter(label: "Enable Autocomplete", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableAutocomplete)", key: "enableAutocomplete"),
                 DemoParameter(label: "Enable Query Validator", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
                 DemoParameter(label: "Enable Query Suggestion", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
-                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableDrilldowns"),
+                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableDrilldowns)", key: "enableDrilldowns"),
+                DemoParameter(label: "Enable Column Visibility Editor", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableColumnVisibilityManager)", key: "enableColumnVisibilityManager")
             ]),
             DemoSectionsModel(title: "UI Configuration Options", arrParameters: [
                 DemoParameter(label: "Show Data Messenger Button", type: .toggle, value: "\(dataChat.config.isVisible)", key:"isVisible"),
@@ -116,7 +173,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 DemoParameter(label: "Currency Code", type: .input, value: dataChat.config.dataFormattingObj.currencyCode, key: "currencyCode"),
                 DemoParameter(label: "Language Code", type: .input, value: dataChat.config.dataFormattingObj.languageCode, key: "languageCode"),
                 DemoParameter(label: "Format for Month, Year", type: .input, value: dataChat.config.dataFormattingObj.monthYearFormat, key: "monthYearFormat"),
-                DemoParameter(label: "Format for Day, Month, Year", type: .input, value: dataChat.config.dataFormattingObj.dayMonthYearFormat, key: "year"),
+                DemoParameter(label: "Format for Day, Month, Year", type: .input, value: dataChat.config.dataFormattingObj.dayMonthYearFormat, key: "dayMonthYearFormat"),
                 DemoParameter(label: "Number of Decimals for Currency Values", type: .input, value: "\(dataChat.config.dataFormattingObj.currencyDecimals)", key: "currencyDecimals"),
                 DemoParameter(label: "Number of Decimals for Quantity Values", type: .input, value: "\(dataChat.config.dataFormattingObj.quantityDecimals)", key: "quantityDecimals"),
                 DemoParameter(label: "User Display Name", type: .input, value: dataChat.config.userDisplayName, key: "userDisplayName"),
@@ -129,7 +186,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             ]),
             DemoSectionsModel(title: "Themes Colors", arrParameters: [
                 DemoParameter(label: "AccentColor", type: .color, value: "#28A8E0", key: "lightTheme"),
-                DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#525252", key: "darkTheme")
+                DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#28A8E0", key: "darkTheme")
             ]),
             DemoSectionsModel(title: "More Configuration", arrParameters: [
                 DemoParameter(label: "Maximum Number of Messages", type: .input, value: "\(dataChat.config.maxMessages)", key: "maxMessages"),
@@ -150,6 +207,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     func loadData(){
         dataChat.config.isVisible = true
         dataChat.config.userDisplayName = "Test"
+        aiMain.backgroundColor = UIColor.darkGray.withAlphaComponent(0.7)
+        aiMain.cardView()
     }
     func searchValue(_ key: String) -> String{
         var value = ""
@@ -181,6 +240,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             dataChat.config.autoQLConfigObj.enableQuerySuggestions = value
         case "enableDrilldowns":
             dataChat.config.autoQLConfigObj.enableDrilldowns = value
+        case "enableColumnVisibilityManager":
+            dataChat.config.autoQLConfigObj.enableColumnVisibilityManager = value
         case "enableVoiceRecord":
             dataChat.config.enableVoiceRecord = value
         case "clearOnClose":
@@ -203,14 +264,21 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                         dict[input.key] = input.value
                     }
                 }
+                self.view.isUserInteractionEnabled = false
+                self.aiMain.isHidden = false
+                self.aiMain.startAnimating()
                 dataChat.login(body: dict) { (success) in
                     DispatchQueue.main.async {
                         let message = success ? "Login Successful!" : "Invalid Credentials"
                         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(alert, animated: true)
+                        auth = DataConfig.authenticationObj
+                        self.view.isUserInteractionEnabled = true
+                        self.aiMain.stopAnimating()
                         if success {
                             self.setNewValue(fatherP: "Authentication", sonP: "Authenticate", value: "Logout", changeLabel: true)
+                            self.loadOptions(login: success)
                             self.tbMain.reloadData()
                         }
                     }
@@ -221,6 +289,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
                     self.setNewValue(fatherP: "Authentication", sonP: "Logout", value: "Authenticate", changeLabel: true)
+                    self.loadOptions(login: false)
                     self.tbMain.reloadData()
                 }
             }
@@ -326,7 +395,6 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
@@ -381,8 +449,9 @@ extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    @objc func changeStatus(){
-        print("change")
+    func detectDevice () {
+        let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
+        isIpad = deviceIdiom == .pad
     }
 }
 extension String {

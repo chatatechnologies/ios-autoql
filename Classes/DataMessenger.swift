@@ -9,15 +9,11 @@ import UIKit
 public class DataMessenger: UIButton {
     var buttonCenter = CGPoint()
     var father2 = UIView()
-    //var authentication: authentication
     public var config = DataConfiguration.instance
     var colorTextPrimary: UIColor = .blue
     public convenience init( authentication: authentication, projectID: String) {
-        //super.init(frame: frame)
         self.init(authenticationFinal: authentication, projectIDF: projectID)
         DataConfig = config
-        //DataConfig.setValue(value: "MX", "dataFormatting", "currencyCode")
-        //let isVisible = DataConfig.getDataValue("dataFormatting", "currencyCode")
     }
     convenience init(authenticationFinal: authentication, projectIDF: String) {
         self.init(authenticationF: authenticationFinal, projectIDFinal: projectIDF)
@@ -25,7 +21,6 @@ public class DataMessenger: UIButton {
     init(authenticationF: authentication,  projectIDFinal: String) {
         if authenticationF.token != "" && !DataConfig.demo{
             DataConfig.authenticationObj = authenticationF
-            //self.authentication = authenticationF
             DataConfig.authenticationObj.token = authenticationF.token
             wsUrlDynamic = DataConfig.authenticationObj.domain
             let service = ChataServices()
@@ -54,29 +49,26 @@ public class DataMessenger: UIButton {
         self.layoutIfNeeded()
     }
     public func changeColor() {
-        reloadColors()
-        self.backgroundColor = chataDrawerBackgroundColor
+        reloadColors(dark: DataConfig.themeConfigObj.theme == "dark")
+        //self.backgroundColor = chataDrawerBackgroundColorPrimary
     }
     public func login(body: [String: Any] = [:], completion: @escaping CompletionChatSuccess){
-        
-        /*if let finalAuth = auth as? authentication{
-            
-        }*/
         let service = ChataServices()
         service.login(parameters: body,  completion: { (success) in
-            // si hay problemas utilizar instance
             if success {
-                service.getJWT(parameters: body) { (success) in
+                service.getJWTResponse(parameters: body) { (success) in
                     DispatchQueue.main.async {
-                        let nameImage = "iconProject" + self.getImageProject(url: wsUrlDynamic)
-                        if nameImage == "iconProjectBubble"{
+                        //let nameImage = "iconProject" + self.getImageProject(url: wsUrlDynamic)
+                        /*if nameImage == "iconProjectBubble"{
                             self.configBubble()
                         } else{
-                            self.backgroundColor = .white
+                            self.backgroundColor = chataDrawerBackgroundColor
                             let image = UIImage(named: "\(nameImage).png", in: Bundle(for: type(of: self)), compatibleWith: nil)
                             self.setImage(image, for: .normal)
-                        }
-                        //self.setImage(self.imageView?.changeColor(color: .white).image, for: .normal)
+                        }*/
+                        /*let image = UIImage(named: "iconProjectBubble.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
+                        self.setImage(image, for: .normal)*/
+                        LOGIN = true
                     }
                     completion(success)
                 }
@@ -106,7 +98,6 @@ public class DataMessenger: UIButton {
     }
     private func configBubble(){
         self.backgroundColor = chataDrawerAccentColor
-        //let jeremyGif = UIImage.gifImageWithName("preloader")
         let image = UIImage(named: "iconProjectBubble.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
         self.setImage(image, for: .normal)
         self.setImage(self.imageView?.changeColor(color: .white).image, for: .normal)
@@ -139,28 +130,22 @@ public class DataMessenger: UIButton {
             && loc.y > ((self.frame.height / 2) + 30)
             && loc.y < (self.father2.frame.height - self.frame.height / 2)
         {
-            //self.center = loc
             let posX = loc.x > (self.father2.frame.width / 2) ? safeXLeft : safeXRight
             let Test = CGPoint(x: posX, y: loc.y)
             if sender.state == .began {
-                //buttonCenter = Test // store old button center
             } else if sender.state == .ended || sender.state == .failed || sender.state == .cancelled {
                 UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
                     self.center = Test
                 })
-                //self.center = buttonCenter // restore button center
             } else {
-                let location = sender.location(in: father2) // get pan location
-                self.center = location // set button to where finger is
+                let location = sender.location(in: father2)
+                self.center = location
             }
         }
     }
     public func createChat() {
-        let chat = Chat(frame: father2.frame)
-        chat.show()
-        //let tips = QTMainView(frame: father2.frame)
-        //tips.show()
-        
+        let mainChat = MainChat()
+        mainChat.show()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

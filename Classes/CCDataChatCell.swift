@@ -8,46 +8,65 @@
 import Foundation
 protocol DataChatCellDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
-    func deleteQuery(numQuery: Int)
+    func deleteQuery(idQuery: String)
     func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
 }
-class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
-    private var data = ChatComponentModel()
+class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate {
+    private var mainData = ChatComponentModel()
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
     private var functionJS = ""
+    let btnReport = UIButton()
+    var vwFather: UIView = UIApplication.shared.keyWindow!
+    var problemMessage = ""
+    private var menuReportProblem: [StackSelection] = [
+        StackSelection(title: "The data is incorrect", action: #selector(reportProblem), tag: 0),
+        StackSelection(title: "The data is incomplete", action: #selector(reportProblem), tag: 1),
+        StackSelection(title: "Other", action: #selector(reportProblem), tag: 2)
+    ]
     let boxWeb = BoxWebviewView()
-    let defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
+    var defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
     var buttonDefault: myCustomButton?
     var lastQuery: Bool = false
     weak var delegate: DataChatCellDelegate?
+    weak var delegateQB: QueryBuilderViewDelegate?
     static var identifier: String {
         return String(describing: self)
     }
     func configCell(allData: ChatComponentModel, index: Int, lastQueryFinal: Bool = false) {
         lastQuery = lastQueryFinal
-        data = allData
+        mainData = allData
         //self.
         self.index = index
-        let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
-        menuButtons.append(new)
         self.backgroundColor = .clear
         contentView.backgroundColor = .clear
         genereteData()
-        self.index = index
+    }
+    func loadLeftMenu(report: Bool = false) {
+        let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
+        menuButtons.append(new)
+        if report {
+           let reportProblem = ButtonMenu(imageStr: "icReport", action: #selector(showMenu), idHTML: "icReport")
+           menuButtons.append(reportProblem)
+        }
     }
     func genereteData() {
-        switch data.type {
+        switch mainData.type {
         case .Introduction:
+            loadLeftMenu(report: mainData.text.count < 10)
             getIntroduction()
         case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
-            if !data.isLoading{
+            if !mainData.isLoading{
+                loadLeftMenu(report: true)
                 getWebView()
             }
         case .Suggestion:
+            loadLeftMenu()
             getSuggestion()
         case .Safetynet:
+            loadLeftMenu()
             getSafetynet()
         case .QueryBuilder:
             getQueryBuilder()
@@ -55,41 +74,61 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     }
     private func getIntroduction(){
         let newView = IntroductionView()
-        newView.loadLabel(text: data.text)
+        newView.loadLabel(text: mainData.text)
         self.contentView.addSubview(newView)
-        newView.cardView(border: !data.user)
-        let align: DViewSafeArea = data.user ? .paddingTopRight : .paddingTopLeft
-        newView.backgroundColor = data.user ? chataDrawerAccentColor : chataDrawerBackgroundColor
-        if !data.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && data.webView != "error"{
+        newView.cardView()
+        let align: DViewSafeArea = mainData.user ? .paddingTopRight : .paddingTopLeft
+        newView.backgroundColor = mainData.user ? chataDrawerAccentColor : chataDrawerBackgroundColorPrimary
+        if !mainData.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && mainData.webView != "error"{
             let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
             newView.addGestureRecognizer(tapgesture)
         }
-        newView.lbl.textColor = data.user ? .white : chataDrawerTextColorPrimary
-        data.user || data.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
+        newView.lbl.textColor = mainData.user ? .white : chataDrawerTextColorPrimary
+        if mainData.referenceID != "1.1.430" && mainData.referenceID != "1.1.431" {
+            mainData.user || mainData.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
+        }
         newView.edgeTo(self, safeArea: align)
+        if !mainData.user && mainData.text.count < 7 {
+            newView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        }
         self.sizeToFit()
     }
     private func getQueryBuilder() {
         let viewQB = QueryBuilderView()
         viewQB.delegate = self
+        viewQB.delegateQB = self
         self.contentView.addSubview(viewQB)
         viewQB.cardView()
         viewQB.edgeTo(self, safeArea: .paddingTop)
         
     }
     private func getWebView() {
+        var icImage = "icColumn"
+        var idChart = "cidColumn"
+        if mainData.groupable {
+            if mainData.dataRows.count > 0 {
+                if mainData.dataRows[0].count == 3 {
+                    icImage = "icStackedColumn"
+                    idChart = "cidstacked_column"
+                }
+            }
+        }
+        let imgStr = mainData.groupable ? icImage : "icTable"
+        let idHTML = mainData.groupable ? idChart : "idTableBasic"
+        defaultType = ButtonMenu(imageStr: imgStr, action: #selector(changeChart), idHTML: idHTML)
         buttonDefault = createButton(btn: defaultType)
-        boxWeb.loadWebview(strWebview: data.webView, idQuery: data.idQuery)
+        boxWeb.loadWebview(strWebview: mainData.webView, idQuery: mainData.idQuery)
         boxWeb.cardView()
-        boxWeb.dataMain = data
-        boxWeb.drilldown = data.drillDown
+        boxWeb.backgroundColor = chataDrawerBackgroundColorPrimary
+        boxWeb.dataMain = mainData
+        boxWeb.drilldown = mainData.drillDown
         boxWeb.delegate = self
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showHide))
         boxWeb.addGestureRecognizer(tapgesture)
         self.contentView.addSubview(boxWeb)
         boxWeb.edgeTo(self, safeArea: .paddingTop)
-        let buttons = getButtons(num: data.dataRows.count > 0 ? data.dataRows[0].count : 0,
-                                 columns: data.columns)
+        let buttons = getButtons(num: mainData.dataRows.count > 0 ? mainData.dataRows[0].count : 0,
+                                 columns: mainData.columns)
         loadButtons(area: .modal2, buttons: buttons, view: boxWeb)
         loadButtons(area: .modal2Right, buttons: menuButtons, view: boxWeb)
         self.sizeToFit()
@@ -97,12 +136,14 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     private func loadButtons(area: DViewSafeArea, buttons: [ButtonMenu], view: UIView) {
         let changeViewMain = UIView()
         let changeView = UIStackView()
+        let nTag = area == .modal2Right ? 1 : 0
+        changeViewMain.tag = nTag
         changeViewMain.cardView()
-        changeViewMain.backgroundColor = chataDrawerBackgroundColor
+        changeViewMain.backgroundColor = chataDrawerBackgroundColorPrimary
         self.contentView.addSubview(changeViewMain)
         changeViewMain.edgeTo(self, safeArea: area, height: 40, view, padding: CGFloat(buttons.count * 40) )
-        changeView.cardView()
-        changeView.getHorizontal()
+        //changeView.cardView()
+        changeView.getSide()
         changeViewMain.addSubview(changeView)
         changeView.edgeTo(changeViewMain, safeArea: .modal, height: 40)
         changeViewMain.layer.zPosition = 1
@@ -117,26 +158,17 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let image = UIImage(named: btn.imageStr, in: Bundle(for: type(of: self)), compatibleWith: nil)
         let image2 = image?.resizeT(maxWidthHeight: 30)
         button.setImage(image2, for: .normal)
-        button.setImage(button.imageView?.changeColor().image, for: .normal)
         button.addTarget(self, action: btn.action, for: .touchUpInside)
         return button
     }
     private func getButtons(num: Int, columns: [ChatTableColumnType]) -> [ButtonMenu] {
         var buttonsFinal: [ButtonMenu] = []
-        let datePivot = supportPivot(columns: data.columns)
+        let datePivot = supportPivot(columns: mainData.columns)
         var contrast = false
         switch num {
         case 2:
-            if columns[0] == .string && columns[1] == .string{
-                buttonsFinal = []
-            }
-            else{
-                buttonsFinal = [
-                    ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
-                    ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
-                    ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
-                    ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
-                ]
+            if mainData.biChart {
+                buttonsFinal = getBichart(dataCount: mainData.rowsClean.count)
             }
         case 3:
             if columns[0] == .string && columns[1] == .string && columns[2] == .string{
@@ -144,36 +176,28 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
             } else{
                 contrast = supportContrast(columns: columns)
                 let typeTry = contrast ? "contrast_" : "stacked_"
-                buttonsFinal = [
-                    ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
-                    ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)column"),
-                    //ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cid\(contrast ? typeTry : "")line"),
-                ]
+                
                 if !contrast {
                     buttonsFinal += [
-                    ButtonMenu(imageStr: "icBubble", action: #selector(changeChart), idHTML: "cidbubble"),
+                    ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDataPivot"),
                     ButtonMenu(imageStr: "icHeat", action: #selector(changeChart), idHTML: "cidheatmap"),
-                    ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area"),
-                    ButtonMenu(imageStr: "icTableData", action: #selector(changeChart), idHTML: "idTableDataPivot") ]
+                    ButtonMenu(imageStr: "icBubble", action: #selector(changeChart), idHTML: "cidbubble")
+                    ]
+                    var firstButton = ButtonMenu(imageStr: "icStackedColumn", action: #selector(changeChart), idHTML: "cid\(typeTry)Column")
+                    if mainData.groupable {
+                        firstButton = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
+
+                    }
+                    buttonsFinal += [
+                        firstButton,
+                        ButtonMenu(imageStr: "icStackedBar", action: #selector(changeChart), idHTML: "cid\(typeTry)bar"),
+                        ButtonMenu(imageStr: "icArea", action: #selector(changeChart), idHTML: "cidstacked_area")
+                    ]
                 }
             }
         default:
-            var specialActive = false
-            columns.forEach { (type) in
-                if type == .dollar //|| type == .quantity
-                {
-                    specialActive = true
-                }
-            }
-            if specialActive{
-                buttonsFinal += [
-                                 ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn"),
-                                 ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
-                                 ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
-                                 ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
-                ]
-            } else {
-                buttonsFinal = []
+            if mainData.biChart{
+                buttonsFinal = getBichart(dataCount: mainData.rowsClean.count)
             }
             //buttonsFinal = []
         }
@@ -183,20 +207,36 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         }
         return buttonsFinal
     }
-    @objc func showHide() {
-        print("Func")
+    func getBichart(dataCount: Int = 0) -> [ButtonMenu] {
+        var firstButton = ButtonMenu(imageStr: "icColumn", action: #selector(changeChart), idHTML: "cidcolumn")
+        if mainData.groupable {
+            firstButton = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
+
+        }
+        var final = [
+            firstButton,
+            ButtonMenu(imageStr: "icBar", action: #selector(changeChart), idHTML: "cidbar"),
+            ButtonMenu(imageStr: "icLine", action: #selector(changeChart), idHTML: "cidline"),
+            
+        ]
+        if dataCount < 6{
+            let pie = ButtonMenu(imageStr: "icPie", action: #selector(changeChart), idHTML: "cidpie")
+            final.append(pie)
+        }
+        return final
     }
+    @objc func showHide() {}
     @objc func showDrillDown() {
-        delegate?.sendDrillDown(idQuery: data.idQuery, obj: "", name: "")
+        delegate?.sendDrillDown(idQuery: mainData.idQuery, obj: "", name: "")
     }
     private func getSuggestion() {
         let newView = SuggestionView()
         newView.delegate = self
-        newView.loadConfig(options: data.options, query: data.text)
-        //newView.loadWebview(strWebview: data.webView)
+        newView.loadConfig(options: mainData.options, query: mainData.text)
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
+        loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         self.sizeToFit()
     }
     private func getSafetynet() {
@@ -204,7 +244,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
-        newView.loadConfig(data, lastQueryFinal: lastQuery)
+        newView.loadConfig(mainData, lastQueryFinal: lastQuery)
         newView.delegate = self
         loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
         self.sizeToFit()
@@ -213,12 +253,52 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         delegate?.sendText(text, safe)
     }
     @IBAction func deleteQuery(_ sender: AnyObject){
-        delegate?.deleteQuery(numQuery: index)
+        delegate?.deleteQuery(idQuery: mainData.idQuery)
+    }
+    @IBAction func closeModal(_ sender: AnyObject) {
+        vwFather.removeView(tag: 200)
+        
+    }
+    @IBAction func showMenu(_ sender: AnyObject){
+        genereMenuReport()
+    }
+    @IBAction func hideMenu(_ sender: AnyObject){
+        superview?.removeView(tag: 2)
+    }
+    @IBAction func reportProblem(_ sender: UIButton){
+        
+        switch sender.tag {
+        case 0:
+            showAlertResult(msg: "The data is incorrect")
+        case 1:
+            showAlertResult(msg: "The data is incomplete")
+        case 2:
+            generatePopUp()
+        default:
+            print("error")
+        }
+        superview?.removeView(tag: 2)
+    }
+    func showAlertResult(msg: String) {
+        let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
+        newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        var finalID = mainData.idQuery
+        if finalID.contains("drilldown"){
+            let newFinalID = finalID.components(separatedBy: "drilldown")
+            finalID = newFinalID[0]
+        }
+        ChataServices.instance.reportProblem(queryID: finalID, problemType: msg) { (success) in
+            DispatchQueue.main.async {
+                newAlert.message = success ? "Thank you for your feedback" : "Error in report"
+                UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
+            }
+        }
     }
     @IBAction func changeChart(_ sender: myCustomButton){
         let btnTemp: myCustomButton = myCustomButton()
         var newID = sender.idButton
         var oldID = buttonDefault?.idButton ?? ""
+        var newTypeStr = newID.replace(target: "cid", withString: "")
         btnTemp.setImage(sender.imageView?.image, for: .normal)
         btnTemp.idButton = newID
         sender.setImage(buttonDefault?.imageView?.image, for: .normal)
@@ -228,23 +308,120 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
         let type = newID.contains("cid") ? newID.replace(target: "cid", withString: "") : newID
         newID = newID.contains("cid") ? "container" : newID
         oldID = oldID.contains("cid") ? "container" : oldID
-        let numRows = newID.contains("Table") ? self.data.dataRows.count : 12
+        let numRows = newID.contains("Table") ? self.mainData.dataRows.count : 12
         functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
-        print(functionJS)
-        //if oldID != newID{
         self.delegate?.updateSize(numRows: numRows,
                                   index: self.index,
                                   toTable: oldID != newID,
                                   isTable: newID.contains("Table"))
-        data.isLoading = true
-        //}
-        /*delayWithSeconds(0.2) {
-            self.boxWeb.wbMain.evaluateJavaScript("hideTables('#\(oldID)','#\(newID)', '\(type)');", completionHandler: {
-               (_,_) in
-               
-           })
-        }*/
-        
+        newTypeStr = newID.contains("Table") ? "table" : newTypeStr
+        mainData.type = ChatComponentType.withLabel(newTypeStr)
+        boxWeb.updateType(newType: mainData.type)
+        mainData.isLoading = true
+    }
+    func generatePopUp () {
+        let vwBackgroundMenu = UIView()
+        vwBackgroundMenu.tag = 200
+        vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        vwFather.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
+        let newView = UIView()
+        newView.backgroundColor = .white
+        newView.cardView()
+        vwBackgroundMenu.addSubview(newView)
+        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
+        let lblTitle = UILabel()
+        lblTitle.textColor = chataDrawerTextColorPrimary
+        lblTitle.text = "Report Problem"
+        newView.addSubview(lblTitle)
+        lblTitle.edgeTo(newView, safeArea: .topView, height: 50)
+        lblTitle.font = generalFont
+        lblTitle.textAlignment = .center
+        let lblInfo = UILabel()
+        lblInfo.text = "Please tell us more about the problem you are experiencing:"
+        newView.addSubview(lblInfo)
+        lblInfo.edgeTo(newView, safeArea: .topHeightPadding, height: 50, lblTitle, padding: 16)
+        lblInfo.font = generalFont
+        lblInfo.numberOfLines = 0
+        lblInfo.textAlignment = .center
+        lblInfo.textColor = chataDrawerTextColorPrimary
+        let tfReport = UITextField()
+        tfReport.font = generalFont
+        tfReport.textColor = chataDrawerTextColorPrimary
+        newView.addSubview(tfReport)
+        tfReport.edgeTo(newView, safeArea: .topHeightPadding, height: 100, lblInfo, padding: 16)
+        tfReport.cardView()
+        tfReport.setLeftPaddingPoints(10)
+        tfReport.configStyle()
+        tfReport.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
+        let stackView = UIStackView()
+        stackView.getSide()
+        newView.addSubview(stackView)
+        stackView.edgeTo(newView, safeArea:.bottomPaddingtoTop, tfReport, padding: 16)
+        let btnCancel = UIButton()
+        btnCancel.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        btnCancel.cardView()
+        btnCancel.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
+        btnCancel.setTitle("Cancel", for: .normal)
+        stackView.addArrangedSubview(btnCancel)
+        btnCancel.edgeTo(stackView, safeArea: .fullStackV, height: 100)
+        btnReport.cardView()
+        btnReport.backgroundColor = chataDrawerBorderColor
+        btnReport.setTitle("Report", for: .normal)
+        btnReport.addTarget(self, action: #selector(reportProblemName), for: .touchUpInside)
+        stackView.addArrangedSubview(btnReport)
+        btnReport.edgeTo(stackView, safeArea: .fullStackV, height: 100)
+    }
+    @objc func actionTyping(_ sender: UITextField) {
+        let valid = (sender.text ?? "") != ""
+        UIView.animate(withDuration: 0.3) {
+            self.btnReport.backgroundColor = valid ? chataDrawerAccentColor : chataDrawerBorderColor
+        }
+        btnReport.isEnabled = valid
+        problemMessage = sender.text ?? ""
+    }
+    @objc func reportProblemName(_ sender: UIButton) {
+        vwFather.removeView(tag: 200)
+        showAlertResult(msg: problemMessage)
+    }
+    func genereMenuReport() {
+        let vwBackgroundMenu = UIView()
+        superview?.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
+        vwBackgroundMenu.tag = 2
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideMenu))
+        vwBackgroundMenu.addGestureRecognizer(gesture)
+        let vwMenu = UIView()
+        vwMenu.backgroundColor = chataDrawerBackgroundColorPrimary
+        vwBackgroundMenu.addSubview(vwMenu)
+        vwMenu.cardView()
+        contentView.subviews.forEach { (subView) in
+            if subView.tag == 1 {
+                var finalSafe: DViewSafeArea = .dropDownTopHeight
+                if self.mainData.type == .Introduction {
+                    finalSafe = .dropDownBottomHeight
+                } else if lastQuery {
+                    let rowValidation = self.mainData.dataRows.count < 3
+                    finalSafe = rowValidation ? .dropDownBottomHeightLeft : finalSafe
+                }
+                vwMenu.edgeTo(self, safeArea: finalSafe, height: 120, subView)
+            }
+        }
+        let newStack = UIStackView()
+        newStack.getSide(axis: .vertical)
+        vwMenu.addSubview(newStack)
+        newStack.edgeTo(vwMenu, safeArea: .none)
+        menuReportProblem.forEach { (newItem) in
+            let newView = UIButton()
+            newView.setTitle(newItem.title, for: .normal)
+            newView.titleLabel?.font = generalFont
+            newView.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
+            newView.addTarget(self, action: newItem.action, for: .touchUpInside)
+            newView.tag = newItem.tag
+            newStack.addArrangedSubview(newView)
+            newView.edgeTo(newStack, safeArea: .fullStackH)
+            newView.clipsToBounds = true
+        }
     }
     public func updateChart(){
         self.boxWeb.wbMain.evaluateJavaScript(functionJS, completionHandler: {
@@ -254,10 +431,33 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate {
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         delegate?.sendDrillDown(idQuery: idQuery, obj: obj, name: name)
     }
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {
+        delegate?.sendDrillDownManual(newData: newData, columns: columns, idQuery: idQuery)
+    }
+    func updateSize(numQBOptions: Int, index: Int) {
+        delegateQB?.updateSize(numQBOptions: numQBOptions, index: self.index)
+    }
+    func callTips() {
+        delegateQB?.callTips()
+    }
 }
 func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
     DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
         completion()
+    }
+}
+struct StackSelection {
+    var title: String
+    var action: Selector
+    var tag: Int
+    init(
+        title: String = "",
+        action: Selector = #selector(DataChatCell.reportProblem),
+        tag: Int = 0
+    ) {
+        self.title = title
+        self.action = action
+        self.tag = tag
     }
 }
 struct ButtonMenu {
@@ -267,4 +467,7 @@ struct ButtonMenu {
 }
 class myCustomButton: UIButton{
     var idButton: String = ""
+}
+class newClass: UIButton {
+    var newString = ""
 }

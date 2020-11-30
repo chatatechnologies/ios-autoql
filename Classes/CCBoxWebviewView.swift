@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 protocol BoxWebviewViewDelegate: class{
     func sendDrillDown(idQuery: String, obj: String, name: String)
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
 }
 class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     var wbMain: WKWebView = WKWebView()
@@ -19,6 +20,9 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     weak var delegate: BoxWebviewViewDelegate?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func updateType(newType: ChatComponentType) {
+        dataMain.type = newType
     }
     func loadWebview(strWebview: String, idQuery: String) {
         self.idQuery = idQuery
@@ -44,8 +48,6 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         let path = bundle.path(forResource: "gifBalls", ofType: "gif")
         let url = URL(fileURLWithPath: path!)
         imageView.loadGif(url: url)
-        //let jeremyGif = UIImage.gifImageWithName("preloader")
-        //let imageView = UIImageView(image: image)
         imageView.tag = 1
         imageView = imageView.changeColor()
         self.addSubview(imageView)
@@ -61,21 +63,46 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
                 viewWithTag.removeFromSuperview()
             }
         }
-        //progress(off: true, viewT: wbChart!)
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if dataMain.columns.count <= 3 {
-            if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE && !drilldown {
-                DRILLDOWNACTIVE = true
-                let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
-                let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
-                let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
-                delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)
+        let table = dataMain.type == .Webview || dataMain.type == .Table
+        if dataMain.columnsInfo.count > 3 && table {
+        } else {
+            if message.name == "drillDown" && DataConfig.autoQLConfigObj.enableDrilldowns && !DRILLDOWNACTIVE
+            {
+                if dataMain.columnsInfo.count > 3 {
+                    newDrilldown(data: message.body as? String ?? "")
+                } else{
+                    DRILLDOWNACTIVE = true
+                    let name = dataMain.columnsInfo.count > 0 ? dataMain.columnsInfo[0].originalName : ""
+                    let name2 = dataMain.columnsInfo.count > 1 ? dataMain.columnsInfo[1].originalName : ""
+                    let nameFinal = (message.body as? String ?? "")?.contains("_") ?? false ? "\(name)º\(name2)" : name
+                    delegate?.sendDrillDown(idQuery: idQuery, obj: message.body as? String ?? "", name: nameFinal)
+                }
             }
         }
+    }
+    func newDrilldown(data: String) {
+        var position = -1
+        dataMain.columns.enumerated().forEach { (index, type) in
+            if type == .date{
+                if position == -1{
+                    position = index
+                }
+            }
+        }
+        var newData: [[String]] = []
+        dataMain.rowsClean.forEach { (row) in
+            row.forEach { (column) in
+                if column == data {
+                    newData.append(row)
+                }
+            }
+        }
+        delegate?.sendDrillDownManual(newData: newData, columns: dataMain.columnsInfo, idQuery: dataMain.idQuery)
     }
 }
