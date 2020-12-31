@@ -13,7 +13,7 @@ protocol DataChatCellDelegate: class {
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
 }
-class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate {
+class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate, IntroductionInteractionViewDelegate {
     private var mainData = ChatComponentModel()
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
@@ -57,6 +57,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         case .Introduction:
             loadLeftMenu(report: mainData.text.count < 10)
             getIntroduction()
+        case .IntroductionInteractive:
+            loadLeftMenu()
+            getIntroductionInteractive()
         case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
             if !mainData.isLoading{
                 loadLeftMenu(report: true)
@@ -74,9 +77,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     private func getIntroduction(){
         let newView = IntroductionView()
-        newView.loadLabel(text: mainData.text)
         self.contentView.addSubview(newView)
         newView.cardView()
+        newView.loadLabel(text: mainData.text, user: mainData.user )
         let align: DViewSafeArea = mainData.user ? .paddingTopRight : .paddingTopLeft
         newView.backgroundColor = mainData.user ? chataDrawerAccentColor : chataDrawerBackgroundColorPrimary
         if !mainData.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && mainData.webView != "error"{
@@ -91,6 +94,29 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         if !mainData.user && mainData.text.count < 7 {
             newView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         }
+        self.sizeToFit()
+    }
+    private func getIntroductionInteractive(){
+        let newView = IntroductionInteractionView()
+        newView.delegate = self
+        self.contentView.addSubview(newView)
+        newView.edgeTo(self, safeArea: .paddingTop)
+        newView.cardView()
+        newView.loadLabel(text: mainData.text, user: mainData.user )
+        /*let align: DViewSafeArea = mainData.user ? .paddingTopRight : .paddingTopLeft
+        newView.backgroundColor = mainData.user ? chataDrawerAccentColor : chataDrawerBackgroundColorPrimary
+        if !mainData.user && index != 0 && DataConfig.autoQLConfigObj.enableDrilldowns && mainData.webView != "error"{
+            let tapgesture = UITapGestureRecognizer(target: self, action: #selector(showDrillDown))
+            newView.addGestureRecognizer(tapgesture)
+        }
+        newView.lbl.textColor = mainData.user ? .white : .red
+        if mainData.referenceID != "1.1.430" && mainData.referenceID != "1.1.431" {
+            mainData.user || mainData.webView == "" ? nil : loadButtons(area: .modal2Right, buttons: menuButtons, view: newView)
+        }
+        
+        if !mainData.user && mainData.text.count < 7 {
+            newView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        }*/
         self.sizeToFit()
     }
     private func getQueryBuilder() {
@@ -113,8 +139,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
                 }
             }
         }
-        let imgStr = mainData.groupable ? icImage : "icTable"
-        let idHTML = mainData.groupable ? idChart : "idTableBasic"
+        print(mainData.biChart)
+        let imgStr = mainData.groupable && mainData.biChart  ? icImage : "icTable"
+        let idHTML = mainData.groupable && mainData.biChart ? idChart : "idTableBasic"
         defaultType = ButtonMenu(imageStr: imgStr, action: #selector(changeChart), idHTML: idHTML)
         buttonDefault = createButton(btn: defaultType)
         boxWeb.loadWebview(strWebview: mainData.webView, idQuery: mainData.idQuery)
@@ -232,6 +259,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     private func getSuggestion() {
         let newView = SuggestionView()
         newView.delegate = self
+        newView.backgroundColor = chataDrawerBackgroundColorPrimary
         newView.loadConfig(options: mainData.options, query: mainData.text)
         newView.cardView()
         self.contentView.addSubview(newView)
@@ -241,6 +269,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     private func getSafetynet() {
         let newView = SafetynetView()
+        newView.backgroundColor = chataDrawerBackgroundColorPrimary
         newView.cardView()
         self.contentView.addSubview(newView)
         newView.edgeTo(self, safeArea: .paddingTop)
@@ -439,6 +468,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     func callTips() {
         delegateQB?.callTips()
+    }
+    func openReport(){
+        generatePopUp()
     }
 }
 func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {

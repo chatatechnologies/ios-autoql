@@ -236,6 +236,7 @@ func getChartFooter(rows: [[String]],
     var drillY: [String] = []
     var stacked: [[Double]] = []
     var positionDD = 0
+    var positionY = 0
     var catXFormat = rows.map {
         (row) -> String in
         let name = (validateArray(row, 0) as? String ?? "").toDate()
@@ -265,6 +266,7 @@ func getChartFooter(rows: [[String]],
                             let mValidation = Double(row[index]) ?? 0.0
                             if mValidation != 0.0 {
                                 positionsCharts = index
+                                positionY = index
                                 break
                             }
                         }
@@ -362,6 +364,7 @@ func getChartFooter(rows: [[String]],
     let positionSpecial = mainColum != -1 ? mainColum : 0
     let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : dataSpecialActive ? (validateArray(columns, positionDD) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
     let pos = columns.count - 1
+    print(positionY)
     let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
         (validateArray(columns, pos) as? String ?? "").replace(target: "'", withString: "")
     return """

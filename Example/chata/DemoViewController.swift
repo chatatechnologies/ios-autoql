@@ -19,7 +19,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     @IBOutlet weak var vwMain: UIView!
     @IBOutlet weak var scMain: UISegmentedControl!
     
-    let loginSection: DemoSectionsModel =
+    var loginSection: DemoSectionsModel =
     DemoSectionsModel(title: "Authentication", arrParameters: [
         DemoParameter(label: "* Project ID", type: .input, value: "", key: "projectID"),
         DemoParameter(label: "* User Email", type: .input, key: "userID", inputType: .mail),
@@ -32,6 +32,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     var allSection: [DemoSectionsModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCredentials(demoEmpty: false, spira: true)
         addObservers()
         detectDevice()
         dataChat.config.demo = false
@@ -40,6 +41,9 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         loadConfig()
         loadData()
         loadOptions()
+    }
+    func getCredentials(demoEmpty: Bool = true, spira: Bool = false) {
+        
     }
     @IBAction func changeSection(_ sender: Any) {
         switch scMain.selectedSegmentIndex {

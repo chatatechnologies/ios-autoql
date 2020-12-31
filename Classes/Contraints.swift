@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 public enum DViewSafeArea: String, CaseIterable {
-    case topView, elementToRight, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, widthRightY, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , safeChat, safeChatLeft, safeChatTop, safeChatBottom, safeButtons, safeButtonsLeft, safeButtonsTop, safeButtonsBottom, safeFH, safeFHLeft, safeFHTop, safeFHBottom, leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, topHeightPadding, fullStatePaddingTop, dropDownBottomHeight, dropDownBottomHeightLeft,
+    case topView, elementToRight, leading, trailing, bottomView, vertical, horizontal, all, none, noneLeft, widthLeft , widthRight, widthRightY, none2, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , safeChat, safeChatLeft, safeChatTop, safeChatBottom, safeButtons, safeButtonsLeft, safeButtonsTop, safeButtonsBottom, safeFH, safeFHLeft, safeFHTop, safeFHBottom, leftCenterY, fullState, fullState2, bottomSize, center, leftAdjust, padding, paddingH, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modal2, modal2Right, dropDownUp, secondTop, bottomPaddingtoTop, bottomPaddingtoTopHalf, fullPadding, topHeight, topHeightPadding, fullStatePaddingTop, dropDownBottomHeight, dropDownBottomHeightLeft,
     topY, nonePadding, fullStackH, topPadding, fullStatePadding, bottomPadding, fullStackV, fullStackHH, dropDown, dropDownTop, dropDownTopView, dropDownTopHeight,dropDownTopHeightLeft, centerSize, bottomRight, centerSizeUp
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
@@ -225,6 +225,12 @@ extension UIView {
             if width > 0 {
                 widthAnchor.constraint(equalToConstant: width).isActive = true
             }
+        case .paddingH:
+            topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
         case .paddingTop:
             topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
@@ -402,6 +408,11 @@ extension UIView {
             centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         case .dropDown:
             topAnchor.constraint(equalTo: view.bottomAnchor, constant: padding).isActive = true
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -padding).isActive = true
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding).isActive = true
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        case .dropDownUp:
+            bottomAnchor.constraint(equalTo: view.topAnchor, constant: padding).isActive = true
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -padding).isActive = true
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: padding).isActive = true
             heightAnchor.constraint(equalToConstant: height).isActive = true

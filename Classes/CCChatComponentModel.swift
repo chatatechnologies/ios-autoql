@@ -92,6 +92,7 @@ struct ChataFullSuggestionItem {
 }
 enum ChatComponentType: String, CaseIterable {
     case Introduction = "text"
+    case IntroductionInteractive = "interactive"
     case QueryBuilder = "qb"
     case Webview = "data"
     case Bar = "bar"

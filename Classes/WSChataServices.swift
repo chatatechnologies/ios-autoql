@@ -154,7 +154,7 @@ class ChataServices {
             var finalComponent = self.getDataComponent(response: response,
                                                        type: type, query: query,
                                                        referenceID: referenceId)
-            if referenceId == "1.1.211" {
+            if referenceId == "1.1.211" && finalComponent.type != .IntroductionInteractive {
                 let msg = response["message"] as? String ?? ""
                 finalComponent.type = .Introduction
                 finalComponent.user = false
@@ -316,10 +316,6 @@ class ChataServices {
                           second: String = "",
                           referenceID: String = "") -> ChatComponentModel {
         var data = response["data"] as? [String: Any] ?? [:]
-        let referenceID = response["reference_id"] as? String ?? ""
-        if referenceID == "1.1.211" {
-            data = [:]
-        }
         let idQueryDefault = data["query_id"] as? String ?? UUID().uuidString
         var dataModel = ChatComponentModel(webView: "error",
                                            options: items,
@@ -331,6 +327,15 @@ class ChataServices {
         }
         let message = response["message"] as? String ?? "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
         dataModel.text = message
+        if message.contains("<report>"){
+            dataModel.type = .IntroductionInteractive
+            let idQuery = data["query_id"] as? String ?? UUID().uuidString
+            dataModel.idQuery = idQuery
+        }
+        let referenceID = response["reference_id"] as? String ?? ""
+        if referenceID == "1.1.211" {
+            data = [:]
+        }
         if data.count > 0 && dataModel.text != "No Data Found" {
             let columns = data["columns"] as? [[String: Any]] ?? []
             let rows = data["rows"] as? [[Any]] ?? []
@@ -338,8 +343,8 @@ class ChataServices {
             var typeD = type
             if group {
                 if type == "" {
-                    typeD = "column"
-                    if rows.count > 0 {
+                    if rows.count > 1 {
+                        typeD = "column"
                         if rows[0].count == 3 {
                             typeD = "stacked_column"
                         }

@@ -21,6 +21,8 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     switch row.type {
     case .Introduction:
         return getSizeText(row.text, width)
+    case .IntroductionInteractive:
+        return 200
     case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea, .Webview, .Table:
         return getSizeWebView(numRow: row.numRow)
     case .Suggestion:
@@ -29,7 +31,7 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
         let finalStr = row.options.count > 0 ? row.options[0] : ""
         return getSizeSafetynet(originalQuery: finalStr)
     case .QueryBuilder:
-        let base = 100
+        let base = 120
         if row.numQBoptions == 0 {
             return 170
         }
@@ -40,7 +42,7 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
 func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
     let base: CGFloat = 70.0
     switch row.type {
-    case .Introduction:
+    case .Introduction, .IntroductionInteractive:
         return CGFloat(row.posH) * base
     case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
         return CGFloat(row.posH) * base
@@ -69,6 +71,9 @@ private func getSizeWebView(numRow: Int) -> CGFloat{
     return size
 }
 private func getSizeSuggestion() -> CGFloat {
+    return CGFloat(data.options.count * 55)
+}
+private func getSizeIntrodectionInteractive() -> CGFloat {
     return CGFloat(data.options.count * 55)
 }
 func getSizeSafetynet(originalQuery: String) -> CGFloat {

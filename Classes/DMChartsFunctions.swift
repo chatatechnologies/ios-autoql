@@ -360,7 +360,7 @@ func getTriTypeChart() -> String {
                     chart = Highcharts.chart('container', {
                         chart: {
                             type: type,
-                            inverted: false
+                            inverted: true
                         },
                         title: subTitle,
                         subTitle: subTitle,
@@ -378,20 +378,6 @@ func getTriTypeChart() -> String {
                             title: {
                                 text: xAxis
                             }
-                        },
-                        yAxis: {
-                            min: 0,
-                            gridLineWidth: 0,
-                            categories: categoriesY,
-                            title: {
-                                text: yAxis
-                            },
-                            labels: {
-                               style: {
-                                   color: colorAxis
-                               },
-                                formatter: dollarFormat
-                             },
                         },
                         colorAxis: {
                             reversed: false,
@@ -435,17 +421,6 @@ func getTriTypeChart() -> String {
                         },
                         title: subTitle,
                         subTitle: subTitle,
-                        yAxis: {
-                            title: {
-                                text: yAxis
-                            },
-                            labels: {
-                               style: {
-                                   color: colorAxis,
-                               },
-                                formatter: dollarFormat
-                             },
-                        },
                         legend: {
                             enabled: false
                         },

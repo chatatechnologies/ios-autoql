@@ -117,7 +117,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             print("fullSuggestion")
         case .Suggestion:
             loadSuggestion(view: view, list: list, firstView: firstView)
-        case .Introduction:
+        case .Introduction, .IntroductionInteractive:
             loadIntro(view: view, text: text)
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .Table, .Webview, .StackArea:
             loadWebView(view: view, webview: webview, loading: loading)

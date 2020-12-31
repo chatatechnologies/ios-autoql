@@ -163,29 +163,31 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     private func addTrasparentViewLabel(labelText: String, pos: Int){
         vwTrasparent.tag = -1
-        tbChange.cardView()
+        tbChange.cardViewShadow()
         dataSource = []
         let originalTerm = "\(originalTexts[pos]) (Original Term)"
+        let removeTerm = "Remove term"
         let list = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
             let text = data.valueLabel
             return "\(data.text) (\(text))"
             
-        }) + [originalTerm]
+        }) + [originalTerm, removeTerm]
         listValue = data.fullSuggestions[pos].suggestionList.map({ (data) -> String in
             return data.text
         }) + [originalTexts[pos]]
         dataSource = list
         tbChange.reloadData()
-        vwTrasparent.backgroundColor = chataDrawerBorderColor.withAlphaComponent(0.5)
+        vwTrasparent.backgroundColor = chataDrawerBackgroundColorSecondary
+        vwTrasparent.cardViewShadow()
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
         vwTrasparent.addGestureRecognizer(tapgesture)
         tbChange.tag = -2
         vwFather.addSubview(tbChange)
         let height: CGFloat = CGFloat(41 * list.count)
-        tbChange.backgroundColor = .none
-        tbChange.bounces = false
+        tbChange.backgroundColor = chataDrawerBackgroundColorSecondary
         tbChange.clipsToBounds = true
-        tbChange.edgeTo(mainLabel, safeArea: .dropDown, height: height, padding: -24)
+        tbChange.bounces = false
+        tbChange.edgeTo(mainLabel, safeArea: .dropDownUp, height: height, padding: -8)
     }
     func loadBtn() {
         let image = UIImage(named: "icPlay.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
@@ -212,18 +214,28 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.backgroundColor = chataDrawerBackgroundColorPrimary.withAlphaComponent(0.9)
+        cell.backgroundColor = chataDrawerBackgroundColorPrimary
         cell.textLabel?.text = dataSource[indexPath.row]
         cell.textLabel?.font = generalFont
-        cell.textLabel?.textColor = chataDrawerTextColorPrimary
         cell.textLabel?.textAlignment = .center
+        if (dataSource.count - 1) == indexPath.row {
+            cell.textLabel?.textColor = .red
+        } else {
+            cell.textLabel?.textColor = chataDrawerTextColorPrimary
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let text = listValue[indexPath.row]
-        selectString[posSelected] = text
-        removeTransparentView()
-        createLabel(false)
+        if (dataSource.count - 1) == indexPath.row {
+            selectString[posSelected] = ""
+            removeTransparentView()
+            createLabel(false)
+        } else {
+            let text = listValue[indexPath.row]
+            selectString[posSelected] = text
+            removeTransparentView()
+            createLabel(false)
+        }
     }
 }
 extension UITapGestureRecognizer {

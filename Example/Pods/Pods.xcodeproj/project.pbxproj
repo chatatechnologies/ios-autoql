@@ -39,6 +39,7 @@
 		177E7A5D251A8497005CDDF3 /* icSideChat.png in Resources */ = {isa = PBXBuildFile; fileRef = 177E7A5A251A8497005CDDF3 /* icSideChat.png */; };
 		177E7A5F251A91F9005CDDF3 /* MainChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177E7A5E251A91F9005CDDF3 /* MainChat.swift */; };
 		1781762F23FF108F001A2F1F /* DMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781762E23FF108F001A2F1F /* DMToolbarView.swift */; };
+		1790CFA4259D9F0A0096FAF2 /* CCIntroductionInteractiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1790CFA3259D9F0A0096FAF2 /* CCIntroductionInteractiveView.swift */; };
 		179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F2013250FCCE4003EF3E9 /* QueryInput.swift */; };
 		17AE6B9C240F1EDD00CFD252 /* DMColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AE6B9B240F1EDD00CFD252 /* DMColors.swift */; };
 		17B19F872458876D00744EB3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B19F862458876D00744EB3 /* Dashboard.swift */; };
@@ -137,6 +138,7 @@
 		177E7A5A251A8497005CDDF3 /* icSideChat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icSideChat.png; sourceTree = "<group>"; };
 		177E7A5E251A91F9005CDDF3 /* MainChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainChat.swift; sourceTree = "<group>"; };
 		1781762E23FF108F001A2F1F /* DMToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMToolbarView.swift; sourceTree = "<group>"; };
+		1790CFA3259D9F0A0096FAF2 /* CCIntroductionInteractiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCIntroductionInteractiveView.swift; sourceTree = "<group>"; };
 		179F2013250FCCE4003EF3E9 /* QueryInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInput.swift; sourceTree = "<group>"; };
 		17AE6B9B240F1EDD00CFD252 /* DMColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMColors.swift; sourceTree = "<group>"; };
 		17B19F862458876D00744EB3 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				17F6F1CE2404557500DE0133 /* CCDataChatCell.swift */,
 				170291FC251D1F8600AD1F03 /* NotificationCell.swift */,
 				17F6F1D124045CA500DE0133 /* CCIntroductionView.swift */,
+				1790CFA3259D9F0A0096FAF2 /* CCIntroductionInteractiveView.swift */,
 				17B510632410286200798321 /* CCBoxWebviewView.swift */,
 				17113B58241FF92200EB9134 /* CCSuggestionView.swift */,
 				1742C60324F96EF900213FDA /* CCQueryBuilder.swift */,
@@ -670,6 +673,7 @@
 				1781762F23FF108F001A2F1F /* DMToolbarView.swift in Sources */,
 				1759829F242D1FF4002D504F /* gif.swift in Sources */,
 				17B46762242526DD0098989C /* CCSafetynetView.swift in Sources */,
+				1790CFA4259D9F0A0096FAF2 /* CCIntroductionInteractiveView.swift in Sources */,
 				17B5106624102F5100798321 /* DMGlobalFunctions.swift in Sources */,
 				16B9925DA75E7EF6458285746426F45A /* chata-dummy.m in Sources */,
 				17ED78D32436803200E4CE6C /* DMWebViewFunctions.swift in Sources */,

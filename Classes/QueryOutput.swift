@@ -35,7 +35,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
             getSafetynet()
         case .Suggestion:
             loadSuggestion()
-        case .Introduction:
+        case .Introduction, .IntroductionInteractive:
             loadIntro()
         case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .Table, .Webview, .StackArea:
             loadWebview()

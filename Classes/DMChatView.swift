@@ -187,4 +187,10 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     func callTips() {
         delegateQB?.callTips()
     }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let vwFather: UIView = UIApplication.shared.keyWindow ?? UIView()
+        vwFather.removeView(tag: -1)
+        vwFather.removeView(tag: -2)
+        tableView.removeView(tag: 2)
+    }
 }
