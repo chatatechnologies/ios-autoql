@@ -58,7 +58,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         lbl.setSize()
         lbl.textColor = chataDrawerTextColorPrimary
         self.addSubview(lbl)
-        lbl.edgeTo(self, safeArea: .topPadding, height: 60, padding: 8)
+        lbl.edgeTo(self, safeArea: .topHeight, height: 60, padding: 8)
         layoutIfNeeded()
     }
     
@@ -200,14 +200,16 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         btnRunQuery.addTarget(self, action: #selector(runQuery), for: .touchUpInside)
         btnRunQuery.cardView()
         self.addSubview(btnRunQuery)
-        btnRunQuery.edgeTo(self, safeArea: .bottomPadding, height: 30, padding: 8)
+        btnRunQuery.edgeTo(self, safeArea: .bottomHeight, height: 30, padding: 8)
     }
     @objc func runQuery(sender: UIButton!) {
         let text = mainLabel.text ?? ""
-        let typingSend = TypingSend(text: text, safe: false)
-        NotificationCenter.default.post(name: notifTypingText,
-                                        object: typingSend)
-        delegateSafetynet?.runquery(query: text)
+        if text != "" && text != " " {
+            let typingSend = TypingSend(text: text, safe: false)
+            NotificationCenter.default.post(name: notifTypingText,
+                                            object: typingSend)
+            delegateSafetynet?.runquery(query: text)
+        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count

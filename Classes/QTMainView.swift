@@ -50,6 +50,20 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         loadTable()
         loadDefault()
     }
+    func runQuery(text: String) {
+        let characters = text.map { $0 }
+        var index = 0
+        Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] timer in
+            if index < text.count {
+                let char = characters[index]
+                self?.tfMain.text! += "\(char)"
+                index += 1
+            } else {
+                timer.invalidate()
+                self?.loadSearch(number: 1)
+            }
+        })
+    }
     private func loadMainChat() {
         self.addSubview(vwMainScrollChat)
         vwMainScrollChat.backgroundColor = .clear
@@ -62,7 +76,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         let size: CGFloat = 40.0
         let padding: CGFloat = -8
         addSubview(vwTextBox)
-        vwTextBox.edgeTo(self, safeArea: .topPadding, height: 50.0, padding: 16)
+        vwTextBox.edgeTo(self, safeArea: .topHeight, height: 50.0, padding: 16)
         vwTextBox.addSubview(btnSend)
         btnSend.edgeTo(vwTextBox, safeArea: .rightCenterY, height: size, padding:padding)
         btnSend.backgroundColor = chataDrawerAccentColor
@@ -76,6 +90,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tfMain.edgeTo(vwTextBox, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
         tfMain.cardView(borderRadius: 20)
         tfMain.loadInputPlace("Search relevant queries by topic")
+        tfMain.backgroundColor = chataDrawerBackgroundColorPrimary
         tfMain.configStyle()
         tfMain.setLeftPaddingPoints(10)
     }
@@ -85,13 +100,13 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tbMain.separatorStyle = .none
         tbMain.clipsToBounds = true
         tbMain.bounces = true
-        tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
+        tbMain.backgroundColor = chataDrawerBackgroundColorSecondary
         vwMainChat.addSubview(tbMain)
         tbMain.edgeTo(vwMainChat, safeArea: .fullPadding, tfMain, svPaginator, padding: 8)
     }
     func loadDefaultPagination() {
         vwMainChat.addSubview(svPaginator)
-        svPaginator.edgeTo(vwMainChat, safeArea: .bottomPadding, height: 50.0, padding: 16)
+        svPaginator.edgeTo(vwMainChat, safeArea: .bottomHeight, height: 50.0, padding: 16)
         svPaginator.getSide(dist: .equalCentering,spacing: 0)
     }
     func loadPagination() {
@@ -148,10 +163,9 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwMainChat.addSubview(vwDefault)
         vwDefault.edgeTo(vwMainChat, safeArea: .fullStatePaddingAll, tfMain, padding: 0)
         vwDefault.addSubview(lblDefault)
-        lblDefault.edgeTo(vwDefault, safeArea: .topPadding, height: 140, padding: 16)
+        lblDefault.edgeTo(vwDefault, safeArea: .topHeight, height: 150, padding: 16)
         lblDefault.text = titleDefault == "" ? """
         Discover what you can ask by entering a topic in the search bar above.
-
 
         Simply click on any of the returned options to run the query in Data Messenger.
         """ : titleDefault
@@ -231,7 +245,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = Qtips.items[indexPath.row]
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.font = generalFont
-        cell.contentView.backgroundColor = chataDrawerBackgroundColorPrimary
+        cell.contentView.backgroundColor = chataDrawerBackgroundColorSecondary
         cell.textLabel?.textColor = chataDrawerTextColorPrimary
         return cell
     }

@@ -130,8 +130,8 @@ extension String {
         return valid == 0.0 ? self : form
     }
     func toStrDate(format: String = "yyyy-MM") -> String {
-        let separete = self.components(separatedBy: " ")
         if format == "yyyy-MM"{
+            let separete = self.components(separatedBy: " ")
             let month = separete.count > 0 ? separete[0] : ""
             let year = separete.count > 1 ? separete[1] : ""
             let (finalMonth, valid) = month.monthStr()
@@ -468,5 +468,20 @@ extension UIStackView{
 extension UILabel {
     func setSize(_ size: CGFloat = 16, _ bold: Bool = false) {
         font = !bold ? UIFont.systemFont(ofSize: size) : UIFont.boldSystemFont(ofSize: size)
+    }
+}
+extension Array {
+    func limitArray(limit: Int) -> Array {
+        var finalArray: Array = self
+        if self.count > limit {
+            finalArray = []
+            for index in 0..<limit {
+                let tempArray = self[index] 
+                finalArray.append(tempArray)
+            }
+            return finalArray
+        } else {
+            return finalArray
+        }
     }
 }

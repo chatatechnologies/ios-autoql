@@ -32,11 +32,12 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
+    
     public func start(mainView: UIView) {
-        let finalAlign: DViewSafeArea = inputPlacement == "top" ? .topPadding : .bottomPadding
+        let finalAlign: DViewSafeArea = inputPlacement == "top" ? .topHeight : .bottomHeight
         mainView.addSubview(self)
         self.backgroundColor = chataDrawerBackgroundColorSecondary
-        self.edgeTo(mainView, safeArea: finalAlign, height: 60 )
+        self.edgeTo(mainView, safeArea: finalAlign, height: 60, mainView )
         DataConfig.authenticationObj = self.authenticationInput
         wsUrlDynamic = self.authenticationInput.domain
         generateComponents()
@@ -64,7 +65,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         let vwFather: UIView = UIApplication.shared.keyWindow!
         vwFather.addSubview(tbAutoComplete)
         tbAutoComplete.isHidden = true
-        tbAutoComplete.edgeTo(self, safeArea: .dropDownTopView, height: 150, tfMain, padding: -16 )
+        tbAutoComplete.edgeTo(self, safeArea: .dropDownTop, height: 150, tfMain, padding: -16 )
     }
     func loadTextField() {
         tfMain.borderRadius()
@@ -82,7 +83,7 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         noFlicker = true
         let query = self.tfMain.text ?? ""
         loadingView(mainView: self, inView: tbAutoComplete)
-        if autoQLConfig.enableAutocomplete && query != ""{
+        if autoQLConfig.enableAutocomplete || query != ""{
             ChataServices().getQueries(query: query) { (queries) in
                 if self.noFlicker {
                     DispatchQueue.main.async {
@@ -94,7 +95,11 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             }
+        } else{
+            loadingView(mainView: self, inView: self.tbAutoComplete, false)
+            self.tbAutoComplete.isHidden = false
         }
+        
     }
     func toggleIcon() {
         if showChataIcon {
@@ -104,6 +109,10 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         } else {
             tfMain.setLeftPaddingPoints(20)
         }
+    }
+    public func hideAutocomplete() {
+        tbAutoComplete.isHidden = true
+        tfMain.text = ""
     }
     func changeButton() {
         let emptyInput = self.tfMain.text?.isEmpty ?? true
@@ -162,7 +171,7 @@ public struct autoQLConfigInput {
 public struct themeConfigInput {
     public var theme: String
     public var accentColor: String
-    public init(theme: String = "light", accentColor: String = "#28a8e0") {
+    public init(theme: String = DataConfig.themeConfigObj.theme, accentColor: String = "#28a8e0") {
         self.theme = theme
         self.accentColor = accentColor
     }

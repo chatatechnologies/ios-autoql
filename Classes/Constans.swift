@@ -30,6 +30,7 @@ public class DataConfiguration {
     public var clearOnClose = false
     public var enableVoiceRecord = true
     public var demo = true
+    public var defaultTab = "data-messenger"
     public var autoQLConfigObj = autoQLConfig(
         enableAutocomplete: true,
         enableQueryValidation: true,

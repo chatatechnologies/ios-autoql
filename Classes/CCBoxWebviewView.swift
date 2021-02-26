@@ -43,7 +43,7 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         wbMain.isUserInteractionEnabled = true
         wbMain.scrollView.isScrollEnabled = true
         self.addSubview(wbMain)
-        self.wbMain.edgeTo(self, safeArea: .nonePadding, height: 8, padding: 10)
+        self.wbMain.edgeTo(self, safeArea: .noneTopPadding, height: 8, padding: 10)
         let bundle = Bundle(for: type(of: self))
         let path = bundle.path(forResource: "gifBalls", ofType: "gif")
         let url = URL(fileURLWithPath: path!)

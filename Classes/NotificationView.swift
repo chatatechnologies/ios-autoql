@@ -42,15 +42,15 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
             let imageView = UIImageView(image: image)
             defaultView.addSubview(imageView)
             imageView.edgeTo(defaultView, safeArea: .centerSizeUp, height: 200, padding: 200)
-            //lblDefault.edgeTo(self, safeArea: .topPadding, height: 20, padding: 16)
-            let lblDefault = getLabel(text: "No notification yet", size: 18, bold: true)
+            //lblDefault.edgeTo(self, safeArea: .topView, height: 20, padding: 16)
+            let lblDefault = getLabel(text: "No notifications yet.", size: 18, bold: true)
             defaultView.addSubview(lblDefault)
-            lblDefault.edgeTo(defaultView, safeArea: .topHeight, height: 30, imageView)
+            lblDefault.edgeTo(defaultView, safeArea: .topHeightFixPadding, height: 30, imageView)
             let lblDefault2 = getLabel(text: "Stay tuned!")
             defaultView.addSubview(lblDefault2)
-            lblDefault2.edgeTo(defaultView, safeArea: .topHeight, height: 30, lblDefault)
+            lblDefault2.edgeTo(defaultView, safeArea: .topHeightFixPadding, height: 30, lblDefault)
             //self.addSubview(lblDefault)
-            //lblDefault.edgeTo(self, safeArea: .topPadding, height: 20, padding: 16)
+            //lblDefault.edgeTo(self, safeArea: .topView, height: 20, padding: 16)
         }
         else{
             self.removeView(tag: 2)
@@ -70,7 +70,7 @@ class NotificationView: UIView, UITableViewDelegate, UITableViewDataSource, Noti
         tbMain.bounces = false
         tbMain.backgroundColor = chataDrawerBackgroundColorSecondary
         self.addSubview(tbMain)
-        tbMain.edgeTo(self, safeArea: .nonePadding, padding: 8)
+        tbMain.edgeTo(self, safeArea: .noneTopPadding, padding: 8)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notifications.count

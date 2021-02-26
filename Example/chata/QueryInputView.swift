@@ -18,6 +18,9 @@ class QueryInputView: UIView, QueryInputDelegate {
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
+    public func hideAutocomplete() {
+        inputQuery.hideAutocomplete()
+    }
     func loadView() {
         inputQuery.authenticationInput = auth
         inputQuery.start(mainView: self)

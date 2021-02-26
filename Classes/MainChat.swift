@@ -7,7 +7,7 @@
 
 import Foundation
 protocol MainChatDelegate: class {
-    func callTips()
+    func callTips(text: String)
 }
 public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDelegate {
     var vwToolbar = ToolbarView()
@@ -18,8 +18,8 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
     var vwDynamicView = UIView()
     var vwMain = UIView()
     let svButtons = UIStackView()
-    var csMain: DViewSafeArea = .safeChat
-    var csTrasparent: DViewSafeArea = .safeFH
+    var csMain: DViewSafeArea = .safeChatRight
+    var csTrasparent: DViewSafeArea = .safeFHRight
     var csBottoms: DViewSafeArea = .safeButtons
     var buttonAxis: NSLayoutConstraint.Axis = .vertical
     var heightButtonsStack: CGFloat = 150
@@ -30,7 +30,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         super.init(frame: frame)
         vwToolbar.delegate = self
     }
-    public func show(query: String = "") {
+    public func show(query: String = "", defaultTab: Int = 0) {
         getMainChatPosition()
         let vwFather: UIView = UIApplication.shared.keyWindow!
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
@@ -46,14 +46,14 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
-                        self.start(query: query)
+                        self.start(query: query, defaultTab: defaultTab)
         }, completion: nil)
     }
     func getMainChatPosition(){
         switch DataConfig.placement {
         case "right":
-            csMain = .safeChat
-            csTrasparent = .safeFH
+            csMain = .safeChatRight
+            csTrasparent = .safeFHRight
             csBottoms = .safeButtons
             buttonAxis = .vertical
             heightButtonsStack = 150
@@ -140,7 +140,7 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         loadChat()
     }
     @objc func changeViewTips() {
-        loadTips()
+        loadTips(text: "")
     }
     @objc func changeViewNotifications() {
         loadSelectBtn(tag: 3)
@@ -151,9 +151,12 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         loadSelectBtn(tag: 1)
         vwToolbar.updateTitle(text: DataConfig.title)
     }
-    func loadTips(){
+    func loadTips(text: String){
         loadSelectBtn(tag: 2)
         vwToolbar.updateTitle(text: "Explore Queries", noDeleteBtn: true)
+        if text != "" {
+            newTips.runQuery(text: text)
+        }
     }
     func delete() {
         newChat.delete()
@@ -162,14 +165,14 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
 extension MainChat {
     private func loadToolbar() {
         vwMain.addSubview(vwToolbar)
-        vwToolbar.edgeTo(vwMain, safeArea: .topView, height: 40.0)
+        vwToolbar.edgeTo(vwMain, safeArea: .topHeight, height: 40.0)
     }
     private func loadMainView() {
         vwDynamicView.backgroundColor = chataDrawerBackgroundColorSecondary
         vwMain.addSubview(vwDynamicView)
         vwDynamicView.edgeTo(vwMain, safeArea: .fullState, vwToolbar)
     }
-    func start(query: String) {
+    func start(query: String, defaultTab: Int = 0) {
         loadToolbar()
         loadMainView()
         loadButtonsSide()
@@ -180,6 +183,9 @@ extension MainChat {
         loadSelectBtn(tag: 1)
         addNotifications()
         initLogin()
+        if defaultTab != 0 {
+            self.loadTips(text: "")
+        }
     }
     func loadSelectBtn(tag: Int) {
         svButtons.subviews.forEach { (view) in
@@ -196,8 +202,8 @@ extension MainChat {
             view.isHidden = tag != view.tag
         }
     }
-    func callTips() {
-        loadTips()
+    func callTips(text: String) {
+        loadTips(text: text)
     }
     @objc func ToogleNotification(_ notification: NSNotification) {
         let valid = notification.object as? Bool ?? false
@@ -214,7 +220,7 @@ extension MainChat {
                     let originalBtn = btn as? UIButton ?? UIButton()
                     if originalBtn.tag == 3 {
                         self.addSubview(self.viewNot)
-                        self.viewNot.edgeTo(originalBtn, safeArea: .widthRightY, height: 15, padding: 0)
+                        self.viewNot.edgeTo(originalBtn, safeArea: .widthRight, height: 15, padding: 0, secondPadding: 10)
                     }
                 }
             }

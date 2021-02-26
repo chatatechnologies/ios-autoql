@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 protocol QBTipsDelegate: class {
-    func callTips()
+    func callTips(text: String)
 }
 protocol ChatViewDelegate: class {
     func sendText(_ text: String, _ safe: Bool)
@@ -184,8 +184,8 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-    func callTips() {
-        delegateQB?.callTips()
+    func callTips(text: String) {
+        delegateQB?.callTips(text: text)
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let vwFather: UIView = UIApplication.shared.keyWindow ?? UIView()

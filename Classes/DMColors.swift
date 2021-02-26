@@ -20,7 +20,7 @@ var chataDashboardAccentColor = (dark ? "#ffffff" : "#28A8E0").hexToColor()
 var chataDrawerMessengerTextColorPrimary = (dark ? "#8f908f" : "#838383").hexToColor()
 var backgroundDash = (dark ? "fafafa" : "fafafa").hexToColor()
 var chataDrawerBlue = "#28a8e0".hexToColor()
-var chataDrawerWebViewBackground = dark ? "#636363" : "#ffffff"
+var chataDrawerWebViewBackground = dark ? "#3B3F46" : "#ffffff"
 var chataDrawerWebViewText = dark ? "#FFFFFF" : "#5D5D5D"
 
 

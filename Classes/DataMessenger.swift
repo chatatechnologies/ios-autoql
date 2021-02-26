@@ -145,7 +145,7 @@ public class DataMessenger: UIButton {
     }
     public func createChat() {
         let mainChat = MainChat()
-        mainChat.show()
+        mainChat.show(defaultTab: DataConfig.defaultTab == "data-messenger" ? 0 : 1)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

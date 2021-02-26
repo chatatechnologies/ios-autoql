@@ -29,7 +29,7 @@ class AutoCompleteView: UIView {
         autoCompleteTable.backgroundColor = .clear
         self.cardViewShadow()
         self.addSubview(autoCompleteTable)
-        autoCompleteTable.edgeTo(self, safeArea: .nonePadding, height: 7, padding: 7)
+        autoCompleteTable.edgeTo(self, safeArea: .noneTopPadding, height: 7, padding: 7)
     }
     override func didMoveToSuperview() {
         loadConfig()

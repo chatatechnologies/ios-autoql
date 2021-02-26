@@ -33,7 +33,7 @@ class IntroductionInteractionView: UIView, UITextViewDelegate {
         lblReport.textColor = chataDrawerTextColorPrimary
         //lbl.lineBreakMode = .byTruncatingTail
         self.addSubview(lblReport)
-        lblReport.edgeTo(self, safeArea: .nonePadding, height: 8, padding: 8)
+        lblReport.edgeTo(self, safeArea: .noneTopPadding, height: 8, padding: 8)
         layoutIfNeeded()
         refererToQueryTips()
     }

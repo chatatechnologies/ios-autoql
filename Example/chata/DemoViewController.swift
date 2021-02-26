@@ -95,6 +95,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     func loadDataSource() {
         let mainTag = 100
         tbMain.isHidden = false
+        inputMainView.hideAutocomplete()
         tbMain.tag = mainTag
         toggleView(tag: mainTag)
     }
@@ -105,6 +106,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         dashboardView.tag = mainTag
         vwMain.addSubview(dashboardView)
         toggleView(tag: mainTag)
+        inputMainView.hideAutocomplete()
         dashboardView.edgeTo(vwMain, safeArea: .none)
         dashboardView.configLoad(authFinal: dataChat.config.authenticationObj, mainView: self.view)
     }
@@ -131,7 +133,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             scMain.removeSegment(at: 1, animated: false)
         } else {
             scMain.insertSegment(withTitle: "Dashboard", at: 1, animated: true)
-            scMain.insertSegment(withTitle: "Input/Output", at: 2, animated: true)
+            //scMain.insertSegment(withTitle: "Input/Output", at: 2, animated: true)
         }
     }
     func loadSections(){
@@ -141,18 +143,19 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             ]),*/
             loginSection,
             DemoSectionsModel(title: "Customize Widgets", arrParameters: [
-                DemoParameter(label: "Reload Drawer", type: .button),
-                DemoParameter(label: "Open Drawer", type: .button, key: "openChat"),
+                DemoParameter(label: "Reload Data Messenger", type: .button),
+                DemoParameter(label: "Open Data Messenger", type: .button, key: "openChat"),
                 DemoParameter(label: "Enable Autocomplete", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableAutocomplete)", key: "enableAutocomplete"),
-                DemoParameter(label: "Enable Query Validator", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
-                DemoParameter(label: "Enable Query Suggestion", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
-                DemoParameter(label: "Enable DrillDown", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableDrilldowns)", key: "enableDrilldowns"),
+                DemoParameter(label: "Enable Query Validation", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
+                DemoParameter(label: "Enable Query Suggestions", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
+                DemoParameter(label: "Enable DrillDowns", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableDrilldowns)", key: "enableDrilldowns"),
                 DemoParameter(label: "Enable Column Visibility Editor", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableColumnVisibilityManager)", key: "enableColumnVisibilityManager")
             ]),
             DemoSectionsModel(title: "UI Configuration Options", arrParameters: [
                 DemoParameter(label: "Show Data Messenger Button", type: .toggle, value: "\(dataChat.config.isVisible)", key:"isVisible"),
                 DemoParameter(label: "Theme", type: .segment, options: ["Light", "Dark"], value: dataChat.config.themeConfigObj.theme.capitalized, key: "theme"),
                 DemoParameter(label: "Drawer Placement", type: .segment, options: ["Top", "Bottom", "Left", "Right"], value: dataChat.config.placement.capitalized, key: "placement"),
+                DemoParameter(label: "Default Tab", type: .segment, options: ["data-messenger", "explore-queries"], value: dataChat.config.themeConfigObj.theme.capitalized, key: "defaultTab"),
                 DemoParameter(label: "Currency Code", type: .input, value: dataChat.config.dataFormattingObj.currencyCode, key: "currencyCode"),
                 DemoParameter(label: "Language Code", type: .input, value: dataChat.config.dataFormattingObj.languageCode, key: "languageCode"),
                 DemoParameter(label: "Format for Month, Year", type: .input, value: dataChat.config.dataFormattingObj.monthYearFormat, key: "monthYearFormat"),
@@ -168,10 +171,10 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 
             ]),
             DemoSectionsModel(title: "Themes Colors", arrParameters: [
-                DemoParameter(label: "AccentColor", type: .color, value: "#28A8E0", key: "lightTheme"),
+                DemoParameter(label: "Light Theme Accent Color", type: .color, value: "#28A8E0", key: "lightTheme"),
                 DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#28A8E0", key: "darkTheme")
             ]),
-            DemoSectionsModel(title: "More Configuration", arrParameters: [
+            DemoSectionsModel(title: "More Configurations", arrParameters: [
                 DemoParameter(label: "Maximum Number of Messages", type: .input, value: "\(dataChat.config.maxMessages)", key: "maxMessages"),
                 DemoParameter(label: "Enable Speech to Text", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableVoiceRecord")
             ])
@@ -300,6 +303,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             dataChat.config.themeConfigObj.theme = dark ? "dark" : "light"
             dataChat.config.themeConfigObj.accentColor = accentColor
             dataChat.changeColor()
+        case "defaultTab":
+            dataChat.config.defaultTab = value
         case "placement":
             dataChat.config.placement = value.lowercased()
             dataChat.movePosition()

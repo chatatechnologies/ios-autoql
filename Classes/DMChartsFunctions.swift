@@ -28,7 +28,7 @@ private func getConstants(dollar: Bool = false) -> String {
             return '-\(finalSymbol)' + (-this.value)
           }
         };
-    """ : "$"
+    """ : "''"
     return """
           var actual = "";
           var colors = \(DataConfig.themeConfigObj.chartColors);
@@ -360,7 +360,7 @@ func getTriTypeChart() -> String {
                     chart = Highcharts.chart('container', {
                         chart: {
                             type: type,
-                            inverted: true
+                            inverted: false
                         },
                         title: subTitle,
                         subTitle: subTitle,
@@ -449,8 +449,7 @@ func getTriTypeChart() -> String {
                              style: styleTooltip,
                              formatter: function () {
                                  var position = categoriesY.indexOf(this.series.name);
-                                 console.log(position);
-                                 drillDown(""+categoriesX[this.point.x]+"_"+drillY[position]);
+                                 drillDown(""+categoriesX[this.point.x]+"_"+drillY[this.point.x]);
                                return "";
                              }
                            },
@@ -583,7 +582,7 @@ func getConfigScript() -> String {
             var dynamicWidthSize = ""+categoriesX.length * 10+"%";
             var widthSize = categoriesX.length <= 10 ? defaultWidth : dynamicWidthSize;
             var dynamicHeightSize = ""+categoriesY.length * 10+"%";
-            var heightSize = categoriesY.length <= 10 ? defaultHeight : dynamicHeightSize;
+            var heightSize = categoriesY.length <= 5 ? defaultHeight : dynamicHeightSize;
             var heightSizeFinal = invert ? heightSize : defaultHeight;
             $('.container, #container').css({ "width": widthSize, "position": "relative","height":heightSizeFinal, "z-index": "0" });
         }

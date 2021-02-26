@@ -23,6 +23,7 @@ let wsJwt = "\(versionBaseTestApi2)jwt?display_name="
 let wsDrillDown = "\(versionBaseTestApi2)chata/query/drilldown"
 let wsDashboard = "\(versionBaseTestApi2)dashboards?key="
 let wsDataAlerts = "/autoql/api/v1/data-alerts/notifications"
+let wsGetQueryNotification = "\(versionBaseTestApi2)rule-notifications/"
 typealias CompletionResponse = (_ response: [String: Any]) -> Void
 func httpRequest(_ urlFinal: String,
                  _ method: String = "GET",

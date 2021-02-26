@@ -33,7 +33,7 @@ class NotificationCell: UITableViewCell {
     func loadComponents() {
         contentView.addSubview(vwMain)
         contentView.backgroundColor = chataDrawerBackgroundColorPrimary
-        vwMain.edgeTo(self, safeArea: .nonePadding, height: 4, padding: 4)
+        vwMain.edgeTo(self, safeArea: .noneTopPadding, height: 4, padding: 4)
         vwMain.cardView()
         loadDeleteBtn()
         loadTitle()
@@ -56,7 +56,7 @@ class NotificationCell: UITableViewCell {
         lblTitle.setSize(16, true)
         lblTitle.numberOfLines = 0
         lblTitle.textColor = chataDrawerTextColorPrimary
-        lblTitle.edgeTo(vwMain, safeArea: .elementToRight, height: 16, btnDelete, padding: 16)
+        lblTitle.edgeTo(vwMain, safeArea: .midTopBottom, height: 16, btnDelete, padding: 16)
     }
     func loadDescription() {
         lblDescription.text = itemNotif.message
@@ -74,7 +74,7 @@ class NotificationCell: UITableViewCell {
             lblDate.edgeTo(vwMain, safeArea: .topHeightPadding, height: 16, lblDescription, padding: 16)
             loadViewQuery()
         } else{
-            lblDate.edgeTo(vwMain, safeArea: .bottomPadding, height: 20, padding: 16)
+            lblDate.edgeTo(vwMain, safeArea: .bottomHeight, height: 20, padding: 16)
         }
     }
     func loadViewQuery() {
@@ -86,7 +86,7 @@ class NotificationCell: UITableViewCell {
         lblQuery.setSize(16, true)
         lblQuery.textAlignment = .center
         vwQuery.addSubview(lblQuery)
-        lblQuery.edgeTo(vwQuery, safeArea: .topPadding, height: 20, padding: 16)
+        lblQuery.edgeTo(vwQuery, safeArea: .topHeight, height: 20, padding: 16)
         lblQuery.addBorder()
         let vwWebView = UIView()
         let outputQuery = QueryOutput()
@@ -94,7 +94,7 @@ class NotificationCell: UITableViewCell {
         vwWebView.edgeTo(vwQuery, safeArea: .fullStatePaddingAll, lblQuery)
         outputQuery.authenticationOutput = DataConfig.authenticationObj
         outputQuery.start(mainView: vwWebView, subViewTop: lblQuery)
-        outputQuery.loadComponent(text: itemNotif.dataReturnQuery)
+        outputQuery.loadComponent(text: itemNotif.id, notification: true)
     }
     @IBAction func hideMenu(_ sender: AnyObject){
         superview?.removeView(tag: 2)

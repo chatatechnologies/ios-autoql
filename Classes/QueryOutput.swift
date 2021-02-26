@@ -22,7 +22,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     public func start(mainView: UIView, subViewTop: UIView? = nil) {
         mainView.addSubview(self)
         if let sub = subViewTop {
-            self.edgeTo(mainView, safeArea: .bottomPaddingtoTop, sub)
+            self.edgeTo(mainView, safeArea: .midTopBottom2, sub)
         } else {
             self.edgeTo(mainView, safeArea: .none)
         }
@@ -49,7 +49,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         newView.tag = 1
         let finalStr = finalComponent.options.count > 0 ? finalComponent.options[0] : ""
         let finalHeight = getSizeSafetynet(originalQuery: finalStr)
-        newView.edgeTo(self, safeArea: .topPadding, height: finalHeight, padding: 16)
+        newView.edgeTo(self, safeArea: .topHeight, height: finalHeight, padding: 16)
         newView.loadConfig(finalComponent, lastQueryFinal: false)
         newView.delegateSafetynet = self
         self.sizeToFit()
@@ -61,7 +61,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         newView.tag = 1
         newView.loadConfig(options: finalComponent.options, query: finalComponent.text)
         self.addSubview(newView)
-        newView.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
+        newView.edgeTo(self, safeArea: .noneTopPadding, height: 16, padding: 16)
         self.sizeToFit()
         loadingView(mainView: self, inView: self, false)
     }
@@ -74,22 +74,37 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         lblComponent.textColor = chataDrawerTextColorPrimary
         lblComponent.textAlignment = .center
         self.addSubview(lblComponent)
-        lblComponent.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
+        lblComponent.edgeTo(self, safeArea: .noneTopPadding, height: 16, padding: 16)
         loadingView(mainView: self, inView: self, false)
     }
     private func loadWebview() {
         self.addSubview(wvMain)
         wvMain.tag = 1
-        wvMain.edgeTo(self, safeArea: .nonePadding, height: 16, padding: 16)
+        wvMain.edgeTo(self, safeArea: .noneTopPadding, height: 16, padding: 16)
         self.wvMain.loadHTMLString(finalComponent.webView, baseURL: nil)
     }
-    public func loadComponent(text: String){
+    public func loadComponent(text: String, notification: Bool = false){
         loadingView(mainView: self, inView: self)
-        loadSafe(query: text)
+        if notification {
+            loadNotificationQuery(idQuery: text)
+        } else {
+            loadSafe(query: text)
+        }
+    }
+    private func loadNotificationQuery(idQuery: String) {
+        NotificationServices.instance.getQueryNotification(idQuery: idQuery) { (component) in
+            DispatchQueue.main.async {
+                var finalComponent = component
+                if component.text.contains("want"){
+                    finalComponent.text = "Internal Service Error: Our system is experiencing an unexpected error. We're aware of this issue and are working to fix it as soon as possible."
+                }
+                self.loadFinalComponent(componentF: finalComponent)
+            }
+        }
     }
     private func loadSafe(query: String) {
         self.removeView(tag: 1)
-        ChataServices.instance.getSafetynet(query: query) { (suggestion) in
+        ChataServices.instance.getSafetynet(query: query) { (suggestion, responseMsg) in
             if suggestion.count == 0 {
                 self.loadWS(query: query)
             } else {

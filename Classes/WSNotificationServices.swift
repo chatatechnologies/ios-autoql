@@ -42,6 +42,14 @@ class NotificationServices {
             self.unacknowledged = 0
         }
     }
+    func getQueryNotification(idQuery: String, completion: @escaping CompletionChatComponentModel) {
+        let url = "\(wsGetQueryNotification)\(idQuery)?key=\(DataConfig.authenticationObj.apiKey)"
+        httpRequest(url) { (response) in
+            let dataResponse = response["query_result"] as? [String : Any] ?? [:]
+            let finalComponent = ChataServices.instance.getDataComponent(response: dataResponse)
+            completion(finalComponent)
+        }
+    }
     func getNotifications(currentNumber: Int = 0, completion: @escaping CompletionNotifications) {
         let url = "\(wsUrlDynamic)\(wsDataAlerts)?key=\(DataConfig.authenticationObj.apiKey)&offset=\(currentNumber)&limit=10"
         httpRequest(url) { (response) in
@@ -51,7 +59,7 @@ class NotificationServices {
             items.forEach { (item) in
                 var newNotification = NotificationItemModel()
                 newNotification.createdAt = String(item["created_at"] as? Int ?? 0).toDate(true, true)
-                newNotification.id = String(item["id"] as? Int ?? 0) 
+                newNotification.id = item["id"] as? String ?? ""
                 newNotification.notificationType = item["notification_type"] as? String ?? ""
                 newNotification.dataAlertId = item["data_alert_id"] as? Int ?? 0
                 newNotification.dataReturnType = item["data_return_type"] as? String ?? ""

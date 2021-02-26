@@ -15,7 +15,7 @@ typealias CompletionQueryTips = (_ response: QTModel) -> Void
 typealias CompletionSuggestions = (_ response: [String]) -> Void
 typealias CompletionNotifications = (_ response: [NotificationItemModel]) -> Void
 public typealias CompletionChatSuccess = (_ response: Bool) -> Void
-typealias CompletionChatSafetynet = (_ response: [ChatFullSuggestion]) -> Void
+typealias CompletionChatSafetynet = (_ response: ([ChatFullSuggestion], String)) -> Void
 class ChataServices {
     static let instance = ChataServices()
     private var projectID = ""
@@ -117,7 +117,7 @@ class ChataServices {
             : "\(wsSafetynet)\(handleQuery)&projectId=\(projectID)"
         httpRequest(urlRequest) { (response) in
             if DataConfig.demo {
-                completion([])
+                completion(([], ""))
             } else {
                 let data = response["data"] as? [String: Any] ?? [:]
                 let replacements = data["replacements"] as? [[String:Any]] ?? []
@@ -133,7 +133,8 @@ class ChataServices {
                     let model = ChatFullSuggestion(suggestionList: suggestion, start: start, end: end)
                     return model
                 }
-                completion(final)
+                let msgFinal = response["message"] as? String ?? ""
+                completion((final, msgFinal))
             }
         }
     }
@@ -199,13 +200,14 @@ class ChataServices {
             let keys = name.split(separator: "º")
             if keys.count > 1 && values.count > 1{
                 let valueOne = String(values[0]).toStrDate()
-                let valueTwo = String(values[1]).toStrDate()
+                //valueOne = "2020-11"
+                let valueTwo = String(values[1])
                 group_bys = [[
-                        "name": String(keys[1]),
+                        "name": String(keys[0]),
                         "value": valueTwo
                     ],
                     [
-                        "name": String(keys[0]),
+                        "name": String(keys[1]),
                         "value": valueOne
                     ]
                 ]
@@ -327,6 +329,8 @@ class ChataServices {
         }
         let message = response["message"] as? String ?? "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
         dataModel.text = message
+        let sql = data["sql"] as? [String] ?? []
+        dataModel.sql = sql
         if message.contains("<report>"){
             dataModel.type = .IntroductionInteractive
             let idQuery = data["query_id"] as? String ?? UUID().uuidString
@@ -336,9 +340,13 @@ class ChataServices {
         if referenceID == "1.1.211" {
             data = [:]
         }
-        if data.count > 0 && dataModel.text != "No Data Found" {
+        if data.count > 0 && !dataModel.text.contains("report") {
+            let limitRowNum = data["limit_row_num"] as? Int ?? 500
             let columns = data["columns"] as? [[String: Any]] ?? []
-            let rows = data["rows"] as? [[Any]] ?? []
+            let rows2 = data["rows"] as? [[Any]] ?? []
+            //rows2.append(["test2"])
+            let rows: [[Any]] = rows2.limitArray(limit: limitRowNum)
+            let limitRows = rows2.count > limitRowNum
             let (columnsFinal, group) = getColumns(columns: columns)
             var typeD = type
             if group {
@@ -423,7 +431,9 @@ class ChataServices {
                 biChart: biChart,
                 rowsClean: rowsFinalClean,
                 referenceID: referenceID,
-                groupable: group
+                groupable: group,
+                sql: sql,
+                limit: limitRows
             )
         }
         return dataModel
@@ -674,6 +684,7 @@ struct SubDashboardModel {
         self.items = items
         self.columnsInfo = columnsInfo
         self.rowsClean = rowsClean
+        self.idQuery = idQuery
     }
 }
 struct DashboardModel {

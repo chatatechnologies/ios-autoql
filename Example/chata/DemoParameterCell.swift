@@ -128,7 +128,7 @@ class DemoParameterCell: UITableViewCell {
         label.numberOfLines = 0
         label.minimumScaleFactor = 0.5
         self.contentView.addSubview(label)
-        label.edgeTo(self.contentView, safeArea: .topView, height: 30.0)
+        label.edgeTo(self.contentView, safeArea: .topHeight, height: 30.0)
         return label
     }
 }

@@ -30,9 +30,9 @@ class SuggestionView: UIView {
         stack.alignment = UIStackView.Alignment.center
         stack.spacing = 8
         /*self.addSubview(label)
-        label.edgeTo(self, safeArea: .topPadding, height: 50, padding: 8)*/
+        label.edgeTo(self, safeArea: .topView, height: 50, padding: 8)*/
         self.addSubview(scrollView)
-        scrollView.edgeTo(self, safeArea: .nonePadding, padding: 16)
+        scrollView.edgeTo(self, safeArea: .noneTopPadding, padding: 16)
         scrollView.addSubview(stack)
         let finalHeight = CGFloat(options.count * 40)
         stack.edgeTo(scrollView, safeArea: .fullStack, height: finalHeight)

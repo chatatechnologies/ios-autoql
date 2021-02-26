@@ -22,9 +22,11 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     case .Introduction:
         return getSizeText(row.text, width)
     case .IntroductionInteractive:
-        return 200
-    case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea, .Webview, .Table:
+        return 170
+    case .Table, .Webview:
         return getSizeWebView(numRow: row.numRow)
+    case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
+        return 380
     case .Suggestion:
         return getSizeSuggestion()
     case .Safetynet:
@@ -161,7 +163,7 @@ func reloadColors (dark: Bool = false) {
     chataDrawerTextColorPrimary = (dark ? "#FFFFFF" :  "#5D5D5D").hexToColor()
     chataDrawerTextColorPlaceholder = (dark ? "#333333" : "#000000").hexToColor()
     chataDashboardAccentColor = (dark ? "#ffffff" : "#28A8E0").hexToColor()
-    chataDrawerWebViewBackground = dark ? "#636363" : "#ffffff"
+    chataDrawerWebViewBackground = dark ? "#3B3F46" : "#ffffff"
     chataDrawerWebViewText = dark ? "#FFFFFF" : "#5D5D5D"
 }
 func supportPivot(columns: [ChatTableColumnType]) -> Bool {

@@ -334,12 +334,14 @@ func getChartFooter(rows: [[String]],
         stacked[locY].append(data3)
         return [locX, locY, data3]
     } : []
-    var dataChartLineTri = triType ? categoriesY.enumerated().map({ (index, element) -> [String: Any] in
+    var dataChartLineTri: [[String: Any]] = []
+    var dataChartLineTri2 = triType ? categoriesY.enumerated().map({ (index, element) -> [String: Any] in
         var data: [String: Any] = [:]
         data["name"] = element
-        data["data"] = stacked[index]//dataStackedColumn[i]
+        data["y"] = stacked[index][0]//dataStackedColumn[i]
         return data
     }) : []
+    dataChartLineTri = [["name": "", "data": dataChartLineTri2]]
     let contrast = triType ? supportContrast(columns: types) : false
     if contrast {
         dataChartLineTri = []

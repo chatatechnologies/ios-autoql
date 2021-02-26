@@ -26,6 +26,8 @@ struct ChatComponentModel {
     var numQBoptions: Int
     var referenceID: String
     var groupable: Bool
+    var sql: [String]
+    var limit: Bool
     init(type: ChatComponentType = .Introduction,
          text: String = "",
          user: Bool = false,
@@ -44,7 +46,9 @@ struct ChatComponentModel {
          rowsClean: [[String]] = [],
          numQBoptions: Int = 0,
          referenceID: String = "",
-         groupable: Bool = false
+         groupable: Bool = false,
+         sql: [String] = [],
+         limit: Bool = false
          ) {
         self.type = type
         self.text = text
@@ -65,6 +69,8 @@ struct ChatComponentModel {
         self.numQBoptions = numQBoptions
         self.referenceID = referenceID
         self.groupable = groupable
+        self.sql = sql
+        self.limit = limit
     }
 }
 struct ChatFullSuggestion {

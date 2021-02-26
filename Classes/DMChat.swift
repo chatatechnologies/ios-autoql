@@ -32,7 +32,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction) )
         self.addGestureRecognizer(tap)*/
         self.edgeTo(vwFather, safeArea: .safe)
-        self.edgeTo(vwFather, safeArea: .safeChat, padding: 30)
+        self.edgeTo(vwFather, safeArea: .safeChatRight, padding: 30)
         UIView.animate(withDuration: 0.50, delay: 0, usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 10, options: UIView.AnimationOptions(rawValue: 0), animations: {
                         self.center = vwFather.center
@@ -55,7 +55,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
     }
     private func loadAutoComplete() {
         self.vwMainChat.addSubview(vwAutoComplete)
-        vwAutoComplete.edgeTo(self, safeArea: .topY, height: 190.0, vwTextBox)
+        vwAutoComplete.edgeTo(self, safeArea: .bottomHeightFixPadding, height: 190.0, vwTextBox)
     }
     @objc func closeAction(sender: UITapGestureRecognizer) {
         dismiss(animated: DataConfig.clearOnClose)
@@ -93,11 +93,11 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
     }
     private func loadMarkWater() {
         vwMainChat.addSubview(vwWaterMark)
-        vwWaterMark.edgeTo(self, safeArea: .bottomSize, height: 30.0, vwTextBox)
+        vwWaterMark.edgeTo(self, safeArea: .bottomTop, height: 30.0, vwTextBox)
     }
     private func loadTextBox() {
         vwMainChat.addSubview(vwTextBox)
-        vwTextBox.edgeTo(self, safeArea: .bottomView, height: 50.0)
+        vwTextBox.edgeTo(self, safeArea: .bottomHeight, height: 50.0, self)
         addObservers()
     }
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -167,17 +167,27 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
     }
     private func loadSafety(text: String) {
         let service = ChataServices()
-        service.getSafetynet(query: text) { (suggestion) in
+        service.getSafetynet(query: text) { (suggestion, responseMsg) in
             if suggestion.count == 0 {
-                self.loadQuery(text: text)
+                if responseMsg.contains("Error") {
+                    let idQuery = UUID().uuidString
+                    let finalComponent = ChatComponentModel(
+                        type: .Introduction,
+                        text: responseMsg,
+                        user: false,
+                        webView: "text",
+                        idQuery: idQuery
+                    )
+                    self.limitData(element: finalComponent, load: true)
+                } else {
+                    self.loadQuery(text: text)
+                }
             } else {
                 let idQuery = UUID().uuidString
                 let finalComponent = ChatComponentModel(
                     type: .Safetynet,
                     text: "Verify by selecting the correct term from the menu below:",
                     user: true,
-                    webView: "",
-                    numRow: 0,
                     options: [text],
                     fullSuggestions: suggestion,
                     idQuery: idQuery
@@ -194,7 +204,9 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
                     if element.referenceID == "1.1.430" || element.referenceID == "1.1.431" {
                         //self.loadingQuery(true)
                         if DataConfig.autoQLConfigObj.enableQuerySuggestions {
-                            self.limitData(element: element)
+                            var finalElement = element
+                            finalElement.webView = "error"
+                            self.limitData(element: finalElement)
                             service.getSuggestionsQueries(query: text) { (items) in
                                 var cloneElement = element
                                 cloneElement.options = items
@@ -224,7 +236,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
             imageView.loadGif(url: url)
             imageView.tag = 100
             self.addSubview(imageView)
-            imageView.edgeTo(self.vwDataMessenger, safeArea: .bottomRight, height: 40, padding: 80)
+            imageView.edgeTo(self.vwDataMessenger, safeArea: .bottomSize, height: 40, padding: 10)
         } else {
             DRILLDOWNACTIVE = false
             if async {
@@ -269,8 +281,8 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
         self.vwDataMessenger.mainData = resetData
         self.vwDataMessenger.tableView.reloadData()
     }
-    func callTips() {
-        delegateQB?.callTips()
+    func callTips(text: String) {
+        delegateQB?.callTips(text: text)
     }
 }
 struct SideBtn {
