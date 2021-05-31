@@ -234,7 +234,7 @@ func getDataPivotColumn(rows: [[String]], type: ChatTableColumnType = .dollar) -
         final.append(finalB)
         //sumas.append(test)
     }
-    var header = [""]
+    var header = ["Month"]
     var headerFree: [String] = []
     for catY in categoriesY {
         header.append(catY)

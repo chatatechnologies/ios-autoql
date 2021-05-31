@@ -18,8 +18,7 @@ class AutoCompleteView: UIView {
     }
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        autoCompleteTable.delegate = self
-        autoCompleteTable.dataSource = self
+        autoCompleteTable.setConfig(dataSource: self)
         autoCompleteTable.delaysContentTouches = false
         self.backgroundColor = chataDrawerBackgroundColorPrimary
     }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VoM-cx-dWl">
     <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,6 +20,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="L00-xJ-IA8">
+                                <rect key="frame" x="392.5" y="8" width="239" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="1500" id="6Vr-kT-yV2"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Data Messenger"/>
+                                    <segment title="Dashboard"/>
+                                </segments>
+                                <connections>
+                                    <action selector="changeSection:" destination="vXZ-lx-hvc" eventType="valueChanged" id="KhY-hj-WSD"/>
+                                </connections>
+                            </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Qq-a7-ycG">
                                 <rect key="frame" x="0.0" y="47" width="1024" height="1299"/>
                                 <subviews>
@@ -47,19 +62,6 @@
                                     <constraint firstAttribute="bottom" secondItem="ic9-Oy-EgF" secondAttribute="bottom" id="sfK-tv-BDH"/>
                                 </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="L00-xJ-IA8">
-                                <rect key="frame" x="392.5" y="8" width="239" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="1500" id="6Vr-kT-yV2"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="Data Messenger"/>
-                                    <segment title="Dashboard"/>
-                                </segments>
-                                <connections>
-                                    <action selector="changeSection:" destination="vXZ-lx-hvc" eventType="valueChanged" id="KhY-hj-WSD"/>
-                                </connections>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -67,9 +69,9 @@
                             <constraint firstItem="L00-xJ-IA8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="20" id="6gy-Tp-xye"/>
                             <constraint firstAttribute="trailing" secondItem="6Qq-a7-ycG" secondAttribute="trailing" id="PIX-Kw-N2m"/>
                             <constraint firstItem="L00-xJ-IA8" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Pys-6F-WtR"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="6Qq-a7-ycG" secondAttribute="bottom" id="d22-il-Nes"/>
+                            <constraint firstAttribute="bottom" secondItem="6Qq-a7-ycG" secondAttribute="bottom" constant="20" id="d22-il-Nes"/>
                             <constraint firstItem="6Qq-a7-ycG" firstAttribute="top" secondItem="L00-xJ-IA8" secondAttribute="bottom" constant="8" id="hIs-Hd-eOO"/>
-                            <constraint firstItem="L00-xJ-IA8" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="tK9-Fg-qLs"/>
+                            <constraint firstItem="L00-xJ-IA8" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="jV7-VA-qiS"/>
                             <constraint firstItem="6Qq-a7-ycG" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="tMV-yx-Qd3"/>
                         </constraints>
                     </view>
@@ -84,5 +86,99 @@
             </objects>
             <point key="canvasLocation" x="141.59999999999999" y="106.59670164917542"/>
         </scene>
+        <!--Demo View Controller-->
+        <scene sceneID="yII-WS-tBk">
+            <objects>
+                <viewController id="VoM-cx-dWl" customClass="DemoViewController" customModule="AutoQL" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fap-bG-NXq"/>
+                        <viewControllerLayoutGuide type="bottom" id="6cc-2T-K1f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LJw-gN-8Ib">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gvg-ho-JqP">
+                                <rect key="frame" x="130.5" y="0.0" width="239" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="6EM-yv-3ur"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="1500" id="dj3-To-8i2"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Data Messenger"/>
+                                    <segment title="Dashboard"/>
+                                </segments>
+                                <connections>
+                                    <action selector="changeSection:" destination="VoM-cx-dWl" eventType="valueChanged" id="Ej0-kA-fHi"/>
+                                </connections>
+                            </segmentedControl>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cuf-3O-dvR">
+                                <rect key="frame" x="0.0" y="31" width="500" height="569"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAz-El-1fF">
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="576"/>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fuw-XE-GEX">
+                                                <rect key="frame" x="0.0" y="0.0" width="500" height="556"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </tableView>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Sgk-VA-Q8G">
+                                                <rect key="frame" x="200" y="238" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="Omm-oh-BVU"/>
+                                                    <constraint firstAttribute="width" constant="100" id="i4d-h6-lvn"/>
+                                                </constraints>
+                                                <color key="color" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="fuw-XE-GEX" secondAttribute="bottom" constant="20" id="9A1-s3-hkG"/>
+                                            <constraint firstItem="fuw-XE-GEX" firstAttribute="top" secondItem="wAz-El-1fF" secondAttribute="top" id="9ww-jn-6iS"/>
+                                            <constraint firstItem="fuw-XE-GEX" firstAttribute="leading" secondItem="wAz-El-1fF" secondAttribute="leading" id="OFi-Td-OZT"/>
+                                            <constraint firstItem="Sgk-VA-Q8G" firstAttribute="centerY" secondItem="wAz-El-1fF" secondAttribute="centerY" id="cOV-p7-Uck"/>
+                                            <constraint firstAttribute="trailing" secondItem="fuw-XE-GEX" secondAttribute="trailing" id="q0s-SP-1yg"/>
+                                            <constraint firstItem="Sgk-VA-Q8G" firstAttribute="centerX" secondItem="wAz-El-1fF" secondAttribute="centerX" id="uZc-3d-5VQ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="wAz-El-1fF" firstAttribute="top" secondItem="cuf-3O-dvR" secondAttribute="top" id="HWA-p1-gPx"/>
+                                    <constraint firstAttribute="trailing" secondItem="wAz-El-1fF" secondAttribute="trailing" id="pNr-LC-E0Z"/>
+                                    <constraint firstAttribute="bottom" secondItem="wAz-El-1fF" secondAttribute="bottom" id="urq-f8-pAy"/>
+                                    <constraint firstItem="wAz-El-1fF" firstAttribute="leading" secondItem="cuf-3O-dvR" secondAttribute="leading" id="y3m-TQ-FbJ"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cuf-3O-dvR" firstAttribute="top" secondItem="gvg-ho-JqP" secondAttribute="bottom" id="0BN-yz-SEf"/>
+                            <constraint firstItem="wAz-El-1fF" firstAttribute="height" secondItem="LJw-gN-8Ib" secondAttribute="height" multiplier="0.96" id="9wc-1M-4pZ"/>
+                            <constraint firstAttribute="trailing" secondItem="cuf-3O-dvR" secondAttribute="trailing" id="K14-C0-Ayv"/>
+                            <constraint firstAttribute="bottom" secondItem="cuf-3O-dvR" secondAttribute="bottom" id="WiJ-MH-vVZ"/>
+                            <constraint firstItem="cuf-3O-dvR" firstAttribute="leading" secondItem="LJw-gN-8Ib" secondAttribute="leading" id="g8v-LC-Hw2"/>
+                            <constraint firstItem="wAz-El-1fF" firstAttribute="width" secondItem="LJw-gN-8Ib" secondAttribute="width" id="jf2-IE-03e"/>
+                            <constraint firstItem="gvg-ho-JqP" firstAttribute="top" secondItem="fap-bG-NXq" secondAttribute="bottom" id="mCj-2o-DWv"/>
+                            <constraint firstItem="gvg-ho-JqP" firstAttribute="centerX" secondItem="LJw-gN-8Ib" secondAttribute="centerX" id="sEY-zh-KRc"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="500" height="600"/>
+                    <connections>
+                        <outlet property="aiMain" destination="Sgk-VA-Q8G" id="Ybc-YJ-lya"/>
+                        <outlet property="scMain" destination="gvg-ho-JqP" id="tuZ-qg-zHH"/>
+                        <outlet property="tbMain" destination="fuw-XE-GEX" id="Azd-iJ-uvA"/>
+                        <outlet property="vwMain" destination="wAz-El-1fF" id="0Me-is-tok"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CpC-fp-m7u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1075.78125" y="124.7437774524158"/>
+        </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

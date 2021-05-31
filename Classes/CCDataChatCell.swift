@@ -7,17 +7,23 @@
 
 import Foundation
 protocol DataChatCellDelegate: class {
+    func updateTableColumn(indexTab: Int, columns: [ChatTableColumn])
     func sendText(_ text: String, _ safe: Bool)
     func deleteQuery(idQuery: String)
     func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
 }
-class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate, IntroductionInteractionViewDelegate {
+class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, QueryBuilderViewDelegate, IntroductionInteractionViewDelegate, UITableViewDelegate, UITableViewDataSource, ColumnsCellDelegate {
     private var mainData = ChatComponentModel()
     private var menuButtons: [ButtonMenu] = []
     private var index: Int = 0
     private var functionJS = ""
+    private var arrColumnsData: [ColumnsItemModel] = []
+    private let tbMain = UITableView()
+    private var dataOriginal = ChatComponentModel()
+    private var isCheckBoxActive: Bool = false
+    private let imgCheck = UIImageView()
     let btnReport = UIButton()
     var vwFather: UIView = UIApplication.shared.keyWindow!
     var problemMessage = ""
@@ -26,8 +32,12 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         StackSelection(title: "The data is incomplete", action: #selector(reportProblem), tag: 1),
         StackSelection(title: "Other", action: #selector(reportProblem), tag: 2)
     ]
+    private var subMenuOptions: [SubMenuOption] = [
+        SubMenuOption(title: "View generated SQL", action: #selector(showSQL), tag: 0, img: "icSQL"),
+    ]
     let boxWeb = BoxWebviewView()
     var defaultType = ButtonMenu(imageStr: "icTable", action: #selector(changeChart), idHTML: "idTableBasic")
+    var formatWB = false
     var buttonDefault: myCustomButton?
     var lastQuery: Bool = false
     weak var delegate: DataChatCellDelegate?
@@ -42,7 +52,15 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         self.index = index
         self.backgroundColor = .clear
         contentView.backgroundColor = .clear
+        buildDataColumns()
         genereteData()
+    }
+    func buildDataColumns(){
+        arrColumnsData = []
+        for col in mainData.columnsInfo {
+            let finalcol = ColumnsItemModel(columnName: col.name, visibility: col.isVisible)
+            arrColumnsData.append(finalcol)
+        }
     }
     func loadLeftMenu(report: Bool = false, sql: Bool = true) {
         let new = ButtonMenu(imageStr: "icDelete", action: #selector(deleteQuery), idHTML: "idDelete")
@@ -51,12 +69,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
             let reportProblem = ButtonMenu(imageStr: "icReport", action: #selector(showMenu), idHTML: "icReport")
             menuButtons.append(reportProblem)
             if sql {
-                let sqlButton = ButtonMenu(imageStr: "icSQL", action: #selector(showSQL), idHTML: "icSQL")
+                let sqlButton = ButtonMenu(imageStr: "icPoints", action: #selector(showSubMenu), idHTML: "icPoints")
                 menuButtons.append(sqlButton)
             }
         }
     }
     func genereteData() {
+        formatWB = false
         switch mainData.type {
         case .Introduction:
             let valid = mainData.text.count < 15
@@ -66,6 +85,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
             loadLeftMenu(report: true)
             getIntroductionInteractive()
         case .Webview, .Table, .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
+            formatWB = true
             if !mainData.isLoading{
                 loadLeftMenu(report: true)
                 getWebView()
@@ -150,6 +170,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         let imgStr = mainData.groupable && mainData.biChart  ? icImage : "icTable"
         let idHTML = mainData.groupable && mainData.biChart ? idChart : "idTableBasic"
         defaultType = ButtonMenu(imageStr: imgStr, action: #selector(changeChart), idHTML: idHTML)
+        if imgStr == "icTable" {
+            mainData.type = .Table
+        }
         buttonDefault = createButton(btn: defaultType)
         boxWeb.loadWebview(strWebview: mainData.webView, idQuery: mainData.idQuery)
         boxWeb.cardView()
@@ -167,15 +190,15 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         loadButtons(area: .modalRight, buttons: menuButtons, view: boxWeb)
         if mainData.limit {
             let btnWarning = UIButton()
-            btnWarning.backgroundColor = .orange
+            btnWarning.setConfig(text: "i",
+                                 backgroundColor: .orange,
+                                 textColor: .white,
+                                 executeIn: self,
+                                 action: #selector(showAlertWarning))
             btnWarning.circle(30)
-            let alertW = UITapGestureRecognizer(target: self, action: #selector(showAlertWarning))
-            btnWarning.addGestureRecognizer(alertW)
-            btnWarning.setTitleColor(.white, for: .normal)
-            btnWarning.setTitle("i", for: .normal)
             btnWarning.tag = 11
             boxWeb.addSubview(btnWarning)
-            btnWarning.edgeTo(boxWeb, safeArea: .bottomRight, height: 30, padding: 8)
+            btnWarning.edgeTo(boxWeb, safeArea: .bottomRight, height: 30, padding: 8, secondPadding: -8)
         }
         self.sizeToFit()
     }
@@ -307,17 +330,50 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         delegate?.deleteQuery(idQuery: mainData.idQuery)
     }
     @IBAction func closeModal(_ sender: AnyObject) {
+        resetData()
+        let btnD = UIButton()
+        self.hideMenu(btnD)
         vwFather.removeView(tag: 200)
-        
+    }
+    @IBAction func applyChanges(_ sender: AnyObject) {
+        ChataServices.instance.saveColumnChanges(columns: mainData.columnsInfo)
+        let btnD = UIButton()
+        self.hideMenu(btnD)
+        delegate?.updateTableColumn(indexTab: index, columns: mainData.columnsInfo)
+        vwFather.removeView(tag: 200)
     }
     @IBAction func showSQL(_ sender: AnyObject){
         generatePopUpSQL()
     }
+    @IBAction func showColumns(_ sender: AnyObject){
+        generateSelectColumns()
+    }
+    @IBAction func showFilter(_ sender: AnyObject){
+        showFilters()
+    }
+    @IBAction func showSubMenu(_ sender: AnyObject){
+        superview?.removeView(tag: 2)
+        vwFather.removeView(tag: 2)
+        generateSubMenu()
+    }
     @IBAction func showMenu(_ sender: AnyObject){
+        superview?.removeView(tag: 2)
+        vwFather.removeView(tag: 2)
         genereMenuReport()
     }
     @IBAction func hideMenu(_ sender: AnyObject){
         superview?.removeView(tag: 2)
+        vwFather.removeView(tag: 2)
+    }
+    @IBAction func hideMenu2(gesture: UITapGestureRecognizer){
+        if gesture.state == .began {
+                    // do something...
+            superview?.removeView(tag: 2)
+        } else if gesture.state == .ended { // optional for touch up event catching
+                    // do something else...
+            print("tap up")
+        }
+        
     }
     @IBAction func reportProblem(_ sender: UIButton){
         
@@ -373,6 +429,74 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         boxWeb.updateType(newType: mainData.type)
         mainData.isLoading = true
     }
+    func isEyeOn() -> Bool {
+        for column in self.mainData.columnsInfo {
+            if !column.isVisible {
+                return true
+            }
+        }
+        return false
+    }
+    func generateSubMenu() {
+        let vwBackgroundMenu = UIView()
+        superview?.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
+        vwBackgroundMenu.isUserInteractionEnabled = false
+        vwBackgroundMenu.tag = 2
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideMenu))
+        contentView.addGestureRecognizer(gesture)
+        let vwMenu = UIView()
+        vwMenu.tag = 2
+        vwMenu.backgroundColor = chataDrawerBackgroundColorPrimary
+        vwFather.addSubview(vwMenu)
+        vwMenu.cardView()
+        if mainData.type != .Table || !formatWB {
+            if subMenuOptions.count > 1 {
+                subMenuOptions.remove(at: 1)
+            }
+        } else {
+            if subMenuOptions.count < 2 {
+                let icon = isEyeOn() ? "icEyeColumnNot" : "icEyeColumn"
+                let newOpt = SubMenuOption(title: "Show/Hide columns", action: #selector(showColumns), tag: 1, img: icon)
+                subMenuOptions.append(newOpt)
+                let newOpt2 = SubMenuOption(title: "Filter Table", action: #selector(showFilter), tag: 3, img: "icFilter")
+                subMenuOptions.append(newOpt2)
+            }
+        }
+        contentView.subviews.forEach { (subView) in
+            if subView.tag == 1 {
+                var finalSafe: DViewSafeArea = .dropDownTopHeight
+                if self.mainData.type == .Introduction {
+                    finalSafe = .dropDownBottomHeight
+                } else if lastQuery {
+                    let rowValidation = self.mainData.dataRows.count < 3
+                    finalSafe = rowValidation ? .dropDownBottomHeightLeft : finalSafe
+                }
+                vwMenu.edgeTo(self, safeArea: finalSafe, height: CGFloat(subMenuOptions.count * 40), subView)
+            }
+        }
+        let newStack = UIStackView()
+        newStack.getSide(axis: .vertical)
+        vwMenu.addSubview(newStack)
+        newStack.edgeTo(vwMenu, safeArea: .none)
+        subMenuOptions.forEach { (newItem) in
+            let newView = UIButton()
+            newView.setConfig(text: newItem.title,
+                              backgroundColor: .clear,
+                              textColor: chataDrawerTextColorPrimary,
+                              executeIn: self,
+                              action: newItem.action)
+            let image = UIImage(named: newItem.img, in: Bundle(for: type(of: self)), compatibleWith: nil)!
+            let image2 = image.resizeT(maxWidthHeight: 30)
+            newView.contentHorizontalAlignment = .left
+            newView.setImage(image2, for: .normal)
+            newView.titleLabel?.font = generalFont
+            newView.tag = newItem.tag
+            newStack.addArrangedSubview(newView)
+            newView.edgeTo(newStack, safeArea: .fullStackH)
+            newView.clipsToBounds = true
+        }
+    }
     func generatePopUpSQL() {
         let vwBackgroundMenu = UIView()
         vwBackgroundMenu.tag = 200
@@ -385,20 +509,19 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         vwBackgroundMenu.addSubview(newView)
         newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
         let lblTitle = UILabel()
-        lblTitle.textColor = chataDrawerTextColorPrimary
-        lblTitle.text = "Generated SQL"
+        lblTitle.setConfig(text: "Generated SQL",
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
         newView.addSubview(lblTitle)
         lblTitle.edgeTo(newView, safeArea: .topHeight, height: 50)
-        lblTitle.font = generalFont
-        lblTitle.textAlignment = .center
         lblTitle.addBorder()
         
         let btnCancel = UIButton()
-        btnCancel.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
-        btnCancel.cardView()
-        btnCancel.setTitleColor(.white, for: .normal)
-        btnCancel.setTitle("Ok", for: .normal)
-        btnCancel.backgroundColor = chataDrawerAccentColor
+        btnCancel.setConfig(text: "Ok",
+                            backgroundColor: chataDrawerAccentColor,
+                            textColor: .white,
+                            executeIn: self,
+                            action: #selector(closeModal))
         newView.addSubview(btnCancel)
         btnCancel.edgeTo(newView, safeArea: .bottomHeight, height: 40, padding: 8)
         let taSql = UITextView()
@@ -413,6 +536,92 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         taSql.edgeTo(newView, safeArea: .fullPadding , lblTitle, btnCancel , padding: 8)
         
     }
+    func generateSelectColumns() {
+        dataOriginal = mainData
+        let vwBackgroundMenu = UIView()
+        vwBackgroundMenu.tag = 200
+        vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        vwFather.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
+        let newView = UIView()
+        newView.backgroundColor = chataDrawerBackgroundColorPrimary
+        newView.cardView()
+        vwBackgroundMenu.addSubview(newView)
+        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
+        let lblTitle = UILabel()
+        lblTitle.setConfig(text: "Show/Hide Columns",
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
+        newView.addSubview(lblTitle)
+        lblTitle.edgeTo(newView, safeArea: .topHeight, height: 50)
+        lblTitle.addBorder()
+        let boxHeader = UIView()
+        boxHeader.backgroundColor = .clear
+        newView.addSubview(boxHeader)
+        boxHeader.edgeTo(newView, safeArea: .topHeightPadding, height: 30, lblTitle, padding: 16)
+        isCheckBoxActive = false
+        changeCheckStr()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeState) )
+        imgCheck.isUserInteractionEnabled = true
+        imgCheck.addGestureRecognizer(tap)
+        newView.addSubview(imgCheck)
+        imgCheck.edgeTo(boxHeader, safeArea: .rightCenterY, height: 25, padding: 0)
+        let lblHeader = UILabel()
+        lblHeader.setConfig(text: "Column Name",
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
+        lblHeader.setSize(16, true)
+        boxHeader.addSubview(lblHeader)
+        lblHeader.edgeTo(boxHeader, safeArea: .leftCenterY, height: 30, imgCheck, padding: 0)
+        let lblInfo = UILabel()
+        lblInfo.setSize(16, true)
+        lblInfo.setConfig(text: "Visibility",
+                          textColor: chataDrawerTextColorPrimary,
+                          align: .right)
+        boxHeader.addSubview(lblInfo)
+        lblInfo.edgeTo(boxHeader, safeArea: .leftCenterY, height: 30, imgCheck, padding: 0)
+        tbMain.backgroundColor = chataDrawerBorderColor
+        newView.addSubview(tbMain)
+        tbMain.edgeTo(newView, safeArea: .topHeightPadding, height: 90, boxHeader, padding: 16)
+        let stackView = UIStackView()
+        stackView.getSide()
+        newView.addSubview(stackView)
+        stackView.edgeTo(newView, safeArea:.midTopBottom2, tbMain, padding: 16)
+        let btnCancel = UIButton()
+        btnCancel.setConfig(text: "Cancel",
+                            backgroundColor: chataDrawerBorderColor,
+                            textColor: chataDrawerTextColorPrimary,
+                            executeIn: self,
+                            action: #selector(closeModal))
+        stackView.addArrangedSubview(btnCancel)
+        //btnCancel.edgeTo(newView, safeArea: .fullStackV, height: 50)
+        let btnApply = UIButton()
+        btnApply.setConfig(text: "Apply",
+                           backgroundColor: chataDrawerAccentColor,
+                           textColor: .white,
+                           executeIn: self,
+                           action: #selector(applyChanges))
+        stackView.addArrangedSubview(btnApply)
+        tbMain.setConfig(dataSource: self)
+        tbMain.backgroundColor = .clear
+        //btnApply.edgeTo(newView, safeArea: .fullStackV, height: 50)
+        
+    }
+    @objc func changeState(sender: UITapGestureRecognizer) {
+        isCheckBoxActive = !isCheckBoxActive
+        changeCheckStr()
+        for (idx, _) in mainData.columnsInfo.enumerated(){
+            mainData.columnsInfo[idx].isVisible = isCheckBoxActive
+            arrColumnsData[idx].visibility = isCheckBoxActive
+        }
+        tbMain.reloadData()
+    }
+    func changeCheckStr(){
+        let imgCheckStr = isCheckBoxActive ? "icCheckTrue" : "icCheckFalse"
+        let image = UIImage(named: imgCheckStr, in: Bundle(for: type(of: self)), compatibleWith: nil)!
+        let image2 = image.resizeT(maxWidthHeight: 25)
+        imgCheck.image = image2
+    }
     func generatePopUp () {
         let vwBackgroundMenu = UIView()
         vwBackgroundMenu.tag = 200
@@ -425,26 +634,25 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         vwBackgroundMenu.addSubview(newView)
         newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
         let lblTitle = UILabel()
-        lblTitle.textColor = chataDrawerTextColorPrimary
-        lblTitle.text = "Report Problem"
+        lblTitle.setConfig(text: "Report Problem",
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
         newView.addSubview(lblTitle)
         lblTitle.edgeTo(newView, safeArea: .topHeight, height: 50)
-        lblTitle.font = generalFont
-        lblTitle.textAlignment = .center
         let buttonCancel = UIButton()
-        buttonCancel.setTitle("✕", for: .normal)
-        buttonCancel.setTitleColor(chataDrawerBorderColor, for: .normal)
-        buttonCancel.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        buttonCancel.setConfig(text: "✕",
+                               backgroundColor: chataDrawerBorderColor,
+                               textColor: .darkGray,
+                               executeIn: self,
+                               action: #selector(closeModal))
         newView.addSubview(buttonCancel)
         buttonCancel.edgeTo(newView, safeArea: .alignViewLeft, height: 50, lblTitle)
         let lblInfo = UILabel()
-        lblInfo.text = "Please tell us more about the problem you are experiencing:"
+        lblInfo.setConfig(text: "Please tell us more about the problem you are experiencing:",
+                          textColor: chataDrawerTextColorPrimary,
+                          align: .center)
         newView.addSubview(lblInfo)
         lblInfo.edgeTo(newView, safeArea: .topHeightPadding, height: 50, lblTitle, padding: 16)
-        lblInfo.font = generalFont
-        lblInfo.numberOfLines = 0
-        lblInfo.textAlignment = .center
-        lblInfo.textColor = chataDrawerTextColorPrimary
         let tfReport = UITextField()
         tfReport.font = generalFont
         tfReport.textColor = chataDrawerTextColorPrimary
@@ -459,16 +667,18 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         newView.addSubview(stackView)
         stackView.edgeTo(newView, safeArea:.midTopBottom2, tfReport, padding: 16)
         let btnCancel = UIButton()
-        btnCancel.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
-        btnCancel.cardView()
-        btnCancel.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
-        btnCancel.setTitle("Cancel", for: .normal)
+        btnCancel.setConfig(text: "Cancel",
+                            backgroundColor: chataDrawerBorderColor,
+                            textColor: chataDrawerTextColorPrimary,
+                            executeIn: self,
+                            action: #selector(closeModal))
         stackView.addArrangedSubview(btnCancel)
         btnCancel.edgeTo(stackView, safeArea: .fullStackV, height: 100)
-        btnReport.cardView()
-        btnReport.backgroundColor = chataDrawerBorderColor
-        btnReport.setTitle("Report", for: .normal)
-        btnReport.addTarget(self, action: #selector(reportProblemName), for: .touchUpInside)
+        btnReport.setConfig(text: "Report",
+                            backgroundColor: chataDrawerAccentColor,
+                            textColor: .white,
+                            executeIn: self,
+                            action: #selector(reportProblemName))
         stackView.addArrangedSubview(btnReport)
         btnReport.edgeTo(stackView, safeArea: .fullStackV, height: 100)
     }
@@ -476,11 +686,10 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         
     }
     @objc func actionTyping(_ sender: UITextField) {
-        let valid = (sender.text ?? "") != ""
+        /*let valid = (sender.text ?? "") != ""
         UIView.animate(withDuration: 0.3) {
             self.btnReport.backgroundColor = valid ? chataDrawerAccentColor : chataDrawerBorderColor
-        }
-        btnReport.isEnabled = valid
+        }*/
         problemMessage = sender.text ?? ""
     }
     @objc func reportProblemName(_ sender: UIButton) {
@@ -500,11 +709,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         vwAlert.edgeTo(self, safeArea: .bottomHeight, height: 100, padding: 16, secondPadding: 40)
         vwAlert.isHidden = true
         let txtMain = UILabel()
-        txtMain.text = "The display limit of rows has been reached. Try queryng a smaller time-frame to ensure all yout data is displayed."
-        txtMain.textColor = .white
-        txtMain.textAlignment = .center
-        txtMain.numberOfLines = 0
-        txtMain.font = generalFont
+        txtMain.setConfig(text: "The display limit of rows has been reached. Try queryng a smaller time-frame to ensure all yout data is displayed.",
+                          textColor: .white,
+                          align: .center)
         vwAlert.addSubview(txtMain)
         txtMain.edgeTo(vwAlert, safeArea: .none, padding: 8)
         
@@ -519,11 +726,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         superview?.addSubview(vwBackgroundMenu)
         vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
         vwBackgroundMenu.tag = 2
+        vwBackgroundMenu.isUserInteractionEnabled = false
         let gesture = UITapGestureRecognizer(target: self, action: #selector(hideMenu))
-        vwBackgroundMenu.addGestureRecognizer(gesture)
+        contentView.addGestureRecognizer(gesture)
         let vwMenu = UIView()
+        vwMenu.tag = 2
         vwMenu.backgroundColor = chataDrawerBackgroundColorPrimary
-        vwBackgroundMenu.addSubview(vwMenu)
+        vwFather.addSubview(vwMenu)
         vwMenu.cardView()
         contentView.subviews.forEach { (subView) in
             if subView.tag == 1 {
@@ -543,10 +752,11 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         newStack.edgeTo(vwMenu, safeArea: .none)
         menuReportProblem.forEach { (newItem) in
             let newView = UIButton()
-            newView.setTitle(newItem.title, for: .normal)
-            newView.titleLabel?.font = generalFont
-            newView.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
-            newView.addTarget(self, action: newItem.action, for: .touchUpInside)
+            newView.setConfig(text: newItem.title,
+                              backgroundColor: .clear,
+                              textColor: chataDrawerTextColorPrimary,
+                              executeIn: self,
+                              action: newItem.action)
             newView.tag = newItem.tag
             newStack.addArrangedSubview(newView)
             newView.edgeTo(newStack, safeArea: .fullStackH)
@@ -557,6 +767,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         self.boxWeb.wbMain.evaluateJavaScript(functionJS, completionHandler: {
             (_,_) in
         })
+    }
+    public func showFilters(){
+        self.boxWeb.wbMain.evaluateJavaScript("showFilter();", completionHandler: {
+            (_,_) in
+        })
+        let tt: AnyObject = "" as AnyObject
+        closeModal(tt)
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         delegate?.sendDrillDown(idQuery: idQuery, obj: obj, name: name)
@@ -572,6 +789,44 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     }
     func openReport(){
         generatePopUp()
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arrColumnsData.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = ColumnsCell()
+        cell.delegate = self
+        cell.configCell(item: arrColumnsData[indexPath.row], index: indexPath.row)
+        return cell
+    }
+    func updateCell(index: Int, visibility: Bool) {
+        self.mainData.columnsInfo[index].isVisible = visibility
+        arrColumnsData[index].visibility = visibility
+        isCheckBoxActive = isStatusOn()
+        changeCheckStr()
+        tbMain.reloadData()
+    }
+    func isStatusOn() -> Bool {
+        for column in arrColumnsData {
+            if !column.visibility{
+                return false
+            }
+        }
+        return true
+    }
+    func resetData() {
+        self.mainData = dataOriginal
+        self.isCheckBoxActive = false
+        buildDataColumns()
+        tbMain.reloadData()
+    }
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in subviews {
+            if subview.frame.contains(point) {
+                return true
+            }
+        }
+        return false
     }
 }
 func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
@@ -591,6 +846,23 @@ struct StackSelection {
         self.title = title
         self.action = action
         self.tag = tag
+    }
+}
+struct SubMenuOption {
+    var title: String
+    var action: Selector
+    var tag: Int
+    var img: String
+    init(
+        title: String = "",
+        action: Selector = #selector(DataChatCell.reportProblem),
+        tag: Int = 0,
+        img: String = ""
+    ) {
+        self.title = title
+        self.action = action
+        self.tag = tag
+        self.img = img
     }
 }
 struct ButtonMenu {

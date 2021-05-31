@@ -132,7 +132,7 @@ private func getBiTypeCharts() -> String{
                 rotation: -60,
                 style: {
                         color: colorAxis,
-                         fontSize:'15.5px',
+                         fontSize:'13px',
                          fontFamily: ['-apple-system','HelveticaNeue']
                 },
                 
@@ -150,7 +150,7 @@ private func getBiTypeCharts() -> String{
               labels: {
                 style: {
                     color: colorAxis,
-                    fontSize:'15.5px',
+                    fontSize:'13px',
                     fontFamily: ['-apple-system','HelveticaNeue']
                 },
                 formatter: dollarFormat
@@ -245,7 +245,7 @@ private func getBiTypeCharts() -> String{
                                 text: xAxis,
                                 style: {
                                    color: colorAxis,
-                                   fontSize:'15.5px',
+                                   fontSize:'13px',
                                    fontFamily: ['-apple-system','HelveticaNeue']
                                }
                             }
@@ -264,61 +264,83 @@ private func getBiTypeCharts() -> String{
                     
             }
         }
-        function biType(type,inverted){
-            finalSize(inverted);
-            chart.destroy()
-                    chart = Highcharts.chart('container', defaultChart);
-            chart.update({
-                        chart: {
-                            type: type,
-                            inverted: inverted
+        function biType(type,inverted) {
+            var newCategory = categoriesX;
+            var chartBiSeries = {
+                chart: {
+                    type: type,
+                    inverted: inverted
+                },
+                xAxis: {
+                    gridLineWidth: 0,
+                    categories: newCategory,
+                    labels: {
+                        rotation: -60,
+                        style: {
+                            color: colorAxis,
+                            fontSize:'13px'
                         },
-                        yAxis: {
-                            title: {
-                                text: yAxis
-                            },
-                            labels: {
-                                formatter: dollarFormat
-                            }
-                        },
-                        xAxis: {
-                             gridLineWidth: 0,
-                             categories: categoriesX,
-                             labels: {
-                               rotation: inverted ? 0 : -60,
-                               style: xAxisStyle,
-                                formatter: function(){
-                                  return formatterLabel(this.value);
-                                }
-                             },
-                             
-                             title: {
-                               text: xAxis
-                             }
-                           },
-                        plotOptions: {
-                            series: {
-                                borderWidth: 0,
-                                dataLabels: {
-                                    enabled: false,
-                                    color: colorAxis,
-                                }
-                            }
-                        },
-                        series: [{
-                                colorByPoint: false,
-                                name: categoriesX,
-                                data: dataChartBi
-                            }],
-                        tooltip: {
-                            backgroundColor: colorGhost,
-                            style: styleTooltip,
-                            formatter: function () {
-                                drillDown(drillX[this.point.x])
-                                return "";
-                            }
+                        formatter: function() {
+                            return formatterLabel(this.value);
                         }
-                    });
+                    },
+                    title: {
+                        text: xAxis
+                    }
+                },
+                yAxis: {
+                    gridLineWidth: 0,
+                    min: 0,
+                    max: 3360,
+                    title: {
+                        text: yAxis,
+                        style: {
+                            color: colorAxis,
+                            fontSize:'13px'
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: colorGhost,
+                    style: styleTooltip,
+                    formatter: function () {
+                        var colorIndex = this.colorIndex;
+                        var x = this.point.x;
+                        var suffix = "";
+                        if (! (dataChartBi[0] instanceof Array)) {
+                            suffix = "_" + colorIndex;
+                        }
+                        drillDown(drillX[x] + suffix);
+                        return "";
+                    }
+                }
+            };
+            if (categoriesX.length == 1 && newCategory[0] === "") {
+                var newCategory = categoriesY;
+            }
+            finalSize(inverted);
+            chart.destroy();
+            if (dataChartBi2[0] instanceof Array || dataChartBi2.length == 0) {
+                chart = Highcharts.chart('container', defaultChart);
+                chartBiSeries.series = {
+                    colorByPoint: false,
+                    name: newCategory,
+                    data: dataChartBi
+                }
+                chart.update(chartBiSeries);
+            } else {
+                chartBiSeries.title = subTitle
+                chartBiSeries.subTitle = subTitle
+                chartBiSeries.showInLegend = true
+                chartBiSeries.legend = false
+                if (inverted) {
+                    chartBiSeries.chart.height = SSH;
+                }
+                chartBiSeries.colors = colors
+                chartBiSeries.series = dataChartBi2
+
+                chart = Highcharts.chart('container', chartBiSeries);
+            }
         }
         function biType3(type,inverted){
             finalSize(inverted);
@@ -553,8 +575,8 @@ func getConfigScript() -> String {
                drillDown( finalText );
         });
         function formatterLabel(value) {
-            if (value.length > 7) {
-                return value.slice(0, 7) + "...";
+            if (value.length > 20) {
+                return value.slice(0, 20) + "...";
             }
           return value;
         }
@@ -576,15 +598,21 @@ func getConfigScript() -> String {
         function typeTable(){
            //$('#container').hide(400);
         }
+        var SSW = 0
+        var SSH = 0
         function finalSize(invert){
-            var defaultWidth = "100%";
-            var defaultHeight = "90%";
-            var dynamicWidthSize = ""+categoriesX.length * 10+"%";
-            var widthSize = categoriesX.length <= 10 ? defaultWidth : dynamicWidthSize;
-            var dynamicHeightSize = ""+categoriesY.length * 10+"%";
-            var heightSize = categoriesY.length <= 5 ? defaultHeight : dynamicHeightSize;
-            var heightSizeFinal = invert ? heightSize : defaultHeight;
-            $('.container, #container').css({ "width": widthSize, "position": "relative","height":heightSizeFinal, "z-index": "0" });
+                var defaultWidth = "100%";
+                var defaultHeight = "90%";
+                var dynamicWidthSize = ""+categoriesX.length * 10+"%";
+                var FFH = invert ? categoriesX.length : categoriesY.length;
+                var widthSize = categoriesX.length <= 10 ? defaultWidth : dynamicWidthSize;
+                var dynamicHeightSize = ""+FFH * 25+"%";
+                var heightSize = FFH <= 5 ? dynamicHeightSize : dynamicHeightSize;
+                var heightSizeFinal = invert ? heightSize : defaultHeight;
+                SSW = invert ? "100%" : widthSize;
+                SSH = invert ? heightSizeFinal : "100%";
+                alert(SSH);
+                $('.container, #container').css({ "width": SSW, "position": "relative","height":SSH, "z-index": "0" });
         }
         function typeChart(graphic){
            var inverted = graphic == "column" || graphic == "line" ? false : true;

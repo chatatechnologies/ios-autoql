@@ -40,11 +40,11 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbMain.delaysContentTouches = false
         tbSecond.allowsSelection = true
         tbSecond.isUserInteractionEnabled = true
-        lblMain.text = "Some things you can ask me:"
+        lblMain.setConfig(text: "Some things you can ask me:",
+                          textColor: chataDrawerTextColorPrimary,
+                          align: .left)
         addSubview(lblMain)
         lblMain.edgeTo(self, safeArea: .topHeight, height: 30, padding: 8)
-        lblMain.textColor = chataDrawerTextColorPrimary
-        lblMain.font = generalFont
         addSubview(lblInfo)
         lblInfo.edgeTo(self, safeArea: .bottomHeight, height: 60, padding: 8)
         addSubview(tbMain)
@@ -112,11 +112,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         })
     }
     func loadTable() {
-        tbMain.delegate = self
-        tbMain.dataSource = self
+        tbMain.setConfig(dataSource: self, separate: true)
         loadData()
-        tbSecond.delegate = self
-        tbSecond.dataSource = self
+        tbSecond.setConfig(dataSource: self, separate: true)
     }
     func loadData() {
         loadingView(mainView: self, inView: tbMain)
@@ -138,6 +136,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             let viewHeader = UIView()
             viewHeader.backgroundColor = chataDrawerBackgroundColorPrimary
             let lbl = UILabel()
+            lbl.setConfig(text: "",
+                          textColor: chataDrawerTextColorPrimary,
+                          align: .left)
             lbl.textColor = chataDrawerTextColorPrimary
             if selectSection != -1 {
                 lbl.text = dataQB[selectSection].topic
@@ -151,7 +152,16 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         return viewHeader
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return tableView == tbMain ? 0 : 25
+        let heightFinal: CGFloat = tableView == tbMain ? 0 : 25
+        return heightFinal
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == tbSecond {
+            let height = getSizeText(dataSelection[indexPath.row], 400)
+            return height
+        }
+        let heightFinal: CGFloat = tableView == tbMain ? 40 : 70
+        return heightFinal
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

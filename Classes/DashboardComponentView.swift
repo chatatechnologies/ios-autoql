@@ -23,6 +23,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     let lblDefault = UILabel()
     var position = 0
     let btnReport = UIButton()
+    let btnSql = UIButton()
     var mainText = "Hit 'Execute' to run this dashboard"
     var problemMessage = ""
     var buttonReport = UIButton()
@@ -40,23 +41,34 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         return String(describing: self)
     }
     func configCell(data: DashboardModel, pos: Int, loading: Int = 0, secondLoading: Int = 0) {
-        self.backgroundColor = chataDrawerBackgroundColorPrimary
-        self.contentView.backgroundColor = chataDrawerBackgroundColorPrimary
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
         self.mainData = data
         self.position = pos
         styleComponent()
         loadTitle()
         let secondType = ChatComponentType.withLabel(data.secondDisplayType)
         vwWebview.addSubview(buttonReport)
+        vwWebview.addSubview(btnSql)
         let image = UIImage(named: "icReport", in: Bundle(for: type(of: self)), compatibleWith: nil)
         let image2 = image?.resizeT(maxWidthHeight: 30)
+        let imageP = UIImage(named: "icSQL", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        let imageP2 = imageP?.resizeT(maxWidthHeight: 30)
         buttonReport.setImage(image2, for: .normal)
         buttonReport.cardView()
         buttonReport.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
         buttonReport.backgroundColor = chataDrawerBackgroundColorPrimary
-        buttonReport.edgeTo(vwWebview, safeArea: .bottomRight, height: 30, padding: 8)
+        buttonReport.edgeTo(vwWebview, safeArea: .bottomRight, height: 30, padding: 8, secondPadding: -8)
         buttonReport.isHidden = loadWB
         buttonReport.layer.zPosition = 48
+        
+        btnSql.setImage(imageP2, for: .normal)
+        btnSql.cardView()
+        btnSql.addTarget(self, action: #selector(showSQL), for: .touchUpInside)
+        btnSql.backgroundColor = chataDrawerBackgroundColorPrimary
+        btnSql.edgeTo(vwWebview, safeArea: .bottomRight, height: 30, padding: 8, secondPadding: -48)
+        btnSql.isHidden = loadWB
+        btnSql.layer.zPosition = 49
         if data.splitView{
             let multiLoad = loading == 0 ? 0 : secondLoading == 2 && loading == 2 ? 2 : 1
             loadComponent(view: vwWebview, nsType: .bottomPorcent, connect: lblMain, loading: multiLoad, type: data.type )
@@ -94,7 +106,49 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
     @IBAction func showMenu(_ sender: AnyObject){
         genereMenuReport()
     }
-    @IBAction func hideMenu(_ sender: AnyObject){
+    @IBAction func showSQL(_ sender: AnyObject){
+        generatePopUpSQL()
+    }
+    func generatePopUpSQL() {
+        let vwBackgroundMenu = UIView()
+        vwBackgroundMenu.tag = 200
+        vwBackgroundMenu.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        vwFather.addSubview(vwBackgroundMenu)
+        vwBackgroundMenu.edgeTo(vwFather, safeArea: .none)
+        let newView = UIView()
+        newView.backgroundColor = chataDrawerBackgroundColorPrimary
+        newView.cardView()
+        vwBackgroundMenu.addSubview(newView)
+        newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
+        let lblTitle = UILabel()
+        lblTitle.setConfig(text: "Generated SQL",
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
+        newView.addSubview(lblTitle)
+        lblTitle.edgeTo(newView, safeArea: .topHeight, height: 50)
+        lblTitle.addBorder()
+        
+        let btnCancel = UIButton()
+        btnCancel.setConfig(text: "Ok",
+                            backgroundColor: chataDrawerAccentColor,
+                            textColor: .white,
+                            executeIn: self,
+                            action: #selector(closeModal))
+        newView.addSubview(btnCancel)
+        btnCancel.edgeTo(newView, safeArea: .bottomHeight, height: 40, padding: 8)
+        let taSql = UITextView()
+        taSql.font = generalFont
+        var finalSqlText = ""
+        for text in mainData.sql {
+            finalSqlText += text
+        }
+        taSql.backgroundColor = chataDrawerBorderColor
+        taSql.text = finalSqlText
+        newView.addSubview(taSql)
+        taSql.edgeTo(newView, safeArea: .fullPadding , lblTitle, btnCancel , padding: 8)
+        
+    }
+    @IBAction func hideMenu(_ sender: AnyObject?){
         superview?.removeView(tag: 2)
     }
     func genereMenuReport() {
@@ -127,43 +181,44 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newStack.edgeTo(vwMenu, safeArea: .none)
         menuReportProblem.forEach { (newItem) in
             let newView = UIButton()
-            newView.setTitle(newItem.title, for: .normal)
-            newView.titleLabel?.font = generalFont
-            newView.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
-            newView.addTarget(self, action: newItem.action, for: .touchUpInside)
             newView.tag = newItem.tag
+            newView.setConfig(text: newItem.title,
+                              backgroundColor: .clear,
+                              textColor: chataDrawerTextColorPrimary,
+                              executeIn: self,
+                              action: newItem.action)
             newStack.addArrangedSubview(newView)
             newView.edgeTo(newStack, safeArea: .fullStackH)
             newView.clipsToBounds = true
         }
     }
     func styleComponent() {
-        self.contentView.backgroundColor = chataDrawerBackgroundColorSecondary
+        //self.contentView.backgroundColor = chataDrawerBackgroundColorSecondary
         vwComponent.cardView()
-        vwComponent.backgroundColor = chataDrawerBackgroundColorPrimary
+        //vwComponent.backgroundColor = chataDrawerBackgroundColorPrimary
+        self.contentView.backgroundColor = DataConfig.dashboardParameters.backgroundDashboard.hexToColor()
         self.contentView.addSubview(vwComponent)
-        vwComponent.edgeTo(self, safeArea: .noneTopPadding, height: 8, padding: 1)
+        vwComponent.edgeTo(self, safeArea: .noneTopPadding, height: 1, padding: 1)
     }
     func loadComponent(view: UIView, nsType: DViewSafeArea = .midTopBottom2, connect: UIView, loading: Int = 0, type: ChatComponentType) {
         vwComponent.addSubview(view)
         vwComponent.backgroundColor = chataDrawerBackgroundColorPrimary
-        view.edgeTo(vwComponent, safeArea: nsType, height: 0.38, connect,  padding: 8)
+        view.edgeTo(vwComponent, safeArea: nsType, height: 0.38, connect,  padding: 1)
         loadDefault(view: view, loading: loading, type: type)
     }
     func loadTitle() {
         lblMain.text = mainData.title
         vwComponent.addSubview(lblMain)
         lblMain.edgeTo(vwComponent, safeArea: .topHeight, height: 30, padding: 8)
-        lblMain.textColor = chataDrawerAccentColor
+        lblMain.textColor = DataConfig.dashboardParameters.titleColor.hexToColor()
     }
     func loadDefault(view: UIView ,loading: Int = 0, type: ChatComponentType) {
         if loading == 0 {
             let newLbl = UILabel()
-            newLbl.text = mainText
-            newLbl.numberOfLines = 0
+            newLbl.setConfig(text: mainText,
+                             textColor: chataDrawerTextColorPrimary,
+                             align: .center)
             newLbl.tag = 1
-            newLbl.textColor = chataDrawerTextColorPrimary
-            newLbl.textAlignment = .center
             view.addSubview(newLbl)
             newLbl.edgeTo(view, safeArea: .none)
         } else {
@@ -223,6 +278,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
             self.wbMain.edgeTo(view, safeArea: .noneBottom, secondPadding: 40)
             loaderWebview(view: view, type2: .Webview)
             buttonReport.isHidden = false
+            btnSql.isHidden = false
             buttonReport.layer.zPosition = 48
             loadWB = false
             wbMain.layer.zPosition = 49
@@ -391,26 +447,25 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         vwBackgroundMenu.addSubview(newView)
         newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
         let lblTitle = UILabel()
-        lblTitle.textColor = chataDrawerTextColorPrimary
-        lblTitle.text = "Report Problem"
+        lblTitle.setConfig(text: "Report Problem",
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
         newView.addSubview(lblTitle)
         lblTitle.edgeTo(newView, safeArea: .topHeight, height: 50)
-        lblTitle.font = generalFont
-        lblTitle.textAlignment = .center
         let buttonCancel = UIButton()
-        buttonCancel.setTitle("✕", for: .normal)
-        buttonCancel.setTitleColor(chataDrawerBorderColor, for: .normal)
-        buttonCancel.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        buttonCancel.setConfig(text: "x",
+                               backgroundColor: .clear,
+                               textColor: chataDrawerBorderColor,
+                               executeIn: self,
+                               action: #selector(closeModal))
         newView.addSubview(buttonCancel)
         buttonCancel.edgeTo(newView, safeArea: .alignViewLeft, height: 50, lblTitle)
         let lblInfo = UILabel()
-        lblInfo.text = "Please tell us more about the problem you are experiencing:"
+        lblInfo.setConfig(text: "Please tell us more about the problem you are experiencing:",
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
         newView.addSubview(lblInfo)
         lblInfo.edgeTo(newView, safeArea: .topHeightPadding, height: 50, lblTitle, padding: 16)
-        lblInfo.font = generalFont
-        lblInfo.numberOfLines = 0
-        lblInfo.textAlignment = .center
-        lblInfo.textColor = chataDrawerTextColorPrimary
         let tfReport = UITextField()
         tfReport.font = generalFont
         tfReport.textColor = chataDrawerTextColorPrimary
@@ -425,16 +480,18 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newView.addSubview(stackView)
         stackView.edgeTo(newView, safeArea:.midTopBottom2, tfReport, padding: 16)
         let btnCancel = UIButton()
-        btnCancel.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
-        btnCancel.cardView()
-        btnCancel.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
-        btnCancel.setTitle("Cancel", for: .normal)
+        btnCancel.setConfig(text: "Cancel",
+                            backgroundColor: chataDrawerBorderColor,
+                            textColor: chataDrawerTextColorPrimary,
+                            executeIn: self,
+                            action: #selector(closeModal))
         stackView.addArrangedSubview(btnCancel)
         btnCancel.edgeTo(stackView, safeArea: .fullStackV, height: 100)
-        btnReport.cardView()
-        btnReport.backgroundColor = chataDrawerBorderColor
-        btnReport.setTitle("Report", for: .normal)
-        btnReport.addTarget(self, action: #selector(reportProblemName), for: .touchUpInside)
+        btnReport.setConfig(text: "Report",
+                            backgroundColor: chataDrawerBorderColor,
+                            textColor: chataDrawerTextColorPrimary,
+                            executeIn: self,
+                            action: #selector(reportProblemName))
         stackView.addArrangedSubview(btnReport)
         btnReport.edgeTo(stackView, safeArea: .fullStackV, height: 100)
     }

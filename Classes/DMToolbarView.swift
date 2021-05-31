@@ -45,9 +45,9 @@ class ToolbarView: UIView {
         btnDelete.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
         self.addSubview(btnDelete)
         btnDelete.edgeTo(self, safeArea: .rightBottom, height: 40.0, self)
-        lblTitle.text = DataConfig.title
-        lblTitle.textColor = .white
-        lblTitle.textAlignment = .center
+        lblTitle.setConfig(text: DataConfig.title,
+                           textColor: .white,
+                           align: .center)
         lblTitle.setSize(16, true)
         self.addSubview(lblTitle)
         lblTitle.edgeTo(self, safeArea: .fullWidth, height: 40.0, cancel, btnDelete)

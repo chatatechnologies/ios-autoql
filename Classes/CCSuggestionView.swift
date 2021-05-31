@@ -45,12 +45,12 @@ class SuggestionView: UIView {
     private func loadSuggestion(options: [String]){
         options.forEach { (text) in
             let btn = UIButton()
-            btn.setTitle(text, for: .normal)
-            btn.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
-            btn.cardView()
+            btn.setConfig(text: text,
+                          backgroundColor: .clear,
+                          textColor: chataDrawerTextColorPrimary,
+                          executeIn: self,
+                          action: #selector(selectSuggest))
             stack.addArrangedSubview(btn)
-            btn.titleLabel?.font = generalFont
-            btn.addTarget(self, action: #selector(selectSuggest), for: .touchUpInside)
             btn.edgeTo(stack, safeArea: .fullStackH, height: 50, padding: 8)
         }
     }

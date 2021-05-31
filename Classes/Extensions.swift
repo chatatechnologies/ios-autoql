@@ -220,6 +220,16 @@ extension CGFloat {
         return finalColor
     }
 }
+extension UITableView {
+    func setConfig(dataSource: UITableViewDataSource, separate: Bool = false ) {
+        self.dataSource = dataSource
+        self.delegate = dataSource as? UITableViewDelegate
+        self.separatorStyle = separate ? .singleLine : .none
+        self.bounces = false
+        self.clipsToBounds = true
+        
+    }
+}
 extension UIImage {
     func resizeT(maxWidthHeight : Double)-> UIImage? {
 
@@ -266,6 +276,15 @@ extension UIButton {
         self.layer.shadowRadius = 5.0
         self.layer.masksToBounds = false
     }
+    func setConfig(text: String, backgroundColor: UIColor, textColor: UIColor, executeIn: Any?, action: Selector) {
+        self.addTarget(executeIn, action: action, for: .touchUpInside)
+        self.cardView()
+        self.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
+        self.setTitle(text, for: .normal)
+        self.backgroundColor = backgroundColor
+        self.setTitleColor(textColor, for: .normal)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+    }
 }
 extension UITextField {
     func addLeftImageTo(image: UIImage) {
@@ -275,6 +294,11 @@ extension UITextField {
         imageView.image = image
         self.leftView = imageView
         self.leftViewMode = .always
+    }
+    func setConfig(text: String, background: UIColor, align: NSTextAlignment) {
+        self.text = text
+        self.backgroundColor = background
+        self.textAlignment = align
     }
     func borderRadius() {
         self.layer.borderWidth = 1.0
@@ -468,6 +492,13 @@ extension UIStackView{
 extension UILabel {
     func setSize(_ size: CGFloat = 16, _ bold: Bool = false) {
         font = !bold ? UIFont.systemFont(ofSize: size) : UIFont.boldSystemFont(ofSize: size)
+    }
+    func setConfig(text: String, textColor: UIColor, align: NSTextAlignment) {
+        self.text = text
+        self.textColor = textColor
+        self.textAlignment = align
+        self.font = generalFont
+        self.numberOfLines = 0
     }
 }
 extension Array {

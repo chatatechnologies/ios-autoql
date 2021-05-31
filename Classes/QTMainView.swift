@@ -50,9 +50,23 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         loadTable()
         loadDefault()
     }
+    func toogleButton(hideButton: Bool = false){
+        //btnSend.isHidden = hideButton
+        if !hideButton{
+            reset()
+        }
+    }
+    func reset(){
+        Qtips.items = []
+        self.tfMain.text = ""
+        tbMain.reloadData()
+        toogleView(true)
+    }
     func runQuery(text: String) {
+        
         let characters = text.map { $0 }
         var index = 0
+        self.tfMain.text = ""
         Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] timer in
             if index < text.count {
                 let char = characters[index]
@@ -95,11 +109,7 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         tfMain.setLeftPaddingPoints(10)
     }
     private func loadTable() {
-        tbMain.delegate = self
-        tbMain.dataSource = self
-        tbMain.separatorStyle = .none
-        tbMain.clipsToBounds = true
-        tbMain.bounces = true
+        tbMain.setConfig(dataSource: self)
         tbMain.backgroundColor = chataDrawerBackgroundColorSecondary
         vwMainChat.addSubview(tbMain)
         tbMain.edgeTo(vwMainChat, safeArea: .fullPadding, tfMain, svPaginator, padding: 8)
@@ -119,6 +129,10 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
             let defaultMed: String = selectBtn == 1 || selectBtn == Qtips.pagination.totalPages ? "..." : "\(selectBtn)"
             btns.insert("\(defaultMed)", at: 2)
             btns.insert("\(Qtips.pagination.totalPages)", at: 3)
+            if Qtips.pagination.totalPages > 6{
+                btns.insert("2", at: 2)
+                btns.insert("\(Qtips.pagination.totalPages - 1)", at: 4)
+            }
         } else {
             for btn in 0..<Qtips.pagination.totalPages{
                 let number = btn + 1
@@ -127,7 +141,6 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         btns.enumerated().forEach { (index, titleBtn) in
             let btnGeneral = UIButton()
-            btnGeneral.setTitle(titleBtn, for: .normal)
             let number = Int(titleBtn) ?? -1
             var finalIndex = number
             if number == -1 {
@@ -137,11 +150,13 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                     finalIndex = index
                 }
             }
+            btnGeneral.setConfig(text: titleBtn,
+                                 backgroundColor: .clear,
+                                 textColor: chataDrawerTextColorPrimary,
+                                 executeIn: self,
+                                 action: #selector(actionChangePage))
             btnGeneral.tag = finalIndex
-            btnGeneral.circle(30)
-            btnGeneral.titleLabel?.font = generalFont
             svPaginator.addArrangedSubview(btnGeneral)
-            btnGeneral.addTarget(self, action: #selector(actionChangePage), for: .touchUpInside)
             btnGeneral.edgeTo(svPaginator, safeArea: .fullStackV, height: 30, padding: 8)
         }
         loadMainBtn()
@@ -164,15 +179,15 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwDefault.edgeTo(vwMainChat, safeArea: .fullStatePaddingAll, tfMain, padding: 0)
         vwDefault.addSubview(lblDefault)
         lblDefault.edgeTo(vwDefault, safeArea: .topHeight, height: 150, padding: 16)
-        lblDefault.text = titleDefault == "" ? """
+        let strText = titleDefault == "" ? """
         Discover what you can ask by entering a topic in the search bar above.
 
         Simply click on any of the returned options to run the query in Data Messenger.
         """ : titleDefault
-        lblDefault.textColor = chataDrawerTextColorPrimary
-        lblDefault.numberOfLines = 0
-        lblDefault.font = generalFont
         toogleView()
+        lblDefault.setConfig(text: strText,
+                             textColor: chataDrawerTextColorPrimary,
+                             align: .center)
     }
     func toogleView(_ hideTable: Bool = true) {
         tbMain.isHidden = hideTable

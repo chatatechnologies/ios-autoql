@@ -30,7 +30,7 @@ class DashboardView: UIView {
         lbTextrun.text = "Run Dashboard Automatically"
         lbTextrun.textAlignment = .center
         addSubview(btnExecute)
-        btnExecute.edgeTo(self, safeArea: .secondTop, height: 30, width: 120)
+        btnExecute.edgeTo(self, safeArea: .secondTop, height: 30, width: 120, padding: 8)
         addSubview(vwDash)
         vwDash.edgeTo(self, safeArea:.fullState, btnExecute)
         vwDash.addSubview(dash)

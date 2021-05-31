@@ -36,13 +36,13 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     func loadDashboardView(){
         loadTableD(table: tbMain)
         loadTableD(table: tbListDashboard)
+        spinnerDashboard.setConfig(text: "",
+                                   backgroundColor: chataDrawerBackgroundColorPrimary,
+                                   textColor: chataDrawerAccentColor,
+                                   executeIn: self,
+                                   action: #selector(toggleDash))
         self.addSubview(spinnerDashboard)
         spinnerDashboard.edgeTo(self, safeArea: .topHeight, height: 40, padding: 8)
-        spinnerDashboard.titleLabel?.font = generalFont
-        spinnerDashboard.setTitleColor(chataDrawerAccentColor, for: .normal)
-        spinnerDashboard.cardView()
-        spinnerDashboard.addTarget(self, action: #selector(toggleDash), for: .touchUpInside)
-        spinnerDashboard.backgroundColor = chataDrawerBackgroundColorPrimary
         self.addSubview(tbMain)
         tbMain.edgeTo(self, safeArea: .fullStatePadding, spinnerDashboard, padding: 8)
         loadEmptyView()
@@ -61,10 +61,9 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         vwEmptyDash.edgeTo(self, safeArea: .topHeightFixPadding, height: 100, spinnerDashboard)
         vwEmptyDash.isHidden = true
         let lblText = UILabel()
-        lblText.text = "Empty Dashboard"
-        lblText.textColor = chataDrawerTextColorPrimary
-        lblText.textAlignment = .center
-        lblText.textColor = chataDrawerTextColorPrimary
+        lblText.setConfig(text: "Empty Dashboard",
+                          textColor: chataDrawerTextColorPrimary,
+                          align: .center)
         vwEmptyDash.addSubview(lblText)
         lblText.edgeTo(vwEmptyDash, safeArea: .none)
     }
@@ -76,7 +75,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
     ){
         self.themeConfigDashboard = theme
         reloadColors(dark: themeConfigDashboard.theme == "dark")
-        self.backgroundColor = chataDrawerBackgroundColorSecondary
+        self.backgroundColor = DataConfig.dashboardParameters.backgroundDashboard.hexToColor()
         loadDashboardView()
         self.edgeTo(view, safeArea: .none)
         self.mainView = mainView
@@ -126,10 +125,11 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
         vwDrillDown.addSubview(component)
         component.edgeTo(vwDrillDown, safeArea: .noneTopPadding, height: 30, padding: 50)
         let lbTitle = UILabel()
-        lbTitle.text = title
-        lbTitle.textAlignment = .center
+        lbTitle.setConfig(text: title,
+                          textColor: chataDrawerTextColorPrimary,
+                          align: .center)
         component.addSubview(lbTitle)
-        lbTitle.edgeTo(component, safeArea: .topHeight, height: 30, padding: 20)
+        lbTitle.edgeTo(component, safeArea: .topHeight, height: 30, padding: 10)
         lbTitle.addBorder()
         component.addSubview(vwWebview)
         vwWebview.backgroundColor = .gray
@@ -147,7 +147,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             wbSecond = WKWebView(frame: self.bounds, configuration: config)
             component.addSubview(self.vwSecondWebview)
             self.vwSecondWebview.backgroundColor = .blue
-            self.vwSecondWebview.edgeTo(component, safeArea: .bottomPorcent, height: 0.38, lbTitle, padding: 20 )
+            self.vwSecondWebview.edgeTo(component, safeArea: .bottomPorcent, height: 0.38, lbTitle, padding: 0 )
             self.vwSecondWebview.addSubview(wbSecond)
             wbSecond.edgeTo(vwSecondWebview, safeArea: .none)
             wbSecond.navigationDelegate = self
@@ -155,7 +155,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             DispatchQueue.main.async {
                 self.wbSecond.loadHTMLString(webview, baseURL: nil)
             }
-            vwWebview.edgeTo(component, safeArea: .midTopBottom, vwSecondWebview, padding: 20 )
+            vwWebview.edgeTo(component, safeArea: .midTopBottom2, vwSecondWebview, padding: 20 )
         } else {
             vwWebview.edgeTo(component, safeArea: .midTopBottom, lbTitle, padding: 20 )
         }
@@ -243,6 +243,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                     self.dataDash[pos].idQuery = component.idQuery
                     self.dataDash[pos].columnsInfo = component.columnsInfo
                     self.dataDash[pos].loading = 2
+                    self.dataDash[pos].sql = component.sql
                     let indexPath = IndexPath(row: pos, section: 0)
                     self.tbMain.reloadRows(at: [indexPath], with: .none)
                 }

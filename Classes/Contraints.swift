@@ -60,9 +60,17 @@ extension UIView {
             getConst(view: secondView, side: .left, padding: finalPadding.left)
             getConst(view: view, side: .bottom, padding: finalPadding.bottom)
         case .midTopBottom:
+            getConst(view: view, side: .left, padding: finalPadding.left)
+            getConst(view: secondView, side: .rightLeft, padding: finalPadding.right)
+            getConst(view: view, side: .height, padding: height)
+            getConst(view: view, side: .top, padding: finalPadding.top)
+            
+            
+        /*case .midTopBottom3:
             getConst(view: view, side: .bottom, padding: finalPadding.bottom)
-            sideSymetric(view: secondView, padding: finalPadding.left)
-            getConst(view: secondView, side: .topBottom, padding: finalPadding.top)
+            getConst(view: secondView, side: .left, padding: finalPadding.left)
+            getConst(view: secondView, side: .right, padding: finalPadding.right)
+            getConst(view: secondView, side: .topBottom, padding: finalPadding.top)*/
         case .bottomPorcent:
             getConst(view: view, side: .heightMultiplier, padding: finalPadding.height)
             sideSymetric(view: secondView, padding: finalPadding.left)
@@ -196,7 +204,7 @@ extension UIView {
             getConst(view: view, side: .right, padding: -10)
             getConst(view: view, side: .bottom)
         case .secondTop:
-            getConst(view: view, side: .top)
+            getConst(view: view, side: .top, padding: padding)
             getConst(view: view, side: .height, padding: height)
             getConst(view: view, side: .width, padding: width)
             getConst(view: view, side: .centerX)
@@ -353,7 +361,7 @@ extension UIView {
             getConst(view: view, side: .height, padding: finalPadding.height)
         case .bottomRight:
             sizeSymetric(view: view, size: height)
-            getConst(view: view, side: .right, padding: finalPadding.right)
+            getConst(view: view, side: .right, padding: secondPadding)
             getConst(view: view, side: .bottom, padding: finalPadding.bottom)
         case .alignViewLeft:
             centerYAnchor.constraint(equalTo: secondView.centerYAnchor).isActive = true

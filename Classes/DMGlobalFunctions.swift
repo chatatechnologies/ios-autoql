@@ -16,6 +16,14 @@ var DRILLDOWNACTIVE = false
 var speechResult = SFSpeechRecognitionResult()
 var finalText = ""
 var data = ChatComponentModel()
+private func validateRows(rows: [ChatTableColumn]) -> Bool {
+    for row in rows {
+        if row.isVisible {
+            return true
+        }
+    }
+    return false
+}
 func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     data = row
     switch row.type {
@@ -24,14 +32,16 @@ func getSize(row: ChatComponentModel, width: CGFloat) -> CGFloat  {
     case .IntroductionInteractive:
         return 170
     case .Table, .Webview:
-        return getSizeWebView(numRow: row.numRow)
+        let validRow = validateRows(rows: row.columnsInfo)
+        return validRow ? getSizeWebView(numRow: row.numRow) : 250
     case .Bar, .Line, .Column, .Pie, .Bubble, .Heatmap, .StackBar, .StackColumn, .StackArea:
         return 380
     case .Suggestion:
         return getSizeSuggestion()
     case .Safetynet:
         let finalStr = row.options.count > 0 ? row.options[0] : ""
-        return getSizeSafetynet(originalQuery: finalStr)
+        let heigthFinal = getSizeSafetynet(originalQuery: finalStr)
+        return heigthFinal
     case .QueryBuilder:
         let base = 120
         if row.numQBoptions == 0 {
@@ -56,7 +66,7 @@ func getSizeDashboard(row: DashboardModel, width: CGFloat) -> CGFloat  {
         return 0
     }
 }
-private func getSizeText(_ text: String, _ width: CGFloat) -> CGFloat {
+func getSizeText(_ text: String, _ width: CGFloat) -> CGFloat {
     let approximateWidthOfBioTextView = width - 12 - 50 - 12 - 2
     let size = CGSize(width: approximateWidthOfBioTextView, height: 1000)
     let attributes = [NSAttributedString.Key.font: generalFont]
@@ -65,7 +75,10 @@ private func getSizeText(_ text: String, _ width: CGFloat) -> CGFloat {
                                                              attributes: attributes,
                                                              context: nil)
     let sum: CGFloat = data.webView == "" ? 0.0 : 15.0
-    let finalHeight = estimatedFrame.height + 50 + sum
+    var finalHeight = estimatedFrame.height + 50 + sum
+    if text.contains("Error ID"){
+        finalHeight += 10
+    }
     return finalHeight
 }
 private func getSizeWebView(numRow: Int) -> CGFloat{
@@ -83,7 +96,7 @@ func getSizeSafetynet(originalQuery: String) -> CGFloat {
     let numRow: Float = Float(size / 3.0)
     let numInt: Int = Int(numRow.rounded(.up))
     let numRows = numInt == 0 ? 1 : numInt
-    let finalSize = CGFloat(140 + (45 * numRows))
+    let finalSize = CGFloat(170 + (45 * numRows))
     return finalSize
 }
 func startRecording(textbox: UITextField) throws {

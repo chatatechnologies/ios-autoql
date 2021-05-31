@@ -43,7 +43,25 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         loadOptions()
     }
     func getCredentials(demoEmpty: Bool = true, spira: Bool = false) {
-        
+        if !demoEmpty {
+                            loginSection.arrParameters = spira ? [
+                                DemoParameter(label: "* Project ID", type: .input, value: "spira-demo3", key: "projectID"),
+                                DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
+                                DemoParameter(label: "* API key", type: .input, value: "AIzaSyBxmGxl9J9siXz--dS-oY3-5XRSFKt_eVo", key: "apiKey"),
+                                DemoParameter(label: "* Domain URL", type: .input, value: "https://spira-staging.chata.io", key: "domain"),
+                                DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
+                                DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
+                                DemoParameter(label: "Authenticate", type: .button, key: "login")
+                            ] : [
+                                DemoParameter(label: "* Project ID", type: .input, value: "atb-demo", key: "projectID"),
+                                DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
+                                DemoParameter(label: "* API key", type: .input, value: "AIzaSyCdHG-E_rX2ENGZJhYBjxmUSAZaqfyqm-0", key: "apiKey"),
+                                DemoParameter(label: "* Domain URL", type: .input, value: "https://atb-staging.chata.io", key: "domain"),
+                                DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
+                                DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
+                                DemoParameter(label: "Authenticate", type: .button, key: "login")
+                            ]
+                        }
     }
     @IBAction func changeSection(_ sender: Any) {
         switch scMain.selectedSegmentIndex {
@@ -84,13 +102,14 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     }
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.tbMain.frame.origin.y == 0 {
-                self.tbMain.frame.origin.y -= keyboardSize.height
+            if self.vwMain.frame.origin.y == 0.0 {
+                let size = keyboardSize.height
+                //self.vwMain.frame.origin.y -= size
             }
         }
     }
     @objc func keyboardWillHide() {
-        self.tbMain.frame.origin.y = 0
+        //self.vwMain.frame.origin.y = 0
     }
     func loadDataSource() {
         let mainTag = 100
@@ -145,14 +164,18 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             DemoSectionsModel(title: "Customize Widgets", arrParameters: [
                 DemoParameter(label: "Reload Data Messenger", type: .button),
                 DemoParameter(label: "Open Data Messenger", type: .button, key: "openChat"),
+            ]),
+            DemoSectionsModel(title: "AutoQL API Configuration Options", arrParameters: [
                 DemoParameter(label: "Enable Autocomplete", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableAutocomplete)", key: "enableAutocomplete"),
                 DemoParameter(label: "Enable Query Validation", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQueryValidation)", key: "enableQueryValidation"),
                 DemoParameter(label: "Enable Query Suggestions", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableQuerySuggestions)", key: "enableQuerySuggestions"),
                 DemoParameter(label: "Enable DrillDowns", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableDrilldowns)", key: "enableDrilldowns"),
-                DemoParameter(label: "Enable Column Visibility Editor", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableColumnVisibilityManager)", key: "enableColumnVisibilityManager")
+                DemoParameter(label: "Enable Column Visibility Editor", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableColumnVisibilityManager)", key: "enableColumnVisibilityManager"),
+                DemoParameter(label: "Enable Notifications", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableNotifications)", key: "enableNotifications")
             ]),
             DemoSectionsModel(title: "UI Configuration Options", arrParameters: [
                 DemoParameter(label: "Show Data Messenger Button", type: .toggle, value: "\(dataChat.config.isVisible)", key:"isVisible"),
+                DemoParameter(label: "Darken Background Behind Data Messenger", type: .toggle, value: "\(dataChat.config.darkenBackgroundBehind)", key:"darkenBackgroundBehind"),
                 DemoParameter(label: "Theme", type: .segment, options: ["Light", "Dark"], value: dataChat.config.themeConfigObj.theme.capitalized, key: "theme"),
                 DemoParameter(label: "Drawer Placement", type: .segment, options: ["Top", "Bottom", "Left", "Right"], value: dataChat.config.placement.capitalized, key: "placement"),
                 DemoParameter(label: "Default Tab", type: .segment, options: ["data-messenger", "explore-queries"], value: dataChat.config.themeConfigObj.theme.capitalized, key: "defaultTab"),
@@ -170,12 +193,18 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             DemoSectionsModel(title: "Chart Colors", arrParameters: [
                 
             ]),
+            DemoSectionsModel(title: "Dashboard Colors", arrParameters: [
+                DemoParameter(label: "Dashboard Title Color", type: .color, value: "#28A8E0", key: "dashboardTitleColor"),
+                DemoParameter(label: "Dashboard Background Color", type: .color, value: "#fafafa", key: "dashboardBackgroundColor"),
+            ]),
             DemoSectionsModel(title: "Themes Colors", arrParameters: [
                 DemoParameter(label: "Light Theme Accent Color", type: .color, value: "#28A8E0", key: "lightTheme"),
                 DemoParameter(label: "Dark Theme Accent Color", type: .color, value: "#28A8E0", key: "darkTheme")
             ]),
             DemoSectionsModel(title: "More Configurations", arrParameters: [
                 DemoParameter(label: "Maximum Number of Messages", type: .input, value: "\(dataChat.config.maxMessages)", key: "maxMessages"),
+                DemoParameter(label: "Enable Explore Queries Tab", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableExploreQueriesTab)", key: "enableExploreQueriesTab"),
+                DemoParameter(label: "Enable Notifications Tab", type: .toggle, value: "\(dataChat.config.autoQLConfigObj.enableNotificationTab)", key: "enableNotificationTab"),
                 DemoParameter(label: "Enable Speech to Text", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableVoiceRecord")
             ])
         ]
@@ -218,6 +247,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         case "isVisible":
             dataChat.config.isVisible = !value
             dataChat.isHidden = !value
+        case "darkenBackgroundBehind":
+            dataChat.config.darkenBackgroundBehind = value
         case "enableAutocomplete":
             dataChat.config.autoQLConfigObj.enableAutocomplete = value
         case "enableQueryValidation":
@@ -228,6 +259,12 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             dataChat.config.autoQLConfigObj.enableDrilldowns = value
         case "enableColumnVisibilityManager":
             dataChat.config.autoQLConfigObj.enableColumnVisibilityManager = value
+        case "enableNotifications":
+            dataChat.config.autoQLConfigObj.enableNotifications = value
+        case "enableNotificationTab":
+            dataChat.config.autoQLConfigObj.enableNotificationTab = value
+        case "enableExploreQueriesTab":
+            dataChat.config.autoQLConfigObj.enableExploreQueriesTab = value
         case "enableVoiceRecord":
             dataChat.config.enableVoiceRecord = value
         case "clearOnClose":
@@ -350,6 +387,10 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 let idx = Int(key) ?? 0
                 dataChat.config.themeConfigObj.chartColors[idx] = value
             }
+        case "dashboardTitleColor":
+            dataChat.config.dashboardParameters.titleColor = value
+        case "dashboardBackgroundColor":
+            dataChat.config.dashboardParameters.backgroundDashboard = value
         default:
             print("Invalid")
         }

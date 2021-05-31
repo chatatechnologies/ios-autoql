@@ -67,12 +67,10 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
     }
     private func loadIntro() {
         let lblComponent = UILabel()
-        lblComponent.font = generalFont
-        lblComponent.text = finalComponent.text
+        lblComponent.setConfig(text: finalComponent.text,
+                               textColor: chataDrawerTextColorPrimary,
+                               align: .center)
         lblComponent.tag = 1
-        lblComponent.numberOfLines = 0
-        lblComponent.textColor = chataDrawerTextColorPrimary
-        lblComponent.textAlignment = .center
         self.addSubview(lblComponent)
         lblComponent.edgeTo(self, safeArea: .noneTopPadding, height: 16, padding: 16)
         loadingView(mainView: self, inView: self, false)
@@ -110,7 +108,7 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
             } else {
                 let finalComponentF = ChatComponentModel(
                     type: .Safetynet,
-                    text: "Verify by selecting the correct term from the menu below:",
+                    text: "I need your help matching a term you used to the exact corresponding term in your database. Verify by selecting the correct term from the menu below:",
                     user: true,
                     webView: "",
                     numRow: 0,
@@ -129,10 +127,11 @@ public class QueryOutput: UIView, WKNavigationDelegate, SuggestionViewDelegate, 
         ChataServices.instance.getDataChat(query: query, type: type, queryOutput: true) { (component) in
             if component.referenceID == "1.1.430" || component.referenceID == "1.1.431" {
                 if DataConfig.autoQLConfigObj.enableQuerySuggestions{
-                    ChataServices.instance.getSuggestionsQueries(query: query) { (options) in
+                    ChataServices.instance.getSuggestionsQueries(query: query, relatedQuery: component.idQuery) { (options) in
                         DispatchQueue.main.async {
                             self.finalComponent = component
                             self.finalComponent.type = .Suggestion
+                            self.finalComponent.idQuery = component.idQuery+"suggestion"
                             self.finalComponent.options = options
                             self.loadType()
                         }

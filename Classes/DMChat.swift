@@ -131,15 +131,33 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
         sendText(query, true)
     }
     func sendText(_ text: String, _ safe: Bool) {
-        let model = ChatComponentModel(type: .Introduction, text: text, user: true)
-        vwDataMessenger.mainData.append(model)
-        self.vwDataMessenger.updateTable()
+        if text == "None of these" || text == "Ninguna de estas" {
+            resetText()
+            self.loadingQuery(true, async: safe)
+            let idQ = self.vwDataMessenger.mainData[self.vwDataMessenger.mainData.count-2].idQuery
+            ChataServices.instance.sendFeedSuggestion(idQuery: idQ)
+            let finalComponent = ChatComponentModel(
+                type: .Introduction,
+                text: "Thank you for your feedback",
+                user: false,
+                webView: "text",
+                idQuery: idQ+"feed"
+            )
+            self.limitData(element: finalComponent, load: true)
+        } else {
+            let model = ChatComponentModel(type: .Introduction, text: text, user: true)
+            vwDataMessenger.mainData.append(model)
+            self.vwDataMessenger.updateTable()
+            resetText()
+            self.loadingQuery(true, async: safe)
+            safe && DataConfig.autoQLConfigObj.enableQueryValidation ? loadSafety(text: text) : loadQuery(text: text, safe: true)
+        }
+    }
+    func resetText() {
         vwTextBox.tfMain.text = ""
         vwAutoComplete.isHidden = true
         self.endEditing(true)
         vwTextBox.changeButton()
-        self.loadingQuery(true, async: safe)
-        safe && DataConfig.autoQLConfigObj.enableQueryValidation ? loadSafety(text: text) : loadQuery(text: text)
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         let service = ChataServices()
@@ -171,9 +189,14 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
             if suggestion.count == 0 {
                 if responseMsg.contains("Error") {
                     let idQuery = UUID().uuidString
+                    let newResponse = """
+                    \(responseMsg)
+
+                    Error ID: 1.1.480
+                    """
                     let finalComponent = ChatComponentModel(
                         type: .Introduction,
-                        text: responseMsg,
+                        text: newResponse,
                         user: false,
                         webView: "text",
                         idQuery: idQuery
@@ -186,7 +209,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
                 let idQuery = UUID().uuidString
                 let finalComponent = ChatComponentModel(
                     type: .Safetynet,
-                    text: "Verify by selecting the correct term from the menu below:",
+                    text: "I need your help matching a term you used to the exact corresponding term in your database. Verify by selecting the correct term from the menu below:",
                     user: true,
                     options: [text],
                     fullSuggestions: suggestion,
@@ -196,7 +219,7 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
             }
         }
     }
-    private func loadQuery(text: String) {
+    private func loadQuery(text: String, safe: Bool = false) {
         DispatchQueue.main.async {
             let service = ChataServices()
             service.getDataChat(query: text) { (element) in
@@ -207,10 +230,11 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
                             var finalElement = element
                             finalElement.webView = "error"
                             self.limitData(element: finalElement)
-                            service.getSuggestionsQueries(query: text) { (items) in
+                            service.getSuggestionsQueries(query: text, relatedQuery: element.idQuery) { (items) in
                                 var cloneElement = element
                                 cloneElement.options = items
                                 cloneElement.type = .Suggestion
+                                cloneElement.idQuery = cloneElement.idQuery+"Suggestions"
                                 self.limitData(element: cloneElement, load: true)
                             }
                         }
@@ -219,7 +243,17 @@ public class Chat: UIView, TextboxViewDelegate, ChatViewDelegate, QBTipsDelegate
                             tt.text = "the query suggestions are disabled"
                             self.limitData(element: tt)
                         }
+                    } else if element.referenceID == "1.9.502"{
+                        var copyElement = element
+                        copyElement.text = """
+                        \(element.text)
+
+                        Error ID: 1.9.502
+                        """
+                        self.limitData(element: copyElement)
                     } else {
+                        var copyelement = element
+                        copyelement.text = text
                         self.limitData(element: element)
                     }
                 }

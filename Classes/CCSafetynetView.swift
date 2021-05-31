@@ -38,8 +38,7 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     func loadConfig(_ data: ChatComponentModel, lastQueryFinal: Bool = false) {
         lastQuery = lastQueryFinal
         self.data = data
-        tbChange.delegate = self
-        tbChange.dataSource = self
+        tbChange.setConfig(dataSource: self)
         loadLabel()
         loadBtn()
         loadSafeLabel()
@@ -49,16 +48,15 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         mainLabel.delegate = self
     }
     func loadLabel() {
-        lbl.text = data.text
-        lbl.textAlignment = .left
-        lbl.numberOfLines = 0
+        lbl.setConfig(text: data.text,
+                      textColor: chataDrawerTextColorPrimary,
+                      align: .left)
         lbl.sizeToFit()
         lbl.translatesAutoresizingMaskIntoConstraints = true
         lbl.lineBreakMode = .byTruncatingTail
         lbl.setSize()
-        lbl.textColor = chataDrawerTextColorPrimary
         self.addSubview(lbl)
-        lbl.edgeTo(self, safeArea: .topHeight, height: 60, padding: 8)
+        lbl.edgeTo(self, safeArea: .topHeight, height: 90, padding: 8)
         layoutIfNeeded()
     }
     
@@ -145,9 +143,9 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
     }
     private func generateLabel(finalText: String, stack: UIStackView){
         let label = UILabel()
-        label.textColor = chataDrawerTextColorPrimary
-        label.text = String(finalText)
-        label.textAlignment = .center
+        label.setConfig(text: String(finalText),
+                        textColor: chataDrawerTextColorPrimary,
+                        align: .center)
         stack.addArrangedSubview(label)
         label.edgeTo(stack, safeArea: .fullStackV, height: 0, padding: 10 )
     }
@@ -194,11 +192,12 @@ class SafetynetView: UIView, UITableViewDataSource, UITableViewDelegate, UITextV
         let image2 = image?.resizeT(maxWidthHeight: 20)
         btnRunQuery.setImage(image2, for: .normal)
         btnRunQuery.imageView?.contentMode = .scaleAspectFit
-        btnRunQuery.setTitle("Run Query", for: .normal)
+        btnRunQuery.setConfig(text: "Run Query",
+                              backgroundColor: chataDrawerAccentColor,
+                              textColor: .white,
+                              executeIn: self,
+                              action: #selector(runQuery))
         btnRunQuery.titleLabel?.font = generalFont
-        btnRunQuery.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
-        btnRunQuery.addTarget(self, action: #selector(runQuery), for: .touchUpInside)
-        btnRunQuery.cardView()
         self.addSubview(btnRunQuery)
         btnRunQuery.edgeTo(self, safeArea: .bottomHeight, height: 30, padding: 8)
     }

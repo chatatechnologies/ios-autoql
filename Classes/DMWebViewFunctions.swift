@@ -108,6 +108,18 @@ func getHTMLStyle() -> String {
         .splitView{
             position: relative;
         }
+        tfoot {
+            display: none;
+        }
+        .empty-state {
+            text-align: center;
+            font-family: '-apple-system','HelveticaNeue';
+            color: \(chataDrawerWebViewText)!important;
+        }
+        .alert-icon {
+            font-size: 50px;
+            color: \(chataDrawerWebViewText)!important;
+        }
     </style>
     """
     return style
@@ -190,6 +202,65 @@ func getHTMLFooter(rows: [[String]],
         type = type2;
         changeGraphic(type2);
     }
+    $('#idTableBasic tfoot th').each(function () {
+        var indexInput = $(this).index();
+        var title = $(this).text();
+        var idInput = title.split(' ').join('_') + '_Basic';
+        $(this).html(
+            '<input id=' + idInput +
+            ' type="text" placeholder="filter column..."/>');
+
+        $("#" + idInput).on('input', function () {
+            var filter = $(this).val().toUpperCase();
+            var table = document.getElementById("idTableBasic");
+            var tr = table.getElementsByTagName("tr");
+
+            for (index = 0; index < tr.length; index++) {
+                td = tr[index].getElementsByTagName("td")[indexInput];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[index].style.display = "";
+                    } else {
+                        tr[index].style.display = "none";
+                    }
+                }
+            }
+        });
+    });
+    $('#idTableDataPivot tfoot th').each(function () {
+        var indexInput = $(this).index();
+        var title = $(this).text();
+        var idInput = title.split(' ').join('_') + '_DataPivot';
+        $(this).html(
+            '<input id=' + idInput +
+            ' type="text" placeholder="Search on ' + title + '"/>');
+
+        $("#" + idInput).on('input', function () {
+            var filter = $(this).val().toUpperCase();
+            var table = document.getElementById("idTableDataPivot");
+            var tr = table.getElementsByTagName("tr");
+
+            for (index = 0; index < tr.length; index++) {
+                td = tr[index].getElementsByTagName("td")[indexInput];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[index].style.display = "";
+                    } else {
+                        tr[index].style.display = "none";
+                    }
+                }
+            }
+        });
+    });
+    function showFilter() {
+        if ( $('tfoot').is(':visible') ) {
+            $('tfoot').css({'display': 'none'});
+        } else {
+            $('tfoot').css({'display': 'table-header-group'});
+        }
+    }
     </script>
     </body>
     </html>
@@ -229,6 +300,7 @@ func getChartFooter(rows: [[String]],
                     mainColum: Int = 0,
                     second: String = "") -> String {
     var dataSpecial: [[Any]] = []
+    var dataSpecial2: [[String:[Any]]] = []
     var dataSpecialActive = false
     var categoriesX: [String] = []
     var categoriesY: [String] = []
@@ -251,16 +323,20 @@ func getChartFooter(rows: [[String]],
         name = validateArray(row, 0) as? String ?? ""
         return name
     }
+    var testData: [[Double]] = []
+    var positionsCharts: Int = -1
+    var positionsChartsSecond: Int = -1
     if types.count > 3 {
         catX = []
         catXFormat = []
         dataChartLine = []
         //var positionsCharts: [Int] = []
-        var positionsCharts: Int = -1
-        var positionsChartsSecond: Int = -1
+        var positionsC: [Int] = []
         for (index, type) in types.enumerated() {
-            if (positionsCharts == -1){
-                if type == .dollar || type == .quantity{
+            //if (positionsCharts == -1){
+                if type == .dollar
+                {
+                    positionsC.append(index)
                     for row in rows {
                         if index <= (row.count-1) {
                             let mValidation = Double(row[index]) ?? 0.0
@@ -272,7 +348,9 @@ func getChartFooter(rows: [[String]],
                         }
                     }
                 }
-            }
+            //}
+        }
+        for (index, type) in types.enumerated() {
             if  type == .date {
                 positionsChartsSecond = index
                 positionDD = index
@@ -285,14 +363,36 @@ func getChartFooter(rows: [[String]],
         rows.enumerated().forEach { (index, row) in
             var name = validateArray(row, positionsChartsSecond) as? String ?? ""
             catX.append(name)
-            name = name.toDate(true)
+            name = name.toDate(true, true)
             if mainColum != -1 {
                 name = validateArray(row, mainColum) as? String ?? ""
                 if types[mainColum] == .date {
-                    name = name.toDate()
+                    name = name.toDate(false, true)
                 }
             }
-            let mount = validateArray(row, positionsCharts) as? String ?? "0"
+            positionsC.enumerated().forEach { (index2,posi) in
+                let mount = validateArray(row, posi) as? String ?? "0"
+                let mountFinal = Double(mount) ?? 0.0
+                print(mountFinal)
+                if catXFormat.firstIndex(of: name) == nil {
+                    catXFormat.append(name)
+                    dataSpecial.append([name, mountFinal])
+                    dataSpecial2.append(["data" : [mountFinal]])
+                    testData.append([mountFinal])
+                } else {
+                    var pos = catXFormat.firstIndex(of: name) ?? 0
+                    pos = Int(pos)
+                    let mountBase = dataSpecial[pos][1] as? Double ?? 0.0
+                    let mountFinalColumn = mountBase + mountFinal
+                    dataSpecial[pos][1] = mountFinalColumn
+                    if testData[pos].count > index2 {
+                        testData[pos][index2] += mountFinal
+                    } else {
+                        testData[pos].append(mountFinal)
+                    }
+                }
+            }
+            /*let mount = validateArray(row, positionsCharts) as? String ?? "0"
             let mountFinal = Double(mount) ?? 0.0
             if catXFormat.firstIndex(of: name) == nil {
                 catXFormat.append(name)
@@ -303,9 +403,39 @@ func getChartFooter(rows: [[String]],
                 let mountBase = dataSpecial[pos][1] as? Double ?? 0.0
                 let mountFinalColumn = mountBase + mountFinal
                 dataSpecial[pos][1] = mountFinalColumn
+            }*/
+            
+        }
+        print(positionsCharts)
+        print(positionsChartsSecond)
+        dataSpecialActive = true
+    }
+    var finalDataSpecial: [[Double]] = []
+    var inx = 0
+    var first = true
+    testData.forEach { (arrDouble) in
+        arrDouble.enumerated().forEach { (idd, value) in
+            let val1 = value
+            if first{
+                finalDataSpecial.append([val1])
+            } else {
+                finalDataSpecial[idd].append(val1)
             }
         }
-        dataSpecialActive = true
+        first = false
+        inx += 1
+        /*
+        arrDouble.enumerated().forEach { (inde, value) in
+            if inde == inx {
+                temparr.append(value)
+            }
+        }
+        finalDataSpecial.append(temparr)
+        inx += 1*/
+    }
+    var ffData: [[String: [Double]] ] = []
+    finalDataSpecial.forEach { (arrDouble) in
+        ffData.append(["data" : arrDouble])
     }
     let triType = columns.count  == 3
     let dataChartBi = triType ? [] : rows.map { (row) -> [Any] in
@@ -362,18 +492,21 @@ func getChartFooter(rows: [[String]],
     }
     let catFinaY: [Any] = triType ? categoriesY : dataChartLine
     let stringChartLine = arrayDictionaryToJson(json: dataChartLineTri)
+    let finaff = arrayDictionaryToJson(json: ffData)
     let dataChartLineFinal: String = triType ? stringChartLine : "\(dataChartLine)"
     let positionSpecial = mainColum != -1 ? mainColum : 0
     let xAxis = triType ? (validateArray(columns, 1) as? String ?? "") : dataSpecialActive ? (validateArray(columns, positionDD) as? String ?? "") : (validateArray(columns, positionSpecial) as? String ?? "")
-    let pos = columns.count - 1
+    let pos = dataSpecialActive ? positionsCharts : columns.count - 1
     print(positionY)
-    let yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
+    var yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
         (validateArray(columns, pos) as? String ?? "").replace(target: "'", withString: "")
+    yAxis = dataSpecialActive && yAxis.contains("Amount") ? "Amount" : yAxis
     return """
         var type = '\(mainType)';
         var xAxis = '\(xAxis)';
         var yAxis = '\(yAxis)';
-        var dataChartBi = \(dataSpecialActive ? dataSpecial : dataChartBi);
+        var dataChartBi2 = \(finaff);
+        var dataChartBi = \(dataChartBi);
         var datachartTri = \(datachartTri);
         var dataChartLine = \(dataChartLineFinal);
         var categoriesX = \(triType ? categoriesX /*catFinaY*/ : catXFormat);
@@ -388,6 +521,14 @@ func getChartFooter(rows: [[String]],
     var color1 = "\(DataConfig.themeConfigObj.chartColors[0])";
     """
 }
+func isColumnsVisible(columns: [ChatTableColumn]) -> Bool {
+    for column in columns {
+        if column.isVisible {
+            return true
+        }
+    }
+    return false
+}
 func tableString(dataTable: [[String]],
                  dataColumn: [String],
                  idTable: String,
@@ -397,48 +538,73 @@ func tableString(dataTable: [[String]],
                  cleanRow: [[String]] = [],
                  positionColumn: Int = 0
                  ) -> String {
-    let star = "<table id='\(idTable)'>"
-    var body = ""
-    let end = "</table>"
-    if dataColumn.count > 0 {
-        body = "<thead><tr>"
-        for (index, column) in dataColumn.enumerated() {
-            if columns.count == dataColumn.count {
-                if columns[index].isVisible {
+    if !isColumnsVisible(columns: columns) {
+        let divEmptyStateColumns = """
+        <div id='idTableBasic' class="empty-state">
+              <span class="alert-icon">⚠</span>
+              <p>
+                All columns in this table are currently hidden. You can adjust your column visibility preferences using the Column Visibility Manager (👁) in the Options Toolbar.
+              </p>
+        </div>
+        """
+        return divEmptyStateColumns
+    } else {
+        let star = "<table id='\(idTable)'>"
+        var body = ""
+        let end = "</table>"
+        if dataColumn.count > 0 {
+            body = "<thead><tr>"
+            for (index, column) in dataColumn.enumerated() {
+                if columns.count == dataColumn.count {
+                    if columns[index].isVisible {
+                        body += "<th>\(column)</th>"
+                    }
+                } else {
                     body += "<th>\(column)</th>"
                 }
-            } else {
-                body += "<th>\(column)</th>"
             }
-        }
-        body += "</tr></thead><tbody>"
-        for (mainIndex, row) in dataTable.enumerated() {
-            body += "<tr>"
-            for (index, column) in row.enumerated() {
-                if columns.count == row.count {
-                    if columns[index].isVisible{
-                        var reorderText = ""
-                        if reorder {
-                            let columnClean = cleanRow[mainIndex][index] 
-                            reorderText = "<span class='originalValue'>\(columnClean)</span>"
+            body += "</tr></thead><tfoot><tr>"
+            for (index, column) in dataColumn.enumerated() {
+                var finalColumn = column.replace(target: "(", withString: "")
+                finalColumn = finalColumn.replace(target: ")", withString: "")
+                if columns.count == dataColumn.count {
+                    if columns[index].isVisible {
+                        body += "<th>\(finalColumn)</th>"
+                    }
+                } else {
+                    body += "<th>\(finalColumn)</th>"
+                }
+            }
+            body += "</tr></tfoot><tbody>"
+            for (mainIndex, row) in dataTable.enumerated() {
+                body += "<tr>"
+                for (index, column) in row.enumerated() {
+                    if columns.count == row.count {
+                        if columns[index].isVisible{
+                            var reorderText = ""
+                            if reorder {
+                                let columnClean = cleanRow[mainIndex][index]
+                                reorderText = "<span class='originalValue'>\(columnClean)</span>"
+                            }
+                            let finalColumn = datePivot
+                                ? column
+                                : column.getTypeColumn(type: columns[index].type)
+                            body += "<td>\(reorderText)<span class='limit'>\(finalColumn)</span></td>"
                         }
+                    } else {
                         let finalColumn = datePivot
                             ? column
                             : column.getTypeColumn(type: columns[index].type)
-                        body += "<td>\(reorderText)<span class='limit'>\(finalColumn)</span></td>"
+                        body += "<td><span class='limit'>\(finalColumn)</span></td>"
                     }
-                } else {
-                    let finalColumn = datePivot
-                        ? column
-                        : column.getTypeColumn(type: columns[index].type)
-                    body += "<td><span class='limit'>\(finalColumn)</span></td>"
                 }
+                body += "</tr>"
             }
-            body += "</tr>"
+            body+="</tbody>"
         }
-        body+="</tbody>"
+        return star + body + end
     }
-    return star + body + end
+    
 }
 func arrayDictionaryToJson(json: [[String: Any]]) -> String {
     do {

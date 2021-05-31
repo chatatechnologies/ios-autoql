@@ -14,15 +14,20 @@ let notifcloseQueryTips = Notification.Name("closeQT")
 let notifAlert = Notification.Name("alert")
 var LOGIN: Bool = false
 var notificationsAttempts: Int = 0
+private var defaultTitle = "Data Messenger"
+private var defaultPlace = "right"
+private var defaultPlaceholder = "Type your queries here"
+private var defaultColors = ["#26A7E9", "#A5CD39", "#DD6A6A", "#FFA700", "#00C1B2"]
 public class DataConfiguration {
     static let instance = DataConfiguration()
     public var authenticationObj = authentication(apiKey: "", domain: "", token: "")
     public var isVisible = true
-    public var placement = "right"
-    public var title = "Data Messenger"
+    public var darkenBackgroundBehind = true
+    public var placement = defaultPlace
+    public var title = defaultTitle
     public var userDisplayName = "User"
     public var introMessage = "Let’s dive into your data. What can I help you discover today?"
-    public var inputPlaceholder = "Type your queries here"
+    public var inputPlaceholder = defaultPlaceholder
     public var showMask = true
     public var maskClosable = true
     public var showHandle = true
@@ -36,7 +41,10 @@ public class DataConfiguration {
         enableQueryValidation: true,
         enableQuerySuggestions: true,
         enableDrilldowns: true,
-        enableColumnVisibilityManager: true
+        enableColumnVisibilityManager: true,
+        enableNotifications: true,
+        enableNotificationTab: true,
+        enableExploreQueriesTab: true
     )
     public var dataFormattingObj = dataFormatting(
         currencyCode: "USD",
@@ -50,7 +58,11 @@ public class DataConfiguration {
     public var themeConfigObj = themeConfig(
         theme: "light",
         accentColor: "#28a8e0",
-        chartColors: ["#355C7D", "#6C5B7B", "#C06C84", "#F67280", "#F8B195"]
+        chartColors: defaultColors
+    )
+    public var dashboardParameters = dashboardParametersConfig (
+        backgroundDashboard: "#fafafa",
+        titleColor: "#28A8E0"
     )
     func show(){
         
@@ -58,11 +70,11 @@ public class DataConfiguration {
     func resetData() {
         authenticationObj = authentication(apiKey: "", domain: "", token: "")
         isVisible = false
-        placement = "right"
-        title = "Data Messenger"
+        placement = defaultPlace
+        title = defaultTitle
         userDisplayName = "User"
         introMessage = "Hi User! Let’s dive into your data. What can I help you discover today?"
-        inputPlaceholder = "Type your queries here"
+        inputPlaceholder = defaultPlaceholder
         showMask = true
         maskClosable = true
         showHandle = true
@@ -74,7 +86,10 @@ public class DataConfiguration {
             enableQueryValidation: true,
             enableQuerySuggestions: true,
             enableDrilldowns: true,
-            enableColumnVisibilityManager: true
+            enableColumnVisibilityManager: true,
+            enableNotifications: true,
+            enableNotificationTab: true,
+            enableExploreQueriesTab: true
         )
         dataFormattingObj = dataFormatting(
             currencyCode: "USD",
@@ -88,7 +103,11 @@ public class DataConfiguration {
         themeConfigObj = themeConfig(
             theme: "light",
             accentColor: "#28a8e0",
-            chartColors: ["#355C7D", "#6C5B7B", "#C06C84", "#F67280", "#F8B195"]
+            chartColors: defaultColors
+        )
+        dashboardParameters = dashboardParametersConfig (
+            backgroundDashboard: "#fafafa",
+            titleColor: "#28A8E0"
         )
     }
 }
@@ -110,6 +129,9 @@ public struct autoQLConfig {
     public var enableQuerySuggestions : Bool
     public var enableDrilldowns : Bool
     public var enableColumnVisibilityManager : Bool
+    public var enableNotifications : Bool
+    public var enableNotificationTab: Bool
+    public var enableExploreQueriesTab: Bool
 }
 public struct dataFormatting {
     public var currencyCode : String
@@ -124,4 +146,8 @@ public struct themeConfig {
     public var theme : String
     public var accentColor : String
     public var chartColors : [String]
+}
+public struct dashboardParametersConfig {
+    public var backgroundDashboard: String
+    public var titleColor: String
 }

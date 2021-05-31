@@ -35,7 +35,8 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         let vwFather: UIView = UIApplication.shared.keyWindow!
         self.center = CGPoint(x: vwFather.center.x, y: vwFather.frame.height + self.frame.height/2)
         vwFather.addSubview(self)
-        self.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        let alpha: CGFloat = DataConfig.darkenBackgroundBehind ? 0.5 : 0-0
+        self.backgroundColor = UIColor.gray.withAlphaComponent(alpha)
         self.edgeTo(vwFather, safeArea: .safe)
         self.addSubview(vwMain)
         vwMain.edgeTo(self, safeArea: csMain, padding: 30)
@@ -116,11 +117,21 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         self.addSubview(newView)
         let referer = DataConfig.placement == "bottom" ? vwMain : vwDynamicView
         newView.edgeTo(self, safeArea: csTrasparent, referer)
-        let buttons: [SideBtn] = [
+        var buttons: [SideBtn] = [
             SideBtn(imageStr: "icSideChat", action: #selector(changeViewChat), tag: 1),
             SideBtn(imageStr: "icSideExplore", action: #selector(changeViewTips), tag: 2),
             SideBtn(imageStr: "icSideNotification", action: #selector(changeViewNotifications), tag: 3)
         ]
+        if !DataConfig.autoQLConfigObj.enableNotifications || !DataConfig.autoQLConfigObj.enableNotificationTab{
+            buttons.remove(at: 2)
+        }
+        if !DataConfig.autoQLConfigObj.enableExploreQueriesTab {
+            buttons.remove(at: 1)
+        }
+        if buttons.count == 1 {
+            buttons.remove(at: 0)
+        }
+        heightButtonsStack = 50.0 * CGFloat(buttons.count)
         for btn in buttons {
             let newButton = UIButton()
             newButton.backgroundColor = chataDrawerAccentColor
@@ -155,7 +166,10 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
         loadSelectBtn(tag: 2)
         vwToolbar.updateTitle(text: "Explore Queries", noDeleteBtn: true)
         if text != "" {
+            newTips.toogleButton(hideButton: true)
             newTips.runQuery(text: text)
+        } else {
+            newTips.toogleButton(hideButton: false)
         }
     }
     func delete() {
@@ -229,20 +243,23 @@ extension MainChat {
     func initLogin() {
         if LOGIN {
             DispatchQueue.main.async {
-                NotificationServices.instance.getStateNotifications(number: 0)
-                Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
-                    (time) in
-                    if LOGIN{
-                        if notificationsAttempts < 6 {
-                            NotificationServices.instance.getStateNotifications(number: 0)
-                        } else {
+                if DataConfig.autoQLConfigObj.enableNotifications {
+                    NotificationServices.instance.getStateNotifications(number: 0)
+                    Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
+                        (time) in
+                        if LOGIN && DataConfig.autoQLConfigObj.enableNotifications{
+                            if notificationsAttempts < 6 {
+                                NotificationServices.instance.getStateNotifications(number: 0)
+                            } else {
+                                time.invalidate()
+                            }
+                        }
+                        else{
                             time.invalidate()
                         }
                     }
-                    else{
-                        time.invalidate()
-                    }
                 }
+                
             }
         }
     }

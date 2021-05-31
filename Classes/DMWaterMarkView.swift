@@ -15,12 +15,12 @@ class WaterMarkView: UIView {
     }
     func loadConfig(){
         let lbMarkWater = UILabel()
-        lbMarkWater.text = "We run on AutoQL by Chata"
+        lbMarkWater.setConfig(text: "We run on AutoQL by Chata",
+                              textColor: chataDrawerMessengerTextColorPrimary,
+                              align: .center)
         self.addSubview(lbMarkWater)
-        lbMarkWater.textAlignment = .center
         lbMarkWater.setSize()
         self.backgroundColor = chataDrawerBackgroundColorSecondary
-        lbMarkWater.textColor = chataDrawerMessengerTextColorPrimary
         lbMarkWater.edgeTo(self, safeArea: .center)
         let image = UIImage(named: "icChat.png", in: Bundle(for: type(of: self)), compatibleWith: nil)
         let imageChat = UIImageView(image: image)

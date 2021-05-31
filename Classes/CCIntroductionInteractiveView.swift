@@ -39,9 +39,11 @@ class IntroductionInteractionView: UIView, UITextViewDelegate {
     }
     func refererToQueryTips() {
         let position = finalText.getPosition(needle: "<")
+        let finishPosition = finalText.getPosition(needle: ">")
+        let size = finishPosition - position - 1
         finalText = finalText.replace(target: "<", withString: "")
         finalText = finalText.replace(target: ">", withString: "")
-        let range = NSRange(location: position, length: 6)
+        let range = NSRange(location: position, length: size)
         let finalColor = "#28A8E0".hexToColor()
         let msgAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor : finalColor,

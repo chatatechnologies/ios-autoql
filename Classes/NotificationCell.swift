@@ -51,25 +51,27 @@ class NotificationCell: UITableViewCell {
         btnDelete.edgeTo(vwMain, safeArea: .rightTop, height: 20.0, vwMain, padding: 16)
     }
     func loadTitle() {
-        lblTitle.text = itemNotif.title
+        lblTitle.setConfig(text: itemNotif.title,
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .left)
         vwMain.addSubview(lblTitle)
         lblTitle.setSize(16, true)
-        lblTitle.numberOfLines = 0
-        lblTitle.textColor = chataDrawerTextColorPrimary
         lblTitle.edgeTo(vwMain, safeArea: .midTopBottom, height: 16, btnDelete, padding: 16)
     }
     func loadDescription() {
-        lblDescription.text = itemNotif.message
+        lblDescription.setConfig(text: itemNotif.message,
+                                 textColor: chataDrawerTextColorPrimary,
+                                 align: .left)
         vwMain.addSubview(lblDescription)
         lblDescription.setSize(14)
-        lblDescription.textColor = chataDrawerTextColorPrimary
         lblDescription.edgeTo(vwMain, safeArea: .topHeightPadding, height: 16, lblTitle, padding: 16)
     }
     func loadDate() {
-        lblDate.text = itemNotif.createdAt
+        lblDate.setConfig(text: itemNotif.createdAt,
+                          textColor: chataDrawerBorderColor,
+                          align: .left)
         vwMain.addSubview(lblDate)
         lblDate.setSize(12)
-        lblDate.textColor = chataDrawerBorderColor
         if itemNotif.expandable {
             lblDate.edgeTo(vwMain, safeArea: .topHeightPadding, height: 16, lblDescription, padding: 16)
             loadViewQuery()
@@ -81,10 +83,10 @@ class NotificationCell: UITableViewCell {
         vwMain.addSubview(vwQuery)
         vwQuery.edgeTo(vwMain, safeArea: .safeFHTop,  lblDate)
         let lblQuery = UILabel()
-        lblQuery.text = itemNotif.dataReturnQuery
-        lblQuery.textColor = chataDrawerTextColorPrimary
+        lblQuery.setConfig(text: itemNotif.dataReturnQuery,
+                           textColor: chataDrawerTextColorPrimary,
+                           align: .center)
         lblQuery.setSize(16, true)
-        lblQuery.textAlignment = .center
         vwQuery.addSubview(lblQuery)
         lblQuery.edgeTo(vwQuery, safeArea: .topHeight, height: 20, padding: 16)
         lblQuery.addBorder()

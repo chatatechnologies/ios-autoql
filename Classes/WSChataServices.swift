@@ -104,7 +104,12 @@ class ChataServices {
         let urlRequest = "\(wsAutocomplete)\(handleQuery)&projectid=1"
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query/autocomplete?text=\(handleQuery)&key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
+        print(urlFinal)
+        UIApplication.shared.beginIgnoringInteractionEvents()
         httpRequest(urlFinal) { (response) in
+            DispatchQueue.main.async {
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
             let responseFinal: [String: Any] = !DataConfig.demo ? response["data"] as? [String: Any] ?? [:] : response
             let matches = responseFinal["matches"] as? [String] ?? []
             completion(matches)
@@ -138,14 +143,21 @@ class ChataServices {
             }
         }
     }
-    func getDataChat(query: String, type: String = "", queryOutput: Bool = false, completion: @escaping CompletionChatComponentModel){
-        
+    func getDataChat(query: String, type: String = "", arraySelection: [[String: Any]] =  [], queryOutput: Bool = false, completion: @escaping CompletionChatComponentModel){
+        /*
+         canonical: "ORIGINAL_TEXT"
+         end: 13
+         start: 0
+         value: "advintage oil"
+         value_label: "ORIGINAL_TEXT"
+         */
         let body: [String: Any] =
             [
                 "text": query,
                 "source": !queryOutput ? "data_messenger.user" : "user",
                 "test": true,
-                "translation": "include"
+                "translation": "include",
+                "user_selection": arraySelection
             ]
         let urlRequest = wsQuery
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
@@ -164,13 +176,21 @@ class ChataServices {
             completion(finalComponent)
         }
     }
-    func getSuggestionsQueries(query: String, completion: @escaping CompletionSuggestions) {
-        let finalQuery = query.replace(target: " ", withString: ",")
-        let finalUrl = "\(wsUrlDynamic)/autoql/api/v1/query/related-queries?key=\(DataConfig.authenticationObj.apiKey)&search=\(finalQuery)&scope=narrow"
+    func getSuggestionsQueries(query: String, relatedQuery: String, completion: @escaping CompletionSuggestions) {
+        var finalQuery = query.replace(target: " ", withString: ",")
+        //finalQuery = query.replace(target: "%20", withString: ",")
+        let finalUrl = "\(wsUrlDynamic)/autoql/api/v1/query/related-queries?key=\(DataConfig.authenticationObj.apiKey)&search=\(finalQuery)&scope=narrow&query_id=\(relatedQuery)"
         httpRequest(finalUrl) { (response) in
             let data = response["data"] as? [String: Any] ?? [:]
             let items = data["items"] as? [String] ?? []
             completion(items)
+        }
+    }
+    func sendFeedSuggestion(idQuery: String) {
+        let newIdQuery = idQuery.replace(target: "suggestion", withString: "")
+        let url = "\(wsUrlDynamic)/autoql/api/v1/query/\(newIdQuery)/suggestions?key=\(DataConfig.authenticationObj.apiKey)"
+        httpRequest(url, "PUT") { (response) in
+            print(response)
         }
     }
     func getValidData(completion: @escaping CompletionChatSuccess) {
@@ -178,7 +198,7 @@ class ChataServices {
         httpRequest(finalUrl) { (response) in
             let result = response["result"] as? String ?? ""
             let msg = response["message"] as? String ?? result
-            completion(msg == "" || msg == "Success")
+            completion(msg == "" || msg == "Success" || msg == "Éxito")
         }
     }
     func reportProblem(queryID: String, problemType: String, completion: @escaping CompletionChatSuccess) {
@@ -190,6 +210,23 @@ class ChataServices {
         httpRequest(url, "PUT", body) { (response) in
             let referenceID = response["reference_id"] as? String ?? ""
             completion(referenceID == "1.1.200")
+        }
+    }
+    func saveColumnChanges(columns: [ChatTableColumn]) {
+        //column-visibility?key=AIzaSyBxmGxl9J9siXz--dS-oY3-5XRSFKt_eVo
+        let url = "\(wsUrlDynamic)/autoql/api/v1/query/column-visibility?key=\(DataConfig.authenticationObj.apiKey)"
+        var dictInt: [[String:Any]] = []
+        for column in columns {
+            let dict: [String: Any] = [
+                "name": column.originalName,
+                "is_visible": column.isVisible
+            ]
+            dictInt.append(dict)
+        }
+        let body: [String: [[String: Any]]] = ["columns": dictInt]
+        httpRequest(url, "PUT", body) { (response) in
+            let referenceID = response["reference_id"] as? String ?? ""
+            print(referenceID)
         }
     }
     func getDataChatDrillDown(obj: String, idQuery: String, name: String, completion: @escaping CompletionChatComponentModel){
@@ -215,7 +252,7 @@ class ChataServices {
         } else {
             var dateFinal = String(obj)
             dateFinal = name.contains("yyyy") ?  dateFinal.toStrDate() : dateFinal
-            if name != ""{
+            if name != "" {
                 group_bys = [
                     [
                         "name" : name,
@@ -331,7 +368,7 @@ class ChataServices {
         dataModel.text = message
         let sql = data["sql"] as? [String] ?? []
         dataModel.sql = sql
-        if message.contains("<report>"){
+        if message.contains("<report>") || message.contains("<repórtalo>"){
             dataModel.type = .IntroductionInteractive
             let idQuery = data["query_id"] as? String ?? UUID().uuidString
             dataModel.idQuery = idQuery
@@ -346,7 +383,7 @@ class ChataServices {
             let rows2 = data["rows"] as? [[Any]] ?? []
             //rows2.append(["test2"])
             let rows: [[Any]] = rows2.limitArray(limit: limitRowNum)
-            let limitRows = rows2.count > limitRowNum
+            let limitRows = rows2.count >= limitRowNum
             let (columnsFinal, group) = getColumns(columns: columns)
             var typeD = type
             if group {
@@ -718,6 +755,7 @@ struct DashboardModel {
     var subDashboardModel: SubDashboardModel
     var stringColumnIndex: Int
     var stringColumnIndexSecond: Int
+    var sql: [String]
     init(
         minW: Int = 0,
         staticVar: Int = 0,
@@ -748,7 +786,8 @@ struct DashboardModel {
         items: [String] = [],
         subDashboardModel: SubDashboardModel = SubDashboardModel(),
         stringColumnIndex: Int = 0,
-        stringColumnIndexSecond: Int = 0
+        stringColumnIndexSecond: Int = 0,
+        sql: [String] = []
     ) {
         self.minW = minW
         self.staticVar = staticVar
@@ -780,6 +819,7 @@ struct DashboardModel {
         self.subDashboardModel = subDashboardModel
         self.stringColumnIndex = stringColumnIndex
         self.stringColumnIndexSecond = stringColumnIndexSecond
+        self.sql = sql
     }
 }
 struct DataPivotRow{

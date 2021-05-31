@@ -12,13 +12,11 @@ class IntroductionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     func loadLabel(text: String, user: Bool = false) {
-        lbl.text = text
-        lbl.textAlignment = .left
-        lbl.numberOfLines = 0
+        lbl.setConfig(text: text,
+                      textColor: chataDrawerTextColorPrimary,
+                      align: .left)
         lbl.sizeToFit()
         lbl.translatesAutoresizingMaskIntoConstraints = true
-        lbl.textColor = chataDrawerTextColorPrimary
-        //lbl.lineBreakMode = .byTruncatingTail
         lbl.setSize(16, user)
         self.addSubview(lbl)
         lbl.edgeTo(self, safeArea: .padding)

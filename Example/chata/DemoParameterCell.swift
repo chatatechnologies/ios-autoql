@@ -112,7 +112,13 @@ class DemoParameterCell: UITableViewCell {
         input.text = Data.value
         input.backgroundColor = Data.value.hexToColor()
         input.textAlignment = .center
-        input.textColor = .white
+        var numF = 0
+        for character in Data.value {
+            if character == "f" {
+                numF += 1
+            }
+        }
+        input.textColor = numF > 2 ? .black : .white
         input.addTarget(self, action: #selector(changeText), for: .editingChanged)
         self.contentView.addSubview(input)
         input.edgeTo(self.contentView, safeArea: .fullBottom, height: 40.0, width: widthElement, label, self.contentView, padding: 0)

@@ -150,6 +150,9 @@ config.theme = theme
     <tr><td>enableQuerySuggestions</td><td>Boolean</td><td>true</td></tr>
     <tr><td>enableDrilldowns</td><td>Boolean</td><td>true</td></tr>
     <tr><td>enableColumnVisibilityManager</td><td>Boolean</td><td>true</td></tr>
+    <tr><td>enableNotifications</td><td>Boolean</td><td>true</td></tr>
+    <tr><td>enableNotificationTab</td><td>Boolean</td><td>true</td></tr>
+    <tr><td>enableExploreQueryTab</td><td>Boolean</td><td>true</td></tr>
     <tr><td>debug</td><td>Boolean</td><td>true</td></tr>
   </tbody>
 </table>

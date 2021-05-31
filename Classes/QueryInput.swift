@@ -57,11 +57,8 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
         
     }
     func loadTable() {
-        tbAutoComplete.delegate = self
-        tbAutoComplete.dataSource = self
+        tbAutoComplete.setConfig(dataSource: self)
         tbAutoComplete.cardView()
-        tbAutoComplete.bounces = false
-        tbAutoComplete.clipsToBounds = true
         let vwFather: UIView = UIApplication.shared.keyWindow!
         vwFather.addSubview(tbAutoComplete)
         tbAutoComplete.isHidden = true

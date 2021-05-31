@@ -39,12 +39,14 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     func deleteQuery(idQuery: String) {
         let numQuery = mainData.firstIndex { (dataC) -> Bool in
             dataC.idQuery == idQuery
-        } ?? 100
+        } ?? 0
         if numQuery <= (mainData.count - 1){
             var deleteSuggestion = false
+            var moreBottom = false
             if mainData.count > (numQuery + 1){
                 if mainData[numQuery + 1].type == .Suggestion {
-                    deleteSuggestion = true
+                    //deleteSuggestion = true
+                    //moreBottom = true
                 }
             }
             //let num = self.mainData[numQuery-1].referenceID == "1.1.430" ? 3 : 2
@@ -68,7 +70,10 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
                     self.tableView.deleteRows(at: indexs, with: .automatic)
                     let finalNN = numQuery == self.mainData.count ? 0 : 1
                     let finalN = numDeletes > 1 ? numDeletes : (numDeletes-finalNN)
-                    let posIndex = numQuery - finalN
+                    var posIndex = numQuery - finalN
+                    if moreBottom {
+                        posIndex += 1
+                    }
                     let endIndex = IndexPath(row: posIndex, section: 0)
                     self.tableView.scrollToRow(at: endIndex, at: .bottom, animated: false)
                 }
@@ -76,20 +81,30 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
         }
     }
     func validateDeletes(numQuery: Int) -> Int {
-        var numDeletes = 1
-        mainData.remove(at: numQuery)
-        if mainData[numQuery-1].type == .Introduction{
-            if mainData[numQuery-1].user {
-                numDeletes += 1
-                mainData.remove(at: numQuery - 1)
-            } else if mainData[numQuery-1].referenceID == "1.1.430" ||
-                mainData[numQuery-1].referenceID == "1.1.431" {
-                numDeletes += 1
-                mainData.remove(at: numQuery - 1)
-                mainData.remove(at: numQuery - 2)
+        if numQuery > 0 {
+            var numDeletes = 1
+            if mainData[numQuery].type == .Suggestion{
+                mainData.remove(at: numQuery)
+                
+            } else{
+                mainData.remove(at: numQuery)
+                if mainData[numQuery-1].type == .Introduction{
+                    if mainData[numQuery-1].user {
+                        numDeletes += 1
+                        mainData.remove(at: numQuery - 1)
+                    } else if mainData[numQuery-1].referenceID == "1.1.430" ||
+                        mainData[numQuery-1].referenceID == "1.1.431" {
+                        numDeletes += 1
+                        mainData.remove(at: numQuery - 1)
+                        mainData.remove(at: numQuery - 2)
+                    }
+                }
             }
+            return numDeletes
         }
-        return numDeletes
+        else {
+            return 0
+        }
     }
 }
 extension ChatView : UITableViewDelegate, UITableViewDataSource {
@@ -120,14 +135,11 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         return finalSize
     }
     private func configLoad() {
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.setConfig(dataSource: self)
         tableView.estimatedRowHeight = 600
         tableView.rowHeight = UITableView.automaticDimension
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
-        tableView.separatorStyle = .none
-        tableView.bounces = false
         tableView.backgroundColor = chataDrawerBackgroundColorSecondary
         self.backgroundColor = .clear
         self.addSubview(tableView)
@@ -168,6 +180,18 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
             }
         }
         
+    }
+    func updateTableColumn(indexTab: Int, columns: [ChatTableColumn]) {
+        mainData[indexTab].columnsInfo = columns
+        let webviewS = ChataServices.instance.genereteFinalWebView(
+                                            type: "table",
+                                            second: "",
+                                            mainColumn: -1,
+            rowsFinal: mainData[indexTab].dataRows,
+            rowsFinalClean: mainData[indexTab].rowsClean,
+            columnsFinal: mainData[indexTab].columnsInfo)
+        mainData[indexTab].webView = webviewS
+        self.tableView.reloadData()
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
         delegate?.sendDrillDown(idQuery: idQuery, obj: obj, name: name)
