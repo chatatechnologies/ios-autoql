@@ -67,7 +67,8 @@ public class QueryInput: UIView, UITableViewDelegate, UITableViewDataSource {
     func loadTextField() {
         tfMain.borderRadius()
         tfMain.configStyle()
-        tfMain.loadInputPlace(placeholder)
+        let txt = self.loadText(key: "dm4")
+        tfMain.loadInputPlace(txt)
         tfMain.addTarget(self, action: #selector(actionTyping), for: .editingChanged)
         tfMain.isEnabled = !isDisabled
         tfMain.backgroundColor = isDisabled ? chataDrawerBorderColor : chataDrawerBackgroundColorPrimary

@@ -20,7 +20,8 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
     @IBOutlet weak var scMain: UISegmentedControl!
     
     var loginSection: DemoSectionsModel =
-    DemoSectionsModel(title: "Authentication", arrParameters: [
+    DemoSectionsModel(
+        title: "Authentication", arrParameters: [
         DemoParameter(label: "* Project ID", type: .input, value: "", key: "projectID"),
         DemoParameter(label: "* User Email", type: .input, key: "userID", inputType: .mail),
         DemoParameter(label: "* API key", type: .input, value: "", key: "apiKey"),
@@ -29,10 +30,11 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         DemoParameter(label: "* Password", type: .input, key: "password", inputType: .password),
         DemoParameter(label: "Authenticate", type: .button, key: "login")
     ])
+    var constSections: [DemoSectionsModel] = []
     var allSection: [DemoSectionsModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        getCredentials(demoEmpty: false, spira: true)
+        getCredentials(isProd: true)
         addObservers()
         detectDevice()
         dataChat.config.demo = false
@@ -40,28 +42,27 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         loadColors()
         loadConfig()
         loadData()
+        hideKeyboardWhenTappedAround()
         loadOptions()
+        constSections = allSection
+        allSection = [allSection[0],allSection[1]]
+        tbMain.reloadData()
     }
-    func getCredentials(demoEmpty: Bool = true, spira: Bool = false) {
-        if !demoEmpty {
-                            loginSection.arrParameters = spira ? [
-                                DemoParameter(label: "* Project ID", type: .input, value: "spira-demo3", key: "projectID"),
-                                DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
-                                DemoParameter(label: "* API key", type: .input, value: "AIzaSyBxmGxl9J9siXz--dS-oY3-5XRSFKt_eVo", key: "apiKey"),
-                                DemoParameter(label: "* Domain URL", type: .input, value: "https://spira-staging.chata.io", key: "domain"),
-                                DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
-                                DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
-                                DemoParameter(label: "Authenticate", type: .button, key: "login")
-                            ] : [
-                                DemoParameter(label: "* Project ID", type: .input, value: "atb-demo", key: "projectID"),
-                                DemoParameter(label: "* User Email", type: .input, value:"vicente@rinro.com.mx", key: "userID", inputType: .mail),
-                                DemoParameter(label: "* API key", type: .input, value: "AIzaSyCdHG-E_rX2ENGZJhYBjxmUSAZaqfyqm-0", key: "apiKey"),
-                                DemoParameter(label: "* Domain URL", type: .input, value: "https://atb-staging.chata.io", key: "domain"),
-                                DemoParameter(label: "* Username", type: .input, value: "admin", key: "username" ),
-                                DemoParameter(label: "* Password", type: .input, value: "admin123", key: "password", inputType: .password),
-                                DemoParameter(label: "Authenticate", type: .button, key: "login")
-                            ]
-                        }
+    func getCredentials(isProd: Bool = false) {
+            let pid = isProd ? "accounting-demo" : "spira-demo3"
+            let keyS = "AIzaSyCWcKQfsJo3Lk6t2VHflBEY6CF51kEPdx8"//isProd ? "AIzaSyA8EomrHDJxkTnc2euI3NOaGDnUGJLCj2c" : "AIzaSyBxmGxl9J9siXz--dS-oY3-5XRSFKt_eVo"
+            let urlS = "https://chata-staging.chata.io"/*isProd ? "https://accounting-demo.chata.io" :
+                "https://spira-staging.chata.io"*/
+            let user = "admin"/*isProd ? "accountdemo" :
+                "admin"*/
+            let pass = "admin123"/*isProd ? "accountdemo123" :
+                "admin123"*/
+            loginSection.arrParameters[0].value = pid
+            loginSection.arrParameters[1].value = "vicente@rinro.com.mx"
+            loginSection.arrParameters[2].value = keyS
+            loginSection.arrParameters[3].value = urlS
+            loginSection.arrParameters[4].value = user
+            loginSection.arrParameters[5].value = pass
     }
     @IBAction func changeSection(_ sender: Any) {
         switch scMain.selectedSegmentIndex {
@@ -104,12 +105,12 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.vwMain.frame.origin.y == 0.0 {
                 let size = keyboardSize.height
-                //self.vwMain.frame.origin.y -= size
+                self.vwMain.frame.origin.y -= size
             }
         }
     }
     @objc func keyboardWillHide() {
-        //self.vwMain.frame.origin.y = 0
+        self.vwMain.frame.origin.y = 0
     }
     func loadDataSource() {
         let mainTag = 100
@@ -126,7 +127,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         vwMain.addSubview(dashboardView)
         toggleView(tag: mainTag)
         inputMainView.hideAutocomplete()
-        dashboardView.edgeTo(vwMain, safeArea: .none)
+        dashboardView.edgeTo(tbMain, safeArea: .none)
         dashboardView.configLoad(authFinal: dataChat.config.authenticationObj, mainView: self.view)
     }
     func loadInput() {
@@ -141,17 +142,25 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
         vwMain.subviews.forEach { (subView) in
             if subView.tag == tag {
                 subView.isHidden = false
-            } else {
+            }
+            else {
                 subView.isHidden = true
             }
+            if subView.tag == 1000{
+                subView.isHidden = false
+            }
         }
+        
     }
     func loadOptions(login: Bool = false) {
         if !login {
             scMain.removeSegment(at: 2, animated: false)
             scMain.removeSegment(at: 1, animated: false)
         } else {
-            scMain.insertSegment(withTitle: "Dashboard", at: 1, animated: true)
+            if scMain.numberOfSegments == 1 {
+                scMain.insertSegment(withTitle: "Dashboard", at: 1, animated: true)
+            }
+            
             //scMain.insertSegment(withTitle: "Input/Output", at: 2, animated: true)
         }
     }
@@ -160,6 +169,9 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             /*DemoSectionsModel(title: "Data Source", arrParameters: [
                 DemoParameter(label: "Demo data", type: .toggle, value: "true", key: "demo")
             ]),*/
+            DemoSectionsModel(title: "", arrParameters: [
+                DemoParameter(label: "", type: .segment, options: ["Login", "Parameters"], value: "Login", key: "loginS")
+            ]),
             loginSection,
             DemoSectionsModel(title: "Customize Widgets", arrParameters: [
                 DemoParameter(label: "Reload Data Messenger", type: .button),
@@ -208,6 +220,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                 DemoParameter(label: "Enable Speech to Text", type: .toggle, value: "\(dataChat.config.enableVoiceRecord)", key: "enableVoiceRecord")
             ])
         ]
+        
     }
     func loadColors() {
         let posFather = allSection.firstIndex { (father) -> Bool in
@@ -300,9 +313,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                         self.view.isUserInteractionEnabled = true
                         self.aiMain.stopAnimating()
                         if success {
-                            self.setNewValue(fatherP: "Authentication", sonP: "Authenticate", value: "Logout", changeLabel: true)
-                            self.loadOptions(login: success)
-                            self.tbMain.reloadData()
+                            self.resetLogin()
                         }
                     }
                 }
@@ -311,9 +322,7 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
                     let alert = UIAlertController(title: "", message: "Successfully logged out", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
-                    self.setNewValue(fatherP: "Authentication", sonP: "Logout", value: "Authenticate", changeLabel: true)
-                    self.loadOptions(login: false)
-                    self.tbMain.reloadData()
+                    self.resetLogout()
                 }
             }
         case "openChat":
@@ -329,6 +338,16 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             print("invalid button")
         }
     }
+    func resetLogout(){
+        self.setNewValue(fatherP: "Authentication", sonP: "Logout", value: "Authenticate", changeLabel: true)
+        self.loadOptions(login: false)
+        self.tbMain.reloadData()
+    }
+    func resetLogin(){
+        self.setNewValue(fatherP: "Authentication", sonP: "Authenticate", value: "Logout", changeLabel: true)
+        self.loadOptions(login: true)
+        self.tbMain.reloadData()
+    }
     func segmentAction(key: String, value: String) {
         self.view.endEditing(true)
         setValueByKey(key, "\(value)")
@@ -340,6 +359,26 @@ class DemoViewController: UIViewController, DemoParameterCellDelegate {
             dataChat.config.themeConfigObj.theme = dark ? "dark" : "light"
             dataChat.config.themeConfigObj.accentColor = accentColor
             dataChat.changeColor()
+        case "loginS":
+            var tempC = constSections
+            if value == "Login" {
+                tempC = [constSections[0],constSections[1]]
+                
+            }
+            else {
+                tempC.remove(at: 1)
+            }
+            tempC[0].arrParameters[0].value = value
+            allSection = tempC
+            tbMain.reloadData()
+            if value == "Login" {
+                if dataChat.config.authenticationObj.token == "" {
+                    self.resetLogout()
+                } else {
+                    self.resetLogin()
+                }
+            }
+            
         case "defaultTab":
             dataChat.config.defaultTab = value
         case "placement":
@@ -440,7 +479,7 @@ extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
         return allSection[section].arrParameters.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let size = getSize(type: allSection[indexPath.section].arrParameters[indexPath.row].type)
+        let size = getSize(type: allSection[indexPath.section].arrParameters[indexPath.row].type, text: allSection[indexPath.section].title)
         return size
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -462,19 +501,25 @@ extension DemoViewController: UITableViewDelegate, UITableViewDataSource {
         label.edgeTo(view, safeArea:.none)
         return view
     }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return allSection[section].title == "" ? 0 : 30
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         return allSection.count
     }
-    func getSize (type: DemoParameterType) -> CGFloat {
+    func getSize (type: DemoParameterType, text: String) -> CGFloat {
         switch type {
         case .button:
             return 50
-        case .toggle, .input, .defaultCase :
+        case .toggle, .defaultCase :
             return 90
+        case .input:
+            return 70
         case .color:
             return 70
         case .segment:
-            return 60
+            let size: CGFloat = text == "" ? 30 : 60
+            return size
         }
         
     }
@@ -533,5 +578,16 @@ extension UIView {
         self.layer.shadowOpacity = 0.5
         self.layer.shadowRadius = 1.0*/
         self.layer.masksToBounds = false
+    }
+}
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

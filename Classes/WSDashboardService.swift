@@ -48,11 +48,11 @@ class DashboardService {
         }
         let url = "\(base)/autoql/api/v1/query?key=\(DataConfig.authenticationObj.apiKey)"
         let body: [String: Any] = [
-                    "debug": true,
-                    "source": "dashboards.user",
-                    "test": true,
-                    "text": query
-                ]
+            "test": true,
+            "source": "dashboards.user",
+            "translation": "include",
+            "text": query
+        ]
         if query == "" {
             var finalComponent = ChataServices().getDataComponent(response: [:],
                                                                       type: "",

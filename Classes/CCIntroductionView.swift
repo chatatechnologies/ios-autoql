@@ -19,7 +19,7 @@ class IntroductionView: UIView {
         lbl.translatesAutoresizingMaskIntoConstraints = true
         lbl.setSize(16, user)
         self.addSubview(lbl)
-        lbl.edgeTo(self, safeArea: .padding)
+        lbl.edgeTo(self, safeArea: .padding, padding: 10.0)
         layoutIfNeeded()
     }
     public override init(frame: CGRect) {

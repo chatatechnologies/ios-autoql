@@ -24,7 +24,8 @@ class QBSecondCell : UITableViewCell{
                           textColor: chataDrawerTextColorPrimary,
                           align: .left)
         lblText.edgeTo(self, safeArea: .leftCenterY, height: height, imgDefault, padding: -8)
-        imgDefault.isHidden = option.contains("See more...")
+        let txt = self.loadText(key: "dm5")
+        imgDefault.isHidden = option.contains("\(txt)...")
         textLabel?.transform = CGAffineTransform(scaleX: 1,y: 1)
         self.backgroundColor = chataDrawerBackgroundColorPrimary
     }

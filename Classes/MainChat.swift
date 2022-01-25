@@ -29,6 +29,8 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
     public override init(frame: CGRect) {
         super.init(frame: frame)
         vwToolbar.delegate = self
+        let txt2 = self.loadText(key: "ws1")
+        ERRORDEFAULT = txt2
     }
     public func show(query: String = "", defaultTab: Int = 0) {
         getMainChatPosition()
@@ -87,6 +89,8 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
                                                object: nil)
     }
     @objc func closeAction(sender: UITapGestureRecognizer) {
+        let vwFather: UIView = UIApplication.shared.keyWindow!
+        vwFather.removeView(tag: 2)
         dismiss(animated: DataConfig.clearOnClose)
     }
     @objc func nothing(sender: UITapGestureRecognizer) {
@@ -164,7 +168,10 @@ public class MainChat: UIView, ToolbarViewDelegate, QBTipsDelegate, QTMainViewDe
     }
     func loadTips(text: String){
         loadSelectBtn(tag: 2)
-        vwToolbar.updateTitle(text: "Explore Queries", noDeleteBtn: true)
+        let txt = self.loadText(key: "eq1")
+        
+        
+        vwToolbar.updateTitle(text: txt, noDeleteBtn: true)
         if text != "" {
             newTips.toogleButton(hideButton: true)
             newTips.runQuery(text: text)
@@ -245,7 +252,7 @@ extension MainChat {
             DispatchQueue.main.async {
                 if DataConfig.autoQLConfigObj.enableNotifications {
                     NotificationServices.instance.getStateNotifications(number: 0)
-                    Timer.scheduledTimer(withTimeInterval: 30, repeats: true) {
+                    Timer.scheduledTimer(withTimeInterval: 60, repeats: true) {
                         (time) in
                         if LOGIN && DataConfig.autoQLConfigObj.enableNotifications{
                             if notificationsAttempts < 6 {

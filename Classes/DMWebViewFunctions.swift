@@ -11,6 +11,23 @@ func getHTMLHeader(triType: Bool = false) -> String {
     <!DOCTYPE html>
     <html lang="en">
     <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no">
+    <link href=“https://fonts.googleapis.com/css?family=Titillium+Web” rel=“stylesheet”>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <title></title>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    </head>
+    <body>
+    \(getHTMLStyle())
+    """
+    /*return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no">
@@ -27,7 +44,7 @@ func getHTMLHeader(triType: Bool = false) -> String {
     \(getHTMLStyle())
     <div class="splitView">
     <div id='container' class='container'></div>
-    """
+    """*/
     //getPieChart() <div id='container' class='container'></div>
 }
 func getHTMLCharts(triType: Bool) -> String {
@@ -120,6 +137,21 @@ func getHTMLStyle() -> String {
             font-size: 50px;
             color: \(chataDrawerWebViewText)!important;
         }
+        svg {
+            
+            /*width: 100%;
+            position: relative;
+            height: 100%;
+            z-index: 0;*/
+          }
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+          }
     </style>
     """
     return style
@@ -151,13 +183,13 @@ func getHTMLFooter(rows: [[String]],
         )
         scriptJS += getFooterScript(dollar: dolarFormat)
     }
-    let sortTable = positionColumn != -1 ? "sortTable();" : ""
+    //let sortTable = positionColumn != -1 ? "sortTable();" : ""
     return """
     </div>
     <script>
     \(scriptJS)
     hideAll();
-    \(sortTable)
+    
     function sortTable() {
       var table, rows, switching, i, x, y, shouldSwitch;
       table = document.getElementById("idTableBasic");
@@ -361,9 +393,13 @@ func getChartFooter(rows: [[String]],
             
         }
         rows.enumerated().forEach { (index, row) in
-            var name = validateArray(row, positionsChartsSecond) as? String ?? ""
+            let name = validateArray(row, positionsChartsSecond) as? String ?? ""
             catX.append(name)
-            name = name.toDate(true, true)
+        }
+        catX.sort()
+        rows.enumerated().forEach { (index, row) in
+            var name = catX[index] ?? ""
+            name = name.toDate(false, false)
             if mainColum != -1 {
                 name = validateArray(row, mainColum) as? String ?? ""
                 if types[mainColum] == .date {
@@ -392,23 +428,7 @@ func getChartFooter(rows: [[String]],
                     }
                 }
             }
-            /*let mount = validateArray(row, positionsCharts) as? String ?? "0"
-            let mountFinal = Double(mount) ?? 0.0
-            if catXFormat.firstIndex(of: name) == nil {
-                catXFormat.append(name)
-                dataSpecial.append([name, mountFinal])
-            } else {
-                var pos = catXFormat.firstIndex(of: name) ?? 0
-                pos = Int(pos)
-                let mountBase = dataSpecial[pos][1] as? Double ?? 0.0
-                let mountFinalColumn = mountBase + mountFinal
-                dataSpecial[pos][1] = mountFinalColumn
-            }*/
-            
         }
-        print(positionsCharts)
-        print(positionsChartsSecond)
-        dataSpecialActive = true
     }
     var finalDataSpecial: [[Double]] = []
     var inx = 0
@@ -501,6 +521,7 @@ func getChartFooter(rows: [[String]],
     var yAxis = triType ? (validateArray(columns, 2) as? String ?? "").replace(target: "'", withString: "") :
         (validateArray(columns, pos) as? String ?? "").replace(target: "'", withString: "")
     yAxis = dataSpecialActive && yAxis.contains("Amount") ? "Amount" : yAxis
+    yAxis = columns.count > 3 ? "Amount" : yAxis
     return """
         var type = '\(mainType)';
         var xAxis = '\(xAxis)';

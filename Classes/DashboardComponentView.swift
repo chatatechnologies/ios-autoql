@@ -126,7 +126,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
                            align: .center)
         newView.addSubview(lblTitle)
         lblTitle.edgeTo(newView, safeArea: .topHeight, height: 50)
-        lblTitle.addBorder()
+        //lblTitle.addBorder()
         
         let btnCancel = UIButton()
         btnCancel.setConfig(text: "Ok",
@@ -405,11 +405,13 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         
     }
     @IBAction func reportProblem(_ sender: UIButton){
+        let alert1 = loadText(key: "g2")
+        let alert2 = loadText(key: "g3")
         switch sender.tag {
         case 0:
-            showAlertResult(msg: "The data is incorrect")
+            showAlertResult(msg: alert1)
         case 1:
-            showAlertResult(msg: "The data is incomplete")
+            showAlertResult(msg: alert2)
         case 2:
             generatePopUp()
         default:
@@ -418,8 +420,11 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         superview?.removeView(tag: 2)
     }
     func showAlertResult(msg: String) {
-        let newAlert = UIAlertController(title: "", message: "Thank you for your feedback", preferredStyle: .alert)
-        newAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        let alertR = loadText(key: "g4")
+        let alertE = loadText(key: "g5")
+        let alertOK = loadText(key: "g9")
+        let newAlert = UIAlertController(title: "", message: alertR, preferredStyle: .alert)
+        newAlert.addAction(UIAlertAction(title: alertOK, style: .default, handler: nil))
         var finalID = mainData.idQuery
         if finalID.contains("drilldown"){
             let newFinalID = finalID.components(separatedBy: "drilldown")
@@ -427,7 +432,7 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         }
         ChataServices.instance.reportProblem(queryID: finalID, problemType: msg) { (success) in
             DispatchQueue.main.async {
-                newAlert.message = success ? "Thank you for your feedback" : "Error in report"
+                newAlert.message = success ? alertR : alertE
                 UIApplication.shared.keyWindow?.rootViewController?.present(newAlert, animated: true, completion: nil)
             }
         }
@@ -447,7 +452,8 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         vwBackgroundMenu.addSubview(newView)
         newView.edgeTo(vwBackgroundMenu, safeArea: .centerSizeUp, height: 260, padding: 300)
         let lblTitle = UILabel()
-        lblTitle.setConfig(text: "Report Problem",
+        let txtTitle = loadText(key: "g6")
+        lblTitle.setConfig(text: txtTitle,
                            textColor: chataDrawerTextColorPrimary,
                            align: .center)
         newView.addSubview(lblTitle)
@@ -461,7 +467,8 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newView.addSubview(buttonCancel)
         buttonCancel.edgeTo(newView, safeArea: .alignViewLeft, height: 50, lblTitle)
         let lblInfo = UILabel()
-        lblInfo.setConfig(text: "Please tell us more about the problem you are experiencing:",
+        let txtInfo = loadText(key: "g7")
+        lblInfo.setConfig(text: txtInfo,
                            textColor: chataDrawerTextColorPrimary,
                            align: .center)
         newView.addSubview(lblInfo)
@@ -480,14 +487,16 @@ class DashboardComponentCell: UITableViewCell, WKNavigationDelegate, WKScriptMes
         newView.addSubview(stackView)
         stackView.edgeTo(newView, safeArea:.midTopBottom2, tfReport, padding: 16)
         let btnCancel = UIButton()
-        btnCancel.setConfig(text: "Cancel",
+        let txt = loadText(key: "g1")
+        let txtRep = loadText(key: "g8")
+        btnCancel.setConfig(text: txt,
                             backgroundColor: chataDrawerBorderColor,
                             textColor: chataDrawerTextColorPrimary,
                             executeIn: self,
                             action: #selector(closeModal))
         stackView.addArrangedSubview(btnCancel)
         btnCancel.edgeTo(stackView, safeArea: .fullStackV, height: 100)
-        btnReport.setConfig(text: "Report",
+        btnReport.setConfig(text: txtRep,
                             backgroundColor: chataDrawerBorderColor,
                             textColor: chataDrawerTextColorPrimary,
                             executeIn: self,

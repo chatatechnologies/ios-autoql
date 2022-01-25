@@ -61,7 +61,7 @@ class ChataServices {
             "username": user,
             "password": parameters["password"] ?? ""
         ]
-        let urlRequest = wsLogin
+        let urlRequest = ISPROD ? wsLoginProd : wsLogin
         httpRequest(urlRequest, "POST", body, content: "application/x-www-form-urlencoded", resultText: true) { (response) in
             self.logout { (success) in
                 let result = response["result"] as? String ?? ""
@@ -80,7 +80,8 @@ class ChataServices {
     func getJWTResponse(parameters: [String: Any], completion: @escaping CompletionChatSuccess) {
         let mail = parameters["userID"] ?? ""
         let project_id = parameters["projectID"] ?? ""
-        let url = "\(wsJwt)\(mail)&project_id=\(project_id)"
+        let finalJWTURL = ISPROD ? wsJwtProd : wsJwt
+        let url = "\(finalJWTURL)\(mail)&project_id=\(project_id)"
         httpRequest(url, resultText: true) { (response) in
             let result = response["result"] as? String ?? ""
             ChataServices.instance.jwt = result
@@ -104,18 +105,17 @@ class ChataServices {
         let urlRequest = "\(wsAutocomplete)\(handleQuery)&projectid=1"
         let urlRequestUser = "\(wsUrlDynamic)/autoql/api/v1/query/autocomplete?text=\(handleQuery)&key=\(DataConfig.authenticationObj.apiKey)"
         let urlFinal = !DataConfig.demo ? urlRequestUser : urlRequest
-        print(urlFinal)
-        UIApplication.shared.beginIgnoringInteractionEvents()
+        //print(urlFinal)
+        //cancelAllTaskWithUrl()
         httpRequest(urlFinal) { (response) in
-            DispatchQueue.main.async {
-                UIApplication.shared.endIgnoringInteractionEvents()
-            }
+            
             let responseFinal: [String: Any] = !DataConfig.demo ? response["data"] as? [String: Any] ?? [:] : response
             let matches = responseFinal["matches"] as? [String] ?? []
             completion(matches)
         }
     }
     func getSafetynet(query: String, completion: @escaping CompletionChatSafetynet){
+        //cancelAllTaskWithUrl()
         let handleQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlRequest = !DataConfig.demo
             ? "\(wsUrlDynamic)/autoql/api/v1/query/validate?text=\(handleQuery)&key=\(DataConfig.authenticationObj.apiKey)"
@@ -177,7 +177,7 @@ class ChataServices {
         }
     }
     func getSuggestionsQueries(query: String, relatedQuery: String, completion: @escaping CompletionSuggestions) {
-        var finalQuery = query.replace(target: " ", withString: ",")
+        let finalQuery = query.replace(target: " ", withString: ",")
         //finalQuery = query.replace(target: "%20", withString: ",")
         let finalUrl = "\(wsUrlDynamic)/autoql/api/v1/query/related-queries?key=\(DataConfig.authenticationObj.apiKey)&search=\(finalQuery)&scope=narrow&query_id=\(relatedQuery)"
         httpRequest(finalUrl) { (response) in
@@ -364,7 +364,10 @@ class ChataServices {
         if items.count > 0{
             dataModel.type = .Suggestion
         }
-        let message = response["message"] as? String ?? "Uh oh.. It looks like you don't have access to this resource. Please double check that all required authentication fields are correct."
+        //let bundle = Bundle(for: type(of: self))
+        //let txtH = loadTT(bundle: bundle ,key: "ws1"
+        let message = response["message"] as? String ?? ERRORDEFAULT
+        
         dataModel.text = message
         let sql = data["sql"] as? [String] ?? []
         dataModel.sql = sql
@@ -560,22 +563,53 @@ class ChataServices {
                                     columns: columnsF)*/
         //getPieChart(dataChart: dataPie)
         //generateChart(rows: rowsFinal,columns: columnsF)
+                             var validateType = ""
+                             switch(typeFinal){
+                                 case "icColumn", "cidcolumn", "column":
+                                     validateType = "COLUMN"
+                                 break
+                                 case "icBar", "cidbar", "bar":
+                                     validateType = "BAR"
+                                 break
+                                 case "icLine", "cidline", "line":
+                                     validateType = "LINE"
+                                 break
+                                 case "icPie", "cidpie", "pie":
+                                     validateType = "PIE"
+                                 break
+                                 case "idTableBasic", "#idTableBasic","table":
+                                     validateType = "TABLE"
+                                 break
+                                 default:
+                                     validateType = "TABLE"
+                             }
+        let finalStrType = "TypeEnum.\(validateType)"
+        let (dataBi, catX, countX) = generateBiDatad3(rows: rowsFinalClean, columns: columnsFinal)
+        var finalDateD3 = MainDataD3()
+        finalDateD3.dataContent = dataBi
+                             finalDateD3.axisX = columnsF[0]
+                             finalDateD3.axisY = columnsF[1]
+                             finalDateD3.aCategoryX = catX
+                             finalDateD3.mainType = finalStrType
+                             finalDateD3.countX = countX
+                             
         let webView = """
             \(getHTMLHeader(triType: columnsF.count == 3))
             \(datePivotStr)
             \(dataPivotStr)
             \(tableBasicStr)
-        \(getHTMLFooter(rows: rowsFinal,
-                        columns: columnsF,
-                        types: columsType,
-                        drills: drills,
-                        type: typeFinal,
-                        mainColumn: mainColumn,
-                        second: second,
-                        positionColumn: positionColumn
-        ))
+            \(getD3String(mDataD3: finalDateD3))
         """
         return webView
+                             /*
+                              \(getHTMLFooter(rows: rowsFinal,
+                                          columns: columnsF,
+                                          types: columsType,
+                                          drills: drills,
+                                          type: typeFinal,
+                                          mainColumn: mainColumn,
+                                          second: second,
+                                          positionColumn: positionColumn))*/
     }
     func getSplit(type: String, table: String = "") -> String {
         let wbSplit = "<div>SplitView</div>"
@@ -628,7 +662,8 @@ class ChataServices {
                 if columnsFinal[index].type == .dateString {
                     if columnsFinal.count > index {
                         let strDate = "\(element)"
-                        finalRow.append(strDate.toDate2(format: columnsFinal[index].formatDate))
+                        let formatDate = strDate.toDate2(format: columnsFinal[index].formatDate)
+                        finalRow.append(formatDate)
                         finalRowClean.append(strDate)
                     }
                 } else {
@@ -672,6 +707,15 @@ class ChataServices {
         }
         return (finalUser, finalText, newDisplayType)
     }
+    func cancelAllTaskWithUrl() {
+        ACTIVESEARCH.forEach { task in
+            let urlbase = task.originalRequest?.url?.absoluteString ?? ""
+            if urlbase.contains("notifications") {
+                print(task.originalRequest?.url)
+                task.cancel()
+            }
+        }
+      }
 }
 struct DashboardList {
     var createdAt: String

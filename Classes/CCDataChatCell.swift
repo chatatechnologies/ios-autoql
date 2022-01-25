@@ -6,7 +6,7 @@
 //
 
 import Foundation
-protocol DataChatCellDelegate: class {
+protocol DataChatCellDelegate: AnyObject {
     func updateTableColumn(indexTab: Int, columns: [ChatTableColumn])
     func sendText(_ text: String, _ safe: Bool)
     func deleteQuery(idQuery: String)
@@ -24,6 +24,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
     private var dataOriginal = ChatComponentModel()
     private var isCheckBoxActive: Bool = false
     private let imgCheck = UIImageView()
+    private var COLUMNRELOAD = false
     let btnReport = UIButton()
     var vwFather: UIView = UIApplication.shared.keyWindow!
     var problemMessage = ""
@@ -327,10 +328,16 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         delegate?.sendText(text, safe)
     }
     @IBAction func deleteQuery(_ sender: AnyObject){
+        superview?.removeView(tag: 2)
+        vwFather.removeView(tag: 2)
         delegate?.deleteQuery(idQuery: mainData.idQuery)
+        
     }
     @IBAction func closeModal(_ sender: AnyObject) {
-        resetData()
+        let btnIF = sender as? UIButton ?? UIButton()
+        if btnIF.tag != 3 {
+            resetData()
+        }
         let btnD = UIButton()
         self.hideMenu(btnD)
         vwFather.removeView(tag: 200)
@@ -341,6 +348,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         self.hideMenu(btnD)
         delegate?.updateTableColumn(indexTab: index, columns: mainData.columnsInfo)
         vwFather.removeView(tag: 200)
+        COLUMNRELOAD = true
     }
     @IBAction func showSQL(_ sender: AnyObject){
         generatePopUpSQL()
@@ -405,6 +413,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         }
     }
     @IBAction func changeChart(_ sender: myCustomButton){
+        print(sender.idButton)
         let btnTemp: myCustomButton = myCustomButton()
         var newID = sender.idButton
         var oldID = buttonDefault?.idButton ?? ""
@@ -416,10 +425,39 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         buttonDefault?.setImage(btnTemp.imageView?.image, for: .normal)
         buttonDefault?.idButton = btnTemp.idButton
         let type = newID.contains("cid") ? newID.replace(target: "cid", withString: "") : newID
+        var validateType = ""
+        switch(newID){
+            case "icColumn", "cidcolumn":
+                validateType = "COLUMN"
+                break
+            case "icBar", "cidbar":
+                validateType = "BAR"
+                break
+            case "icLine", "cidline":
+                validateType = "LINE"
+                break
+            case "icPie", "cidpie":
+                validateType = "PIE"
+                break
+            case "idTableBasic":
+                validateType = "TABLE"
+                break
+            default:
+                validateType = "TABLE"
+        }
+        //print(validateType)
         newID = newID.contains("cid") ? "container" : newID
         oldID = oldID.contains("cid") ? "container" : oldID
+        if mainData.reloadData{
+            mainData.reloadData = false
+            oldID = "idTableBasic"
+        }
         let numRows = newID.contains("Table") ? self.mainData.dataRows.count : 12
-        functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
+        //functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
+        //functionJS = "hideTables('#\(oldID)','#\(newID)', '\(type)');"
+        
+        
+        functionJS = "updateData(TypeEnum.\(validateType))"
         self.delegate?.updateSize(numRows: numRows,
                                   index: self.index,
                                   toTable: oldID != newID,
@@ -428,6 +466,32 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         mainData.type = ChatComponentType.withLabel(newTypeStr)
         boxWeb.updateType(newType: mainData.type)
         mainData.isLoading = true
+        /*if mainData.reloadData {
+            mainData.reloadData = false
+            //var test = myCustomButton()
+            //test.idButton = "idTableBasic"
+            //changeChart(test)
+            
+            functionJS = "hideTables('#\(newID)','#idTableBasic', 'idTableBasic');"
+            self.delegate?.updateSize(numRows: self.mainData.dataRows.count,
+                                      index: self.index,
+                                      toTable: true,
+                                      isTable: true)
+            mainData.type = ChatComponentType.withLabel("table")
+            boxWeb.updateType(newType: mainData.type)
+            mainData.isLoading = true
+            //print(sender.idButton)
+            //changeChart(sender)
+            
+            functionJS = "hideTables('#idTableBasic','#\(newID)', '\(type)');"
+            self.delegate?.updateSize(numRows: numRows,
+                                      index: self.index,
+                                      toTable: oldID != newID,
+                                      isTable: newID.contains("Table"))
+            mainData.type = ChatComponentType.withLabel("table")
+            boxWeb.updateType(newType: mainData.type)
+            mainData.isLoading = true
+        }*/
     }
     func isEyeOn() -> Bool {
         for column in self.mainData.columnsInfo {
@@ -517,6 +581,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         lblTitle.addBorder()
         
         let btnCancel = UIButton()
+        btnCancel.tag = 3
         btnCancel.setConfig(text: "Ok",
                             backgroundColor: chataDrawerAccentColor,
                             textColor: .white,
@@ -559,7 +624,13 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         boxHeader.backgroundColor = .clear
         newView.addSubview(boxHeader)
         boxHeader.edgeTo(newView, safeArea: .topHeightPadding, height: 30, lblTitle, padding: 16)
-        isCheckBoxActive = false
+        //isCheckBoxActive = false
+        isCheckBoxActive = true
+        arrColumnsData.forEach { column in
+            if !column.visibility && isCheckBoxActive {
+                isCheckBoxActive = false
+            }
+        }
         changeCheckStr()
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeState) )
         imgCheck.isUserInteractionEnabled = true
@@ -567,19 +638,23 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         newView.addSubview(imgCheck)
         imgCheck.edgeTo(boxHeader, safeArea: .rightCenterY, height: 25, padding: 0)
         let lblHeader = UILabel()
-        lblHeader.setConfig(text: "Column Name",
+        let bundle = Bundle(for: type(of: self))
+        let txtH = loadTT(bundle: bundle ,key: "dm8")
+        let txtV = self.loadText(key: "dm9")
+        lblHeader.setConfig(text: txtH,
                            textColor: chataDrawerTextColorPrimary,
                            align: .center)
         lblHeader.setSize(16, true)
         boxHeader.addSubview(lblHeader)
         lblHeader.edgeTo(boxHeader, safeArea: .leftCenterY, height: 30, imgCheck, padding: 0)
+        lblHeader.textAlignment = .left
         let lblInfo = UILabel()
         lblInfo.setSize(16, true)
-        lblInfo.setConfig(text: "Visibility",
+        lblInfo.setConfig(text: txtV,
                           textColor: chataDrawerTextColorPrimary,
                           align: .right)
         boxHeader.addSubview(lblInfo)
-        lblInfo.edgeTo(boxHeader, safeArea: .leftCenterY, height: 30, imgCheck, padding: 0)
+        lblInfo.edgeTo(boxHeader, safeArea: .leftCenterY, height: 30, imgCheck, padding: -8)
         tbMain.backgroundColor = chataDrawerBorderColor
         newView.addSubview(tbMain)
         tbMain.edgeTo(newView, safeArea: .topHeightPadding, height: 90, boxHeader, padding: 16)
@@ -588,7 +663,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         newView.addSubview(stackView)
         stackView.edgeTo(newView, safeArea:.midTopBottom2, tbMain, padding: 16)
         let btnCancel = UIButton()
-        btnCancel.setConfig(text: "Cancel",
+        let txt = loadText(key: "g1")
+        btnCancel.setConfig(text: txt,
                             backgroundColor: chataDrawerBorderColor,
                             textColor: chataDrawerTextColorPrimary,
                             executeIn: self,
@@ -640,6 +716,7 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         newView.addSubview(lblTitle)
         lblTitle.edgeTo(newView, safeArea: .topHeight, height: 50)
         let buttonCancel = UIButton()
+        buttonCancel.tag = 3
         buttonCancel.setConfig(text: "✕",
                                backgroundColor: chataDrawerBorderColor,
                                textColor: .darkGray,
@@ -667,7 +744,9 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         newView.addSubview(stackView)
         stackView.edgeTo(newView, safeArea:.midTopBottom2, tfReport, padding: 16)
         let btnCancel = UIButton()
-        btnCancel.setConfig(text: "Cancel",
+        let txt = loadText(key: "g1")
+        btnCancel.tag = 3
+        btnCancel.setConfig(text: txt,
                             backgroundColor: chataDrawerBorderColor,
                             textColor: chataDrawerTextColorPrimary,
                             executeIn: self,
@@ -772,7 +851,8 @@ class DataChatCell: UITableViewCell, ChatViewDelegate, BoxWebviewViewDelegate, Q
         self.boxWeb.wbMain.evaluateJavaScript("showFilter();", completionHandler: {
             (_,_) in
         })
-        let tt: AnyObject = "" as AnyObject
+        let tt: UIButton = UIButton()
+        tt.tag = 3
         closeModal(tt)
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {

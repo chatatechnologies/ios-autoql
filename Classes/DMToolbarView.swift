@@ -53,6 +53,8 @@ class ToolbarView: UIView {
         lblTitle.edgeTo(self, safeArea: .fullWidth, height: 40.0, cancel, btnDelete)
     }
     @objc func actionClose(sender: UIButton!) {
+        let vwFather: UIView = UIApplication.shared.keyWindow!
+        vwFather.removeView(tag: 2)
         if let father = self.superview?.superview as? MainChat {
             father.dismiss(animated: DataConfig.clearOnClose)
         }

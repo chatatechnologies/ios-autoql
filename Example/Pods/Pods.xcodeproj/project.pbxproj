@@ -38,6 +38,7 @@
 		175A794C262625EC00947E3D /* icCheckTrue.png in Resources */ = {isa = PBXBuildFile; fileRef = 175A794A262625EC00947E3D /* icCheckTrue.png */; };
 		175B809A240053D5001F52D8 /* DMTextboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B8099240053D5001F52D8 /* DMTextboxView.swift */; };
 		175B809C24005CCC001F52D8 /* DMWaterMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B809B24005CCC001F52D8 /* DMWaterMarkView.swift */; };
+		175E212626829AC7007C8A64 /* t.json in Resources */ = {isa = PBXBuildFile; fileRef = 179B159A2667F5F0004C33DA /* t.json */; };
 		175E9CC92502B2BC00375DEE /* icSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 175E9CC82502B2BC00375DEE /* icSearch.png */; };
 		1771BF0E241C01E000BE1D4F /* CCChatTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771BF0D241C01E000BE1D4F /* CCChatTableModel.swift */; };
 		1771BF10241C57D000BE1D4F /* preloader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1771BF0F241C57D000BE1D4F /* preloader.gif */; };
@@ -92,6 +93,8 @@
 		4CE26873860047EDE677E7009F4D1DD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		6A0C81B35D1AE3D0051630A305274490 /* chata-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E064F34F2C1F711C347B68F988EE0EEF /* chata-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5707982C1DAB5188E2EF7A9AFC4AD34 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		E991904A277A5704007C5EB9 /* D3Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919049277A5704007C5EB9 /* D3Swift.swift */; };
+		E9E8E2D52787771F00B3C9CB /* D3Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E8E2D42787771F00B3C9CB /* D3Main.swift */; };
 		E9F37A6C495FCC62FF6D103B4BC8D208 /* Pods-chata_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 515F708E65E21EE45B09FE2F230EDED2 /* Pods-chata_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EEE833FF9F499F680633D46ABBE955E7 /* Pods-chata_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 606F7B8958B5E76ABB16524DE53C3BBE /* Pods-chata_Tests-dummy.m */; };
 /* End PBXBuildFile section */
@@ -157,6 +160,7 @@
 		178A548926277E1A0088BD32 /* icEyeColumnNot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icEyeColumnNot.png; sourceTree = "<group>"; };
 		1790CFA3259D9F0A0096FAF2 /* CCIntroductionInteractiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCIntroductionInteractiveView.swift; sourceTree = "<group>"; };
 		17996E58261E50F80074055E /* icEyeColumn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icEyeColumn.png; sourceTree = "<group>"; };
+		179B159A2667F5F0004C33DA /* t.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = t.json; sourceTree = "<group>"; };
 		179F2013250FCCE4003EF3E9 /* QueryInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInput.swift; sourceTree = "<group>"; };
 		17AE6B9B240F1EDD00CFD252 /* DMColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMColors.swift; sourceTree = "<group>"; };
 		17B19F862458876D00744EB3 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -218,6 +222,8 @@
 		E064F34F2C1F711C347B68F988EE0EEF /* chata-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "chata-umbrella.h"; sourceTree = "<group>"; };
 		E24CECC3E1581D87B2ECC1458A102F30 /* Pods_chata_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chata_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E401986602F4522DDE20C5746E93DC96 /* chata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = chata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9919049277A5704007C5EB9 /* D3Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = D3Swift.swift; sourceTree = "<group>"; };
+		E9E8E2D42787771F00B3C9CB /* D3Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = D3Main.swift; sourceTree = "<group>"; };
 		EF4C22F42EF937820BAF1E70B5017295 /* Pods-chata_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-chata_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		EFD2549423BE9778D5C44C355A1DA672 /* Pods-chata_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-chata_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		F7B655E436F8F89433EF8726D8F7B829 /* chata-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "chata-prefix.pch"; sourceTree = "<group>"; };
@@ -257,6 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				1749743C252A32BA00A3B0BB /* PieChart.swift */,
+				E9919049277A5704007C5EB9 /* D3Swift.swift */,
+				E9E8E2D42787771F00B3C9CB /* D3Main.swift */,
 			);
 			path = D3;
 			sourceTree = "<group>";
@@ -338,6 +346,7 @@
 				1742C60524F9AE4D00213FDA /* icArrowLeft.png */,
 				17EF228F23FC6B2B001C5F69 /* icSend.png */,
 				175E9CC82502B2BC00375DEE /* icSearch.png */,
+				179B159A2667F5F0004C33DA /* t.json */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -676,6 +685,7 @@
 				175A794B262625EC00947E3D /* icCheckFalse.png in Resources */,
 				17F2387B2506BD100040CC8B /* icReport.png in Resources */,
 				17996E59261E50F80074055E /* icEyeColumn.png in Resources */,
+				175E212626829AC7007C8A64 /* t.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +712,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1733C51125190AED00F0E9FC /* WSNotificationServices.swift in Sources */,
+				E9E8E2D52787771F00B3C9CB /* D3Main.swift in Sources */,
 				175B809C24005CCC001F52D8 /* DMWaterMarkView.swift in Sources */,
 				1742C60424F96EF900213FDA /* CCQueryBuilder.swift in Sources */,
 				1781762F23FF108F001A2F1F /* DMToolbarView.swift in Sources */,
@@ -721,6 +732,7 @@
 				177E7A5F251A91F9005CDDF3 /* MainChat.swift in Sources */,
 				174EE21025647F39003DF757 /* Components.swift in Sources */,
 				17B19F872458876D00744EB3 /* Dashboard.swift in Sources */,
+				E991904A277A5704007C5EB9 /* D3Swift.swift in Sources */,
 				17CDBBCE24FEC4DD00C9F535 /* QTMainView.swift in Sources */,
 				179F2014250FCCE4003EF3E9 /* QueryInput.swift in Sources */,
 				17F6F1D524045D7000DE0133 /* CCChatComponentModel.swift in Sources */,

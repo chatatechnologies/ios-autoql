@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 public enum DViewSafeArea: String, CaseIterable {
     case topHeight, alignViewLeft, leftRightView, none, noneAsymetric, widthLeft , widthRight, full, fullStack, fullLimit, fullWidth, leftBottom, rightTop, rightBottom, fullStatePaddingAll, rightCenterY, safe , safeChatRight, safeChatLeft, safeChatTop, safeChatBottom, safeButtons, safeButtonsLeft, safeButtonsTop, safeButtonsBottom, safeFHRight, safeFHLeft, safeFHTop, safeFHBottom, leftCenterY, fullState, bottomTop, center, leftAdjust, padding, paddingTop, rightMiddle = "right", leftMiddle = "left", topMiddle = "top", bottomMiddle = "bottom", fullBottom, fullBottomCenter, paddingTopLeft, paddingTopRight, modal, modalLeft, modalRight, dropDownUp, secondTop, midTopBottom, midTopBottom2, bottomPorcent, fullPadding, topHeightFixPadding, topHeightPadding, dropDownBottomHeight, dropDownBottomHeightLeft, bottomHeightFixPadding, bottomRight,
-        noneTopPadding, fullStackH, fullStatePadding, bottomHeight, fullStackV, dropDown, dropDownTop, dropDownTopHeight,dropDownTopHeightLeft, centerSize, bottomSize, centerSizeUp, noneBottom
+        noneTopPadding, fullStackH, fullStatePadding, bottomHeight, fullStackV, dropDown, dropDownTop, dropDownTopHeight,dropDownTopHeightLeft, centerSize, bottomSize, centerSizeUp, noneBottom, midTopBottom3
     static func withLabel(_ str: String) -> DViewSafeArea? {
         return self.allCases.first {
             "\($0.description)" == str
@@ -64,13 +64,10 @@ extension UIView {
             getConst(view: secondView, side: .rightLeft, padding: finalPadding.right)
             getConst(view: view, side: .height, padding: height)
             getConst(view: view, side: .top, padding: finalPadding.top)
-            
-            
-        /*case .midTopBottom3:
+        case .midTopBottom3:
+            sideSymetric(view: view, padding: finalPadding.left)
             getConst(view: view, side: .bottom, padding: finalPadding.bottom)
-            getConst(view: secondView, side: .left, padding: finalPadding.left)
-            getConst(view: secondView, side: .right, padding: finalPadding.right)
-            getConst(view: secondView, side: .topBottom, padding: finalPadding.top)*/
+            getConst(view: secondView, side: .topBottom, padding: finalPadding.top)
         case .bottomPorcent:
             getConst(view: view, side: .heightMultiplier, padding: finalPadding.height)
             sideSymetric(view: secondView, padding: finalPadding.left)
@@ -183,8 +180,11 @@ extension UIView {
             getConst(view: view, side: .centerY)
         case .padding:
             sideCenter(view: view)
-            getConst(view: view, side: .left, padding: 10, typeEqual: .greater)
-            getConst(view: view, side: .right, padding: -10, typeEqual: .less)
+            sideSymetric(view: view, padding: finalPadding.top, vertical: true)
+            getConst(view: view, side: .left, padding: finalPadding.top, typeEqual: .greater)
+            getConst(view: view, side: .right, padding: finalPadding.right, typeEqual: .less)
+            //getConst(view: view, side: .left, padding: finalPadding.top, typeEqual: .less)
+            //getConst(view: view, side: .right, padding: finalPadding.right, typeEqual: .greater)
             if width > 0 {
                 getConst(view: view, side: .width, padding: width)
             }
@@ -200,7 +200,7 @@ extension UIView {
             getConst(view: view, side: .bottom)
         case .paddingTopRight:
             getConst(view: view, side: .top, padding: 16)
-            getConst(view: view, side: .left, padding: 58, typeEqual: .greater)
+            getConst(view: view, side: .left, padding: 38, typeEqual: .greater)
             getConst(view: view, side: .right, padding: -10)
             getConst(view: view, side: .bottom)
         case .secondTop:
@@ -459,7 +459,7 @@ extension UIView {
         
     }
     
-    private func sideSymetric(view: UIView, padding: CGFloat, vertical: Bool = false, safe: Bool = false){
+    public func sideSymetric(view: UIView, padding: CGFloat, vertical: Bool = false, safe: Bool = false){
         if vertical {
             getConst(view: view, side: .top, padding: padding, safe: safe)
             getConst(view: view, side: .bottom, padding: -padding, safe: safe)
@@ -524,4 +524,3 @@ private struct axisConst {
         self.secondX = secondX
     }
 }
-

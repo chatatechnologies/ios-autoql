@@ -10,7 +10,7 @@ import UIKit
 protocol QBTipsDelegate: class {
     func callTips(text: String)
 }
-protocol ChatViewDelegate: class {
+protocol ChatViewDelegate: AnyObject {
     func sendText(_ text: String, _ safe: Bool)
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
@@ -20,7 +20,7 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
     weak var delegate: ChatViewDelegate?
     weak var delegateQB: QBTipsDelegate?
     var mainData = [
-        ChatComponentModel(type: .Introduction, text: "Hi \(DataConfig.userDisplayName)! \(DataConfig.introMessage)"),
+        ChatComponentModel(type: .Introduction, text: "\(DataConfig.userDisplayHi)!  \(DataConfig.userDisplayName)! \(DataConfig.introMessage)"),
         ChatComponentModel(type: .QueryBuilder, text: "")
     ]
     private var cellAnimationsFlags = [IndexPath]()
@@ -32,6 +32,8 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
         if DataConfig.authenticationObj.token == "" {
             mainData.remove(at: 1)
         }
+        //let txt = self.loadText(key: "dm11")
+        
     }
     override func didMoveToSuperview() {
         configLoad()
@@ -41,8 +43,8 @@ class ChatView: UIView, ChatViewDelegate, DataChatCellDelegate, QueryBuilderView
             dataC.idQuery == idQuery
         } ?? 0
         if numQuery <= (mainData.count - 1){
-            var deleteSuggestion = false
-            var moreBottom = false
+            let deleteSuggestion = false
+            let moreBottom = false
             if mainData.count > (numQuery + 1){
                 if mainData[numQuery + 1].type == .Suggestion {
                     //deleteSuggestion = true
@@ -169,6 +171,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
     }
     func updateSize(numRows: Int, index: Int, toTable: Bool, isTable: Bool) {
         let indexPath = IndexPath(row: index, section: 0)
+        mainData[index].reloadData = false
         guard let cell = self.tableView.cellForRow(at: indexPath) as? DataChatCell else {return}
         cell.updateChart()
         if toTable{
@@ -191,6 +194,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
             rowsFinalClean: mainData[indexTab].rowsClean,
             columnsFinal: mainData[indexTab].columnsInfo)
         mainData[indexTab].webView = webviewS
+        mainData[indexTab].reloadData = true
         self.tableView.reloadData()
     }
     func sendDrillDown(idQuery: String, obj: String, name: String) {
@@ -215,6 +219,7 @@ extension ChatView : UITableViewDelegate, UITableViewDataSource {
         let vwFather: UIView = UIApplication.shared.keyWindow ?? UIView()
         vwFather.removeView(tag: -1)
         vwFather.removeView(tag: -2)
+        vwFather.removeView(tag: 2)
         tableView.removeView(tag: 2)
     }
 }

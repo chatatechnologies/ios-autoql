@@ -84,6 +84,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                 let firstDash = dashboards.count > 0 ? dashboards[0] : DashboardList()
                 let name = "\(firstDash.name) ⌄"
                 self.spinnerDashboard.setTitle(name, for: .normal)
+                //self.spinnerDashboard.cardView(color: chataDrawerAccentColor)
                 self.listDash = dashboards
                 self.dataDash = firstDash.data
                 self.tbMain.reloadData()
@@ -130,7 +131,7 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
                           align: .center)
         component.addSubview(lbTitle)
         lbTitle.edgeTo(component, safeArea: .topHeight, height: 30, padding: 10)
-        lbTitle.addBorder()
+        //lbTitle.addBorder()
         component.addSubview(vwWebview)
         vwWebview.backgroundColor = .gray
         if webview != "" && webview != "text" {
@@ -155,9 +156,13 @@ public class Dashboard: UIView, DashboardComponentCellDelegate, WKNavigationDele
             DispatchQueue.main.async {
                 self.wbSecond.loadHTMLString(webview, baseURL: nil)
             }
+            vwWebview.backgroundColor = .red
             vwWebview.edgeTo(component, safeArea: .midTopBottom2, vwSecondWebview, padding: 20 )
         } else {
-            vwWebview.edgeTo(component, safeArea: .midTopBottom, lbTitle, padding: 20 )
+            print(component.frame.height)
+            //vwWebview.edgeTo(component, safeArea: .topHeight, height: 30, padding: 10)
+            vwWebview.edgeTo(component, safeArea: .midTopBottom3, lbTitle, padding: 20 )
+            
         }
         vwWebview.addSubview(wbMain)
         wbMain.edgeTo(vwWebview, safeArea: .none)
@@ -374,6 +379,7 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             loadingGeneral = 0
             let name = "\(listDash[indexPath.row].name) ⌄"
             spinnerDashboard.setTitle(name, for: .normal)
+            spinnerDashboard.cardView()
             toggleListDashboard(false)
             dataDash = listDash[indexPath.row].data
             toggleTable()
@@ -396,10 +402,8 @@ extension Dashboard: UITableViewDelegate, UITableViewDataSource {
             loadTwoDash(query: text, type: "", index: position, column: dataDash[position].stringColumnIndexSecond )
         }
     }
-    func sendDrillDown(idQuery: String, obj: String, name: String) {
-    }
+    func sendDrillDown(idQuery: String, obj: String, name: String) {}
     
-    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {
-    }
+    func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String) {}
     
 }

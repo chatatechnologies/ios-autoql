@@ -109,6 +109,8 @@ public class DataMessenger: UIButton {
         }
     }
     public func show(_ vwFather: UIView) {
+        LANGUAGEDEVICE = String(Locale.preferredLanguages[0].prefix(2))
+        
         self.isHidden = !DataConfig.isVisible
         vwFather.addSubview(self)
         father2 = vwFather
@@ -116,6 +118,7 @@ public class DataMessenger: UIButton {
         self.edgeTo(father2, safeArea: type)
         let pan = UIPanGestureRecognizer(target: self, action:  #selector(buttonAction2))
         self.addGestureRecognizer(pan)
+        DataConfiguration.instance.loadLangDefaul()
     }
     @objc func buttonAction(sender: UIButton!) {
         self.father2.endEditing(true)
@@ -175,3 +178,5 @@ extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = true
     }
 }
+
+

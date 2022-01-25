@@ -28,6 +28,7 @@ struct ChatComponentModel {
     var groupable: Bool
     var sql: [String]
     var limit: Bool
+    var reloadData: Bool
     init(type: ChatComponentType = .Introduction,
          text: String = "",
          user: Bool = false,
@@ -48,7 +49,8 @@ struct ChatComponentModel {
          referenceID: String = "",
          groupable: Bool = false,
          sql: [String] = [],
-         limit: Bool = false
+         limit: Bool = false,
+         reloadData: Bool = false
          ) {
         self.type = type
         self.text = text
@@ -71,6 +73,7 @@ struct ChatComponentModel {
         self.groupable = groupable
         self.sql = sql
         self.limit = limit
+        self.reloadData = reloadData
     }
 }
 struct ChatFullSuggestion {

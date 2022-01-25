@@ -171,6 +171,7 @@ extension String {
         let format2 = format.components(separatedBy: "-")
         var year = ""
         var month = ""
+        var day = ""
         if format2.count > 0 {
             format2.enumerated().forEach { (index, formatE) in
                 if separete.count > index {
@@ -183,11 +184,17 @@ extension String {
                         month = separete[index]
                     } else if ff == "mmmm" {
                         month = String(separete[index].prefix(3))
+                    } else if ff == "dd" {
+                        day = LANGUAGEDEVICE == "en"
+                            ? "\(separete[index]) "
+                            : "\(separete[index]) de "
                     }
                 }
             }
         }
-        let finalDate = "\(month) \(year)"
+        let finalDate = LANGUAGEDEVICE == "en"
+            ? "\(month) \(day) \(year)"
+            : "\(day)\(month) \(year)"
         return finalDate
     }
     func toMonth() -> String {
@@ -204,8 +211,21 @@ extension String {
                       "October",
                       "November",
                       "December"]
+        let monthsSpanish = ["",
+                             "Enero",
+                             "Febrero",
+                             "Marzo",
+                             "Abril",
+                             "Mayo",
+                             "Junio",
+                             "Julio",
+                             "Agosto",
+                             "Septiembre",
+                             "Octubre",
+                             "Novimebre",
+                             "Diciembre"]
         let pos = Int(self) ?? 0
-        return months[pos]
+        return LANGUAGEDEVICE == "en" ? months[pos] : monthsSpanish[pos]
     }
 }
 extension Array {
@@ -278,7 +298,8 @@ extension UIButton {
     }
     func setConfig(text: String, backgroundColor: UIColor, textColor: UIColor, executeIn: Any?, action: Selector) {
         self.addTarget(executeIn, action: action, for: .touchUpInside)
-        self.cardView()
+        //self.cardView()
+        self.addBorder()
         self.setTitleColor(chataDrawerTextColorPrimary, for: .normal)
         self.setTitle(text, for: .normal)
         self.backgroundColor = backgroundColor
@@ -329,11 +350,55 @@ extension UITextField {
         self.rightViewMode = .always
     }
 }
+func loadTT(bundle: Bundle, key: String) -> String {
+    if let path = bundle.path(forResource: "t", ofType: "json") {
+        do {
+              let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+              let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+            print(jsonResult)
+            if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
+                print(jsonResult)
+                if let person = jsonResult[LANGUAGEDEVICE] as? [String: String] {
+                    let finalWord = person[key] ?? ""
+                    return finalWord
+                    //return finalWord
+                }
+            }
+          } catch {
+            print("error")
+               // handle error
+          }
+    }
+    return ""
+}
 extension UIView {
-    func cardView(border: Bool = true, borderRadius: CGFloat = 10) {
+    func loadText(key: String) -> String{
+        let bundle = Bundle(for: type(of: self))
+        //let path = bundle.path(forResource: "translation", ofType: "json")
+        if let path = bundle.path(forResource: "t", ofType: "json") {
+            do {
+                  let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                  let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+                print(jsonResult)
+                if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
+                    print(jsonResult)
+                    if let person = jsonResult[LANGUAGEDEVICE] as? [String: String] {
+                        let finalWord = person[key] ?? ""
+                        return finalWord
+                        //return finalWord
+                    }
+                }
+              } catch {
+                print("error")
+                   // handle error
+              }
+        }
+        return ""
+    }
+    func cardView(border: Bool = true, borderRadius: CGFloat = 10, color: UIColor = chataDrawerBorderColor) {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = borderRadius
-        self.layer.borderColor = border ? chataDrawerBorderColor.cgColor : UIColor.clear.cgColor
+        self.layer.borderColor = border ? color.cgColor : UIColor.clear.cgColor
         /*self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowOpacity = 0.5

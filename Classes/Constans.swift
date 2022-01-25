@@ -14,10 +14,14 @@ let notifcloseQueryTips = Notification.Name("closeQT")
 let notifAlert = Notification.Name("alert")
 var LOGIN: Bool = false
 var notificationsAttempts: Int = 0
+var ACTIVESEARCH: [URLSessionDataTask] = []
+var LANGUAGEDEVICE = "en"
+var ISPROD = false
+var ERRORDEFAULT = ""
 private var defaultTitle = "Data Messenger"
 private var defaultPlace = "right"
 private var defaultPlaceholder = "Type your queries here"
-private var defaultColors = ["#26A7E9", "#A5CD39", "#DD6A6A", "#FFA700", "#00C1B2"]
+var defaultColors = ["#26A7E9", "#A5CD39", "#DD6A6A", "#FFA700", "#00C1B2"]
 public class DataConfiguration {
     static let instance = DataConfiguration()
     public var authenticationObj = authentication(apiKey: "", domain: "", token: "")
@@ -26,6 +30,7 @@ public class DataConfiguration {
     public var placement = defaultPlace
     public var title = defaultTitle
     public var userDisplayName = "User"
+    public var userDisplayHi = "Hi"
     public var introMessage = "Let’s dive into your data. What can I help you discover today?"
     public var inputPlaceholder = defaultPlaceholder
     public var showMask = true
@@ -67,6 +72,16 @@ public class DataConfiguration {
     func show(){
         
     }
+    public func loadLangDefaul(){
+        let bundle = Bundle(for: type(of: self))
+        let txtV = loadTT(bundle: bundle, key: "dm10")
+        let txt = loadTT(bundle: bundle, key: "dm11")
+        let txtD = loadTT(bundle: bundle, key: "dm12")
+        introMessage = txtV
+        userDisplayHi = txt
+        inputPlaceholder = txtD
+        
+    }
     func resetData() {
         authenticationObj = authentication(apiKey: "", domain: "", token: "")
         isVisible = false
@@ -98,7 +113,7 @@ public class DataConfiguration {
             quantityDecimals: 0,
             comparisonDisplay: "PERCENT",
             monthYearFormat: "MMM YYYY",
-            dayMonthYearFormat: "MMM d YYYY"
+            dayMonthYearFormat: "MMM dd YYYY"
         )
         themeConfigObj = themeConfig(
             theme: "light",

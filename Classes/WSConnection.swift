@@ -9,17 +9,21 @@ import Foundation
 private var baseApi = "https://backend.chata.ai/"
 private var baseTestApi = "https://backend-staging.chata.ai/"
 private var baseTestApi2 = "https://backend-staging.chata.io/"
+private var baseProd = "https://backend.chata.io/"
 private var baseQbo = "https://qbo-staging.chata.io/"
 private var versionApi1 = "\(baseApi)api/v1/"
 private var versionBaseTestApi1 = "\(baseTestApi)api/v1/"
-private var versionBaseTestApi2 = "\(baseTestApi2)api/v1/"
+private var versionBaseTestApi2 = ISPROD ? "\(baseProd)api/v1/" :"\(baseTestApi2)api/v1/"
+private var versionBaseProd = "\(baseProd)api/v1/"
 var wsUrlDynamic = ""
 let wsQueryBuilder = "\(versionBaseTestApi2)topics?key="
 let wsAutocomplete = "\(versionApi1)autocomplete?q="
 let wsQuery = "\(versionBaseTestApi1)chata/query"
 let wsSafetynet = "\(versionApi1)safetynet?q="
 let wsLogin = "\(versionBaseTestApi2)login"
+let wsLoginProd = "\(versionBaseProd)login"
 let wsJwt = "\(versionBaseTestApi2)jwt?display_name="
+let wsJwtProd = "\(versionBaseProd)jwt?display_name="
 let wsDrillDown = "\(versionBaseTestApi2)chata/query/drilldown"
 let wsDashboard = "\(versionBaseTestApi2)dashboards?key="
 let wsDataAlerts = "/autoql/api/v1/data-alerts/notifications"
@@ -32,6 +36,7 @@ func httpRequest(_ urlFinal: String,
                  resultText: Bool = false,
                  token: String = "",
                  integrator: Bool = false,
+                 sync: Bool = false,
                  completion: @escaping CompletionResponse) {
     let url = URL(string: urlFinal)! //change the url
     let session = URLSession.shared
@@ -89,36 +94,75 @@ func httpRequest(_ urlFinal: String,
     if integrator {
         request.setValue(DataConfig.authenticationObj.domain, forHTTPHeaderField: "Integrator-Domain")
     }
-    let task = session.dataTask(with: request, completionHandler: { data, response, error in
-        guard error == nil else {
-            completion(["result": "fail"])
-            return
-        }
-        guard let data = data else {
-            return
-        }
-        if let response = response {
-            let nsHTTPResponse = response as! HTTPURLResponse
-            let statusCode = nsHTTPResponse.statusCode
-            print ("status code = \(statusCode)")
-        }
-        if resultText {
-            if let respon = String(data: data,
-                                   encoding: String.Encoding.utf8) {
-                completion(["result":respon])
+    if sync{
+        let semaphore = DispatchSemaphore(value: 0)
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+            semaphore.signal()
+            guard error == nil else {
+                completion(["result": "fail"])
+                return
             }
-        } else {
-            do {
-                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                if let json = responseJSON as? [String: Any] {
-                    completion(json)
-                } else{
-                    completion(["response": responseJSON ?? [:]])
+            guard let data = data else {
+                return
+            }
+            if let response = response {
+                let nsHTTPResponse = response as! HTTPURLResponse
+                let statusCode = nsHTTPResponse.statusCode
+                print ("status code = \(statusCode)")
+            }
+            if resultText {
+                if let respon = String(data: data,
+                                       encoding: String.Encoding.utf8) {
+                    completion(["result":respon])
+                }
+            } else {
+                do {
+                    let responseJSON = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                    if let json = responseJSON as? [String: Any] {
+                        completion(json)
+                    } else{
+                        completion(["response": responseJSON ?? [:]])
+                    }
                 }
             }
-        }
-    })
-    task.resume()
+        })
+        ACTIVESEARCH.append(task)
+        task.resume()
+        _ = semaphore.wait(timeout: .distantFuture)
+    } else {
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+            guard error == nil else {
+                completion(["result": "fail"])
+                return
+            }
+            guard let data = data else {
+                return
+            }
+            if let response = response {
+                let nsHTTPResponse = response as! HTTPURLResponse
+                let statusCode = nsHTTPResponse.statusCode
+                print ("status code = \(statusCode)")
+            }
+            if resultText {
+                if let respon = String(data: data,
+                                       encoding: String.Encoding.utf8) {
+                    completion(["result":respon])
+                }
+            } else {
+                do {
+                    let responseJSON = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                    if let json = responseJSON as? [String: Any] {
+                        completion(json)
+                    } else{
+                        completion(["response": responseJSON ?? [:]])
+                    }
+                }
+            }
+        })
+        ACTIVESEARCH.append(task)
+        task.resume()
+    }
+    
 }
 func httpFormDat(_ urlFinal: String, _ method: String = "GET",_ body: [String: Any] = [:] , completion: @escaping CompletionResponse) {
     let url = URL(string: urlFinal)! //change the url
@@ -163,5 +207,27 @@ func jsonToString(json: [String: Any]) -> String {
         return jsonString
     } catch {
         return ""
+    }
+}
+extension URLSession {
+    func synchronousDataTask(urlrequest: URLRequest) -> (data: Data?, response: URLResponse?, error: Error?) {
+        var data: Data?
+        var response: URLResponse?
+        var error: Error?
+
+        let semaphore = DispatchSemaphore(value: 0)
+
+        let dataTask = self.dataTask(with: urlrequest) {
+            data = $0
+            response = $1
+            error = $2
+
+            semaphore.signal()
+        }
+        dataTask.resume()
+
+        _ = semaphore.wait(timeout: .distantFuture)
+
+        return (data, response, error)
     }
 }

@@ -24,8 +24,9 @@ class DashboardView: UIView {
     func configLoad(authFinal: authentication, mainView: UIView = UIView()){
         let blueColor = "#28A8E0".hexToColor()
         btnExecute.setTitle("▷ Execute", for: .normal)
-        btnExecute.setTitleColor(blueColor, for: .normal)
-        btnExecute.cardView(color: blueColor)
+        btnExecute.setTitleColor(.white, for: .normal)
+        //btnExecute.cardView(color: blueColor)
+        btnExecute.backgroundColor = blueColor
         btnExecute.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         lbTextrun.text = "Run Dashboard Automatically"
         lbTextrun.textAlignment = .center

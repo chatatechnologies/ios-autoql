@@ -23,10 +23,12 @@ struct DemoParameter {
     var action: Selector?
     var key: String
     var inputType: DemoInputType
+    var placeholder: String
     init(label: String = "", type: DemoParameterType = .defaultCase,
          options: [String] = [], value: String = "",
          action: Selector? = nil, key: String = "",
-         inputType: DemoInputType = .normal) {
+         inputType: DemoInputType = .normal,
+         placeholder: String = "") {
         self.label = label
         self.type = type
         self.options = options
@@ -34,6 +36,7 @@ struct DemoParameter {
         self.action = action
         self.key = key
         self.inputType = inputType
+        self.placeholder = placeholder
     }
 }
 enum DemoParameterType {

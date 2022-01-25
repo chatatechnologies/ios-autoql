@@ -15,7 +15,8 @@ class WaterMarkView: UIView {
     }
     func loadConfig(){
         let lbMarkWater = UILabel()
-        lbMarkWater.setConfig(text: "We run on AutoQL by Chata",
+        let txt = self.loadText(key: "dm3")
+        lbMarkWater.setConfig(text: txt,
                               textColor: chataDrawerMessengerTextColorPrimary,
                               align: .center)
         self.addSubview(lbMarkWater)

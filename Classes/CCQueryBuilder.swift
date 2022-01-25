@@ -40,7 +40,8 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbMain.delaysContentTouches = false
         tbSecond.allowsSelection = true
         tbSecond.isUserInteractionEnabled = true
-        lblMain.setConfig(text: "Some things you can ask me:",
+        let txt = self.loadText(key: "dm1")
+        lblMain.setConfig(text: txt,
                           textColor: chataDrawerTextColorPrimary,
                           align: .left)
         addSubview(lblMain)
@@ -51,7 +52,9 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
         tbMain.edgeTo(self, safeArea: .fullPadding, lblMain, lblInfo, padding: 16)
         tbMain.backgroundColor = chataDrawerBackgroundColorPrimary
         lblInfo.clipsToBounds = true
-        lblInfo.text = titleFooter
+        let txt2 = loadText(key: "dm2")
+        titleFooter = txt2
+        lblInfo.text = txt2
         lblInfo.isScrollEnabled = false
         lblInfo.bounces = false
         lblInfo.font = generalFont
@@ -203,7 +206,8 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == tbMain {
-            dataSelection = dataQB[indexPath.row].queries + ["💡 See more..."]
+            let txt = self.loadText(key: "dm5")
+            dataSelection = dataQB[indexPath.row].queries + ["💡 \(txt)..."]
             selectSection = indexPath.row
             toggleAnimationSecond()
             tbSecond.reloadData()
@@ -239,11 +243,11 @@ class QueryBuilderView: UIView, UITableViewDelegate, UITableViewDataSource, UITe
             .underlineStyle: NSUnderlineStyle.double.rawValue,
             .font: generalFont
         ]
-        let range = NSRange(location: 4, length: 17)
+        let range = LANGUAGEDEVICE == "es" ? NSRange(location: 7, length: 20) :NSRange(location: 4, length: 17)
         let mainAttr = NSMutableAttributedString(string: "\(titleFooter)")
         mainAttr.addAttribute(.link, value: "\(0)", range: range)
         mainAttr.addAttributes(msgAttributes, range: range)
-        let range2 = NSRange(location: 0, length: titleFooter.count + 1)
+        let range2 = NSRange(location: 0, length: titleFooter.count)
         let attributedString:[NSAttributedString.Key: Any] = [
             .font: generalFont,
             .foregroundColor : chataDrawerTextColorPrimary,

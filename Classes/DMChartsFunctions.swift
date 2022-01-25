@@ -602,16 +602,15 @@ func getConfigScript() -> String {
         var SSH = 0
         function finalSize(invert){
                 var defaultWidth = "100%";
-                var defaultHeight = "90%";
+                var defaultHeight = "100%";
                 var dynamicWidthSize = ""+categoriesX.length * 10+"%";
                 var FFH = invert ? categoriesX.length : categoriesY.length;
                 var widthSize = categoriesX.length <= 10 ? defaultWidth : dynamicWidthSize;
                 var dynamicHeightSize = ""+FFH * 25+"%";
-                var heightSize = FFH <= 5 ? dynamicHeightSize : dynamicHeightSize;
+                var heightSize = FFH <= 5 ? defaultHeight : dynamicHeightSize;
                 var heightSizeFinal = invert ? heightSize : defaultHeight;
                 SSW = invert ? "100%" : widthSize;
                 SSH = invert ? heightSizeFinal : "100%";
-                alert(SSH);
                 $('.container, #container').css({ "width": SSW, "position": "relative","height":SSH, "z-index": "0" });
         }
         function typeChart(graphic){

@@ -7,7 +7,7 @@
 
 import Foundation
 import WebKit
-protocol BoxWebviewViewDelegate: class{
+protocol BoxWebviewViewDelegate: AnyObject{
     func sendDrillDown(idQuery: String, obj: String, name: String)
     func sendDrillDownManual(newData: [[String]], columns: [ChatTableColumn], idQuery: String)
 }
@@ -53,6 +53,7 @@ class BoxWebviewView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         self.addSubview(imageView)
         imageView.edgeTo(self, safeArea: .centerSize, height: 50, padding: 100)
         self.wbMain.loadHTMLString(strWebview, baseURL: nil)
+        
     }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         imageView.isHidden = false

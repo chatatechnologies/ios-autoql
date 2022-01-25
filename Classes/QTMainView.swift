@@ -101,9 +101,10 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         btnSend.setImage(image, for: .normal)
         btnSend.circle(size)
         vwTextBox.addSubview(tfMain)
+        let txtTF = loadText(key: "qt1")
         tfMain.edgeTo(vwTextBox, safeArea: .leftCenterY, height: size, btnSend, padding: padding)
         tfMain.cardView(borderRadius: 20)
-        tfMain.loadInputPlace("Search relevant queries by topic")
+        tfMain.loadInputPlace(txtTF)
         tfMain.backgroundColor = chataDrawerBackgroundColorPrimary
         tfMain.configStyle()
         tfMain.setLeftPaddingPoints(10)
@@ -120,17 +121,26 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         svPaginator.getSide(dist: .equalCentering,spacing: 0)
     }
     func loadPagination() {
+        var defaultSecond = 2
         btns = btnsBase
         svPaginator.subviews.forEach { (view) in
             view.removeFromSuperview()
         }
         if Qtips.pagination.totalPages > 4 {
             btns.insert("1", at: 1)
-            let defaultMed: String = selectBtn == 1 || selectBtn == Qtips.pagination.totalPages ? "..." : "\(selectBtn)"
-            btns.insert("\(defaultMed)", at: 2)
+            
+            let defaultMed: String = selectBtn == 1 || selectBtn == Qtips.pagination.totalPages ? "..." : "\(selectBtn + 1)"
+            if selectBtn < Qtips.pagination.totalPages-2{
+                btns.insert("\(defaultMed)", at: 2)
+            } else {
+                btns.insert("", at: 2)
+            }
             btns.insert("\(Qtips.pagination.totalPages)", at: 3)
             if Qtips.pagination.totalPages > 6{
-                btns.insert("2", at: 2)
+                if (defaultMed != "..."){
+                    defaultSecond = selectBtn
+                }
+                btns.insert("\(defaultSecond)", at: 2)
                 btns.insert("\(Qtips.pagination.totalPages - 1)", at: 4)
             }
         } else {
@@ -141,7 +151,10 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         btns.enumerated().forEach { (index, titleBtn) in
             let btnGeneral = UIButton()
-            let number = Int(titleBtn) ?? -1
+            var number = Int(titleBtn) ?? -1
+            if titleBtn == "" {
+                number = 0
+            }
             var finalIndex = number
             if number == -1 {
                 if titleBtn == "..."{
@@ -179,11 +192,13 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwDefault.edgeTo(vwMainChat, safeArea: .fullStatePaddingAll, tfMain, padding: 0)
         vwDefault.addSubview(lblDefault)
         lblDefault.edgeTo(vwDefault, safeArea: .topHeight, height: 150, padding: 16)
+        let txt = loadText(key: "qt2")
+        let txt2 = loadText(key: "qt3")
         let strText = titleDefault == "" ? """
-        Discover what you can ask by entering a topic in the search bar above.
-
-        Simply click on any of the returned options to run the query in Data Messenger.
-        """ : titleDefault
+        \(txt)
+        
+        \(txt2)
+        """: titleDefault
         toogleView()
         lblDefault.setConfig(text: strText,
                              textColor: chataDrawerTextColorPrimary,
@@ -195,11 +210,13 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         vwDefault.isHidden = !hideTable
     }
     @objc func actionChangePage(sender: UIButton!) {
-        let limitMin = sender.tag == 0 ? selectBtn == 1 : false
-        let limitMax = sender.tag == (btns.count - 1) ? selectBtn == Qtips.pagination.totalPages : false
-        let sameBtn = selectBtn == sender.tag
-        let invalidRequest = sameBtn || limitMax || limitMin
-        loadSearch(number: sender.tag, pagination: btns.count > 4, sameBtn: invalidRequest)
+        if sender.tag != 0 {
+            let limitMin = sender.tag == 0 ? selectBtn == 1 : false
+            let limitMax = sender.tag == (btns.count - 1) ? selectBtn == Qtips.pagination.totalPages : false
+            let sameBtn = selectBtn == sender.tag
+            let invalidRequest = sameBtn || limitMax || limitMin
+            loadSearch(number: sender.tag, pagination: btns.count > 4, sameBtn: invalidRequest)
+        }
     }
     @objc func actionSearch(sender: UIButton!) {
         self.endEditing(true)
@@ -225,8 +242,9 @@ class QTMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                         self.tbMain.reloadData()
                     } else{
                         loadingView(mainView: self, inView: self.vwMainChat, false)
+                        let txtD = self.loadText(key: "qt4")
                         self.lblDefault.text = """
-                        Sorry, I couldn’t find any queries matching your input. Try entering a different topic or keyword instead.
+                        \(txtD)
                         """
                         self.toogleView()
                     }
