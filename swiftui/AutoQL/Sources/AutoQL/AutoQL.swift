@@ -5,7 +5,7 @@ struct StartAutoQL: View{
         ZStack{
             Group{
                 if showingChat{
-                    ChatView(showingChat: $showingChat)
+                    WindowChatView(showingChat: $showingChat)
                 } else {
                     ButtonAutoQL(showingChat: $showingChat)
                 }
