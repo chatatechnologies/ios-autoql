@@ -1,26 +1,18 @@
 import SwiftUI
-
-public struct HomeAutoQL: View{
-    public var body: some View{
+struct StartAutoQL: View{
+    @State var showingChat = false
+    var body: some View{
         ZStack{
-            Text("AutoQL2.0")
+            Group{
+                if showingChat{
+                    ChatView(showingChat: $showingChat)
+                } else {
+                    ButtonAutoQL(showingChat: $showingChat)
+                }
+            }
         }
     }
 }
 public func getButton() -> some View {
-    var body: some View{
-        ZStack{
-            Text("AutoQL2.0")
-        }
-    }
-    return body
-}
-extension View {
-    public func centerH() -> some View {
-        HStack {
-            Spacer()
-            self
-            Spacer()
-        }
-    }
+    return StartAutoQL()
 }
