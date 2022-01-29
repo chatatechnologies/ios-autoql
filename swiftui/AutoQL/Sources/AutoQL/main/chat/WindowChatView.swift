@@ -22,7 +22,7 @@ struct WindowChatView: View{
                     MainChatView()
                         .frame(width: abs(p.size.width - 24 ), height: abs(p.size.height), alignment: .center)
                         .padding(0)
-                        .background(backgroundColorSecondary)
+                        .background(qlBackgroundColorSecondary)
                 }
             }
         }

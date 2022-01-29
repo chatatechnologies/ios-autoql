@@ -16,7 +16,7 @@ struct ButtonAutoQL: View {
                     HStack{
                         ImagePath(name: "btnChata")
                     }.frame(width: 60, height: 60)
-                        .background(accentColorB)
+                        .background(qlAccentColor)
                         .clipShape(
                             Circle()
                         )

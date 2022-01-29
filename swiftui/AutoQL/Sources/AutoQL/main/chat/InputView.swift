@@ -12,11 +12,17 @@ struct InputView: View {
     var body: some View {
         HStack{
             TextField("Type your Queries here", text: $value)
-                .textFieldStyle(.roundedBorder)
+                .padding()
+                .background(
+                    AnyView(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(qlBackgroundColorPrimary)
+                    )
+                )
             Text("M")
             Text("G")
         }.padding()
-            .background(backgroundColorSecondary)
+            .background(qlBackgroundColorSecondary)
     }
 }
 

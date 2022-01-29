@@ -21,6 +21,6 @@ struct ChatBarView: View {
                 leading: 16,
                 bottom: 16,
                 trailing: 16))
-        .background(accentColorB)
+        .background(qlAccentColor)
     }
 }
