@@ -10,7 +10,9 @@ import SwiftUI
 struct ChatBarView: View {
     var body: some View {
         HStack{
-            Button("x", action: {})
+            Button("x", action: {
+                
+            })
             Spacer()
             Text("Data Messenger").foregroundColor(.white)
             Spacer()

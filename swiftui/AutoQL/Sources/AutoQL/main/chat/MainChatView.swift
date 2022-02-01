@@ -9,11 +9,15 @@ import SwiftUI
 
 struct MainChatView: View {
     @State var valueInput = ""
+    @State var allComponents: [ChatComponent] = []
     var body: some View {
         VStack{
             ChatBarView()
-            ChatBotView()
-            InputView(value: $valueInput)
+            ChatBodyView(allComponents: $allComponents)
+            ChatBarBottomView(
+                value: $valueInput,
+                allComponents: $allComponents
+            )
             Spacer()
         }
     }

@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct InputView: View {
+struct ChatBarBottomView: View {
     @Binding var value: String
+    @Binding var allComponents : [ChatComponent]
+    var service = ChatBarBottomModelView()
     var body: some View {
         HStack{
             TextField("Type your Queries here", text: $value)
@@ -19,7 +21,11 @@ struct InputView: View {
                             .fill(qlBackgroundColorPrimary)
                     )
                 )
-            Text("M")
+            Button("SEND") {
+                service.addComponentToChat { newComponents in
+                    allComponents += newComponents
+                }
+            }
             Text("G")
         }.padding()
             .background(qlBackgroundColorSecondary)

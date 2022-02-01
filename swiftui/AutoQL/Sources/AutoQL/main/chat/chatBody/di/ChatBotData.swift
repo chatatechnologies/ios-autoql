@@ -6,21 +6,7 @@
 //
 
 import SwiftUI
-let bodyMSG: [ChatComponent] = [
-    ChatComponent(type: .botmessage),
-    ChatComponent(type: .usermessage),
-    ChatComponent(type: .botmessage),
-    ChatComponent(type: .usermessage),
-    ChatComponent(type: .botmessage),
-    ChatComponent(type: .usermessage),
-    ChatComponent(type: .botmessage),
-    ChatComponent(type: .usermessage),
-    ChatComponent(type: .botmessage),
-    ChatComponent(type: .usermessage),
-    ChatComponent(type: .botmessage),
-    ChatComponent(type: .usermessage),
-    ChatComponent(type: .botmessage),
-    ChatComponent(type: .usermessage),
+var bodyMSG: [ChatComponent] = [
     ChatComponent(type: .botmessage),
     ChatComponent(type: .usermessage)
     /*ChatBotMessageView(label: "Hi! Let’s dive into your data. What can I help you discover today?"),

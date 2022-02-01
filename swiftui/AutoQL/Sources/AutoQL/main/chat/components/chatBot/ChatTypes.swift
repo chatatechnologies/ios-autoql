@@ -11,12 +11,12 @@ struct ChatComponent: Hashable{
     var label: String
     init(
         type: DataChat = .botmessage,
-        label: String = "test"
+        label: String = "Hi! Let’s dive into your data. What can I help you discover today?"
     ){
         self.type = type
         self.label = label
     }
 }
 enum DataChat {
-    case botmessage, usermessage
+    case botmessage, usermessage, querybuilder
 }
