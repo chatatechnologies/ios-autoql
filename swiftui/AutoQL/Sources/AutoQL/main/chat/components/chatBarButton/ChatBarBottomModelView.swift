@@ -9,8 +9,8 @@ import SwiftUI
 
 class ChatBarBottomModelView {
     var serviceBodyChat = ChatBodyModelView()
-    func addComponentToChat(completion: @escaping([ChatComponent]) -> ()){
-        serviceBodyChat.addNewComponent { newComponents in
+    func addComponentToChat(query: String, completion: @escaping([ChatComponent]) -> ()){
+        serviceBodyChat.addNewComponent(query: query) { newComponents in
             completion(newComponents)
         }
     }

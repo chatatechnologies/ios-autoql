@@ -11,16 +11,19 @@ class ChatBodyModelView : ObservableObject {
     @Published var bodyMessages = [ChatComponent]()
     init() {
         bodyMessages = [
-            ChatComponent(type: .botmessage),
+            ChatComponent(type: .botmessage, label: "Hi! Let’s dive into your data. What can I help you discover today?"),
             ChatComponent(type: .querybuilder)
         ]
     }
     func getDefaultMessage() -> [ChatComponent]{
         return bodyMessages
     }
-    func addNewComponent(completion: @escaping([ChatComponent]) -> ()){
-        let newComponent = ChatComponent(type: .usermessage)
-        let newComponent2 = ChatComponent(type: .botmessage)
+    func addNewComponent(query: String, completion: @escaping([ChatComponent]) -> ()){
+        let newComponent = ChatComponent(type: .usermessage, label: query)
+        let newComponent2 = ChatComponent(
+            type: .botmessage,
+            label: "Response"
+        )
         bodyMessages += [newComponent, newComponent2]
         completion([newComponent, newComponent2])
     }
