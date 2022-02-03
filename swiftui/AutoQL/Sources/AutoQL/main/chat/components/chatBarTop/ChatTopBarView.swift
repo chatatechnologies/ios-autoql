@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChatBarView: View {
+struct ChatTopBarView: View {
     var body: some View {
         HStack{
             Button("x", action: {
