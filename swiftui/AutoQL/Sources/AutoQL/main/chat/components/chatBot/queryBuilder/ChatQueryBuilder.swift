@@ -8,19 +8,30 @@
 import SwiftUI
 
 struct ChatQueryBuilder: View {
+    @Binding var value: String
+    var onClick: () -> Void
+    var qbOptionsLvl1: [String] = ["Sales", "Items", "Expenses", "Purchase Orders"]
     var body: some View {
         HStack{
             VStack{
                 QLText(label: "Some things you can ask me:")
                 List{
-                    QLText(label: "Sales", padding: 0)
-                    QLText(label: "Items", padding: 0)
-                    QLText(label: "Expenses", padding: 0)
-                    QLText(label: "Purchase Orders", padding: 0)
+                    ForEach(qbOptionsLvl1, id: \.self){
+                        qbOption in
+                        QueryBuilderItemView(
+                            label: qbOption,
+                            onClick: onClick,
+                            value: $value
+                        )
+                    }
                 }
+                .frame(height:180)
                 .listStyle(PlainListStyle())
-                .frame(height:150)
-                QLText(label: "Use  Explore Queries to further explore the possibilities.")
+                .onAppear {
+                    UITableView.appearance().separatorStyle = .none
+                    UITableView.appearance().bounces = false
+                }
+                QLText(label: "Use  Explore Queries to further explore the possibilities.", padding: 8)
             }.layoutPriority(1)
             Spacer()
         }
@@ -31,19 +42,5 @@ struct ChatQueryBuilder: View {
             )
         )
         .padding(8)
-    }
-}
-struct QueryBuilderItemView: View{
-    var body: some View{
-        HStack{
-            QLText(label: "Sales", padding: 0)
-            Spacer()
-            Button {
-                print("Into")
-            } label: {
-                Text("N")
-            }
-
-        }
     }
 }

@@ -11,7 +11,7 @@ struct ChatBarBottomView: View {
     @Binding var value: String
     @Binding var allComponents : [ChatComponent]
     var speechManager = SpeechManager()
-    var service = ChatBarBottomModelView()
+    var service = ChatBodyService()
     @State var recording = false
     //@ObservedObject private var mic = MicMonitor(numberOfSamples: 30)
     var body: some View {
@@ -25,7 +25,8 @@ struct ChatBarBottomView: View {
                     )
                 )
             Button("SEND") {
-                service.addComponentToChat(query: value) { newComponents in
+                service.addNewComponent(query: value) {
+                    newComponents in
                     allComponents += newComponents
                 }
                 value = ""

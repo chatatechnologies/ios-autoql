@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ChatBodyView: View {
     @Binding var allComponents : [ChatComponent]
-    @StateObject private var service = ChatBodyModelView()
+    @Binding var queryValue: String
+    @StateObject private var service = ChatBodyService()
     var body: some View {
         ScrollView {
             VStack{
@@ -21,12 +22,22 @@ struct ChatBodyView: View {
                     case .botmessage:
                         ChatBotMessageView(label: bod.label)
                     case .querybuilder:
-                        ChatQueryBuilder()
+                        ChatQueryBuilder(
+                            value: $queryValue,
+                            onClick: addNewComponent
+                        )
                     }
                 }
             }.onAppear {
                 allComponents = service.getDefaultMessage()
             }
+        }
+    }
+    func addNewComponent(){
+        service.addNewComponent(query: queryValue) {
+            newComponents in
+            allComponents += newComponents
+            queryValue = ""
         }
     }
 }

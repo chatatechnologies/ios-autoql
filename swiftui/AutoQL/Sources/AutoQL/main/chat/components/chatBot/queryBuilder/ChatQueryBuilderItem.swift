@@ -7,14 +7,22 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct QueryBuilderItemView: View{
+    var label: String
+    var onClick: () -> Void
+    @Binding var value: String
+    var body: some View{
+        HStack{
+            QLText(label: label, padding: 0)
+            Spacer()
+            Button {
+                value = label
+                onClick()
+            } label: {
+                Text("N")
+            }
+
+        }
     }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        SwiftUIView()
-    }
-}

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ChatBodyService : ObservableObject {
+class ChatBodyService: ObservableObject {
     @Published var bodyMessages = [ChatComponent]()
     init() {
         bodyMessages = [
