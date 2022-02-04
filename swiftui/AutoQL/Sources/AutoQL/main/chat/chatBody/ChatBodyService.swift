@@ -21,7 +21,7 @@ class ChatBodyService: ObservableObject {
     func addNewComponent(query: String, completion: @escaping([ChatComponent]) -> ()){
         let newComponent = ChatComponent(type: .usermessage, label: query)
         let newComponent2 = ChatComponent(
-            type: .botmessage,
+            type: .botresponseText,
             label: "Response"
         )
         bodyMessages += [newComponent, newComponent2]

@@ -20,12 +20,15 @@ struct ChatBodyView: View {
                     case .usermessage:
                         ChatUserMessageView(label: bod.label)
                     case .botmessage:
-                        ChatBotMessageView(label: bod.label)
+                        ChatBotResponseText(label: bod.label)
                     case .querybuilder:
                         ChatQueryBuilder(
                             value: $queryValue,
                             onClick: addNewComponent
                         )
+                    case .botresponseText:
+                        ChatBotMessageView(label: bod.label)
+                            .overlay(ChatToolbarOptions(), alignment: .topTrailing)
                     }
                 }
             }.onAppear {

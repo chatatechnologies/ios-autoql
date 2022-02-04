@@ -2,12 +2,12 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Vicente Rincon on 27/01/22.
+//  Created by Vicente Rincon on 03/02/22.
 //
 
 import SwiftUI
 
-struct ChatBotMessageView: View {
+struct ChatBotResponseText: View {
     var label: String
     var body: some View {
         HStack{
@@ -23,6 +23,4 @@ struct ChatBotMessageView: View {
         .padding(8)
     }
 }
-struct ChatBotMessageModel: Hashable{
-    var label: String
-}
+

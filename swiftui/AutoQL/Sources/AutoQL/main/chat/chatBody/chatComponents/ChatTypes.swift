@@ -18,5 +18,5 @@ struct ChatComponent: Hashable{
     }
 }
 enum DataChat {
-    case botmessage, usermessage, querybuilder
+    case botmessage, usermessage, querybuilder, botresponseText
 }

@@ -2,21 +2,31 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Vicente Rincon on 31/01/22.
+//  Created by Vicente Rincon on 03/02/22.
 //
 
 import SwiftUI
 
-struct ChatQueryBuilder: View {
+struct ChatSubQueryBuilder: View {
     @Binding var value: String
+    @Binding var isLvl2: Bool
+    var qbOptionsLvl2: [String] = ["Total sales last month", "Top 5 customers by sales this year"]
     var onClick: () -> Void
-    var qbOptionsLvl1: [String] = ["Sales", "Items", "Expenses", "Purchase Orders"]
     var body: some View {
         HStack{
             VStack{
-                QLText(label: "Some things you can ask me:")
+                Button("B") {
+                    isLvl2 = false
+                }
+                Spacer()
+            }
+            VStack{
+                HStack{
+                    QLText(label: "Items", padding: 4)
+                    Spacer()
+                }
                 List{
-                    ForEach(qbOptionsLvl1, id: \.self){
+                    ForEach(qbOptionsLvl2, id: \.self){
                         qbOption in
                         QueryBuilderItemView(
                             label: qbOption,
@@ -25,22 +35,14 @@ struct ChatQueryBuilder: View {
                         )
                     }
                 }
-                .frame(height:180)
+                .frame(height:90)
                 .listStyle(PlainListStyle())
                 .onAppear {
                     UITableView.appearance().separatorStyle = .none
                     UITableView.appearance().bounces = false
                 }
-                QLText(label: "Use  Explore Queries to further explore the possibilities.", padding: 8)
-            }.layoutPriority(1)
-            Spacer()
-        }
-        .background(
-            AnyView(
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(qlBackgroundColorPrimary)
-            )
-        )
-        .padding(8)
+                Spacer()
+            }
+        }.padding()
     }
 }
