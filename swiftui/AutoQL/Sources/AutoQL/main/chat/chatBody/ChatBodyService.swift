@@ -27,5 +27,13 @@ class ChatBodyService: ObservableObject {
         bodyMessages += [newComponent, newComponent2]
         completion([newComponent, newComponent2])
     }
+    /*func removeComponent(_ position : Int){
+        var listElements = [position]
+        if bodyMessages[position - 1].type == .usermessage {
+            listElements.insert(position - 1, at: 0)
+        }
+        let renevueComponents = bodyMessages.removeElements(listElements)
+        bodyMessages = renevueComponents
+    }*/
 }
 

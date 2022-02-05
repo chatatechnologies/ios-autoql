@@ -14,8 +14,10 @@ struct ChatBodyView: View {
     var body: some View {
         ScrollView {
             VStack{
-                ForEach(allComponents, id:\.self) {
-                    bod in
+                //ForEach(allComponents, id:\.self) {
+                ForEach(Array(allComponents.enumerated()), id: \.offset) {
+                    //bod in
+                    (index, bod) in
                     switch(bod.type){
                     case .usermessage:
                         ChatUserMessageView(label: bod.label)
@@ -27,14 +29,25 @@ struct ChatBodyView: View {
                             onClick: addNewComponent
                         )
                     case .botresponseText:
-                        ChatBotMessageView(label: bod.label)
-                            .overlay(ChatToolbarOptions(), alignment: .topTrailing)
+                        ChatBotMessageView(
+                            label: bod.label,
+                            position: index,
+                            onClick: removeComponent
+                        )
                     }
                 }
             }.onAppear {
                 allComponents = service.getDefaultMessage()
             }
         }
+    }
+    func removeComponent(_ position : Int){
+        var listElements = [position]
+        if allComponents[position - 1].type == .usermessage {
+            listElements.insert(position - 1, at: 0)
+        }
+        let renevueComponents = allComponents.removeElements(listElements)
+        allComponents = renevueComponents
     }
     func addNewComponent(){
         service.addNewComponent(query: queryValue) {
