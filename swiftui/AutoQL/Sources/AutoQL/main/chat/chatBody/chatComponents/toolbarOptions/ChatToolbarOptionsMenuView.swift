@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatToolbarOptions: View {
-    var onClick: () -> Void
+    var onClick: (_ typeFunction : ChatToolItemType) -> Void
     @State var buttons: [ChatToolbarModel] = []
     var body: some View {
         HStack {
@@ -16,25 +16,14 @@ struct ChatToolbarOptions: View {
                 ForEach(0..<buttons.count){
                     index in
                     Button{
-                        print("funca")
+                        onClick(buttons[index].typeFunction)
                     } label: {
-                        Text(buttons[index].image)
+                        ChatToolBatItemView(
+                            type: buttons[index].typeFunction,
+                            image: buttons[index].image
+                        )
                     }
                 }
-                /*Button {
-                    print("Report")
-                } label: {
-                    Text("R")
-                }*/
-
-                /*Button(action: onClick) {
-                    Text("D")
-                }*/
-                /*Button {
-                    print("points")
-                } label: {
-                    Text("P")
-                }*/
             }
             .padding(8)
         }

@@ -6,8 +6,10 @@
 //
 
 import Foundation
-struct ChatToolbarModel {
-    //var onClick: () -> Void
+struct ChatToolbarModel{
     var image: String
-    
+    var typeFunction: ChatToolItemType
+}
+enum ChatToolItemType {
+    case delete, report, more
 }

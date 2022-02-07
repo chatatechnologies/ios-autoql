@@ -12,7 +12,9 @@ struct ChatBotMessageView: View {
     var position: Int
     var onClick: (_ position : Int) -> Void
     @State var buttons: [ChatToolbarModel] = [
-        ChatToolbarModel(image: "T")
+        ChatToolbarModel(image: "R", typeFunction: .report),
+        ChatToolbarModel(image: "D", typeFunction: .delete),
+        ChatToolbarModel(image: "P", typeFunction: .more)
     ]
     var body: some View {
         HStack{
@@ -25,16 +27,13 @@ struct ChatBotMessageView: View {
                 )
                 .overlay(
                     ChatToolbarOptions(
-                        onClick: remove,
+                        onClick: toolbarAction,
                         buttons: buttons
                     ), alignment: .topTrailing
                 )
                 
             Spacer()
         }
-        .onAppear(perform: {
-            loadButtons()
-        })
         .padding(
             EdgeInsets(
                 top: 40,
@@ -44,12 +43,12 @@ struct ChatBotMessageView: View {
             )
         )
     }
-    func loadButtons(){
-        buttons.append(ChatToolbarModel(image: "D"))
-        print("new")
-    }
-    func remove(){
-        onClick(position)
+    func toolbarAction(_ typeFunction: ChatToolItemType){
+        switch(typeFunction){
+        case .delete: onClick(position)
+        case .more: print("more options")
+        case .report: print("Report")
+        }
     }
 }
 struct ChatBotMessageModel: Hashable{
