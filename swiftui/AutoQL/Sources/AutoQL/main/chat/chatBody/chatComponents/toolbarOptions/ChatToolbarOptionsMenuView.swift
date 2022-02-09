@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChatToolbarOptions: View {
     var onClick: (_ typeFunction : ChatToolItemType) -> Void
+    var onClickMenuAction: (_ typeFunction : ChatToolbarSubOptionType) -> Void
     @State var buttons: [ChatToolbarModel] = []
     var body: some View {
         HStack {
@@ -20,7 +21,8 @@ struct ChatToolbarOptions: View {
                     } label: {
                         ChatToolBatItemView(
                             type: buttons[index].typeFunction,
-                            image: buttons[index].image
+                            image: buttons[index].image,
+                            onClickMenuAction: onClickMenuAction
                         )
                     }
                 }

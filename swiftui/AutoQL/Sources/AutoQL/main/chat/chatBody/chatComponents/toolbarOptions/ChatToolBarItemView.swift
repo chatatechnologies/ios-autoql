@@ -9,6 +9,7 @@ import SwiftUI
 struct ChatToolBatItemView : View  {
     var type: ChatToolItemType
     var image: String
+    var onClickMenuAction: (_ typeFunction : ChatToolbarSubOptionType) -> Void
     var body: some View {
         Group {
             switch type {
@@ -45,11 +46,6 @@ struct ChatToolBatItemView : View  {
         }
     }
     func actionOption(_ type: ChatToolbarSubOptionType){
-        switch type {
-        case .viewsql: print("sql")
-        case .incorrect: print("incorrect")
-        case .other: print("other")
-        case .incomplete: print("incomplete")
-        }
+        onClickMenuAction(type)
     }
 }

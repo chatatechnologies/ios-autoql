@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainChatView: View {
     @Binding var showingChat: Bool
+    @Binding var isPopUp: Bool
     @State var valueInput = ""
     @State var allComponents: [ChatComponent] = []
     var body: some View {
@@ -19,7 +20,9 @@ struct MainChatView: View {
             )
             ChatBodyView(
                 allComponents: $allComponents,
-                queryValue: $valueInput
+                queryValue: $valueInput,
+                isPopUp: $isPopUp
+                
             )
             ChatBarBottomView(
                 value: $valueInput,

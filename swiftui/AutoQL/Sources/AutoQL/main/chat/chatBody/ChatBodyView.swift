@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatBodyView: View {
     @Binding var allComponents : [ChatComponent]
     @Binding var queryValue: String
+    @Binding var isPopUp: Bool
     @StateObject private var service = ChatBodyService()
     var body: some View {
         ScrollView {
@@ -32,6 +33,7 @@ struct ChatBodyView: View {
                         ChatBotMessageView(
                             label: bod.label,
                             position: index,
+                            isPopUp: $isPopUp,
                             onClick: removeComponent
                         )
                     }

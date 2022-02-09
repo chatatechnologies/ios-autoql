@@ -10,7 +10,9 @@ import SwiftUI
 struct ChatBotMessageView: View {
     var label: String
     var position: Int
+    @Binding var isPopUp: Bool
     var onClick: (_ position : Int) -> Void
+    @State private var showingAlert = false
     @State var buttons: [ChatToolbarModel] = [
         ChatToolbarModel(image: "R", typeFunction: .report),
         ChatToolbarModel(image: "D", typeFunction: .delete),
@@ -28,10 +30,13 @@ struct ChatBotMessageView: View {
                 .overlay(
                     ChatToolbarOptions(
                         onClick: toolbarAction,
+                        onClickMenuAction: toolbarMenuAction,
                         buttons: buttons
                     ), alignment: .topTrailing
                 )
-                
+                .alert(isPresented: $showingAlert) {
+                            Alert(title: Text(""), message: Text("Thank you for your feedback."), dismissButton: .default(Text("Ok!")))
+                }
             Spacer()
         }
         .padding(
@@ -43,6 +48,7 @@ struct ChatBotMessageView: View {
             )
         )
     }
+    
     func toolbarAction(_ typeFunction: ChatToolItemType){
         switch(typeFunction){
         case .delete: onClick(position)
@@ -50,7 +56,12 @@ struct ChatBotMessageView: View {
         case .report: print("Report")
         }
     }
-}
-struct ChatBotMessageModel: Hashable{
-    var label: String
+    func toolbarMenuAction(_ type: ChatToolbarSubOptionType){
+        switch type {
+        case .viewsql: print("sql")
+        case .incorrect: showingAlert = true
+        case .other: isPopUp = true
+        case .incomplete: showingAlert = true
+        }
+    }
 }
