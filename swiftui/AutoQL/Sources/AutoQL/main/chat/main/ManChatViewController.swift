@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MainChatViewController: View {
     @State var showingChat: Bool = false
-    @State private var isPresented: Bool = false
+    @State private var isReportPopUp: Bool = false
+    @State private var isSQLPopUp: Bool = false
     var body: some View{
         ZStack{
             GeometryReader { p in
@@ -22,7 +23,8 @@ struct MainChatViewController: View {
                     }.padding(0)
                     MainChatView(
                         showingChat: $showingChat,
-                        isPopUp: $isPresented
+                        isReportPopUp: $isReportPopUp,
+                        isSQLPopUp: $isSQLPopUp
                     )
                     .frame(width: abs(p.size.width - 24 ), height: abs(p.size.height), alignment: .center)
                     .padding(0)
@@ -30,7 +32,8 @@ struct MainChatViewController: View {
                 }
             }
         }
-        .customPopupView(isPresented: $isPresented, popupView: { popupView(isPresented: $isPresented) })
+        .customPopupView(isPresented: $isReportPopUp, popupView: { ReportProblemPopUp(isPresented: $isReportPopUp) })
+        .customPopupView(isPresented: $isSQLPopUp, popupView: { SQLPopUp(isPresented: $isSQLPopUp) })
         .edgesIgnoringSafeArea(.all)
         
     }

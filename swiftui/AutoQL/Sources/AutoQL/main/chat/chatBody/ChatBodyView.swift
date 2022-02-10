@@ -10,7 +10,8 @@ import SwiftUI
 struct ChatBodyView: View {
     @Binding var allComponents : [ChatComponent]
     @Binding var queryValue: String
-    @Binding var isPopUp: Bool
+    @Binding var isReportPopUp: Bool
+    @Binding var isSQLPopUp: Bool
     @StateObject private var service = ChatBodyService()
     var body: some View {
         ScrollView {
@@ -33,7 +34,15 @@ struct ChatBodyView: View {
                         ChatBotMessageView(
                             label: bod.label,
                             position: index,
-                            isPopUp: $isPopUp,
+                            isReportPopUp: $isReportPopUp,
+                            isSQLPopUp: $isSQLPopUp,
+                            onClick: removeComponent
+                        )
+                    case .webview:
+                        ChatWebView(
+                            position: index,
+                            isReportPopUp: $isReportPopUp,
+                            isSQLPopUp: $isSQLPopUp,
                             onClick: removeComponent
                         )
                     }

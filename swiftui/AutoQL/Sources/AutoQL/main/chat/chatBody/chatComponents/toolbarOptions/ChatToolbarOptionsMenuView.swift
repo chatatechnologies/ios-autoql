@@ -41,7 +41,7 @@ struct ChatToolbarOptions: View {
                 top: -16,
                 leading: 0,
                 bottom: 0,
-                trailing: -16
+                trailing: 0
             )
         )
     }

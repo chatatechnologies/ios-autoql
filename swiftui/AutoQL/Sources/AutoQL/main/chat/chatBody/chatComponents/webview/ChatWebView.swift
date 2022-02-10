@@ -2,13 +2,13 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Vicente Rincon on 27/01/22.
+//  Created by Vicente Rincon on 09/02/22.
 //
 
 import SwiftUI
+import WebKit
 
-struct ChatBotMessageView: View {
-    var label: String
+struct ChatWebView: View {
     var position: Int
     @Binding var isReportPopUp: Bool
     @Binding var isSQLPopUp: Bool
@@ -20,33 +20,29 @@ struct ChatBotMessageView: View {
         ChatToolbarModel(image: "P", typeFunction: .more)
     ]
     var body: some View {
-        HStack{
-            QLText(label: label)
-                .background(
+        ZStack{
+            HStack{
+                WebView().background(
                     QLRoundedView(cornerRadius: 10)
                 )
-                .overlay(
-                    ChatToolbarOptions(
-                        onClick: toolbarAction,
-                        onClickMenuAction: toolbarMenuAction,
-                        buttons: buttons
-                    ), alignment: .topTrailing
-                )
-                .alert(isPresented: $showingAlert) {
-                            Alert(title: Text(""), message: Text("Thank you for your feedback."), dismissButton: .default(Text("Ok!")))
-                }
-            Spacer()
-        }
-        .padding(
-            EdgeInsets(
-                top: 40,
-                leading: 8,
-                bottom: 8,
-                trailing: 8
+            }
+            .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 400)
+            .background(
+                QLRoundedView(cornerRadius: 10)
             )
+        }
+        .padding(8)
+        .overlay(
+            ChatToolbarOptions(
+                onClick: toolbarAction,
+                onClickMenuAction: toolbarMenuAction,
+                buttons: buttons
+            ), alignment: .topTrailing
         )
+        .alert(isPresented: $showingAlert) {
+                    Alert(title: Text(""), message: Text("Thank you for your feedback."), dismissButton: .default(Text("Ok!")))
+        }
     }
-    
     func toolbarAction(_ typeFunction: ChatToolItemType){
         switch(typeFunction){
         case .delete: onClick(position)
@@ -62,4 +58,15 @@ struct ChatBotMessageView: View {
         case .incomplete: showingAlert = true
         }
     }
+}
+struct WebView: UIViewRepresentable {
+  //@Binding var text: String
+   
+  func makeUIView(context: Context) -> WKWebView {
+    return WKWebView()
+  }
+   
+  func updateUIView(_ uiView: WKWebView, context: Context) {
+    uiView.loadHTMLString(generateWB(), baseURL: nil)
+  }
 }

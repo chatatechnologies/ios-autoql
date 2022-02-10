@@ -19,21 +19,14 @@ class ChatBodyService: ObservableObject {
         return bodyMessages
     }
     func addNewComponent(query: String, completion: @escaping([ChatComponent]) -> ()){
-        let newComponent = ChatComponent(type: .usermessage, label: query)
-        let newComponent2 = ChatComponent(
+        let question = ChatComponent(type: .usermessage, label: query)
+        /*let answer = ChatComponent(
             type: .botresponseText,
             label: "Response"
-        )
-        bodyMessages += [newComponent, newComponent2]
-        completion([newComponent, newComponent2])
+        )*/
+        let answer = ChatComponent(type: .webview, label: "")
+        bodyMessages += [question, answer]
+        completion([question, answer])
     }
-    /*func removeComponent(_ position : Int){
-        var listElements = [position]
-        if bodyMessages[position - 1].type == .usermessage {
-            listElements.insert(position - 1, at: 0)
-        }
-        let renevueComponents = bodyMessages.removeElements(listElements)
-        bodyMessages = renevueComponents
-    }*/
 }
 
