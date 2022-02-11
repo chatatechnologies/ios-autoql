@@ -7,16 +7,21 @@
 
 import SwiftUI
 struct ChatComponent: Hashable{
-    var type: DataChat
+    var type: DataChatType
     var label: String
     init(
-        type: DataChat = .botmessage,
+        type: DataChatType = .botmessage,
         label: String = ""
     ){
         self.type = type
         self.label = label
     }
 }
-enum DataChat {
-    case botmessage, usermessage, querybuilder, botresponseText, webview
+enum DataChatType {
+    case botmessage,
+         usermessage,
+         querybuilder,
+         botresponseText,
+         webview,
+         suggestion
 }

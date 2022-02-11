@@ -20,14 +20,7 @@ class SpeechManager {
             DispatchQueue.main.async {
                 switch authStatus {
                 case .authorized:
-                    print("auth")
-                    /*if isTypingMic {
-                        do {
-                            try startRecording(textbox: textbox)
-                        } catch {
-                            print("authorized")
-                        }
-                    }*/
+                    print("Auth")
                 case .denied:
                     print("denied")
                 case .restricted, .notDetermined:

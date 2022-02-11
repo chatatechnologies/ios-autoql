@@ -47,7 +47,6 @@ struct ChatQueryBuilder: View {
         .padding(8)
     }
     func selectOptionQB1(){
-        print("go lvl 2")
         changeLvl2 = true
     }
     @ViewBuilder

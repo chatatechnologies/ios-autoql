@@ -45,11 +45,22 @@ struct ChatBodyView: View {
                             isSQLPopUp: $isSQLPopUp,
                             onClick: removeComponent
                         )
+                    case .suggestion:
+                        ChatSuggestion(
+                            position: index,
+                            isReportPopUp: $isReportPopUp,
+                            isSQLPopUp: $isSQLPopUp,
+                            removeElement: removeComponent,
+                            value: $queryValue,
+                            onClick: addNewComponent
+                        )
                     }
                 }
             }.onAppear {
                 allComponents = service.getDefaultMessage()
             }
+        }.onAppear {
+            UIScrollView.appearance().bounces = false
         }
     }
     func removeComponent(_ position : Int){

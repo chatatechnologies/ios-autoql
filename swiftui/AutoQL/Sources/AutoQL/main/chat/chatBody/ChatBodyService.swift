@@ -18,15 +18,34 @@ class ChatBodyService: ObservableObject {
     func getDefaultMessage() -> [ChatComponent]{
         return bodyMessages
     }
-    func addNewComponent(query: String, completion: @escaping([ChatComponent]) -> ()){
+    func addNewComponent(
+        query: String,
+        completion: @escaping([ChatComponent]) -> ()){
+        
+        completion(getAnswer(query: query))
+    }
+    func getAnswer(query: String) -> ([ChatComponent]) {
+        var components: [ChatComponent] = []
         let question = ChatComponent(type: .usermessage, label: query)
-        /*let answer = ChatComponent(
-            type: .botresponseText,
-            label: "Response"
-        )*/
-        let answer = ChatComponent(type: .webview, label: "")
-        bodyMessages += [question, answer]
-        completion([question, answer])
+        components.append(question)
+        let responseType: DataChatType = .webview
+        switch responseType {
+        case .botmessage,
+             .usermessage,
+             .querybuilder,
+             .botresponseText,
+             .webview:
+            let answer = ChatComponent(type: responseType, label: "Response")
+            components.append(answer)
+        case .suggestion:
+            let answer = ChatComponent(type: .botresponseText, label: "I want to make sure I understood your query. Did you mean:")
+            let answerSuggestion = ChatComponent(
+                type: responseType,
+                label: ""
+            )
+            components += [answer, answerSuggestion]
+        }
+        return components
     }
 }
 
