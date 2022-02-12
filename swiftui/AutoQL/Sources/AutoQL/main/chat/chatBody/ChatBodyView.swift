@@ -62,6 +62,7 @@ struct ChatBodyView: View {
         }.onAppear {
             UIScrollView.appearance().bounces = false
         }
+        .background(qlBackgroundColorSecondary)
     }
     func removeComponent(_ position : Int){
         var listElements = [position]

@@ -17,14 +17,15 @@ struct MainChatView: View {
         VStack{
             ChatTopBarView(
                 showingChat: $showingChat,
-                allComponents: $allComponents
+                label: "Data Messenger",
+                actionButtons: true,
+                removeItems: removeItems
             )
             ChatBodyView(
                 allComponents: $allComponents,
                 queryValue: $valueInput,
                 isReportPopUp: $isReportPopUp,
                 isSQLPopUp: $isSQLPopUp
-                
             )
             ChatBarBottomView(
                 value: $valueInput,
@@ -32,5 +33,9 @@ struct MainChatView: View {
             )
             Spacer()
         }
+    }
+    func removeItems() {
+        let defaultValue: [ChatComponent] = [allComponents[0], allComponents[1]]
+        allComponents = defaultValue
     }
 }
