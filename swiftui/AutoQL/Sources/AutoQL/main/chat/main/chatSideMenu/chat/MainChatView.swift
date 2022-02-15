@@ -11,7 +11,8 @@ struct MainChatView: View {
     @Binding var showingChat: Bool
     @Binding var isReportPopUp: Bool
     @Binding var isSQLPopUp: Bool
-    @State var valueInput = ""
+    @Binding var valueInput: String
+    @Binding var sendRequest: Bool
     @State var allComponents: [ChatComponent] = []
     var body: some View {
         VStack{
@@ -25,7 +26,8 @@ struct MainChatView: View {
                 allComponents: $allComponents,
                 queryValue: $valueInput,
                 isReportPopUp: $isReportPopUp,
-                isSQLPopUp: $isSQLPopUp
+                isSQLPopUp: $isSQLPopUp,
+                sendRequest: $sendRequest
             )
             ChatBarBottomView(
                 value: $valueInput,

@@ -12,6 +12,8 @@ struct MainChatViewController: View {
     @State private var isReportPopUp: Bool = false
     @State private var isSQLPopUp: Bool = false
     @State var optSelected: ChatSideMenuType = .chat
+    @State var sendQuery = ""
+    @State var sendRequest = false
     var sizeMenu = 30.0
     var body: some View{
         ZStack{
@@ -28,12 +30,18 @@ struct MainChatViewController: View {
                         ChatView(
                             showingChat: $showingChat,
                             isReportPopUp: $isReportPopUp,
-                            isSQLPopUp: $isSQLPopUp
+                            isSQLPopUp: $isSQLPopUp,
+                            valueInput: $sendQuery,
+                            sendRequest: $sendRequest
                         )
                     case .explore:
                         ExploreView(
-                            showingChat: $showingChat
-                        )
+                            showingChat: $showingChat,
+                            sendQuery: $sendQuery,
+                            sendRequest: $sendRequest
+                        ).onChange(of: sendRequest) { newValue in
+                            optSelected = .chat
+                        }
                     case .notification:
                         NotificationView(
                             showingChat: $showingChat

@@ -16,14 +16,10 @@ struct ChatBarBottomView: View {
     //@ObservedObject private var mic = MicMonitor(numberOfSamples: 30)
     var body: some View {
         HStack{
-            TextField("Type your Queries here", text: $value)
-                .padding()
-                .background(
-                    AnyView(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(qlBackgroundColorPrimary)
-                    )
-                )
+            QLInputText(
+                label: "Type your Queries here",
+                value: $value
+            )
             Button("SEND") {
                 service.addNewComponent(query: value) {
                     newComponents in

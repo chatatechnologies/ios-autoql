@@ -12,11 +12,14 @@ struct QLText: View {
     var color = qlTextColorPrimary
     var padding = 16.0
     var fontSize = 16.0
+    var aligment: Alignment = .leading
+    var multiAligment: TextAlignment = .leading
     var body: some View {
         Text(label)
             .font(.system(size: fontSize))
             .foregroundColor(color)
             .padding(padding)
-            .frame(alignment: .leading)
+            .frame(alignment: aligment)
+            .multilineTextAlignment(multiAligment)
     }
 }

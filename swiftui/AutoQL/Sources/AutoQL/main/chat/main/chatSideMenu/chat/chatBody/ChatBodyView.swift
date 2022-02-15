@@ -12,6 +12,7 @@ struct ChatBodyView: View {
     @Binding var queryValue: String
     @Binding var isReportPopUp: Bool
     @Binding var isSQLPopUp: Bool
+    @Binding var sendRequest: Bool
     @StateObject private var service = ChatBodyService()
     var body: some View {
         ScrollView {
@@ -61,8 +62,13 @@ struct ChatBodyView: View {
             }
         }.onAppear {
             UIScrollView.appearance().bounces = false
+            if sendRequest {
+                addNewComponent()
+                sendRequest = false
+            }
         }
         .background(qlBackgroundColorSecondary)
+        
     }
     func removeComponent(_ position : Int){
         var listElements = [position]
