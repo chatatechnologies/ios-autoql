@@ -22,7 +22,7 @@ struct ExploreView: View {
             QLInputText(
                 label: "Search relevant queries by topic",
                 value: $valueInput
-            )
+            ).padding()
             Group {
                 if isEmptyView {
                     ExploreEmptyView()

@@ -1,5 +1,5 @@
 import SwiftUI
-struct StartAutoQL: View{
+struct AutoQL: View{
     @State var showingChat = false
     var body: some View{
         ZStack{
@@ -14,5 +14,5 @@ struct StartAutoQL: View{
     }
 }
 public func getButton() -> some View {
-    return StartAutoQL()
+    return AutoQL()
 }

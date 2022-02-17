@@ -15,7 +15,8 @@ struct ButtonAutoQL: View {
                 Button( action: openChat){
                     HStack{
                         ImagePath(name: "btnChata")
-                    }.frame(width: 60, height: 60)
+                            .frame(width: 32.0, height: 32.0)
+                    }.frame(width: 40, height: 40)
                         .background(qlAccentColor)
                         .clipShape(
                             Circle()

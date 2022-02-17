@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import WebKit
 
 struct ChatWebView: View {
     var position: Int
@@ -58,15 +57,4 @@ struct ChatWebView: View {
         case .incomplete: showingAlert = true
         }
     }
-}
-struct WebView: UIViewRepresentable {
-  //@Binding var text: String
-   
-  func makeUIView(context: Context) -> WKWebView {
-    return WKWebView()
-  }
-   
-  func updateUIView(_ uiView: WKWebView, context: Context) {
-    uiView.loadHTMLString(generateWB(), baseURL: nil)
-  }
 }

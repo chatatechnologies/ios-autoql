@@ -17,6 +17,7 @@ struct NotificationView: View {
                 label: "Notifications"
             ){}
             Spacer()
-        }
+            NotificationBodyView()
+        }.background(qlBackgroundColorSecondary)
     }
 }
