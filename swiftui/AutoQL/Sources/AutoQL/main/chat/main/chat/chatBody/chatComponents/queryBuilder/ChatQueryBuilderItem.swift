@@ -19,9 +19,8 @@ struct QueryBuilderItemView: View{
                 value = label
                 onClick()
             } label: {
-                Text("N")
+                ImagePath(name: "icArrowRight", size: 20)
             }
-
         }
     }
 }

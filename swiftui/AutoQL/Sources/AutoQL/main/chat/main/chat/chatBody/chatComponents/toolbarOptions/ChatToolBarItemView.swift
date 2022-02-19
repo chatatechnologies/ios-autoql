@@ -13,7 +13,7 @@ struct ChatToolBatItemView : View  {
     var body: some View {
         Group {
             switch type {
-            case .delete: Text(image)
+            case .delete: ImagePath(name: image, size:30)
             case .report: DropDownImage(
                 dropDownList: [
                     ChatToolbarSubOptionModel(

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Combine
 struct ChatBodyView: View {
     @Binding var allComponents : [ChatComponent]
     @Binding var queryValue: String
@@ -14,57 +14,73 @@ struct ChatBodyView: View {
     @Binding var isSQLPopUp: Bool
     @Binding var sendRequest: Bool
     @StateObject private var service = ChatBodyService()
+    @State private var messageIDToScroll: UUID?
+    let columns = [GridItem(.flexible(minimum: 10))]
     var body: some View {
-        ScrollView {
-            VStack{
-                //ForEach(allComponents, id:\.self) {
-                ForEach(Array(allComponents.enumerated()), id: \.offset) {
-                    //bod in
-                    (index, bod) in
-                    switch(bod.type){
-                    case .usermessage:
-                        ChatUserMessageView(label: bod.label)
-                    case .botmessage:
-                        ChatBotResponseText(label: bod.label)
-                    case .querybuilder:
-                        ChatQueryBuilder(
-                            value: $queryValue,
-                            onClick: addNewComponent
-                        )
-                    case .botresponseText:
-                        ChatBotMessageView(
-                            label: bod.label,
-                            position: index,
-                            isReportPopUp: $isReportPopUp,
-                            isSQLPopUp: $isSQLPopUp,
-                            onClick: removeComponent
-                        )
-                    case .webview:
-                        ChatWebView(
-                            position: index,
-                            isReportPopUp: $isReportPopUp,
-                            isSQLPopUp: $isSQLPopUp,
-                            onClick: removeComponent
-                        )
-                    case .suggestion:
-                        ChatSuggestion(
-                            position: index,
-                            isReportPopUp: $isReportPopUp,
-                            isSQLPopUp: $isSQLPopUp,
-                            removeElement: removeComponent,
-                            value: $queryValue,
-                            onClick: addNewComponent
-                        )
+        VStack{
+            ScrollView {
+                ScrollViewReader{ proxy in
+                    //ForEach(allComponents, id:\.self) {
+                    LazyVGrid(columns: columns, spacing:0){
+                        ForEach(allComponents.indices, id: \.self) {
+                            index in
+                            //bod in
+                            
+                            switch(allComponents[index].type){
+                            case .usermessage:
+                                ChatUserMessageView(label: allComponents[index].label)
+                            case .botmessage:
+                                ChatBotResponseText(label: allComponents[index].label)
+                            case .querybuilder:
+                                ChatQueryBuilder(
+                                    value: $queryValue,
+                                    onClick: addNewComponent
+                                )
+                            case .botresponseText:
+                                ChatBotMessageView(
+                                    label: allComponents[index].label,
+                                    position: index,
+                                    isReportPopUp: $isReportPopUp,
+                                    isSQLPopUp: $isSQLPopUp,
+                                    onClick: removeComponent
+                                )
+                            case .webview:
+                                ChatWebView(
+                                    position: index,
+                                    isReportPopUp: $isReportPopUp,
+                                    isSQLPopUp: $isSQLPopUp,
+                                    onClick: removeComponent
+                                )
+                            case .suggestion:
+                                ChatSuggestion(
+                                    position: index,
+                                    isReportPopUp: $isReportPopUp,
+                                    isSQLPopUp: $isSQLPopUp,
+                                    removeElement: removeComponent,
+                                    value: $queryValue,
+                                    onClick: addNewComponent
+                                )
+                            }
+                                
+                        }
+                        Spacer()
+                            .id("bottom")
+                        
                     }
+                    .onChange(of: allComponents, perform: { _ in
+                        withAnimation {
+                            proxy.scrollTo("bottom")
+                        }
+                    })
+                }.onAppear {
+                    allComponents = service.getDefaultMessage()
                 }
             }.onAppear {
-                allComponents = service.getDefaultMessage()
-            }
-        }.onAppear {
-            UIScrollView.appearance().bounces = false
-            if sendRequest {
-                addNewComponent()
-                sendRequest = false
+                UIScrollView.appearance().bounces = false
+                if sendRequest {
+                    addNewComponent()
+                    sendRequest = false
+                }
             }
         }
         .background(qlBackgroundColorSecondary)
@@ -83,6 +99,7 @@ struct ChatBodyView: View {
             newComponents in
             allComponents += newComponents
             queryValue = ""
+            messageIDToScroll = newComponents.last?.uid
         }
     }
 }

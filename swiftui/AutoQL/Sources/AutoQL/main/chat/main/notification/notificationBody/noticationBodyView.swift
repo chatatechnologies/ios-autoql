@@ -12,12 +12,7 @@ struct NotificationBodyView: View{
         HStack{
             Group {
                 if isEmpty {
-                    VStack{
-                        ImagePath(name: "btnChata", size: 150)
-                        QLText(label: "No notifications yet.", padding: 4)
-                        QLText(label: "Stay tuned", padding: 4)
-                        Spacer()
-                    }
+                    notificationEmptyView()
                     
                 } else {
                     NotificationListView()

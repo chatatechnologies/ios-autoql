@@ -13,17 +13,17 @@ struct chatSideMenuView: View{
             VStack{
                 VStack(spacing:0){
                     ChatSideButton(
-                        label: "C",
+                        image: "icSideChat",
                         type: ChatSideMenuType.chat,
                         mainType: $optSelected
                     )
                     ChatSideButton(
-                        label: "E",
+                        image: "icSideExplore",
                         type: ChatSideMenuType.explore,
                         mainType: $optSelected
                     )
                     ChatSideButton(
-                        label: "N",
+                        image: "icSideNotification",
                         type: ChatSideMenuType.notification,
                         mainType: $optSelected
                     )

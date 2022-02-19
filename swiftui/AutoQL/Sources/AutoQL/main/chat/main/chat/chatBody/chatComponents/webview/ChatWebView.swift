@@ -14,9 +14,9 @@ struct ChatWebView: View {
     var onClick: (_ position : Int) -> Void
     @State private var showingAlert = false
     @State var buttons: [ChatToolbarModel] = [
-        ChatToolbarModel(image: "R", typeFunction: .report),
-        ChatToolbarModel(image: "D", typeFunction: .delete),
-        ChatToolbarModel(image: "P", typeFunction: .more)
+        ChatToolbarModel(image: "icReport", typeFunction: .report),
+        ChatToolbarModel(image: "icDelete", typeFunction: .delete),
+        ChatToolbarModel(image: "icPoints", typeFunction: .more)
     ]
     var body: some View {
         ZStack{

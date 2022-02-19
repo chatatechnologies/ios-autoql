@@ -7,14 +7,17 @@
 
 import SwiftUI
 struct ChatComponent: Hashable{
+    var uid: UUID
     var type: DataChatType
     var label: String
     init(
         type: DataChatType = .botmessage,
-        label: String = ""
+        label: String = "",
+        uid: UUID = UUID()
     ){
         self.type = type
         self.label = label
+        self.uid = uid
     }
 }
 enum DataChatType {

@@ -14,14 +14,20 @@ struct ChatTopBarView: View {
     @State var removeItems: () -> Void
     var body: some View {
         HStack{
-            Button("x", action: {
+            Button {
                 showingChat = false
-            })
+            } label: {
+                ImagePath(name: "icCancel", size: 20)
+            }
             Spacer()
             Text(label).foregroundColor(.white)
             Spacer()
             if actionButtons {
-                Button("D", action: removeItems)
+                Button {
+                    removeItems()
+                } label: {
+                    ImagePath(name: "icDeleteBar", size: 20)
+                }
             }
         }.padding(
             EdgeInsets(

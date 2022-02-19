@@ -14,8 +14,8 @@ struct ChatSuggestion: View {
     var removeElement: (_ position : Int) -> Void
     @State private var showingAlert = false
     @State var buttons: [ChatToolbarModel] = [
-        ChatToolbarModel(image: "R", typeFunction: .report),
-        ChatToolbarModel(image: "D", typeFunction: .delete)
+        ChatToolbarModel(image: "icReport", typeFunction: .report),
+        ChatToolbarModel(image: "icDelete", typeFunction: .delete)
     ]
     @Binding var value: String
     var onClick: () -> Void

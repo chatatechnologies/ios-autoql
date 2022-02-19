@@ -19,7 +19,7 @@ struct DropDownImage: View {
                 }
             }
         } label:{
-            Text(image)
+            ImagePath(name: image, size: 30)
         }
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainChatViewController: View {
-    @State var showingChat: Bool = false
+    @Binding var showingChat: Bool
     @State private var isReportPopUp: Bool = false
     @State private var isSQLPopUp: Bool = false
     @State var optSelected: ChatSideMenuType = .chat

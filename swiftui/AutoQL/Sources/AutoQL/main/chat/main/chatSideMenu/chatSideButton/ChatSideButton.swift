@@ -7,12 +7,14 @@
 
 import SwiftUI
 struct ChatSideButton: View {
-    var label: String
+    var image: String
     var type: ChatSideMenuType
     @Binding var mainType: ChatSideMenuType
     var body: some View{
-        Button(label){
+        Button {
             mainType = type
+        } label: {
+            ImagePath(name: image, size: 30, tintColor: type == mainType)
         }
             .frame(maxWidth: .infinity, maxHeight: 40)
             .background(
