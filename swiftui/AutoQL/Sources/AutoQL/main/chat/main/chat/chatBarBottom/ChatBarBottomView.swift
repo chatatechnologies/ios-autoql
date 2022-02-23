@@ -20,21 +20,27 @@ struct ChatBarBottomView: View {
                 label: "Type your Queries here",
                 value: $value
             )
-            Button("SEND") {
-                service.addNewComponent(query: value) {
-                    newComponents in
-                    allComponents += newComponents
+            Group{
+                if value.isEmpty || recording {
+                    QLCircleButton(image: "icMic") {
+                        recordingToggle()
+                    }
+                } else {
+                    QLCircleButton(image: "icMic") {
+                        service.addNewComponent(query: value) {
+                            newComponents in
+                            allComponents += newComponents
+                        }
+                        value = ""
+                    }
                 }
-                value = ""
             }
-            Button("REC") {
-                recordingToggle()
-            }
-        }.padding()
-            .background(qlBackgroundColorSecondary)
-            .onAppear {
-                speechManager.checkPermissions()
-            }
+        }
+        .padding(8)
+        .background(qlBackgroundColorSecondary)
+        .onAppear {
+            speechManager.checkPermissions()
+        }
     }
     private func recordingToggle(){
         if speechManager.isRecording{

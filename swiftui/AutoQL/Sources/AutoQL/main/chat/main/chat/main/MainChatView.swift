@@ -35,6 +35,7 @@ struct MainChatView: View {
             )
             Spacer()
         }
+
     }
     func removeItems() {
         let defaultValue: [ChatComponent] = [allComponents[0], allComponents[1]]

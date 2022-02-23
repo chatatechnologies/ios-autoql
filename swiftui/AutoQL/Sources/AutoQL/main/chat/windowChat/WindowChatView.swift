@@ -10,6 +10,8 @@ import SwiftUI
 struct WindowChatView: View{
     @Binding var showingChat: Bool
     var body: some View{
-        MainChatViewController(showingChat: $showingChat)
+        MainChatViewController(showingChat: $showingChat).onAppear {
+            reloadColors()
+        }
     }
 }

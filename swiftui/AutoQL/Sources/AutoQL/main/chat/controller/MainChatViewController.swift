@@ -50,6 +50,10 @@ struct MainChatViewController: View {
                 }
             }
         }
+        .onAppear(perform: {
+            //optSelected = .notification
+            //optSelected = .chat
+        })
         .customPopupView(isPresented: $isReportPopUp, popupView: { ReportProblemPopUp(isPresented: $isReportPopUp) })
         .customPopupView(isPresented: $isSQLPopUp, popupView: { SQLPopUp(isPresented: $isSQLPopUp) })
         .edgesIgnoringSafeArea(.all)

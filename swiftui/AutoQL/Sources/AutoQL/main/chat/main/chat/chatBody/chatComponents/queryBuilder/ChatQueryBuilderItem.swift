@@ -19,9 +19,13 @@ struct QueryBuilderItemView: View{
                 value = label
                 onClick()
             } label: {
-                ImagePath(name: "icArrowRight", size: 20)
+                ImagePath(
+                    name: "icArrowRight",
+                    size: 20,
+                    tintColor: true
+                )
             }
-        }
+        }.listRowBackground(qlBackgroundColorPrimary)
     }
 }
 
