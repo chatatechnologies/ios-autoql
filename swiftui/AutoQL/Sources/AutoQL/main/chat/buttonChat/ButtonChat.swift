@@ -20,7 +20,8 @@ struct ButtonAutoQL: View {
                         .background(qlAccentColor)
                         .clipShape(
                             Circle()
-                        )
+                            
+                        ).shadow(color: qlBorderColor, radius: 2)
                 }
             }
         }
