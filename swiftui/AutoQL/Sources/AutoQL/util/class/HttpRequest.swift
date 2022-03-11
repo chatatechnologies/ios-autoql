@@ -52,6 +52,10 @@ class HttpRequest{
             return nil
         }
         var request = URLRequest(url: urlValid) as URLRequest
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if !DataConfig.authenticationObj.token.isEmpty{
+            request.setValue("Bearer \(DataConfig.authenticationObj.token)", forHTTPHeaderField: "Authorization")
+        }
         request.httpMethod = httpMethod
         return request
     }
@@ -66,6 +70,9 @@ class HttpRequest{
         }
         request.httpBody = data
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if !DataConfig.authenticationObj.token.isEmpty{
+            request.setValue("Bearer \(DataConfig.authenticationObj.token)", forHTTPHeaderField: "Authorization")
+        }
         sendRequest(request: request) { response in
             completion(response)
         }

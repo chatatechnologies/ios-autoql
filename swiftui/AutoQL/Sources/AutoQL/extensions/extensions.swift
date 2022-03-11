@@ -52,4 +52,16 @@ extension Color {
         )
     }
 }
-
+extension String{
+    func safeConvert(dict: [String: Any]) -> String{
+        return dict[self] as? String ?? ""
+    }
+}
+extension Dictionary where Key == String, Value == Any {
+    func toStr(_ key: String) -> String{
+        return self[key] as? String ?? ""
+    }
+    func toBool(_ key: String) -> Bool{
+        return self[key] as? Bool ?? false
+    }
+}
