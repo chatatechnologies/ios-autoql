@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-struct ChatQueryBuilder: View {
+struct TopicView: View {
     @Binding var value: String
-    @State private var changeLvl2 = false
+    @StateObject var viewModel = TopicViewModel()
     var onClick: () -> Void
-    var qbOptionsLvl1: [String] = ["Sales", "Items", "Expenses", "Purchase Orders"]
     var body: some View {
         HStack{
             VStack{
@@ -20,13 +19,16 @@ struct ChatQueryBuilder: View {
                     Spacer()
                 }
                 Group {
-                    if !changeLvl2{
-                        getQueryBuilderLvl1()
+                    if !viewModel.changeLvl2{
+                        TopicsLvl1(
+                            viewModel: viewModel,
+                            value: $value)
                     }
                     else {
-                        ChatSubQueryBuilder(
+                        TopicSubView(
                             value: $value,
-                            isLvl2: $changeLvl2,
+                            isLvl2: $viewModel.changeLvl2,
+                            item: TopicService.instance.topics[viewModel.indexSelect],
                             onClick: onClick
                         )
                     }
@@ -46,17 +48,19 @@ struct ChatQueryBuilder: View {
         )
         .padding(8)
     }
-    func selectOptionQB1(){
-        changeLvl2 = true
-    }
-    @ViewBuilder
-    func getQueryBuilderLvl1() -> some View {
+}
+struct TopicsLvl1: View{
+    var viewModel = TopicViewModel()
+    @Binding var value: String
+    var body: some View{
         List{
-            ForEach(qbOptionsLvl1, id: \.self){
-                qbOption in
-                QueryBuilderItemView(
-                    label: qbOption,
-                    onClick: selectOptionQB1,
+            ForEach(viewModel.qbOptionsLvl1.indices, id: \.self){
+                index in
+                TopicItemView(
+                    label: viewModel.qbOptionsLvl1[index],
+                    onClick: {
+                        viewModel.selectOptionQB1(position: index)
+                    },
                     value: $value
                 )
             }

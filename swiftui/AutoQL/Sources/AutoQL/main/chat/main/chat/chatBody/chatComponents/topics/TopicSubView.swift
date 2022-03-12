@@ -7,28 +7,36 @@
 
 import SwiftUI
 
-struct ChatSubQueryBuilder: View {
+struct TopicSubView: View {
     @Binding var value: String
     @Binding var isLvl2: Bool
-    var qbOptionsLvl2: [String] = ["Total sales last month", "Top 5 customers by sales this year"]
+    var item: TopicModel
     var onClick: () -> Void
     var body: some View {
         HStack{
             VStack{
-                Button("B") {
+                Button {
                     isLvl2 = false
+                } label: {
+                    ImagePath(
+                        name: "icArrowRight",
+                        size: 20,
+                        tintColor: true
+                    ).rotationEffect(.degrees(-180))
                 }
                 Spacer()
             }
             VStack{
                 HStack{
-                    QLText(label: "Items", padding: 4)
+                    QLText(label: self.item.topic, padding: 0)
                     Spacer()
+                }.onTapGesture {
+                    isLvl2 = false
                 }
                 List{
-                    ForEach(qbOptionsLvl2, id: \.self){
+                    ForEach(self.item.queries, id: \.self){
                         qbOption in
-                        QueryBuilderItemView(
+                        TopicItemView(
                             label: qbOption,
                             onClick: onClick,
                             value: $value

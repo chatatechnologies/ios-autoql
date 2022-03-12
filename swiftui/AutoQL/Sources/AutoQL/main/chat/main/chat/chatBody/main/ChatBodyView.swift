@@ -32,7 +32,7 @@ struct ChatBodyView: View {
                             case .botmessage:
                                 ChatBotResponseText(label: allComponents[index].label)
                             case .querybuilder:
-                                ChatQueryBuilder(
+                                TopicView(
                                     value: $queryValue,
                                     onClick: addNewComponent
                                 )

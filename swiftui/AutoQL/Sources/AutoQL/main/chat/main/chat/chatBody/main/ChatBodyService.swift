@@ -12,8 +12,10 @@ class ChatBodyService: ObservableObject {
     init() {
         bodyMessages = [
             ChatComponent(type: .botmessage, label: "Hi! Let’s dive into your data. What can I help you discover today?"),
-            ChatComponent(type: .querybuilder)
         ]
+        if !TopicService.instance.topics.isEmpty {
+            bodyMessages.append(ChatComponent(type: .querybuilder))
+        }
     }
     func getDefaultMessage() -> [ChatComponent]{
         return bodyMessages

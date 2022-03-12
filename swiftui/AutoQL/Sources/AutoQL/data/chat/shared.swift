@@ -6,14 +6,15 @@
 //
 
 import Foundation
-public var DataConfig = DataConfiguration.instance
+public var shared = AutoQLConfig.shared
 var LANGUAGEDEVICE = "en"
 var ISPROD = false
 
-public class DataConfiguration {
-    static let instance = DataConfiguration()
-    public var authenticationObj = authentication(apiKey: "", domain: "", token: "")
+public class AutoQLConfig {
+    public static let shared = AutoQLConfig()
+    public var authenticationObj = Authentication(apiKey: "", domain: "", token: "")
     public var isVisible = true
+    public var projectID = ""
     public var darkenBackgroundBehind = true
     public var placement = ""
     public var title = ""
@@ -29,7 +30,7 @@ public class DataConfiguration {
     public var enableVoiceRecord = true
     public var demo = true
     public var defaultTab = "data-messenger"
-    public var autoQLConfigObj = autoQLConfig(
+    public var autoQLConfigObj = ConfigChat(
         enableAutocomplete: true,
         enableQueryValidation: true,
         enableQuerySuggestions: true,
@@ -39,7 +40,7 @@ public class DataConfiguration {
         enableNotificationTab: true,
         enableExploreQueriesTab: true
     )
-    public var dataFormattingObj = dataFormatting(
+    public var dataFormattingObj = DataFormatting(
         currencyCode: "USD",
         languageCode: "en-US",
         currencyDecimals: 2,
@@ -48,12 +49,12 @@ public class DataConfiguration {
         monthYearFormat: "MMM YYYY",
         dayMonthYearFormat: "MMM d YYYY"
     )
-    public var themeConfigObj = themeConfig(
+    public var themeConfigObj = ThemeConfig(
         theme: "dark",
         accentColor: "#28a8e0",
         chartColors: []
     )
-    public var dashboardParameters = dashboardParametersConfig (
+    public var dashboardParameters = ConfigDashboard (
         backgroundDashboard: "#fafafa",
         titleColor: "#28A8E0"
     )
@@ -71,7 +72,7 @@ public class DataConfiguration {
         
     }*/
 }
-public struct authentication {
+public struct Authentication {
     public var apiKey: String
     public var domain: String
     public var token: String
@@ -83,7 +84,7 @@ public struct authentication {
         self.token = token
     }
 }
-public struct autoQLConfig {
+public struct ConfigChat {
     public var enableAutocomplete : Bool
     public var enableQueryValidation : Bool
     public var enableQuerySuggestions : Bool
@@ -93,7 +94,7 @@ public struct autoQLConfig {
     public var enableNotificationTab: Bool
     public var enableExploreQueriesTab: Bool
 }
-public struct dataFormatting {
+public struct DataFormatting {
     public var currencyCode : String
     public var languageCode : String
     public var currencyDecimals : Int
@@ -102,12 +103,12 @@ public struct dataFormatting {
     public var monthYearFormat : String
     public var dayMonthYearFormat : String
 }
-public struct themeConfig {
+public struct ThemeConfig {
     public var theme : String
     public var accentColor : String
     public var chartColors : [String]
 }
-public struct dashboardParametersConfig {
+public struct ConfigDashboard {
     public var backgroundDashboard: String
     public var titleColor: String
 }

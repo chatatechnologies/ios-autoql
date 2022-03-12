@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct QueryBuilderItemView: View{
+struct TopicItemView: View{
     var label: String
     var onClick: () -> Void
     @Binding var value: String

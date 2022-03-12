@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-let dark = DataConfiguration.instance.themeConfigObj.theme == "dark"
+let dark = AutoQLConfig.shared.themeConfigObj.theme == "dark"
 var qlAccentColor = Color.init(hex: "26a7df")
 var qlColorWhite = Color.init(hex: "ffffff")
 var qlBackgroundColorPrimary = dark ? Color.init(hex: "3B3F46") : Color.init(hex: "ffffff")
@@ -21,7 +21,7 @@ var qlDangerColor = dark ? Color.init(hex: "ff584e") : Color.init(hex: "ca0b00")
 var qlWarningColor = dark ? Color.init(hex: "ffcc00") : Color.init(hex: "ffcc00")
 var qlSuccessColor = dark ? Color.init(hex: "2aca4d") : Color.init(hex: "2aca4d")
 func reloadColors() {
-    let dark = DataConfiguration.instance.themeConfigObj.theme == "dark"
+    let dark = AutoQLConfig.shared.themeConfigObj.theme == "dark"
     qlBackgroundColorPrimary = Color.init(hex: dark ? "3B3F46" : "ffffff")
     qlBackgroundColorSecondary = Color.init(hex: dark ? "20252A" : "F1F3F5")
     qlBackgroundColorTertiary = Color.init(hex: dark ? "292929" : "cccccc")

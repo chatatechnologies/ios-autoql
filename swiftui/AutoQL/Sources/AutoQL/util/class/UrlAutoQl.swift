@@ -12,6 +12,7 @@ class UrlAutoQl{
     static let baseUrlProd = "https://backend.chata.io/"
     static let baseApiV1 = "\(baseUrlDebug)api/v1/"
     static let wsLogin = "\(baseApiV1)login"
-    static let wsgetJWT = "\(baseApiV1)jwt?display_name="
+    static let wsGetJWT = "\(baseApiV1)jwt?display_name="
+    static let wsGetTopics = "\(baseApiV1)topics?key=\(AutoQLConfig.shared.authenticationObj.apiKey)&project_id=\(AutoQLConfig.shared.projectID)"
     var urlDynamic = ""
 }
