@@ -13,17 +13,17 @@ struct MainChatView: View {
     @Binding var isSQLPopUp: Bool
     @Binding var valueInput: String
     @Binding var sendRequest: Bool
-    @State var allComponents: [ChatComponent] = []
+    @StateObject private var viewModel = MainChatViewModel()
     var body: some View {
         VStack{
             ChatTopBarView(
                 showingChat: $showingChat,
                 label: "Data Messenger",
                 actionButtons: true,
-                removeItems: removeItems
+                removeItems: viewModel.cleanChat
             )
             ChatBodyView(
-                allComponents: $allComponents,
+                allComponents: $viewModel.allComponents,
                 queryValue: $valueInput,
                 isReportPopUp: $isReportPopUp,
                 isSQLPopUp: $isSQLPopUp,
@@ -31,14 +31,14 @@ struct MainChatView: View {
             )
             ChatBarBottomView(
                 value: $valueInput,
-                allComponents: $allComponents
+                allComponents: $viewModel.allComponents
             )
             Spacer()
+        }.onAppear {
+            if AutoQLConfig.shared.authenticationObj.token.isEmpty{
+                viewModel.cleanChat()
+            }
         }
 
-    }
-    func removeItems() {
-        let defaultValue: [ChatComponent] = [allComponents[0], allComponents[1]]
-        allComponents = defaultValue
     }
 }

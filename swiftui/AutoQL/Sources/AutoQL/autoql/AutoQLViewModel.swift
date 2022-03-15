@@ -30,6 +30,9 @@ public class AutoQLViewModel: ObservableObject{
             }
         }
     }
+    public func logout(){
+        AutoQLConfig.shared.resetData()
+    }
     private func getJWT(parameters: [String: Any], completion: @escaping CompletionSuccess) {
         let mail = parameters.toStr("userID")
         let projectID = parameters.toStr("projectID")

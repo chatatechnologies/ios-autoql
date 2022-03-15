@@ -58,6 +58,12 @@ public class AutoQLConfig {
         backgroundDashboard: "#fafafa",
         titleColor: "#28A8E0"
     )
+    public func resetData(){
+        AutoQLConfig.shared.authenticationObj = Authentication(apiKey: "", domain: "", token: "")
+        AutoQLConfig.shared.projectID = ""
+        TopicService.instance.topics = []
+        UrlAutoQl.instance.urlDynamic = ""
+    }
     func show(){
         
     }
