@@ -10,37 +10,53 @@ import CoreData
 struct ChatBarBottomView: View {
     @Binding var value: String
     @Binding var allComponents : [ChatComponent]
+    @State var typing = false
+    @StateObject var viewModel = ChatBarBottomModelView()
     var speechManager = SpeechManager()
     var service = ChatBodyService()
     @State var recording = false
     //@ObservedObject private var mic = MicMonitor(numberOfSamples: 30)
     var body: some View {
-        HStack{
-            QLInputText(
-                label: "Type your Queries here",
-                value: $value
-            )
-            Group{
-                if value.isEmpty || recording {
-                    QLCircleButton(image: "icMic") {
-                        recordingToggle()
-                    }
-                } else {
-                    QLCircleButton(image: "icMic") {
-                        service.addNewComponent(query: value) {
-                            newComponents in
-                            allComponents += newComponents
+        VStack(spacing: 4){
+            //Spacer()
+            if !value.isEmpty {
+                AutoCompleteView(value: $value, queries: $viewModel.queries){
+                    addNewComponent()
+                }
+            }
+            HStack{
+                QLInputText(
+                    label: "Type your Queries here",
+                    value: $value
+                ).onChange(of: value) { newValue in
+                    viewModel.getAutoComplete(query: newValue)
+                }
+                Group{
+                    if value.isEmpty || recording {
+                        QLCircleButton(image: "icMic") {
+                            recordingToggle()
                         }
-                        value = ""
+                    } else {
+                        QLCircleButton(image: "icSend") {
+                            addNewComponent()
+                        }
                     }
                 }
             }
         }
-        .padding(8)
-        .background(qlBackgroundColorSecondary)
+        .padding(.horizontal, 8)
+        //.background(qlBackgroundColorSecondary)
         .onAppear {
             speechManager.checkPermissions()
         }
+        
+    }
+    private func addNewComponent(){
+        service.addNewComponent(query: value) {
+            newComponents in
+            allComponents += newComponents
+        }
+        value = ""
     }
     private func recordingToggle(){
         if speechManager.isRecording{

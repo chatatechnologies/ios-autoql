@@ -64,6 +64,9 @@ extension Dictionary where Key == String, Value == Any {
     func toBool(_ key: String) -> Bool{
         return self[key] as? Bool ?? false
     }
+    func toDict(_ key: String) -> [String: Any]{
+        return self[key] as? [String: Any] ?? [:]
+    }
     func toArrDict(_ key: String) -> [[String: Any]]{
         return self[key] as? [[String: Any]] ?? []
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TopicItemView: View{
     var label: String
+    var isSecondLevel = false
     var onClick: () -> Void
     @Binding var value: String
     var body: some View{
@@ -16,7 +17,9 @@ struct TopicItemView: View{
             QLText(label: label, padding: 0)
             Spacer()
             Button {
-                value = label
+                if isSecondLevel{
+                    value = label
+                }
                 onClick()
             } label: {
                 ImagePath(

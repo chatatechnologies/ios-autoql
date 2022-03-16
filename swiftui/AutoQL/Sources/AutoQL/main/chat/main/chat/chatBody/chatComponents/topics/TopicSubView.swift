@@ -38,6 +38,7 @@ struct TopicSubView: View {
                         qbOption in
                         TopicItemView(
                             label: qbOption,
+                            isSecondLevel: true,
                             onClick: onClick,
                             value: $value
                         )

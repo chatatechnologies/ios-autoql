@@ -17,14 +17,13 @@ struct QLInputText: View {
             .padding()
             .foregroundColor(qlColorWhite)
             .accentColor(Color.green)
+            
             .background(
                 AnyView(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(qlBackgroundColorPrimary)
                 )
-            ).onAppear {
-                print(label)
-            }
+            )
     }
 }
 extension View {

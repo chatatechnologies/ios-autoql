@@ -48,7 +48,8 @@ class HttpRequest{
         }
     }
     private func genereteURLRequest(url: String, httpMethod: String) -> URLRequest?{
-        guard let urlValid = URL(string: url) else {
+        let urlEncoding = url.encodingURL()
+        guard let urlValid = URL(string: urlEncoding) else {
             return nil
         }
         var request = URLRequest(url: urlValid) as URLRequest
@@ -60,7 +61,8 @@ class HttpRequest{
         return request
     }
     private func generateRequest(url: String, httpMethod: String, body: [String: Any] = [:], completion: @escaping CompletionResponse){
-        guard let urlValid = URL(string: url) else {
+        let urlEncoding = url.encodingURL()
+        guard let urlValid = URL(string: urlEncoding) else {
             return
         }
         var request = URLRequest(url: urlValid) as URLRequest
