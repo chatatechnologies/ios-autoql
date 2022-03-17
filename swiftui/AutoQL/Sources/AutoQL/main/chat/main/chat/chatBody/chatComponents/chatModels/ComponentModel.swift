@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-struct ChatComponent: Hashable{
+struct ComponentModel: Hashable{
     var uid: UUID
     var type: DataChatType
     var label: String

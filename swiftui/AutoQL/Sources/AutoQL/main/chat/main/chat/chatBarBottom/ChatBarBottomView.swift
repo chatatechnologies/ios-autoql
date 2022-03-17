@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 struct ChatBarBottomView: View {
     @Binding var value: String
-    @Binding var allComponents : [ChatComponent]
+    @Binding var allComponents : [ComponentModel]
     @State var typing = false
     @StateObject var viewModel = ChatBarBottomModelView()
     var speechManager = SpeechManager()

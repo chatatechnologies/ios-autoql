@@ -8,9 +8,9 @@
 import Foundation
 class MainChatViewModel: ObservableObject{
     static let instance = MainChatViewModel()
-    @Published var allComponents: [ChatComponent] = []
+    @Published var allComponents: [ComponentModel] = []
     func cleanChat(){
-        var defaultValue: [ChatComponent] = []
+        var defaultValue: [ComponentModel] = []
         if TopicService.instance.topics.isEmpty{
             defaultValue.append(allComponents[0])
         } else {

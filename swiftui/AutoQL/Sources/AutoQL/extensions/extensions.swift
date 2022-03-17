@@ -70,7 +70,15 @@ extension Dictionary where Key == String, Value == Any {
     func toArrDict(_ key: String) -> [[String: Any]]{
         return self[key] as? [[String: Any]] ?? []
     }
+    func toArrArrAny(_ key: String) -> NSArray{
+        return self[key] as? NSArray ?? []
+    }
     func toArrStr(_ key: String) -> [String]{
         return self[key] as? [String] ?? []
+    }
+}
+extension NSArray{
+    func toArrArrAny() -> [[Any]]{
+        return self as? [[Any]] ?? []
     }
 }

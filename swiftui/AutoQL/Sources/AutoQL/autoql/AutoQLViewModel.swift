@@ -43,7 +43,7 @@ public class AutoQLViewModel: ObservableObject{
                 AutoQLConfig.shared.authenticationObj.domain = parameters.toStr("userDomainURL")
                 AutoQLConfig.shared.authenticationObj.token = response.toStr("message")
                 AutoQLConfig.shared.projectID = projectID
-                UrlAutoQl.instance.urlDynamic = AutoQLConfig.shared.authenticationObj.domain
+                UrlAutoQl.instance.urlDynamic = "\(AutoQLConfig.shared.authenticationObj.domain)/autoql/api/v1/"
                 self.getValidData { success in
                     completion(success)
                 }
@@ -54,7 +54,7 @@ public class AutoQLViewModel: ObservableObject{
         }
     }
     private func getValidData(completion: @escaping CompletionSuccess) {
-        let url = "\(UrlAutoQl.instance.urlDynamic)/autoql/api/v1/query/related-queries?key=\(AutoQLConfig.shared.authenticationObj.apiKey)&search=test"
+        let url = "\(UrlAutoQl.instance.urlDynamic)query/related-queries?key=\(AutoQLConfig.shared.authenticationObj.apiKey)&search=test"
         HttpRequest.instance.get(url: url) { response in
             let success = response.toBool("success")
             if success {

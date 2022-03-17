@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 struct ChatBodyView: View {
-    @Binding var allComponents : [ChatComponent]
+    @Binding var allComponents : [ComponentModel]
     @Binding var queryValue: String
     @Binding var isReportPopUp: Bool
     @Binding var isSQLPopUp: Bool
