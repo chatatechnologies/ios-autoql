@@ -82,3 +82,16 @@ extension NSArray{
         return self as? [[Any]] ?? []
     }
 }
+extension Double {
+    func currency() -> String{
+        let format = NumberFormatter()
+        format.numberStyle = .currency
+        format.currencyCode = AutoQLConfig.shared.dataFormattingObj.currencyCode
+        format.minimumFractionDigits = AutoQLConfig.shared.dataFormattingObj.currencyDecimals
+        format.maximumFractionDigits = AutoQLConfig.shared.dataFormattingObj.currencyDecimals
+        format.locale = Locale.init(identifier: AutoQLConfig.shared.dataFormattingObj.languageCode)
+        let dolar = format.string(from: NSNumber(value: self)) ?? ""
+        let finalStr = self == 0.0 ? "" : "\(String(describing: dolar))"
+        return finalStr
+    }
+}

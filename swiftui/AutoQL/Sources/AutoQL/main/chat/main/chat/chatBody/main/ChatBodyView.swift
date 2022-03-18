@@ -25,7 +25,6 @@ struct ChatBodyView: View {
                         ForEach(allComponents.indices, id: \.self) {
                             index in
                             //bod in
-                            
                             switch(allComponents[index].type){
                             case .usermessage:
                                 ChatUserMessageView(label: allComponents[index].label)
@@ -67,7 +66,7 @@ struct ChatBodyView: View {
                             .id("bottom")
                         
                     }
-                    .onChange(of: allComponents, perform: { _ in
+                    .onChange(of: allComponents.count, perform: { _ in
                         withAnimation {
                             proxy.scrollTo("bottom")
                         }
@@ -97,9 +96,11 @@ struct ChatBodyView: View {
     func addNewComponent(){
         service.addNewComponent(query: queryValue) {
             newComponents in
-            allComponents += newComponents
-            queryValue = ""
-            messageIDToScroll = newComponents.last?.uid
+            DispatchQueue.main.async {
+                allComponents += newComponents
+                queryValue = ""
+                messageIDToScroll = newComponents.last?.uid
+            }
         }
     }
 }

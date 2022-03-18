@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 struct ComponentInfoModel {
     var chartImages: String?
-    //var columns: [String]
+    var columns: [ComponentColumns]
     var displayType: String
     var interpretation: String
     var limitRowNum: Int
@@ -22,18 +22,15 @@ struct ComponentInfoModel {
 extension ComponentInfoModel: Decodable{
     enum CodingKeys: String, CodingKey{
         case chartImages = "chart_images"
-        case columns = "columns"
+        case columns, rows, interpretation, sql, text
         case displayType = "display_type"
-        case interpretation = "interpretation"
         case limitRowNum = "limit_row_num"
         case queryID = "query_id"
         case rowLimit = "row_limit"
-        case rows = "rows"
-        case sql = "sql"
-        case text = "text"
     }
     init(from decoder: Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.columns =  try container.decodeIfPresent([ComponentColumns].self, forKey: .columns) ?? []
         self.chartImages = try container.decodeIfPresent(String.self, forKey: .chartImages) ?? ""
         self.displayType = try container.decodeIfPresent(String.self, forKey: .displayType) ?? ""
         self.interpretation = try container.decodeIfPresent(String.self, forKey: .interpretation) ?? ""

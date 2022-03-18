@@ -54,7 +54,9 @@ struct ChatBarBottomView: View {
     private func addNewComponent(){
         service.addNewComponent(query: value) {
             newComponents in
-            allComponents += newComponents
+            DispatchQueue.main.async {
+                allComponents += newComponents
+            }
         }
         value = ""
     }

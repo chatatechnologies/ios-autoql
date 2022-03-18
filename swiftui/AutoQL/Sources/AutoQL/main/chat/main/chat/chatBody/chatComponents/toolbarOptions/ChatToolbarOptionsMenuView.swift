@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ChatToolbarOptions: View {
+    var side: sideType = .right
     var onClick: (_ typeFunction : ChatToolItemType) -> Void
     var onClickMenuAction: (_ typeFunction : ChatToolbarSubOptionType) -> Void
     @State var buttons: [ChatToolbarModel] = []
@@ -32,17 +33,19 @@ struct ChatToolbarOptions: View {
         .background(
             AnyView(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(.white)
+                    .fill(qlBackgroundColorPrimary)
                     .shadow(color: qlBorderColor, radius: 2)
             )
-        )
-        .padding(
+        ).padding(
             EdgeInsets(
-                top: -16,
+                top: -36,
                 leading: 0,
                 bottom: 0,
-                trailing: 0
+                trailing: side == .left ? -60 : 0
             )
         )
     }
+}
+enum sideType {
+    case left, right
 }

@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
-struct ComponentModel: Hashable{
+struct ComponentModel{
     var uid: UUID
     var type: DataChatType
     var label: String
+    var componentInfo: ComponentInfoModel?
     init(
         type: DataChatType = .botmessage,
         label: String = "",
-        uid: UUID = UUID()
+        uid: UUID = UUID(),
+        componentInfo: ComponentInfoModel? = nil
     ){
         self.type = type
         self.label = label
         self.uid = uid
+        self.componentInfo = componentInfo
     }
 }
 enum DataChatType {

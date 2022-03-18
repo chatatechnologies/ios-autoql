@@ -27,6 +27,7 @@ struct ChatBotMessageView: View {
                 )
                 .overlay(
                     ChatToolbarOptions(
+                        side: .left,
                         onClick: toolbarAction,
                         onClickMenuAction: toolbarMenuAction,
                         buttons: buttons
@@ -39,7 +40,7 @@ struct ChatBotMessageView: View {
         }
         .padding(
             EdgeInsets(
-                top: 40,
+                top: 50,
                 leading: 8,
                 bottom: 8,
                 trailing: 8

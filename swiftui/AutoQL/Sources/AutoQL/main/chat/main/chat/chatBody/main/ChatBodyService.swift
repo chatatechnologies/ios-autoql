@@ -7,6 +7,7 @@
 
 import SwiftUI
 typealias CompletionComponents = (_ arrComponents: [ComponentModel]) -> Void
+typealias CompletionComponentInfo = (_ componentInfo: ComponentInfoModel) -> Void
 class ChatBodyService: ObservableObject {
     @Published var bodyMessages = [ComponentModel]()
     init() {
@@ -23,11 +24,13 @@ class ChatBodyService: ObservableObject {
     func addNewComponent(
         query: String,
         completion: @escaping CompletionComponents){
-            getQuery(query) { arrComponents in
-                completion(self.getAnswer(query: query))
+            getQuery(query) { componentInfo in
+                completion(
+                    self.getAnswer(query: query, info: componentInfo)
+                )
             }
     }
-    func getQuery(_ query: String, dataType: String = "data_messenger.user", completion: @escaping CompletionComponents){
+    func getQuery(_ query: String, dataType: String = "data_messenger.user", completion: @escaping CompletionComponentInfo){
         let body: [String: Any] = [
             "text": query,
             "source": dataType,
@@ -45,25 +48,27 @@ class ChatBodyService: ObservableObject {
                     if var finalDecodedData = decodedData{
                         let rows = dataResponse.toArrArrAny("rows").toArrArrAny()
                         finalDecodedData.rows = rows
-                        print(finalDecodedData)
+                        completion(finalDecodedData)
                     }
                 }
             }
-            completion([])
         }
     }
-    func getAnswer(query: String) -> ([ComponentModel]) {
+    func getAnswer(query: String, info: ComponentInfoModel) -> ([ComponentModel]) {
         var components: [ComponentModel] = []
         let question = ComponentModel(type: .usermessage, label: query)
         components.append(question)
-        let responseType: DataChatType = .webview
+        let responseType = getType(info)
         switch responseType {
         case .botmessage,
              .usermessage,
              .querybuilder,
-             .botresponseText,
              .webview:
             let answer = ComponentModel(type: responseType, label: "Response")
+            components.append(answer)
+        case .botresponseText:
+            let (_, value) = validateOneAnswer(info.rows)
+            let answer = ComponentModel(type: responseType, label: value, componentInfo: info)
             components.append(answer)
         case .suggestion:
             let answer = ComponentModel(type: .botresponseText, label: "I want to make sure I understood your query. Did you mean:")
@@ -74,6 +79,23 @@ class ChatBodyService: ObservableObject {
             components += [answer, answerSuggestion]
         }
         return components
+    }
+    func getType(_ info: ComponentInfoModel) -> DataChatType{
+        if info.displayType == "data"{
+            if validateOneAnswer(info.rows).0 {
+                return .botresponseText
+            }
+        }
+        return .webview
+    }
+    func validateOneAnswer(_ rows: [[Any]]) -> (Bool, String){
+        if rows.count == 1 {
+            if rows[0].count == 1{
+                let result = rows[0][0] as? Double ?? 0
+                return (true, result.currency())
+            }
+        }
+        return (false, "")
     }
 }
 
