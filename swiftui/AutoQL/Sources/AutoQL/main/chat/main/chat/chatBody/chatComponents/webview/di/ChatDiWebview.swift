@@ -7,11 +7,12 @@
 
 import Foundation
 var webviewStringExample = "<html><body><h1>Hello World</h1></body></html>"
-func generateWB() -> String {
+func generateWB(_ tableString: String = "") -> String {
+    
     return """
         \(getHeaderWB())
         \(getStyleWB())
-        \(getBodyWB())
+        \(getBodyWB(tableString))
         \(getScriptWB())
     """
 }
@@ -94,7 +95,7 @@ func getStyleWB() -> String {
         </style>
     """
 }
-func getBodyWB() -> String {
+func getBodyWB(_ tableString: String = "") -> String {
     return """
         </head>
         <body>
@@ -106,8 +107,7 @@ func getBodyWB() -> String {
             <button class="button" onclick="updateData(TypeEnum.LINE)">LINE</button>
             <button class="button" onclick="updateData(TypeEnum.PIE)">PIE</button>
           </div>
-                
-        <table id="idTableBasic"><thead><tr><th>Month</th><th>Total Revenue</th></tr></thead><tfoot><tr><th>Month</th><th>Total Revenue</th></tr></tfoot><tbody><tr><td>Nov 2019</td><td>$106,630.75</td></tr><tr><td>Oct 2019</td><td>$104,254.00</td></tr><tr><td>Sep 2019</td><td>$57,326.75</td></tr><tr><td>Ago 2019</td><td>$122,868.00</td></tr><tr><td>May 2019</td><td>$100,500.00</td></tr></tbody></table>
+        \(tableString)
     """
 }
 func getScriptWB() -> String {

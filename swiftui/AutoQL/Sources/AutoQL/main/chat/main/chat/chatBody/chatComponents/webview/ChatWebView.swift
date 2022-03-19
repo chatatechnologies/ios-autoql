@@ -11,6 +11,8 @@ struct ChatWebView: View {
     var position: Int
     @Binding var isReportPopUp: Bool
     @Binding var isSQLPopUp: Bool
+    var info: ComponentInfoModel?
+    @State var wbString = ""
     var onClick: (_ position : Int) -> Void
     @State private var showingAlert = false
     @State var buttons: [ChatToolbarModel] = [
@@ -21,9 +23,15 @@ struct ChatWebView: View {
     var body: some View {
         ZStack{
             HStack{
-                WebView().background(
+                WebView(WbString: wbString).background(
                     QLRoundedView(cornerRadius: 10)
                 )
+            }.onAppear{
+                guard let info = info else{
+                    return
+                }
+                let table = TableViewHTML.instance.getTable(info)
+                wbString = generateWB(table)
             }
             .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 400)
             .background(

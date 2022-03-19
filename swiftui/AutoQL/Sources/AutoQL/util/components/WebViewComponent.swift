@@ -22,12 +22,11 @@ struct WebViewComponent: View{
 }
 struct WebView: UIViewRepresentable {
   //@Binding var text: String
-  var WbString = ""
-  func makeUIView(context: Context) -> WKWebView {
-    return WKWebView()
-  }
-   
-  func updateUIView(_ uiView: WKWebView, context: Context) {
-    uiView.loadHTMLString(generateWB(), baseURL: nil)
-  }
+    var WbString = ""
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.loadHTMLString(WbString, baseURL: nil)
+    }
 }

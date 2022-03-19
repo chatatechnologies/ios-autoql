@@ -62,9 +62,11 @@ class ChatBodyService: ObservableObject {
         switch responseType {
         case .botmessage,
              .usermessage,
-             .querybuilder,
-             .webview:
+             .querybuilder:
             let answer = ComponentModel(type: responseType, label: "Response")
+            components.append(answer)
+        case .webview:
+            let answer = ComponentModel(type: responseType, label: "Response", componentInfo: info)
             components.append(answer)
         case .botresponseText:
             let (_, value) = validateOneAnswer(info.rows)
@@ -84,6 +86,8 @@ class ChatBodyService: ObservableObject {
         if info.displayType == "data"{
             if validateOneAnswer(info.rows).0 {
                 return .botresponseText
+            } else {
+                return .webview
             }
         }
         return .webview

@@ -48,6 +48,7 @@ struct ChatBodyView: View {
                                     position: index,
                                     isReportPopUp: $isReportPopUp,
                                     isSQLPopUp: $isSQLPopUp,
+                                    info: allComponents[index].componentInfo ?? nil,
                                     onClick: removeComponent
                                 )
                             case .suggestion:
