@@ -7,7 +7,7 @@
 import WebKit
 import SwiftUI
 struct WebViewComponent: View{
-    var WbString = "\(generateWB())"
+    var WbString = "\(WebviewString.instance.generateWB())"
     var body: some View{
         HStack{
             WebView(WbString: WbString).background(

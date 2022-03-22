@@ -31,7 +31,7 @@ struct ChatWebView: View {
                     return
                 }
                 let table = TableViewHTML.instance.getTable(info)
-                wbString = generateWB(table)
+                wbString = WebviewString.instance.generateWB(table)
             }
             .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 400)
             .background(

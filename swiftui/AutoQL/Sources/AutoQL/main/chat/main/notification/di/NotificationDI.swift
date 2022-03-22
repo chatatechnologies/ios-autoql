@@ -25,7 +25,7 @@ func getNotifications() -> [NotificationModel] {
             query: "total sales",
             content: NotificationContentModel(
                 typeContent: .webview,
-                content: generateWB()
+                content: WebviewString.instance.generateWB()
             )
         )
     ]
