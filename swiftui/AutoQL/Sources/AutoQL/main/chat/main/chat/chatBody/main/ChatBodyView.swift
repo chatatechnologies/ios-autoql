@@ -13,6 +13,7 @@ struct ChatBodyView: View {
     @Binding var isReportPopUp: Bool
     @Binding var isSQLPopUp: Bool
     @Binding var sendRequest: Bool
+    @Binding var isLoading: Bool
     @StateObject private var service = ChatBodyService()
     @State private var messageIDToScroll: UUID?
     let columns = [GridItem(.flexible(minimum: 10))]
@@ -95,10 +96,12 @@ struct ChatBodyView: View {
         allComponents = renevueComponents
     }
     func addNewComponent(){
+        isLoading = true
         service.addNewComponent(query: queryValue) {
             newComponents in
             DispatchQueue.main.async {
                 allComponents += newComponents
+                isLoading = false
                 queryValue = ""
                 messageIDToScroll = newComponents.last?.uid
             }

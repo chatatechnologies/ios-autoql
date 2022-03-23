@@ -15,6 +15,7 @@ struct ChatBarBottomView: View {
     var speechManager = SpeechManager()
     var service = ChatBodyService()
     @State var recording = false
+    @Binding var isLoading: Bool
     //@ObservedObject private var mic = MicMonitor(numberOfSamples: 30)
     var body: some View {
         VStack(spacing: 4){
@@ -24,6 +25,19 @@ struct ChatBarBottomView: View {
                     addNewComponent()
                 }
             }
+            HStack{
+                if isLoading{
+                    ProgressCircleQL()
+                } else {
+                    HStack{
+                        Spacer()
+                        ImagePath(name: "icSideChat", size: 15, tintColor: true)
+                        QLText(label: "We run on AutoQL by Chata", padding: 0, fontSize: 10)
+                        Spacer()
+                    }
+                }
+            }
+            //ImagePath(name: "icBalls", size: 100, type: "gif")
             HStack{
                 QLInputText(
                     label: "Type your Queries here",
@@ -52,9 +66,11 @@ struct ChatBarBottomView: View {
         
     }
     private func addNewComponent(){
+        isLoading = true
         service.addNewComponent(query: value) {
             newComponents in
             DispatchQueue.main.async {
+                self.isLoading = false
                 allComponents += newComponents
             }
         }
@@ -77,4 +93,3 @@ struct ChatBarBottomView: View {
         speechManager.isRecording.toggle()
     }
 }
-
